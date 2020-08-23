@@ -1,6 +1,6 @@
 # cattle
 
-The new generation of JOJ Frontend. Cattle are commonly raised as livestock for M(obx)eat and M(aerial U)Ilk, and also used as R(eact)iding animals.
+The new generation of JOJ Frontend. Cattle are commonly raised as livestock for M(obx)eat and M(aterial U)Ilk, and also used as R(eact)iding animals.
 
 ## Requirements
 
