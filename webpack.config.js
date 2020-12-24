@@ -84,6 +84,30 @@ module.exports = {
           },
         ],
       },
+      // less
+      {
+        test: /\.(less)$/,
+        exclude: [
+          /\.(css)$/,
+          /src/,
+        ],
+        use: [
+          MiniCssExtractPlugin.loader,
+          {
+            loader: 'css-loader',
+          },
+          {
+            loader: 'less-loader',
+            options: {
+              sourceMap: true,
+              lessOptions: {
+                javascriptEnabled: true,
+              },
+              // modifyVars: get_theme(),
+            },
+          },
+        ],
+      },
       // static assets
       { test: /\.html$/, use: 'html-loader' },
       { test: /\.(a?png|svg)$/, use: 'url-loader?limit=10000' },
