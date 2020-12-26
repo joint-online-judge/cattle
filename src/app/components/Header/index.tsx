@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { TodoTextInput } from 'app/components/TodoTextInput';
 import { TodoModel } from 'app/models/TodoModel';
+import I18nTest from 'app/components/Header/i18nTest';
 
 export interface HeaderProps {
   addTodo: (todo: Partial<TodoModel>) => any;
@@ -21,6 +22,7 @@ export class Header extends React.Component<HeaderProps, HeaderState> {
     return (
       <header>
         <h1>Todos</h1>
+        <I18nTest />
         <TodoTextInput
           newTodo
           onSave={this.handleSave}
