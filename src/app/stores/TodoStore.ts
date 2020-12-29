@@ -17,10 +17,10 @@ export const useTodoStore = (defaultTodos: TodoModel[] = []) => {
     editTodo(id: number, data: Partial<TodoModel>): void {
       store.todos = store.todos.map((todo) => {
         if (todo.id === id) {
-          if (typeof data.completed == 'boolean') {
+          if (typeof data.completed === 'boolean') {
             todo.completed = data.completed;
           }
-          if (typeof data.text == 'string') {
+          if (typeof data.text === 'string') {
             todo.text = data.text;
           }
         }

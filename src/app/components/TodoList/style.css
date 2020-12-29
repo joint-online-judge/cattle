@@ -140,9 +140,11 @@
   .normal li .toggle {
     background: none;
   }
+
   .normal li .toggle {
     height: 40px;
   }
+
   .toggleAll {
     transform: rotate(90deg);
     appearance: none;

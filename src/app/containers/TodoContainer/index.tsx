@@ -48,13 +48,12 @@ export const TodoContainer = observer(() => {
       const nextHash = TODO_FILTER_LOCATION_HASH[nextFilter];
       history.replace(nextHash);
     },
-    [history, setFilter]
+    [history, setFilter],
   );
 
-  const itemsToDisplay =
-    filter === TodoFilter.ALL
-      ? todoStore.todos
-      : filter === TodoFilter.ACTIVE
+  const itemsToDisplay = filter === TodoFilter.ALL
+    ? todoStore.todos
+    : filter === TodoFilter.ACTIVE
       ? todoStore.activeTodos
       : todoStore.completedTodos;
 
