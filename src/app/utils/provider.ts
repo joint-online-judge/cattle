@@ -1,4 +1,4 @@
-import axios, {AxiosResponse, AxiosInstance} from 'axios';
+import axios, { AxiosResponse, AxiosInstance } from 'axios';
 import * as Cookies from 'js-cookie';
 
 const Provider = {
@@ -8,31 +8,31 @@ const Provider = {
       headers: {
         'X-CSRFToken': Cookies.get('csrftoken'), // todo
       },
-    })
+    });
   },
 
   getInstance(): AxiosInstance {
-    return this.provider
+    return this.provider;
   },
 
   request(...args: any) {
-    return this.provider.request(...args)
+    return this.provider.request(...args);
   },
 
   post(...args: any) {
-    return this.provider.post(...args)
+    return this.provider.post(...args);
   },
 
   get(...args: any): Promise<AxiosResponse> {
-    return this.provider.get(...args)
+    return this.provider.get(...args);
   },
 
   patch(...args: any): Promise<AxiosResponse> {
-    return this.provider.patch(...args)
+    return this.provider.patch(...args);
   },
 
   delete(...args: any) {
-    return this.provider.delete(...args)
+    return this.provider.delete(...args);
   },
 };
 

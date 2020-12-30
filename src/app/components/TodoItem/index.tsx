@@ -23,7 +23,7 @@ export class TodoItem extends React.Component<TodoProps, TodoState> {
     this.state = { editing: false };
   }
 
-  private handleDoubleClick = (e: React.SyntheticEvent<any>) => {
+  private handleDoubleClick = () => {
     this.setState({ editing: true });
   };
 
@@ -31,15 +31,15 @@ export class TodoItem extends React.Component<TodoProps, TodoState> {
     const { todo } = this.props;
     const target = e.target as any;
     if (
-      target &&
-      target.checked !== undefined &&
-      target.checked !== todo.completed
+      target
+      && target.checked !== undefined
+      && target.checked !== todo.completed
     ) {
       this.updateTodo({ completed: target.checked });
     }
   };
 
-  private handleClickDeleteButton = (e: React.SyntheticEvent<any>) => {
+  private handleClickDeleteButton = () => {
     const { todo, deleteTodo } = this.props;
     deleteTodo(todo.id);
   };
