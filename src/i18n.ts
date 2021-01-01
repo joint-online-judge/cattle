@@ -6,6 +6,7 @@ import LanguageDetector from 'i18next-browser-languagedetector';
 // don't want to use this?
 // have a look at the Quick start guide
 // for passing in lng and translations on init
+import { isProduction } from './main';
 
 i18n
   // load translation using http -> see /public/locales (i.e. https://github.com/i18next/react-i18next/tree/master/example/react/public/locales)
@@ -20,7 +21,7 @@ i18n
   // for all options read: https://www.i18next.com/overview/configuration-options
   .init({
     fallbackLng: 'en',
-    debug: true,
+    debug: !isProduction,
     backend: {
       loadPath: 'assets/locales/{{lng}}/{{ns}}.json',
     },
