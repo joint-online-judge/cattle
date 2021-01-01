@@ -3,10 +3,10 @@ import axios from 'axios';
 // prepare api
 import { isProduction } from '../../../main';
 
-const api_url_dev = 'https://umjicanvas.com/api/v1/';
-const api_url_prod = 'https://sll.apple.com';
+const API_URL_DEV = 'https://umjicanvas.com/api/v1/';
+const API_URL_PROD = 'https://sll.apple.com';
 
-const baseURL = isProduction ? api_url_prod : api_url_dev;
+const baseURL = isProduction ? API_URL_PROD : API_URL_DEV;
 axios.defaults.baseURL = baseURL;
 axios.defaults.timeout = 1000;
 

@@ -47,7 +47,6 @@ class Proxy {
   delete(id: string) {
     return this.request('delete', `/${this.endpoint}/${id}`);
   }
-
 }
 
 export default Proxy;

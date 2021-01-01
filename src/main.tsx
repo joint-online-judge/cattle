@@ -9,5 +9,5 @@ const history = createBrowserHistory();
 // render react DOM
 ReactDOM.render(<App history={history} />, document.getElementById('root'));
 
-export const isProduction =
-  process.argv.indexOf('-p') >= 0 || process.env.NODE_ENV === 'production';
+export const isProduction = process.argv.indexOf('-p') >= 0
+  || process.env.NODE_ENV === 'production';
