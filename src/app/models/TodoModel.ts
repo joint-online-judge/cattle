@@ -12,6 +12,7 @@ export class TodoModel {
   }
 
   static nextId = 1;
+
   static generateId() {
     return this.nextId++;
   }
