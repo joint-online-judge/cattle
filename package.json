@@ -7,7 +7,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "webpack-dev-server --mode development --hot --progress --colors --port 3000 --open",
-    "build": "webpack -p --progress --colors",
+    "build": "cross-env NODE_ENV=prod webpack -p --progress --colors",
     "prettier": "prettier --write \"src/**/*.{ts,tsx,css}\"",
     "lint": "eslint src/* --no-error-on-unmatched-pattern",
     "pre-commit": "npm run lint",
@@ -71,6 +71,7 @@
     "antd": "^4.8.6",
     "axios": "^0.20.0",
     "classnames": "^2.2.6",
+    "cross-env": "^7.0.3",
     "i18next": "^19.8.4",
     "i18next-browser-languagedetector": "^6.0.1",
     "i18next-http-backend": "^1.0.21",

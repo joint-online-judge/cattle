@@ -1,5 +1,14 @@
 import axios, { AxiosInstance, AxiosRequestConfig, Method } from 'axios';
 
+import { isProduction } from '../../../config';
+
+const API_URL_DEV = 'https://umjicanvas.com/api/v1/';
+const API_URL_PROD = 'https://sll.apple.com';
+
+const baseURL = isProduction ? API_URL_PROD : API_URL_DEV;
+axios.defaults.baseURL = baseURL;
+axios.defaults.timeout = 3000;
+
 class Proxy {
   constructor(endpoint: string, config: AxiosRequestConfig) {
     this.endpoint = endpoint;
