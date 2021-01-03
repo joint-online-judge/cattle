@@ -30,6 +30,5 @@ The new generation of JOJ Frontend. Cattle are commonly raised as livestock for 
   $ npm run prettier
   ```
 
-  
 
   

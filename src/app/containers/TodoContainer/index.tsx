@@ -10,6 +10,7 @@ import { useTodoStore } from 'app/stores/TodoStore';
 import { TODO_FILTER_LOCATION_HASH, TodoFilter } from 'app/constants';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
+import { Proxy } from 'app/utils/proxies';
 
 const useStyles = makeStyles({
   root: {
@@ -32,6 +33,12 @@ export const TodoContainer = observer(() => {
   const location = useLocation();
   const [filter, setFilter] = React.useState(TodoFilter.ALL);
   const classes = useStyles();
+
+  // Note: useEffect with [] is similar to componentDidMount
+  React.useEffect(() => {
+    // TODO: Sample, delete this later
+    console.log(new Proxy('user', {}).read('1'));
+  }, []);
 
   // location change callback
   React.useEffect(() => {
