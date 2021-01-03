@@ -8,21 +8,9 @@ import { TodoList } from 'app/components/TodoList';
 import { TodoModel } from 'app/models';
 import { useTodoStore } from 'app/stores/TodoStore';
 import { TODO_FILTER_LOCATION_HASH, TodoFilter } from 'app/constants';
-import { makeStyles } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
-import { Proxy } from 'app/utils/proxies';
+import { Button } from 'antd';
+import { useRequest } from 'ahooks';
 
-const useStyles = makeStyles({
-  root: {
-    background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
-    border: 0,
-    borderRadius: 3,
-    boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
-    color: 'white',
-    height: 48,
-    padding: '0 30px',
-  },
-});
 
 export const TodoContainer = observer(() => {
   const todoStore = useTodoStore([
@@ -32,12 +20,22 @@ export const TodoContainer = observer(() => {
   const history = useHistory();
   const location = useLocation();
   const [filter, setFilter] = React.useState(TodoFilter.ALL);
-  const classes = useStyles();
+  const [count, setCount] = React.useState(0);
+
+  const { loading, run } = useRequest(async () => {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        setCount(count + 1);
+        resolve();
+      }, 1000);
+    });
+  }, { manual: true });
 
   // Note: useEffect with [] is similar to componentDidMount
   React.useEffect(() => {
-    // TODO: Sample, delete this later
-    console.log(new Proxy('user', {}).read('1'));
+    run().then(res => {
+      console.log(res);
+    })
   }, []);
 
   // location change callback
@@ -66,9 +64,13 @@ export const TodoContainer = observer(() => {
 
   return (
     <div>
-      <Button variant="contained" color="primary" className={classes.root}>
-        你好，世界
+      <Button type='primary' onClick={run} loading={loading}>
+        useRequest
       </Button>
+      <Button type='primary' onClick={() => {setCount(count + 1)}} loading={loading}>
+        No useRequest
+      </Button>
+      <pre>{count}</pre>
       <Header addTodo={todoStore.addTodo} />
       <TodoList
         todos={itemsToDisplay}
