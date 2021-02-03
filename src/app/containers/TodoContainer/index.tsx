@@ -12,7 +12,6 @@ import { Button } from 'antd';
 import { useRequest } from 'ahooks';
 import { DomainService } from 'client';
 
-
 export const TodoContainer = observer(() => {
   const todoStore = useTodoStore([
     new TodoModel('Use MobX'),
@@ -61,10 +60,16 @@ export const TodoContainer = observer(() => {
 
   return (
     <div>
-      <Button type='primary' onClick={run} loading={loading}>
+      <Button type="primary" onClick={run} loading={loading}>
         useRequest
       </Button>
-      <Button type='primary' onClick={() => {setCount(count + 1)}} loading={loading}>
+      <Button
+        type="primary"
+        onClick={() => {
+          setCount(count + 1);
+        }}
+        loading={loading}
+      >
         No useRequest
       </Button>
       <pre>{count}</pre>
