@@ -10,6 +10,7 @@ import { useTodoStore } from 'app/stores/TodoStore';
 import { TODO_FILTER_LOCATION_HASH, TodoFilter } from 'app/constants';
 import { Button } from 'antd';
 import { useRequest } from 'ahooks';
+import { DomainService } from 'client';
 
 
 export const TodoContainer = observer(() => {
@@ -23,20 +24,16 @@ export const TodoContainer = observer(() => {
   const [count, setCount] = React.useState(0);
 
   const { loading, run } = useRequest(async () => {
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        setCount(count + 1);
-        resolve();
-      }, 1000);
-    });
+    const res = await DomainService.listUserDomainsApiV1DomainListGet();
+    console.log(res);
   }, { manual: true });
 
   // Note: useEffect with [] is similar to componentDidMount
-  React.useEffect(() => {
-    run().then(res => {
-      console.log(res);
-    })
-  }, []);
+  // React.useEffect(() => {
+  //   run().then(res => {
+  //     console.log(res);
+  //   })
+  // }, []);
 
   // location change callback
   React.useEffect(() => {

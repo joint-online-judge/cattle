@@ -30,8 +30,10 @@ module.exports = {
     // (jsnext:main directs not usually distributable es6 format, but es6 sources)
     mainFields: ['module', 'browser', 'main'],
     alias: {
+      '@': path.resolve(__dirname, 'src/'),
       app: path.resolve(__dirname, 'src/app/'),
       'react-dom': '@hot-loader/react-dom',
+      client: path.resolve(__dirname, 'src/client/'),
     },
   },
   module: {
@@ -159,6 +161,13 @@ module.exports = {
     },
     stats: 'minimal',
     clientLogLevel: 'warning',
+    proxy: {
+      '/api': {
+        // url of backend dev server
+        target: 'http://localhost:8000',
+        changeOrigin: true,
+      }
+    },
   },
   // https://webpack.js.org/configuration/devtool/
   devtool: isProduction ? 'hidden-source-map' : 'cheap-module-eval-source-map',
