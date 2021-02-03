@@ -164,7 +164,7 @@ module.exports = {
     proxy: {
       '/api': {
         // url of backend dev server
-        target: 'http://localhost:8000',
+        target: 'http://localhost:34765',
         changeOrigin: true,
       }
     },
