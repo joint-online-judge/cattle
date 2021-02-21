@@ -8,7 +8,9 @@ export class UserModel {
   @observable public session: Session;
 
   constructor() {
-    this.session.jwt = '';
+    this.session = {
+      jwt: '',
+    };
   }
 }
 
