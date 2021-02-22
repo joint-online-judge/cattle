@@ -1,15 +1,14 @@
 import { observable } from 'mobx';
-
-interface Session {
-  jwt: string
-}
+import { UserBase } from '@/client';
 
 export class UserModel {
-  @observable public session: Session;
+  @observable public profile: UserBase;
 
   constructor() {
-    this.session = {
-      jwt: '',
+    this.profile = {
+      scope: '',
+      uname: '',
+      mail: '',
     };
   }
 }
