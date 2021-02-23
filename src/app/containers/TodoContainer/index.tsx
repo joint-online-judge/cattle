@@ -60,10 +60,10 @@ export const TodoContainer = observer(() => {
       ? todoStore.activeTodos
       : todoStore.completedTodos;
   const auth = useAuth();
-  const logoutResult = useRequest(async () => {
+  const logoutHook = useRequest(async () => {
     auth.logout();
     window.location.href = (await UserService.logoutApiV1UserLogoutGet(
-      'http://127.0.0.1:3000/login', false,
+      'http://127.0.0.1:3000', false,
     )).redirect_url;
   }, { manual: true });
   return (
@@ -89,8 +89,8 @@ export const TodoContainer = observer(() => {
               alt={`${auth.user.profile.uname} gravatar`}
             />
             <Button
-              onClick={logoutResult.run}
-              loading={logoutResult.loading}
+              onClick={logoutHook.run}
+              loading={logoutHook.loading}
             >
               Log out
             </Button>
