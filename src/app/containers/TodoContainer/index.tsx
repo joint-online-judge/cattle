@@ -8,9 +8,11 @@ import { TodoList } from 'app/components/TodoList';
 import { TodoModel } from 'app/models';
 import { useTodoStore } from 'app/stores/TodoStore';
 import { TODO_FILTER_LOCATION_HASH, TodoFilter } from 'app/constants';
-import { Button } from 'antd';
+import { Button, Spin } from 'antd';
 import { useRequest } from 'ahooks';
-import { DomainService } from 'client';
+import { DomainService, UserService } from 'client';
+import { gravatarImageUrl } from 'app/utils';
+import { useAuth } from 'app/components/Auth';
 
 export const TodoContainer = observer(() => {
   const todoStore = useTodoStore([
@@ -57,9 +59,16 @@ export const TodoContainer = observer(() => {
     : filter === TodoFilter.ACTIVE
       ? todoStore.activeTodos
       : todoStore.completedTodos;
-
+  const auth = useAuth();
+  const logoutResult = useRequest(async () => {
+    auth.logout();
+    window.location.href = (await UserService.logoutApiV1UserLogoutGet(
+      'http://127.0.0.1:3000/login', false,
+    )).redirect_url;
+  }, { manual: true });
   return (
     <div>
+      <Spin />
       <Button type="primary" onClick={run} loading={loading}>
         useRequest
       </Button>
@@ -72,6 +81,22 @@ export const TodoContainer = observer(() => {
       >
         No useRequest
       </Button>
+      {auth.loggedIn
+        ? (
+          <div>
+            <img
+              src={gravatarImageUrl(auth.user.profile.gravatar)}
+              alt={`${auth.user.profile.uname} gravatar`}
+            />
+            <Button
+              onClick={logoutResult.run}
+              loading={logoutResult.loading}
+            >
+              Log out
+            </Button>
+          </div>
+        ) : null}
+
       <pre>{count}</pre>
       <Header addTodo={todoStore.addTodo} />
       <TodoList

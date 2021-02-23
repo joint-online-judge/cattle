@@ -1,21 +1,31 @@
 import { useLocalStore } from 'mobx-react';
 import { UserModel } from 'app/models';
-import { UserBase } from '@/client';
+import { UserBase, UserService } from '@/client';
+import config from '@/config';
+import { autoSaveJson } from 'app/utils';
 
 export type UserStore = ReturnType<typeof useUserStore>;
 export const useUserStore = (user: UserModel) => {
   const store = useLocalStore(() => ({
     user,
-    loggedIn: false,
     get profile() {
       return store.user.profile;
     },
-    login(_profile: UserBase) {
-      this.loggedIn = true;
-      store.setProfile(_profile);
+    get loggedIn(): Boolean {
+      return Boolean(store.user.profile.uname);
+    },
+    async login() {
+      try {
+        const profile = await UserService.getUserApiV1UserUidGet('me');
+        if (profile) {
+          store.setProfile(profile);
+        }
+        return Promise.resolve();
+      } catch (err) {
+        return Promise.reject();
+      }
     },
     logout() {
-      this.loggedIn = false;
       store.setProfile({
         scope: '',
         uname: '',
@@ -26,5 +36,6 @@ export const useUserStore = (user: UserModel) => {
       store.user.profile = _profile;
     },
   }));
+  autoSaveJson(store.user, config.LOCAL_STORAGE_USER_KEY);
   return store;
 };
