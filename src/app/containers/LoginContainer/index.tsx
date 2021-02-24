@@ -1,9 +1,8 @@
 import * as React from 'react';
-import { Button, Spin } from 'antd';
+import { Spin, Result } from 'antd';
 import { observer } from 'mobx-react';
 import { useRequest } from 'ahooks';
 import { UserService } from '@/client';
-// import { gravatarImageUrl } from 'app/utils';
 import { useAuth } from 'app/components/Auth';
 import { Redirect, useLocation } from 'react-router';
 import config from '@/config';
@@ -20,28 +19,27 @@ export const LoginContainer = observer(() => {
       await auth.login();
     }
   });
-  const loginResult = useRequest(async () => {
-    const { from } = location.state || { from: { pathname: '/' } };
-    window.location.href = (await UserService.jaccountLoginApiV1UserJaccountLoginGet(
-      `${config.BASE_URL}/login/?action=profile&from=${from.pathname}`, false,
-    )).redirect_url;
-  }, { manual: true });
+  useRequest(async () => {
+    if (!auth.loggedIn) {
+      const { from } = location.state || { from: { pathname: '/' } };
+      window.location.href = (await UserService.jaccountLoginApiV1UserJaccountLoginGet(
+        `${config.BASE_URL}/login/?action=profile&from=${from.pathname}`, false,
+      )).redirect_url;
+    }
+  });
 
   return (
-    <Spin spinning={profileHook.loading}>
-      {auth.loggedIn ? (
-        <Redirect to={query.get('from') || '/'} />
-      ) : (
-        <div>
-          <Button
-            type="primary"
-            onClick={loginResult.run}
-            loading={loginResult.loading}
-          >
-            Login
-          </Button>
-        </div>
-      )}
+    <Spin spinning={profileHook.loading} size="large">
+      {
+        auth.loggedIn
+          ? <Redirect to={query.get('from') || '/'} />
+          : (
+            <Result
+              icon={<Spin size="large" />}
+              title="Redirecting to login page..."
+            />
+          )
+      }
     </Spin>
   );
 });
