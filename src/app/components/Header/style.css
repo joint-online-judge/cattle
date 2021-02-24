@@ -1,0 +1,18 @@
+#Header {
+  padding-top: 10px !important;
+  padding-bottom: 10px !important;
+}
+
+.HeaderItem {
+  font-size: 14px;
+}
+
+.HeaderUserSubMenu {
+  border-radius: 6px;
+  max-width: 30px;
+}
+
+
+#Gravatar {
+  border-radius: 10px;
+}

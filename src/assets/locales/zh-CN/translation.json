@@ -1,3 +1,7 @@
 {
-  "TEST": "大史历历"
+  "TEST": "大史历历",
+  "PROFILE": "我的资料",
+  "SETTINGS": "偏好设置",
+  "JACCOUNT_LOG_IN": "jAccount 登录",
+  "LOG_OUT": "登出"
 }

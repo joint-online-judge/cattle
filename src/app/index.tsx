@@ -3,6 +3,7 @@ import { hot } from 'react-hot-loader/root';
 import { Router, Route, Switch } from 'react-router';
 import { LoginContainer, TodoContainer } from 'app/containers';
 import { PrivateRoute, ProvideAuth } from 'app/components/Auth';
+import { NaviBarContainer } from 'app/containers/NaviBarContainer';
 
 // render react DOM
 export const App = hot(({ history }) => {
@@ -10,8 +11,11 @@ export const App = hot(({ history }) => {
     <ProvideAuth>
       <Router history={history}>
         <Switch>
-          <Route exact path="/" component={TodoContainer} />
           <Route path="/login" component={LoginContainer} />
+          <Route path="/" component={NaviBarContainer} />
+        </Switch>
+        <Switch>
+          <Route exact path="/" component={TodoContainer} />
           <PrivateRoute>
             <Route path="/test" component={TodoContainer} />
           </PrivateRoute>

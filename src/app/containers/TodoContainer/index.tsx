@@ -2,7 +2,6 @@ import * as React from 'react';
 // import * as style from './style.css';
 import { observer } from 'mobx-react';
 import { useLocation, useHistory } from 'react-router';
-import { Header } from 'app/components/Header';
 import { Footer } from 'app/components/Footer';
 import { TodoList } from 'app/components/TodoList';
 import { TodoModel } from 'app/models';
@@ -98,7 +97,6 @@ export const TodoContainer = observer(() => {
         ) : null}
 
       <pre>{count}</pre>
-      <Header addTodo={todoStore.addTodo} />
       <TodoList
         todos={itemsToDisplay}
         completeAll={todoStore.completeAll}
