@@ -6,29 +6,26 @@ The new generation of JOJ Frontend. Cattle are commonly raised as livestock for 
 
 * node.js/npm
 
-  ## Setup
+## Setup
 
-  ```
-  $ npm install
-  ```
+``` bash
+npm install
+```
 
-  ## Running
+## Running
 
-  ```
-  $ npm start
-  ```
+``` bash
+npm start
+```
 
-  ## Build
+## Build
 
-  ```
-  $ npm run build
-  ```
+``` bash
+npm run build
+```
 
-  ## Code Format
+## Code Format
 
-  ```
-  $ npm run prettier
-  ```
-
-
-  
+``` bash
+npm run prettier
+```
