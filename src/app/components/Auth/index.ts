@@ -1,3 +1,3 @@
 export * from './ProvideAuth';
 export * from './PrivateRoute';
-export * from './authContext';
+export * from './AuthContext';
