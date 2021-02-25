@@ -2,6 +2,7 @@ import React, { ReactNode } from 'react';
 import { observer } from 'mobx-react';
 import { useTranslation } from 'react-i18next';
 import { Dropdown, Menu } from 'antd';
+import { Link } from 'react-router-dom';
 import { gravatarImageUrl } from 'app/utils';
 import { DownOutlined } from '@ant-design/icons';
 import { useAuth } from 'app/components/Auth';
@@ -43,11 +44,11 @@ export const UserMenuItem = observer(() => {
         LoggedInSubMenuArrange.map((item) => (typeof (item) !== 'string'
           ? (
             <Menu.Item key={item.key} className={style.HeaderUserSubMenuItem}>
-              <a href={item.path}>
+              <Link to={item.path}>
                 {
                   item.node ? item.node : t(item.key)
                 }
-              </a>
+              </Link>
             </Menu.Item>
           ) : (
             <Menu.Divider key={`${item}`} />
@@ -74,6 +75,6 @@ export const UserMenuItem = observer(() => {
         </span>
       </Dropdown>
     ) : (
-      <a href="/login">{t('JACCOUNT_LOG_IN')}</a>
+      <Link to="/login">{t('JACCOUNT_LOG_IN')}</Link>
     );
 });
