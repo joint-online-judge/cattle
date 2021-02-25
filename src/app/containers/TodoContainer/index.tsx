@@ -9,9 +9,7 @@ import { useTodoStore } from 'app/stores/TodoStore';
 import { TODO_FILTER_LOCATION_HASH, TodoFilter } from 'app/constants';
 import { Button, Spin } from 'antd';
 import { useRequest } from 'ahooks';
-import { DomainService, UserService } from 'client';
-import { gravatarImageUrl } from 'app/utils';
-import { useAuth } from 'app/components/Auth';
+import { DomainService } from 'client';
 
 export const TodoContainer = observer(() => {
   const todoStore = useTodoStore([
@@ -58,13 +56,6 @@ export const TodoContainer = observer(() => {
     : filter === TodoFilter.ACTIVE
       ? todoStore.activeTodos
       : todoStore.completedTodos;
-  const auth = useAuth();
-  const logoutHook = useRequest(async () => {
-    auth.logout();
-    window.location.href = (await UserService.logoutApiV1UserLogoutGet(
-      'http://127.0.0.1:3000', false,
-    )).redirect_url;
-  }, { manual: true });
   return (
     <div>
       <Spin />
@@ -80,22 +71,6 @@ export const TodoContainer = observer(() => {
       >
         No useRequest
       </Button>
-      {auth.loggedIn
-        ? (
-          <div>
-            <img
-              src={gravatarImageUrl(auth.user.profile.gravatar)}
-              alt={`${auth.user.profile.uname} gravatar`}
-            />
-            <Button
-              onClick={logoutHook.run}
-              loading={logoutHook.loading}
-            >
-              Log out
-            </Button>
-          </div>
-        ) : null}
-
       <pre>{count}</pre>
       <TodoList
         todos={itemsToDisplay}

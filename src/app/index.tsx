@@ -4,6 +4,7 @@ import { Router, Route, Switch } from 'react-router';
 import { LoginContainer, TodoContainer } from 'app/containers';
 import { PrivateRoute, ProvideAuth } from 'app/components/Auth';
 import { NaviBarContainer } from 'app/containers/NaviBarContainer';
+import { Logout } from 'app/containers/Logout';
 
 // render react DOM
 export const App = hot(({ history }) => {
@@ -12,6 +13,7 @@ export const App = hot(({ history }) => {
       <Router history={history}>
         <Switch>
           <Route path="/login" component={LoginContainer} />
+          <Route path="/logout" component={Logout} />
           <Route path="/" component={NaviBarContainer} />
         </Switch>
         <Switch>
