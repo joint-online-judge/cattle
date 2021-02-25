@@ -15,11 +15,16 @@ export const LoginContainer = observer(() => {
   const location = useLocation<{ from: Location }>();
   const query = useQuery();
   const profileHook = useRequest(async () => {
+    // redirect back from jAccount page
     if (query.get('action') === 'profile' && query.get('from')) {
-      await auth.login();
+      try {
+        await auth.login();
+        return;
+      } catch (err) {
+        console.error(err);
+      }
     }
-  });
-  useRequest(async () => {
+    // either fetch profile fails or try to login normally
     if (!auth.loggedIn) {
       const { from } = location.state || { from: { pathname: '/' } };
       window.location.href = (await UserService.jaccountLoginApiV1UserJaccountLoginGet(
@@ -27,7 +32,6 @@ export const LoginContainer = observer(() => {
       )).redirect_url;
     }
   });
-
   return (
     <Spin spinning={profileHook.loading} size="large">
       {
