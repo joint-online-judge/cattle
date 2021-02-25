@@ -18,8 +18,8 @@ export const App = hot(({ history }) => {
         </Switch>
         <Switch>
           <Route exact path="/" component={TodoContainer} />
-          <PrivateRoute>
-            <Route path="/test" component={TodoContainer} />
+          <PrivateRoute path="/test">
+            <TodoContainer />
           </PrivateRoute>
         </Switch>
       </Router>
