@@ -5,7 +5,7 @@ import { useRequest } from 'ahooks';
 import { UserService } from '@/client';
 import { useAuth } from 'app/components/Auth';
 import { Redirect, useLocation } from 'react-router';
-import config from '@/config';
+import { BASE_URL } from 'app/constants';
 
 const useQuery = () => {
   return new URLSearchParams(useLocation().search);
@@ -23,7 +23,7 @@ export const LoginContainer = observer(() => {
     if (!auth.loggedIn) {
       const { from } = location.state || { from: { pathname: '/' } };
       window.location.href = (await UserService.jaccountLoginApiV1UserJaccountLoginGet(
-        `${config.BASE_URL}/login/?action=profile&from=${from.pathname}`, false,
+        `${BASE_URL}/login/?action=profile&from=${from.pathname}`, false,
       )).redirect_url;
     }
   });

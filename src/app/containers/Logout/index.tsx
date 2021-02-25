@@ -5,7 +5,7 @@ import { useRequest } from 'ahooks';
 import { UserService } from '@/client';
 import { useAuth } from 'app/components/Auth';
 import { Redirect } from 'react-router';
-import config from '@/config';
+import { BASE_URL } from 'app/constants';
 
 export const Logout = observer(() => {
   const auth = useAuth();
@@ -14,7 +14,7 @@ export const Logout = observer(() => {
     if (auth.loggedIn) {
       auth.logout();
       window.location.href = (await UserService.logoutApiV1UserLogoutGet(
-        config.BASE_URL, false,
+        BASE_URL, false,
       )).redirect_url;
     }
   });

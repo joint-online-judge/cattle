@@ -1,7 +1,7 @@
 import { useLocalStore } from 'mobx-react';
 import { UserModel } from 'app/models';
 import { UserBase, UserService } from '@/client';
-import config from '@/config';
+import { LOCAL_STORAGE_USER_KEY } from 'app/constants';
 import { autoSaveJson } from 'app/utils';
 
 export type UserStore = ReturnType<typeof useUserStore>;
@@ -36,6 +36,6 @@ export const useUserStore = (user: UserModel) => {
       store.user.profile = _profile;
     },
   }));
-  autoSaveJson(store.user, config.LOCAL_STORAGE_USER_KEY);
+  autoSaveJson(store.user, LOCAL_STORAGE_USER_KEY);
   return store;
 };
