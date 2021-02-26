@@ -1,36 +1,24 @@
-import * as React from 'react';
-import { TodoTextInput } from 'app/components/TodoTextInput';
-import { TodoModel } from 'app/models/TodoModel';
-import I18nTest from 'app/components/Header/i18nTest';
+import { Menu } from 'antd';
+import { observer } from 'mobx-react';
+import React from 'react';
+import { useTranslation } from 'react-i18next';
+import { UserMenuItem } from 'app/components/Header/UserMenuItem';
+import * as style from './style.css';
 
-export interface HeaderProps {
-  addTodo: (todo: Partial<TodoModel>) => any;
-}
-
-export interface HeaderState {
-  /* empty */
-}
-
-export class Header extends React.Component<HeaderProps, HeaderState> {
-  private handleSave = (text: string) => {
-    if (text.length) {
-      this.props.addTodo({ text });
-    }
-  };
-
-  render() {
-    return (
-      <header>
-        <h1>Todos</h1>
-        <I18nTest />
-        <TodoTextInput
-          newTodo
-          onSave={this.handleSave}
-          placeholder="What needs to be done?"
-        />
-      </header>
-    );
-  }
-}
-
-export default Header;
+export const Header = observer(() => {
+  const { t } = useTranslation();
+  return (
+    <Menu
+      mode="horizontal"
+      id={style.Header}
+      selectable={false}
+    >
+      <Menu.Item key="test" className={style.HeaderItem}>
+        <a href="/">{t('TEST')}</a>
+      </Menu.Item>
+      <Menu.Item key="user" className={style.HeaderFloatRightItem}>
+        <UserMenuItem />
+      </Menu.Item>
+    </Menu>
+  );
+});

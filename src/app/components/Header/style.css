@@ -1,0 +1,26 @@
+#Header {
+  padding: 10px 32px 10px 32px !important;
+}
+
+.HeaderItem {
+  font-size: 14px;
+}
+
+.HeaderFloatRightItem {
+  float: right;
+}
+
+.HeaderUserSubMenu {
+  border-radius: 6px;
+  width: 158px;
+  padding-right: 4px;
+}
+
+.HeaderUserSubMenuItem {
+  padding: 4px 8px 4px 16px;
+}
+
+
+#Gravatar {
+  border-radius: 10px;
+}

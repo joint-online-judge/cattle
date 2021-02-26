@@ -2,13 +2,12 @@ import * as React from 'react';
 // import * as style from './style.css';
 import { observer } from 'mobx-react';
 import { useLocation, useHistory } from 'react-router';
-import { Header } from 'app/components/Header';
 import { Footer } from 'app/components/Footer';
 import { TodoList } from 'app/components/TodoList';
 import { TodoModel } from 'app/models';
 import { useTodoStore } from 'app/stores/TodoStore';
 import { TODO_FILTER_LOCATION_HASH, TodoFilter } from 'app/constants';
-import { Button } from 'antd';
+import { Button, Spin } from 'antd';
 import { useRequest } from 'ahooks';
 import { DomainService } from 'client';
 
@@ -57,9 +56,9 @@ export const TodoContainer = observer(() => {
     : filter === TodoFilter.ACTIVE
       ? todoStore.activeTodos
       : todoStore.completedTodos;
-
   return (
     <div>
+      <Spin />
       <Button type="primary" onClick={run} loading={loading}>
         useRequest
       </Button>
@@ -73,7 +72,6 @@ export const TodoContainer = observer(() => {
         No useRequest
       </Button>
       <pre>{count}</pre>
-      <Header addTodo={todoStore.addTodo} />
       <TodoList
         todos={itemsToDisplay}
         completeAll={todoStore.completeAll}

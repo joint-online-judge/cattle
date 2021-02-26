@@ -18,6 +18,7 @@ module.exports = {
   },
   output: {
     path: outPath,
+    publicPath: '/',
     filename: isProduction ? '[contenthash].js' : '[hash].js',
     chunkFilename: isProduction
       ? '[name].[contenthash].js'
