@@ -3,5 +3,8 @@
   "PROFILE": "我的资料",
   "SETTINGS": "偏好设置",
   "JACCOUNT_LOG_IN": "jAccount 登录",
-  "LOG_OUT": "登出"
+  "LOG_OUT": "登出",
+  "GENERAL_SETTINGS": "通用设置",
+  "ACCOUNT_SETTINGS": "账户设置",
+  "SECURITY_SETTINGS": "安全设置"
 }

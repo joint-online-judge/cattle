@@ -5,6 +5,7 @@ import { LoginContainer, TodoContainer } from 'app/containers';
 import { PrivateRoute, ProvideAuth } from 'app/components/Auth';
 import { NavBarContainer } from 'app/containers/NavBarContainer';
 import { Logout } from 'app/containers/Logout';
+import { NavBar } from 'app/components/Settings';
 
 // render react DOM
 export const App = hot(({ history }) => {
@@ -21,6 +22,13 @@ export const App = hot(({ history }) => {
           <PrivateRoute path="/test">
             <TodoContainer />
           </PrivateRoute>
+          {/* ---Settings--- */}
+          <PrivateRoute path="/settings">
+            <NavBar />
+            <TodoContainer />
+          </PrivateRoute>
+
+          {/* ---Settings--- */}
         </Switch>
       </Router>
     </ProvideAuth>

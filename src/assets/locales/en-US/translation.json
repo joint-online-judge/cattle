@@ -3,5 +3,8 @@
   "PROFILE": "Profile",
   "SETTINGS": "Settings",
   "JACCOUNT_LOG_IN": "jAccount Login",
-  "LOG_OUT": "Log out"
+  "LOG_OUT": "Log out",
+  "GENERAL_SETTINGS": "General",
+  "ACCOUNT_SETTINGS": "Profile",
+  "SECURITY_SETTINGS": "Security"
 }
