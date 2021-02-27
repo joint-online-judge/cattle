@@ -1,17 +1,27 @@
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 
-import Backend from 'i18next-http-backend';
 import LanguageDetector from 'i18next-browser-languagedetector';
 // don't want to use this?
 // have a look at the Quick start guide
 // for passing in lng and translations on init
 import { IS_PRODUCTION } from 'app/constants';
-// fixme: i18n fails to load when redirect back from login page
+import en from '@/assets/locales/en/translation.json';
+import zh from '@/assets/locales/zh-CN/translation.json';
+
+const ns = ['translation'];
+
+// fixme: work with SUPPORT_LANGUAGE_LIST constant
+const resources = {
+  en: {
+    translation: { ...en },
+  },
+  'zh-CN': {
+    translation: { ...zh },
+  },
+};
+
 i18n
-  // load translation using http -> see /public/locales (i.e. https://github.com/i18next/react-i18next/tree/master/example/react/public/locales)
-  // learn more: https://github.com/i18next/i18next-http-backend
-  .use(Backend)
   // detect user language
   // learn more: https://github.com/i18next/i18next-browser-languageDetector
   .use(LanguageDetector)
@@ -22,11 +32,11 @@ i18n
   .init({
     fallbackLng: 'en',
     debug: !IS_PRODUCTION,
-    backend: {
-      loadPath: 'assets/locales/{{lng}}/{{ns}}.json',
-    },
+    ns,
+    resources,
     react: {
       useSuspense: false,
+      wait: true,
     },
   });
 
