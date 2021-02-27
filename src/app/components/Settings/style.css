@@ -3,3 +3,8 @@
   border-radius: 6px;
   border: 1px solid #f0f0f0;
 }
+
+.SettingsLabel {
+  font-size: 24px;
+  font-weight: 400;
+}

@@ -1,0 +1,11 @@
+.SettingContainer {
+  margin-right: auto;
+  margin-left: auto;
+  width: 980px;
+}
+
+@media only screen and (max-width: 1000px) {
+  .SettingContainer {
+    width: 90vw;
+  }
+}

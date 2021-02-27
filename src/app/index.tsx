@@ -6,10 +6,10 @@ import {
   TodoContainer,
   NavBarContainer,
   LogoutContainer,
+  SettingsContainer,
 } from 'app/containers';
 import { PrivateRoute, ProvideAuth } from 'app/components/Auth';
-import { ProvideSettings } from 'app/components/Settings/ProvideSettings';
-import { NavBar } from 'app/components/Settings';
+import { ProvideSettings } from 'app/components/Settings';
 
 // render react DOM
 export const App = hot(({ history }) => {
@@ -29,7 +29,7 @@ export const App = hot(({ history }) => {
             </PrivateRoute>
             {/* ---Settings--- */}
             <PrivateRoute path="/settings">
-              <NavBar />
+              <SettingsContainer />
             </PrivateRoute>
             {/* ---Settings--- */}
           </Switch>
