@@ -7,7 +7,7 @@ import { useAuth } from 'app/components/Auth';
 import { Redirect } from 'react-router';
 import { BASE_URL } from 'app/constants';
 
-export const Logout = observer(() => {
+export const LogoutContainer = observer(() => {
   const auth = useAuth();
 
   useRequest(async () => {
