@@ -1,14 +1,16 @@
 import { observable } from 'mobx';
-import { UserBase } from '@/client';
+import { User } from '@/client';
 
 export class UserModel {
-  @observable public profile: UserBase;
+  @observable public profile: User;
 
   constructor() {
     this.profile = {
       scope: '',
       uname: '',
       mail: '',
+      register_timestamp: '',
+      login_timestamp: '',
     };
   }
 }
