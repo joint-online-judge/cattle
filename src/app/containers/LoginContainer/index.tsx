@@ -6,12 +6,14 @@ import { UserService } from '@/client';
 import { useAuth } from 'app/components/Auth';
 import { Redirect, useLocation } from 'react-router';
 import { BASE_URL } from 'app/constants';
+import { useTranslation } from 'react-i18next';
 
 const useQuery = () => {
   return new URLSearchParams(useLocation().search);
 };
 export const LoginContainer = observer(() => {
   const auth = useAuth();
+  const { t } = useTranslation();
   const location = useLocation<{ from: Location }>();
   const query = useQuery();
   const profileHook = useRequest(async () => {
@@ -40,7 +42,7 @@ export const LoginContainer = observer(() => {
           : (
             <Result
               icon={<Spin size="large" />}
-              title="Redirecting to login page..."
+              title={t('USERS.LOGIN.REDIRECTING')}
             />
           )
       }

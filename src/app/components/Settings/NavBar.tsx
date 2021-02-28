@@ -15,15 +15,15 @@ export const NavBar = observer(() => {
   const { t } = useTranslation();
   const MenuArrange: (MenuItem)[] = [
     {
-      key: 'GENERAL_SETTINGS',
+      key: 'SETTINGS.GENERAL_SETTINGS',
       path: '/settings/general',
     },
     {
-      key: 'ACCOUNT_SETTINGS',
+      key: 'SETTINGS.ACCOUNT_SETTINGS',
       path: '/settings/account',
     },
     {
-      key: 'SECURITY_SETTINGS',
+      key: 'SETTINGS.SECURITY_SETTINGS',
       path: '/settings/security',
     },
   ];

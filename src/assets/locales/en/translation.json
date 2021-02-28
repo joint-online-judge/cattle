@@ -1,10 +1,20 @@
 {
   "TEST": "Big SLL",
-  "PROFILE": "Profile",
-  "SETTINGS": "Settings",
-  "JACCOUNT_LOG_IN": "jAccount Login",
-  "LOG_OUT": "Log out",
-  "GENERAL_SETTINGS": "General",
-  "ACCOUNT_SETTINGS": "Profile",
-  "SECURITY_SETTINGS": "Security"
+  "USERS": {
+    "PROFILE": "Profile",
+    "LOGIN": {
+      "JACCOUNT_LOG_IN": "jAccount Login",
+      "REDIRECTING": "Redirecting to the login page..."
+    },
+    "LOG_OUT": "登出"
+  },
+  "SETTINGS": {
+    "SETTINGS": "Settings",
+    "GENERAL_SETTINGS": "General",
+    "ACCOUNT_SETTINGS": "Account",
+    "SECURITY_SETTINGS": "Security",
+    "I18NLANG": "Language",
+    "TIMEZONE": "Timezone",
+    "UPDATE_SETTINGS": "Update Settings"
+  }
 }

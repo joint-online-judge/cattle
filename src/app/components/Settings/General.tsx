@@ -1,6 +1,7 @@
 import { observer } from 'mobx-react';
 import React from 'react';
 import { Button, Form, Select } from 'antd';
+import { useTranslation } from 'react-i18next';
 import SettingsModel from 'app/models/SettingsModel';
 import { useSettings } from './SettingsContext';
 import * as style from './style.css';
@@ -18,6 +19,7 @@ const options = {
 
 export const General = observer(() => {
   const [form] = Form.useForm();
+  const { t } = useTranslation();
   const settings = useSettings();
   const onFinish = (values: SettingsModel) => {
     settings.updateSettings(values);
@@ -34,7 +36,9 @@ export const General = observer(() => {
         (Object.keys(settings.settings)).map((key) => (
           <Form.Item
             label={(
-              <p className={style.SettingsLabel}>{key}</p>
+              <p className={style.SettingsLabel}>
+                {t(`SETTINGS.${key.toUpperCase()}`)}
+              </p>
             )}
             name={key}
             key={key}
@@ -55,7 +59,9 @@ export const General = observer(() => {
         ))
       }
       <Form.Item>
-        <Button type="primary" htmlType="submit">Update Settings</Button>
+        <Button type="primary" htmlType="submit">
+          {t('SETTINGS.UPDATE_SETTINGS')}
+        </Button>
       </Form.Item>
     </Form>
   );

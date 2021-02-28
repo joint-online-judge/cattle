@@ -25,16 +25,16 @@ export const UserMenuItem = observer(() => {
     },
     'username-profile-divider',
     {
-      key: 'PROFILE',
+      key: 'USERS.PROFILE',
       path: `/user/${auth.profile.uname}`,
     },
     'profile-setting-divider',
     {
-      key: 'SETTINGS',
+      key: 'SETTINGS.SETTINGS',
       path: '/settings/profile',
     },
     {
-      key: 'LOG_OUT',
+      key: 'USERS.LOG_OUT',
       path: '/logout',
     },
   ];
