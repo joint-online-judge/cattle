@@ -4,7 +4,7 @@ import {
   Button, Form, PageHeader, Select,
 } from 'antd';
 import { useTranslation } from 'react-i18next';
-import SettingsModel from 'app/models/SettingsModel';
+import { DisplaySettings } from 'app/models/SettingsModel';
 import { useSettings } from './SettingsContext';
 import * as style from './style.css';
 
@@ -23,8 +23,8 @@ export const General = observer(() => {
   const [form] = Form.useForm();
   const { t } = useTranslation();
   const settings = useSettings();
-  const onFinish = (values: SettingsModel) => {
-    settings.updateSettings(values);
+  const onFinish = (values: DisplaySettings) => {
+    settings.updateDisplaySettings(values);
   };
   return (
     <>
@@ -35,13 +35,13 @@ export const General = observer(() => {
       <Form
         form={form}
         name="general-settings"
-        initialValues={settings.settings}
+        initialValues={settings.settings.displaySettings}
         layout="vertical"
         onFinish={onFinish}
         className={style.SettingsForm}
       >
         {
-          (Object.keys(settings.settings)).map((key) => (
+          (Object.keys(settings.settings.displaySettings)).map((key) => (
             <Form.Item
               label={(
                 <b>
