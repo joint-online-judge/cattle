@@ -15,6 +15,7 @@
     "SECURITY_SETTINGS": "安全设置",
     "I18NLANG": "语言",
     "TIMEZONE": "时区",
-    "UPDATE_SETTINGS": "更新设置"
+    "UPDATE_SETTINGS": "更新设置",
+    "DISPLAY_SETTINGS": "显示设置"
   }
 }

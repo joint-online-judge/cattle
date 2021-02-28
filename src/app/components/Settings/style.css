@@ -4,7 +4,24 @@
   border: 1px solid #f0f0f0;
 }
 
-.SettingsLabel {
-  font-size: 24px;
-  font-weight: 400;
+
+.SettingsForm {
+  width: 60%
 }
+
+
+.SettingsUserInfoHeader {
+  padding: 16px 24px 16px 0;
+}
+
+.SettingsHeader {
+  padding: 0 24px 8px 0;
+  border-bottom: #eaecef 1px solid;
+  margin-bottom: 30px;
+}
+
+.SaveButton{
+  border-radius: 6px;
+}
+
+

@@ -6,7 +6,7 @@
       "JACCOUNT_LOG_IN": "jAccount Login",
       "REDIRECTING": "Redirecting to the login page..."
     },
-    "LOG_OUT": "登出"
+    "LOG_OUT": "Log out"
   },
   "SETTINGS": {
     "SETTINGS": "Settings",
@@ -15,6 +15,7 @@
     "SECURITY_SETTINGS": "Security",
     "I18NLANG": "Language",
     "TIMEZONE": "Timezone",
-    "UPDATE_SETTINGS": "Update Settings"
+    "UPDATE_SETTINGS": "Update Settings",
+    "DISPLAY_SETTINGS": "Display Settings"
   }
 }
