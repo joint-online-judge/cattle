@@ -51,7 +51,7 @@ export const General = observer(() => {
               name={key}
               key={key}
             >
-              <Select>
+              <Select className={style.FormInput}>
                 {
                   options[key].map((_optionValue) => (
                     <Select.Option

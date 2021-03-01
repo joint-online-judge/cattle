@@ -1,5 +1,5 @@
 .NavBarMenu {
-  width: 20vw;
+  width: 190px;
   border-radius: 6px;
   border: 1px solid #f0f0f0;
 }
@@ -20,8 +20,23 @@
   margin-bottom: 30px;
 }
 
-.SaveButton{
+/* To locate the input box of antd design */
+.FormInput > div {
+  border-radius: 6px !important;
+}
+
+.SaveButton {
   border-radius: 6px;
+}
+
+@media only screen and (max-width: 767px) {
+  .NavBarMenu {
+    width: 100%;
+  }
+
+  .SettingsHeader {
+    padding-top: 30px;
+  }
 }
 
 
