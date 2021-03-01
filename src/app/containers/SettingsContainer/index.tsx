@@ -21,7 +21,11 @@ export const SettingsContainer = observer(() => {
         >
           <NavBar />
         </Col>
-        <Col span={16}>
+        <Col
+          xs={24}
+          sm={24}
+          md={16}
+        >
           <Route
             path="/settings"
             component={() => <Redirect to="/settings/general" />}

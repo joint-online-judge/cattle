@@ -37,6 +37,11 @@
   .SettingsHeader {
     padding-top: 30px;
   }
+
+  .SettingsForm {
+    width: 78%
+  }
+
 }
 
 
