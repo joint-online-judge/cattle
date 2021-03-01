@@ -75,6 +75,6 @@ export const UserMenuItem = observer(() => {
         </span>
       </Dropdown>
     ) : (
-      <Link to="/login">{t('JACCOUNT_LOG_IN')}</Link>
+      <Link to="/login">{t('USERS.LOGIN.JACCOUNT_LOG_IN')}</Link>
     );
 });
