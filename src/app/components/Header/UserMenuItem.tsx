@@ -17,6 +17,7 @@ interface LoggedInSubMenuItem {
 export const UserMenuItem = observer(() => {
   const { t } = useTranslation();
   const auth = useAuth();
+  // divider name has no actual meaning just to be a key of the divider component to pass eslint
   const LoggedInSubMenuArrange: (LoggedInSubMenuItem | string)[] = [
     {
       key: 'username',
@@ -27,6 +28,10 @@ export const UserMenuItem = observer(() => {
     {
       key: 'USERS.PROFILE',
       path: `/user/${auth.profile.uname}`,
+    },
+    {
+      key: 'DOMAINS.DOMAINS',
+      path: '/settings/domains',
     },
     'profile-setting-divider',
     {

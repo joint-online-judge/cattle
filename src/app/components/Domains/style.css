@@ -1,0 +1,26 @@
+.SettingsHeader {
+  padding: 0 0 8px 0;
+  margin-bottom: 15px;
+}
+
+.Button {
+  border-radius: 6px;
+}
+
+.List {
+  border-radius: 6px;
+}
+
+.ListItem {
+  padding: 16px 8px 16px 16px !important;
+}
+
+.Space {
+  width: 100%
+}
+
+@media only screen and (max-width: 767px) {
+  .SettingsHeader {
+    padding-top: 30px;
+  }
+}

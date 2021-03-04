@@ -8,6 +8,12 @@
     },
     "LOG_OUT": "登出"
   },
+  "DOMAINS": {
+    "DOMAINS": "我的域",
+    "SETTINGS": "设置",
+    "NEW_DOMAIN": "新建域",
+    "LEAVE": "退出"
+  },
   "SETTINGS": {
     "SETTINGS": "偏好设置",
     "GENERAL_SETTINGS": "通用设置",

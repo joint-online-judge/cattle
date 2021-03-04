@@ -15,9 +15,9 @@
 }
 
 .SettingsHeader {
-  padding: 0 24px 8px 0;
+  padding: 0 0 8px 0;
   border-bottom: #eaecef 1px solid;
-  margin-bottom: 30px;
+  margin-bottom: 15px;
 }
 
 /* To locate the input box of antd design */
@@ -25,8 +25,20 @@
   border-radius: 6px !important;
 }
 
-.SaveButton {
+.Button {
   border-radius: 6px;
+}
+
+.List {
+  border-radius: 6px;
+}
+
+.ListItem {
+  padding: 16px 8px 16px 16px !important;
+}
+
+.Space {
+  width: 100%
 }
 
 @media only screen and (max-width: 767px) {

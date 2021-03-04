@@ -67,7 +67,7 @@ export const General = observer(() => {
           ))
         }
         <Form.Item>
-          <Button type="primary" htmlType="submit" className={style.SaveButton}>
+          <Button type="primary" htmlType="submit" className={style.Button}>
             {t('SETTINGS.UPDATE_SETTINGS')}
           </Button>
         </Form.Item>

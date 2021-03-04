@@ -8,6 +8,12 @@
     },
     "LOG_OUT": "Log out"
   },
+  "DOMAINS": {
+    "DOMAINS": "Domains",
+    "SETTINGS": "Settings",
+    "NEW_DOMAIN": "New Domain",
+    "LEAVE": "Leave"
+  },
   "SETTINGS": {
     "SETTINGS": "Settings",
     "GENERAL_SETTINGS": "General",

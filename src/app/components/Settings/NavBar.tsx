@@ -26,6 +26,10 @@ export const NavBar = observer(() => {
       key: 'SETTINGS.SECURITY_SETTINGS',
       path: '/settings/security',
     },
+    {
+      key: 'DOMAINS.DOMAINS',
+      path: '/settings/domains',
+    },
   ];
   return (
     <Menu mode="vertical" className={style.NavBarMenu}>
