@@ -19,6 +19,27 @@
   width: 100%
 }
 
+.Title {
+  margin: auto;
+  text-align: center;
+}
+
+#CreateDomain {
+  max-width: 768px;
+  margin: 100px auto auto auto;
+}
+
+#CreateForm {
+  max-width: 544px;
+  margin: 0 auto;
+}
+
+#SubmitButton {
+  width: 100% !important;
+  height: 50px;
+  margin-top: 20px;
+}
+
 @media only screen and (max-width: 767px) {
   .SettingsHeader {
     padding-top: 30px;

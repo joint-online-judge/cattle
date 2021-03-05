@@ -3,3 +3,4 @@ export * from './LoginContainer';
 export * from './SettingsContainer';
 export * from './NavBarContainer';
 export * from './LogoutContainer';
+export * from './DomainContainer';

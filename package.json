@@ -71,6 +71,7 @@
     "@material-ui/icons": "^4.9.1",
     "@material-ui/styles": "^4.10.0",
     "@types/js-cookie": "^2.2.6",
+    "@uiw/react-md-editor": "^2.1.10",
     "ahooks": "^2.9.3",
     "antd": "^4.8.6",
     "axios": "^0.20.0",

@@ -7,6 +7,7 @@ import {
   NavBarContainer,
   LogoutContainer,
   SettingsContainer,
+  DomainContainer,
 } from 'app/containers';
 import { PrivateRoute, ProvideAuth } from 'app/components/Auth';
 import { ProvideSettings } from 'app/components/Settings';
@@ -32,6 +33,9 @@ export const App = hot(({ history }) => {
               <SettingsContainer />
             </PrivateRoute>
             {/* ---Settings--- */}
+            <PrivateRoute path="/domains">
+              <DomainContainer />
+            </PrivateRoute>
           </Switch>
         </Router>
       </ProvideAuth>

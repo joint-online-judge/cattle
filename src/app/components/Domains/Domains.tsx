@@ -29,7 +29,11 @@ export const Domains = observer(() => {
           title={t('DOMAINS.DOMAINS')}
           className={style.SettingsHeader}
           extra={[
-            <Button className={style.Button}>{t('DOMAINS.NEW_DOMAIN')}</Button>,
+            <Button className={style.Button}>
+              <Link to="/domains/create">
+                {t('DOMAINS.NEW_DOMAIN')}
+              </Link>
+            </Button>,
           ]}
         />
         <List
