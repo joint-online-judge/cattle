@@ -23,7 +23,6 @@ if (isProduction) {
   // use mini-css-extract-plugin for css only when production
   plugins.push(new MiniCssExtractPlugin({
     filename: isProduction ? '[contenthash].css' : '[fullhash].css',
-    disable: !isProduction,
   }));
 }
 
