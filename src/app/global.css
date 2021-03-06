@@ -1,5 +1,12 @@
+/*If you really want to change class of ant-design,*/
+/*open the html file and find its css class name,*/
+/*not its component name. E.g:*/
+/*.ant-btn {*/
+/*  border-radius: 10px;*/
+/*}*/
+
 .Button {
-  border-radius: 6px;
+  border-radius: 10px;
 }
 
 /* To locate the input box in Form.Item of antd design */

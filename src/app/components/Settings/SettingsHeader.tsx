@@ -3,7 +3,7 @@ import React from 'react';
 import { PageHeader } from 'antd';
 import { useAuth } from 'app/components/Auth';
 import { gravatarImageUrl } from 'app/utils';
-import * as style from './style.css';
+import style from './style.css';
 
 export const SettingsHeader = observer(() => {
   const auth = useAuth();

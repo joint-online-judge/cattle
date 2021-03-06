@@ -3,7 +3,7 @@ import { observer } from 'mobx-react';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { UserMenuItem } from 'app/components/Header/UserMenuItem';
-import * as style from './style.css';
+import style from './style.css';
 
 export const Header = observer(() => {
   const { t } = useTranslation();

@@ -1,5 +1,5 @@
-import * as React from 'react';
-// import * as style from './style.css';
+import React from 'react';
+// import style from './global.css';
 import { observer } from 'mobx-react';
 import { useLocation, useHistory } from 'react-router';
 import { Footer } from 'app/components/Footer';

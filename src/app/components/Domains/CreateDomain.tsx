@@ -5,7 +5,7 @@ import {
 } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { DomainService } from '@/client';
-import * as style from './style.css';
+import style from './style.css';
 
 const { Title } = Typography;
 

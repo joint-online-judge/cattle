@@ -14,7 +14,7 @@ import { Link } from 'react-router-dom';
 import { useRequest } from 'ahooks';
 
 import { DomainService } from '@/client';
-import * as style from './style.css';
+import style from './style.css';
 
 const { Text } = Typography;
 export const Domains = observer(() => {

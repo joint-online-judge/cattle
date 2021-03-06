@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 import { gravatarImageUrl } from 'app/utils';
 import { DownOutlined } from '@ant-design/icons';
 import { useAuth } from 'app/components/Auth';
-import * as style from './style.css';
+import style from './style.css';
 
 interface LoggedInSubMenuItem {
   key: string;

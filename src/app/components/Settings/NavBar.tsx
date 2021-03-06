@@ -3,7 +3,7 @@ import { observer } from 'mobx-react';
 import { useTranslation } from 'react-i18next';
 import { Menu } from 'antd';
 import { Link } from 'react-router-dom';
-import * as style from './style.css';
+import style from './style.css';
 
 interface MenuItem {
   key: string;

@@ -9,7 +9,23 @@ var outPath = path.join(__dirname, './build');
 // plugins
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var MiniCssExtractPlugin = require('mini-css-extract-plugin');
-var WebpackCleanupPlugin = require('webpack-cleanup-plugin');
+
+const plugins = [
+  new webpack.EnvironmentPlugin({
+    NODE_ENV: 'dev', // use 'development' unless process.env.NODE_ENV is defined
+    DEBUG: false,
+  }),
+  new HtmlWebpackPlugin({
+    template: 'assets/index.html',
+  }),
+];
+if (isProduction) {
+  // use mini-css-extract-plugin for css only when production
+  plugins.push(new MiniCssExtractPlugin({
+    filename: isProduction ? '[contenthash].css' : '[fullhash].css',
+    disable: !isProduction,
+  }));
+}
 
 module.exports = {
   context: sourcePath,
@@ -19,10 +35,10 @@ module.exports = {
   output: {
     path: outPath,
     publicPath: '/',
-    filename: isProduction ? '[contenthash].js' : '[hash].js',
+    filename: isProduction ? '[contenthash].js' : '[id].js',
     chunkFilename: isProduction
-      ? '[name].[contenthash].js'
-      : '[name].[hash].js',
+        ? '[name].[contenthash].js'
+        : '[name].[fullhash].js',
   },
   target: 'web',
   resolve: {
@@ -36,6 +52,11 @@ module.exports = {
       'react-dom': '@hot-loader/react-dom',
       client: path.resolve(__dirname, 'src/client/'),
     },
+    fallback: {
+      'crypto': require.resolve('crypto-browserify'),
+      'buffer': require.resolve('buffer/'),
+      'stream': require.resolve('stream-browserify'),
+    },
   },
   module: {
     rules: [
@@ -45,7 +66,7 @@ module.exports = {
         use: [
           !isProduction && {
             loader: 'babel-loader',
-            options: { plugins: ['react-hot-loader/babel'] },
+            options: {plugins: ['react-hot-loader/babel']},
           },
           'ts-loader',
         ].filter(Boolean),
@@ -57,31 +78,39 @@ module.exports = {
           isProduction ? MiniCssExtractPlugin.loader : 'style-loader',
           {
             loader: 'css-loader',
-            query: {
+            options: {
               sourceMap: !isProduction,
               importLoaders: 1,
               modules: {
                 localIdentName: isProduction
-                  ? '[hash:base64:5]'
-                  : '[local]__[hash:base64:5]',
+                    ? '[hash:base64]'
+                    : '[path][name]__[local]',
+                mode: (resourcePath) => {
+                  if (/pure.css$/i.test(resourcePath)) {
+                    return 'pure';
+                  }
+                  if (/global.css$/i.test(resourcePath)) {
+                    return 'global';
+                  }
+                  return 'local';
+                },
               },
             },
           },
           {
             loader: 'postcss-loader',
             options: {
-              ident: 'postcss',
-              plugins: [
-                require('postcss-import')({ addDependencyTo: webpack }),
-                require('postcss-url')(),
-                require('postcss-preset-env')({
-                  stage: 0,
-                }),
-                require('postcss-reporter')(),
-                require('postcss-browser-reporter')({
-                  disabled: isProduction,
-                }),
-              ],
+              postcssOptions: {
+                plugins: [
+                  require('postcss-import')({addDependencyTo: webpack}),
+                  require('postcss-url')(),
+                  require('postcss-preset-env')({
+                    stage: 0,
+                  }),
+                  require('postcss-reporter'),
+                  require('postcss-browser-reporter'),
+                ],
+              },
             },
           },
         ],
@@ -94,7 +123,7 @@ module.exports = {
           /src/,
         ],
         use: [
-          MiniCssExtractPlugin.loader,
+          isProduction ? MiniCssExtractPlugin.loader : 'style-loader',
           {
             loader: 'css-loader',
           },
@@ -111,8 +140,8 @@ module.exports = {
         ],
       },
       // static assets
-      { test: /\.html$/, use: 'html-loader' },
-      { test: /\.(a?png|svg)$/, use: 'url-loader?limit=10000' },
+      {test: /\.html$/, use: 'html-loader'},
+      {test: /\.(a?png|svg)$/, use: 'url-loader?limit=10000'},
       {
         test: /\.(jpe?g|gif|bmp|mp3|mp4|ogg|wav|eot|ttf|woff|woff2)$/,
         use: 'file-loader',
@@ -121,7 +150,6 @@ module.exports = {
   },
   optimization: {
     splitChunks: {
-      name: true,
       cacheGroups: {
         commons: {
           chunks: 'initial',
@@ -132,27 +160,16 @@ module.exports = {
           chunks: 'all',
           priority: -10,
           filename: isProduction
-            ? 'vendor.[contenthash].js'
-            : 'vendor.[hash].js',
+              ? 'vendor.[contenthash].js'
+              : 'vendor.[fullhash].js',
         },
       },
     },
-    runtimeChunk: true,
+    runtimeChunk: {
+      name: (entrypoint) => `runtime~${entrypoint.name}`,
+    },
   },
-  plugins: [
-    new webpack.EnvironmentPlugin({
-      NODE_ENV: 'development', // use 'development' unless process.env.NODE_ENV is defined
-      DEBUG: false,
-    }),
-    new WebpackCleanupPlugin(),
-    new MiniCssExtractPlugin({
-      filename: isProduction ? '[contenthash].css' : '[hash].css',
-      disable: !isProduction,
-    }),
-    new HtmlWebpackPlugin({
-      template: 'assets/index.html',
-    }),
-  ],
+  plugins,
   devServer: {
     contentBase: sourcePath,
     hot: true,
@@ -167,15 +184,13 @@ module.exports = {
         // url of backend dev server
         target: 'http://localhost:34765',
         changeOrigin: true,
-      }
+      },
     },
   },
   // https://webpack.js.org/configuration/devtool/
-  devtool: isProduction ? 'hidden-source-map' : 'cheap-module-eval-source-map',
-  node: {
-    // workaround for webpack-dev-server issue
-    // https://github.com/webpack/webpack-dev-server/issues/60#issuecomment-103411179
-    fs: 'empty',
-    net: 'empty',
-  },
+  devtool: isProduction ? undefined : 'eval-cheap-module-source-map',
 };
+
+if (isProduction) {
+
+}

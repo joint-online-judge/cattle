@@ -9,7 +9,7 @@ import {
   SettingsHeader,
 } from 'app/components/Settings';
 import { Domains } from 'app/components/Domains';
-import * as style from './style.css';
+import style from './style.css';
 
 export const SettingsContainer = observer(() => {
   return (
