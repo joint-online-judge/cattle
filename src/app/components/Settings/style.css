@@ -1,44 +1,21 @@
+@import "../../global.css";
+
 .NavBarMenu {
   width: 190px;
   border-radius: 6px;
   border: 1px solid #f0f0f0;
 }
 
-
 .SettingsForm {
   width: 60%
 }
-
 
 .SettingsUserInfoHeader {
   padding: 16px 24px 16px 0;
 }
 
 .SettingsHeader {
-  padding: 0 0 8px 0;
   border-bottom: #eaecef 1px solid;
-  margin-bottom: 15px;
-}
-
-/* To locate the input box of antd design */
-.FormInput > div {
-  border-radius: 6px !important;
-}
-
-.Button {
-  border-radius: 6px;
-}
-
-.List {
-  border-radius: 6px;
-}
-
-.ListItem {
-  padding: 16px 8px 16px 16px !important;
-}
-
-.Space {
-  width: 100%
 }
 
 @media only screen and (max-width: 767px) {
@@ -46,14 +23,9 @@
     width: 100%;
   }
 
-  .SettingsHeader {
-    padding-top: 30px;
-  }
-
   .SettingsForm {
     width: 78%
   }
-
 }
 
 
