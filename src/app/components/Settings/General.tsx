@@ -5,13 +5,13 @@ import {
 } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { DisplaySettings } from 'app/models/SettingsModel';
-import { useSettings } from './SettingsContext';
+import { SUPPORT_LANGUAGES } from 'app/constants/i18n';
+import { useSettings } from 'app/components';
 import * as style from './style.css';
 
 const options = {
   i18nLang: [
-    'en',
-    'zh-CN',
+    ...Object.keys(SUPPORT_LANGUAGES),
   ],
   timeZone: [
     'Asia/Shanghai',

@@ -8,13 +8,14 @@ import { DomainService } from '@/client';
 import * as style from './style.css';
 
 const { Title } = Typography;
+
 export const CreateDomain = observer(() => {
   const { t } = useTranslation();
-  // todo: add gravatar and bulletin
   const onFinish = async ({ url, name }) => {
     await DomainService.createDomainApiV1DomainsPost(url, name);
   };
-  /* todo: add validation */
+  /* todo: add helper */
+  /* todo: finish i18n */
   return (
     <div id={style.CreateDomain}>
       <Title className={style.Title}>{t('DOMAINS.CREATE_A_NEW_DOMAIN')}</Title>

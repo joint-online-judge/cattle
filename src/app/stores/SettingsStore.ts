@@ -3,7 +3,7 @@ import { useLocalStore } from 'mobx-react';
 import { autorun, set } from 'mobx';
 import { LOCAL_STORAGE_SETTINGS_KEY } from 'app/constants';
 import { autoSaveJson } from 'app/utils';
-import i18n from '@/i18n';
+import i18n from 'app/i18n';
 import { DisplaySettings } from 'app/models/SettingsModel';
 
 export type SettingsStore = ReturnType<typeof useSettingsStore>
