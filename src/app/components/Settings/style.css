@@ -1,5 +1,5 @@
 .NavBarMenu {
-  width: 190px;
+  width: 85%;
   border-radius: 6px;
   border: 1px solid #f0f0f0;
 }
@@ -8,11 +8,12 @@
   width: 60%
 }
 
-.SettingsUserInfoHeader {
-  padding: 16px 24px 16px 0;
+.UserInfoHeader {
+  padding: 16px 24px 16px 0 !important;
+  margin-bottom: 0 !important;
 }
 
-.SettingsHeader {
+.SettingsTitle {
   border-bottom: #eaecef 1px solid;
 }
 

@@ -30,7 +30,7 @@ export const General = observer(() => {
     <>
       <PageHeader
         title={t('SETTINGS.DISPLAY_SETTINGS')}
-        className={style.SettingsHeader}
+        className={style.SettingsTitle}
       />
       <Form
         form={form}
@@ -51,7 +51,7 @@ export const General = observer(() => {
               name={key}
               key={key}
             >
-              <Select className={style.FormInput}>
+              <Select>
                 {
                   options[key].map((_optionValue) => (
                     <Select.Option
@@ -67,7 +67,7 @@ export const General = observer(() => {
           ))
         }
         <Form.Item>
-          <Button type="primary" htmlType="submit" className={style.Button}>
+          <Button type="primary" htmlType="submit">
             {t('SETTINGS.UPDATE_SETTINGS')}
           </Button>
         </Form.Item>

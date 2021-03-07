@@ -17,7 +17,7 @@ export const CreateDomain = observer(() => {
   /* todo: add helper */
   return (
     <div id={style.CreateDomain}>
-      <Title className={style.Title}>{t('DOMAINS.CREATE_A_NEW_DOMAIN')}</Title>
+      <Title>{t('DOMAINS.CREATE_A_NEW_DOMAIN')}</Title>
       <Form
         onFinish={onFinish}
         layout="vertical"
@@ -32,7 +32,7 @@ export const CreateDomain = observer(() => {
             },
           ]}
         >
-          <Input className={style.Input} />
+          <Input />
         </Form.Item>
         <Form.Item
           name="url"
@@ -43,13 +43,13 @@ export const CreateDomain = observer(() => {
             },
           ]}
         >
-          <Input className={style.Input} />
+          <Input />
         </Form.Item>
         <Form.Item
           name="gravatar"
           label={t('DOMAINS.CREATE.GRAVATAR')}
         >
-          <Input className={style.Input} />
+          <Input />
         </Form.Item>
         <Form.Item
           name="bulletin"
@@ -57,7 +57,6 @@ export const CreateDomain = observer(() => {
         >
           {/* todo: make it a markdown editor */}
           <Input.TextArea
-            className={style.Input}
             autoSize={{
               minRows: 5,
             }}
@@ -67,10 +66,9 @@ export const CreateDomain = observer(() => {
           <Button
             htmlType="submit"
             type="primary"
-            className={style.Button}
             id={style.SubmitButton}
           >
-            {t('DOMAINS.CREATE.SUBMIT')}
+            {t('DOMAINS.CREATE.CREATE')}
           </Button>
         </Form.Item>
       </Form>

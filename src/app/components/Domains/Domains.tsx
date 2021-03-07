@@ -14,7 +14,6 @@ import { Link } from 'react-router-dom';
 import { useRequest } from 'ahooks';
 
 import { DomainService } from '@/client';
-import style from './style.css';
 
 const { Text } = Typography;
 export const Domains = observer(() => {
@@ -27,9 +26,9 @@ export const Domains = observer(() => {
       <Spin spinning={domainListHook.loading}>
         <PageHeader
           title={t('DOMAINS.DOMAINS')}
-          className={style.SettingsHeader}
+          className="SettingsHeader"
           extra={[
-            <Button className={style.Button}>
+            <Button>
               <Link to="/domains/create">
                 {t('DOMAINS.NEW_DOMAIN')}
               </Link>
@@ -41,20 +40,18 @@ export const Domains = observer(() => {
           dataSource={domainListHook.data}
           bordered
           split
-          className={style.List}
           renderItem={(item) => (
             <List.Item
-              className={style.ListItem}
               actions={[
-                <Button className={style.Button}>
+                <Button>
                   {t('DOMAINS.SETTINGS')}
                 </Button>,
-                <Button className={style.Button}>
+                <Button>
                   {t('DOMAINS.LEAVE')}
                 </Button>,
               ]}
             >
-              <Space className={style.Space}>
+              <Space>
                 <Avatar src={item.gravatar} />
                 <Link
                   to={`/domains/${item.url}`}

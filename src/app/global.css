@@ -1,47 +1,40 @@
-/*If you really want to change class of ant-design,*/
-/*open the html file and find its css class name,*/
-/*not its component name. E.g:*/
-/*.ant-btn {*/
-/*  border-radius: 10px;*/
-/*}*/
-
-.Button {
-  border-radius: 10px;
+/* ant design modification */
+.ant-btn {
+  border-radius: 6px;
 }
 
-/* To locate the input box in Form.Item of antd design */
-.FormInput > div {
+.ant-select > div {
   border-radius: 6px !important;
 }
 
-.Input {
+.ant-input {
   border-radius: 6px;
 }
 
-.List {
+.ant-list {
   border-radius: 6px;
 }
 
-.ListItem {
-  padding: 16px 8px 16px 16px !important;
-}
-
-.SettingsHeader {
-  padding: 0 0 8px 0;
-  margin-bottom: 15px;
-}
-
-.Space {
+.ant-space {
   width: 100%
 }
 
-.Title {
+.ant-typography {
   margin: auto;
   text-align: center;
 }
 
+.ant-list-item {
+  padding: 16px 8px 16px 16px !important;
+}
+
+.ant-page-header {
+  padding: 0 0 8px 0;
+  margin-bottom: 15px;
+}
+
 @media only screen and (max-width: 767px) {
-  .SettingsHeader {
+  .ant-page-header {
     padding-top: 30px;
   }
 }

@@ -13,7 +13,6 @@ import style from './style.css';
 
 export const SettingsContainer = observer(() => {
   return (
-    // todo: add responsive
     <div className={style.SettingContainer}>
       <Row>
         <SettingsHeader />
