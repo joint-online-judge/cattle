@@ -31,6 +31,7 @@ export const NavBar = observer(() => {
       path: '/settings/domains',
     },
   ];
+  // todo: change selected key according to the url
   return (
     <Menu mode="vertical" className={style.NavBarMenu}>
       {

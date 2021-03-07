@@ -32,7 +32,7 @@ export const JOJRouters = observer(({ history }) => {
             <SettingsContainer />
           </PrivateRoute>
           {/* ---Settings--- */}
-          <PrivateRoute path="/domains">
+          <PrivateRoute path="/domain">
             <DomainContainer />
           </PrivateRoute>
         </Switch>

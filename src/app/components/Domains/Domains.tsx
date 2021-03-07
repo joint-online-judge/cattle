@@ -29,7 +29,7 @@ export const Domains = observer(() => {
           className="SettingsHeader"
           extra={[
             <Button>
-              <Link to="/domains/create">
+              <Link to="/domain/create">
                 {t('DOMAINS.NEW_DOMAIN')}
               </Link>
             </Button>,
@@ -54,7 +54,7 @@ export const Domains = observer(() => {
               <Space>
                 <Avatar src={item.gravatar} />
                 <Link
-                  to={`/domains/${item.url}`}
+                  to={`/domain/${item.url}`}
                 >
                   <strong>{item.name}</strong>
                 </Link>
