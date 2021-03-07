@@ -12,7 +12,15 @@
     "DOMAINS": "Domains",
     "SETTINGS": "Settings",
     "NEW_DOMAIN": "New Domain",
-    "LEAVE": "Leave"
+    "LEAVE": "Leave",
+    "CREATE_A_NEW_DOMAIN": "Create a new domain",
+    "CREATE": {
+      "NAME": "Name",
+      "URL": "Url (ID)",
+      "GRAVATAR": "Gravatar Email",
+      "BULLETIN": "Bulletin",
+      "CREATE": "Create"
+    }
   },
   "SETTINGS": {
     "SETTINGS": "Settings",

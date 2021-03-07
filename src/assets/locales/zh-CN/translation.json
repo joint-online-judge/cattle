@@ -12,7 +12,15 @@
     "DOMAINS": "我的域",
     "SETTINGS": "设置",
     "NEW_DOMAIN": "新建域",
-    "LEAVE": "退出"
+    "LEAVE": "退出",
+    "CREATE_A_NEW_DOMAIN": "创建域",
+    "CREATE": {
+      "NAME": "名字",
+      "URL": "域网址 (ID)",
+      "GRAVATAR": "Gravatar 邮箱",
+      "BULLETIN": "公告",
+      "CREATE": "创建"
+    }
   },
   "SETTINGS": {
     "SETTINGS": "偏好设置",
