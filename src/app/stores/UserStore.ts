@@ -21,9 +21,9 @@ export const useUserStore = (user: UserModel) => {
         if (profile) {
           store.setProfile(profile as User);
         }
-        return Promise.resolve();
+        return await Promise.resolve();
       } catch (err) {
-        return Promise.reject();
+        return await Promise.reject();
       }
     },
     logout() {
