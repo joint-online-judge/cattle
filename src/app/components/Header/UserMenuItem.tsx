@@ -36,7 +36,7 @@ export const UserMenuItem = observer(() => {
     'profile-setting-divider',
     {
       key: 'SETTINGS.SETTINGS',
-      path: '/settings/profile',
+      path: '/settings',
     },
     {
       key: 'USERS.LOG_OUT',
