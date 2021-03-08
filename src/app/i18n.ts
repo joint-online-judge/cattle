@@ -29,7 +29,6 @@ i18n
     resources: resources(),
     react: {
       useSuspense: false,
-      wait: true,
     },
   });
 
