@@ -14,6 +14,7 @@ import { Link } from 'react-router-dom';
 import { useRequest } from 'ahooks';
 
 import { DomainService } from '@/client';
+import { gravatarImageUrl } from 'app/utils';
 
 const { Text } = Typography;
 export const Domains = observer(() => {
@@ -52,7 +53,7 @@ export const Domains = observer(() => {
               ]}
             >
               <Space>
-                <Avatar src={item.gravatar} />
+                <Avatar src={gravatarImageUrl(item.gravatar)} />
                 <Link
                   to={`/domain/${item.url}`}
                 >

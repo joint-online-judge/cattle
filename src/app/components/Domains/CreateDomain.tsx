@@ -5,19 +5,26 @@ import {
 } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { DomainService } from '@/client';
+import { useHistory } from 'react-router';
 import style from './style.css';
 
 const { Title } = Typography;
 
 export const CreateDomain = observer(() => {
   const { t } = useTranslation();
-  const onFinish = async ({ url, name }) => {
-    await DomainService.createDomainApiV1DomainsPost(url, name);
+  const history = useHistory();
+  const onFinish = async ({
+                            url, name, gravatar, bulletin,
+                          }) => {
+    await DomainService.createDomainApiV1DomainsPost(url, name,
+      bulletin, gravatar);
+    history.push(`/domain/${url}`);
   };
   /* todo: add helper */
+  /* todo: add onChange on URL/ID field to ensure unique field */
   return (
     <div id={style.CreateDomain}>
-      <Title>{t('DOMAINS.CREATE_A_NEW_DOMAIN')}</Title>
+      <Title id={style.CreateTitle}>{t('DOMAINS.CREATE_A_NEW_DOMAIN')}</Title>
       <Form
         onFinish={onFinish}
         layout="vertical"
