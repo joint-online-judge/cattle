@@ -29,23 +29,24 @@ export const LoginContainer = observer(() => {
     // either fetch profile fails or try to login normally
     if (!auth.loggedIn) {
       const { from } = location.state || { from: { pathname: '/' } };
-      window.location.href = (await UserService.jaccountLoginApiV1UserJaccountLoginGet(
-        `${BASE_URL}/login/?action=profile&from=${from.pathname}`, false,
-      )).redirect_url;
+      window.location.href = (
+        await UserService.jaccountLoginApiV1UserJaccountLoginGet(
+          `${BASE_URL}/login/?action=profile&from=${from.pathname}`,
+          false
+        )
+      ).redirect_url;
     }
   });
   return (
     <Spin spinning={profileHook.loading} size="large">
-      {
-        auth.loggedIn
-          ? <Redirect to={query.get('from') || '/'} />
-          : (
-            <Result
-              icon={<Spin size="large" />}
-              title={t('USERS.LOGIN.REDIRECTING')}
-            />
-          )
-      }
+      {auth.loggedIn ? (
+        <Redirect to={query.get('from') || '/'} />
+      ) : (
+        <Result
+          icon={<Spin size="large" />}
+          title={t('USERS.LOGIN.REDIRECTING')}
+        />
+      )}
     </Spin>
   );
 });

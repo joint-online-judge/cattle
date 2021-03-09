@@ -24,19 +24,22 @@ class Proxy {
 
   request(requestType: Method, url, data = null) {
     return new Promise((resolve, reject) => {
-      this.instance.request({
-        method: requestType,
-        url,
-        data,
-      }).then((response) => {
-        resolve(response.data);
-      }).catch(({ response }) => {
-        if (response) {
-          reject(response.data);
-        } else {
-          reject();
-        }
-      });
+      this.instance
+        .request({
+          method: requestType,
+          url,
+          data,
+        })
+        .then((response) => {
+          resolve(response.data);
+        })
+        .catch(({ response }) => {
+          if (response) {
+            reject(response.data);
+          } else {
+            reject();
+          }
+        });
     });
   }
 

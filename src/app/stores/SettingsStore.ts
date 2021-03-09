@@ -6,7 +6,7 @@ import { autoSaveJson } from 'app/utils';
 import i18n from 'app/i18n';
 import { DisplaySettings } from 'app/models/SettingsModel';
 
-export type SettingsStore = ReturnType<typeof useSettingsStore>
+export type SettingsStore = ReturnType<typeof useSettingsStore>;
 export const useSettingsStore = (settings: SettingsModel) => {
   const store = useLocalStore(() => ({
     settings,

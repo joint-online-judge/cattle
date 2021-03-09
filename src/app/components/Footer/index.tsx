@@ -66,9 +66,7 @@ export class Footer extends React.Component<FooterProps, FooterState> {
         {this.renderTodoCount()}
         <ul className={style.filters}>
           {TODO_FILTER_TYPES.map((filter) => (
-            <li key={filter}>
-              {this.renderFilterLink(filter)}
-            </li>
+            <li key={filter}>{this.renderFilterLink(filter)}</li>
           ))}
         </ul>
         {this.renderClearButton()}

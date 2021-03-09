@@ -11,7 +11,7 @@ import style from './style.css';
 interface LoggedInSubMenuItem {
   key: string;
   path: string;
-  node?: ReactNode,
+  node?: ReactNode;
 }
 
 export const UserMenuItem = observer(() => {
@@ -22,7 +22,7 @@ export const UserMenuItem = observer(() => {
     {
       key: 'username',
       path: `/user/${auth.profile.uname}`,
-      node: (<b>{auth.profile.uname}</b>),
+      node: <b>{auth.profile.uname}</b>,
     },
     'username-profile-divider',
     {
@@ -45,41 +45,35 @@ export const UserMenuItem = observer(() => {
   ];
   const UserSubMenu = auth.loggedIn ? (
     <Menu className={style.HeaderUserSubMenu}>
-      {
-        LoggedInSubMenuArrange.map((item) => (typeof (item) !== 'string'
-          ? (
-            <Menu.Item key={item.key} className={style.HeaderUserSubMenuItem}>
-              <Link to={item.path}>
-                {
-                  item.node ? item.node : t(item.key)
-                }
-              </Link>
-            </Menu.Item>
-          ) : (
-            <Menu.Divider key={`${item}`} />
-          )))
-      }
+      {LoggedInSubMenuArrange.map((item) =>
+        typeof item !== 'string' ? (
+          <Menu.Item key={item.key} className={style.HeaderUserSubMenuItem}>
+            <Link to={item.path}>{item.node ? item.node : t(item.key)}</Link>
+          </Menu.Item>
+        ) : (
+          <Menu.Divider key={`${item}`} />
+        )
+      )}
     </Menu>
   ) : null;
 
-  return auth.loggedIn
-    ? (
-      <Dropdown
-        overlay={UserSubMenu}
-        placement="bottomRight"
-        trigger={['click']}
-        arrow
-      >
-        <span>
-          <img
-            src={gravatarImageUrl(auth.profile.gravatar, 20)}
-            alt={`@${auth.profile.uname}`}
-            id={style.Gravatar}
-          />
-          <DownOutlined />
-        </span>
-      </Dropdown>
-    ) : (
-      <Link to="/login">{t('USERS.LOGIN.JACCOUNT_LOG_IN')}</Link>
-    );
+  return auth.loggedIn ? (
+    <Dropdown
+      overlay={UserSubMenu}
+      placement="bottomRight"
+      trigger={['click']}
+      arrow
+    >
+      <span>
+        <img
+          src={gravatarImageUrl(auth.profile.gravatar, 20)}
+          alt={`@${auth.profile.uname}`}
+          id={style.Gravatar}
+        />
+        <DownOutlined />
+      </span>
+    </Dropdown>
+  ) : (
+    <Link to="/login">{t('USERS.LOGIN.JACCOUNT_LOG_IN')}</Link>
+  );
 });

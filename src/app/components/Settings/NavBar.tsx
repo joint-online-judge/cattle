@@ -8,12 +8,12 @@ import style from './style.css';
 interface MenuItem {
   key: string;
   path: string;
-  node?: ReactNode,
+  node?: ReactNode;
 }
 
 export const NavBar = observer(() => {
   const { t } = useTranslation();
-  const MenuArrange: (MenuItem)[] = [
+  const MenuArrange: MenuItem[] = [
     {
       key: 'SETTINGS.GENERAL_SETTINGS',
       path: '/settings/general',
@@ -33,24 +33,16 @@ export const NavBar = observer(() => {
   ];
   return (
     <Menu mode="vertical" className={style.NavBarMenu}>
-      {
-        MenuArrange.map((item, index) => (
-          <Fragment key={`fragment-${item.key}`}>
-            <Menu.Item key={item.key}>
-              <Link to={item.path}>
-                {
-                  item.node ? item.node : t(item.key)
-                }
-              </Link>
-            </Menu.Item>
-            {
-              index < MenuArrange.length - 1
-                ? <Menu.Divider key={`after-${item.key}`} />
-                : null
-            }
-          </Fragment>
-        ))
-      }
+      {MenuArrange.map((item, index) => (
+        <Fragment key={`fragment-${item.key}`}>
+          <Menu.Item key={item.key}>
+            <Link to={item.path}>{item.node ? item.node : t(item.key)}</Link>
+          </Menu.Item>
+          {index < MenuArrange.length - 1 ? (
+            <Menu.Divider key={`after-${item.key}`} />
+          ) : null}
+        </Fragment>
+      ))}
     </Menu>
   );
 });

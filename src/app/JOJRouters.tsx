@@ -5,7 +5,9 @@ import {
   DomainContainer,
   LoginContainer,
   LogoutContainer,
-  NavBarContainer, SettingsContainer, TodoContainer,
+  NavBarContainer,
+  SettingsContainer,
+  TodoContainer,
 } from 'app/containers';
 import { ConfigProvider } from 'antd';
 import React from 'react';

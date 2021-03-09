@@ -31,9 +31,9 @@ export class TodoItem extends React.Component<TodoProps, TodoState> {
     const { todo } = this.props;
     const target = e.target as any;
     if (
-      target
-      && target.checked !== undefined
-      && target.checked !== todo.completed
+      target &&
+      target.checked !== undefined &&
+      target.checked !== todo.completed
     ) {
       this.updateTodo({ completed: target.checked });
     }

@@ -3,7 +3,8 @@ import {
   Avatar,
   Button,
   List,
-  PageHeader, Space,
+  PageHeader,
+  Space,
   Spin,
   Typography,
   ConfigProvider,
@@ -29,9 +30,7 @@ export const Domains = observer(() => {
           className="SettingsHeader"
           extra={[
             <Button key="domain-create">
-              <Link to="/domain/create">
-                {t('DOMAINS.NEW_DOMAIN')}
-              </Link>
+              <Link to="/domain/create">{t('DOMAINS.NEW_DOMAIN')}</Link>
             </Button>,
           ]}
         />
@@ -43,24 +42,16 @@ export const Domains = observer(() => {
           renderItem={(item) => (
             <List.Item
               actions={[
-                <Button>
-                  {t('DOMAINS.SETTINGS')}
-                </Button>,
-                <Button>
-                  {t('DOMAINS.LEAVE')}
-                </Button>,
+                <Button>{t('DOMAINS.SETTINGS')}</Button>,
+                <Button>{t('DOMAINS.LEAVE')}</Button>,
               ]}
             >
               <Space>
                 <Avatar src={item.gravatar} />
-                <Link
-                  to={`/domain/${item.url}`}
-                >
+                <Link to={`/domain/${item.url}`}>
                   <strong>{item.name}</strong>
                 </Link>
-                <Text type="secondary">
-                  {item.name} Owner
-                </Text>
+                <Text type="secondary">{item.name} Owner</Text>
               </Space>
             </List.Item>
           )}

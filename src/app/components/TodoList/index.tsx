@@ -8,8 +8,7 @@ export interface TodoListProps extends TodoActions {
   completeAll: () => any;
 }
 
-export interface TodoListState {
-}
+export interface TodoListState {}
 
 export class TodoList extends React.Component<TodoListProps, TodoListState> {
   // constructor(props?: TodoListProps, context?: any) {

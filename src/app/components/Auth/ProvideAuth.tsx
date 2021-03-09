@@ -6,8 +6,6 @@ import { AuthContext } from './AuthContext';
 export const ProvideAuth = ({ children }) => {
   const userStore = useUserStore(new UserModel());
   return (
-    <AuthContext.Provider value={userStore}>
-      {children}
-    </AuthContext.Provider>
+    <AuthContext.Provider value={userStore}>{children}</AuthContext.Provider>
   );
 };

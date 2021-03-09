@@ -20,11 +20,14 @@ export const TodoContainer = observer(() => {
   const [filter, setFilter] = React.useState(TodoFilter.ALL);
   const [count, setCount] = React.useState(0);
 
-  const { loading, run } = useRequest(async () => {
-    // const res = await DomainService.listUserDomainsApiV1DomainListGet();
-    const res = '';
-    console.log(res);
-  }, { manual: true });
+  const { loading, run } = useRequest(
+    async () => {
+      // const res = await DomainService.listUserDomainsApiV1DomainListGet();
+      const res = '';
+      console.log(res);
+    },
+    { manual: true }
+  );
 
   // Note: useEffect with [] is similar to componentDidMount
   // React.useEffect(() => {
@@ -48,12 +51,13 @@ export const TodoContainer = observer(() => {
       const nextHash = TODO_FILTER_LOCATION_HASH[nextFilter];
       history.replace(nextHash);
     },
-    [history, setFilter],
+    [history, setFilter]
   );
 
-  const itemsToDisplay = filter === TodoFilter.ALL
-    ? todoStore.todos
-    : filter === TodoFilter.ACTIVE
+  const itemsToDisplay =
+    filter === TodoFilter.ALL
+      ? todoStore.todos
+      : filter === TodoFilter.ACTIVE
       ? todoStore.activeTodos
       : todoStore.completedTodos;
   return (

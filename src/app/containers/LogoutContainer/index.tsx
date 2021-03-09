@@ -13,19 +13,15 @@ export const LogoutContainer = observer(() => {
   useRequest(async () => {
     if (auth.loggedIn) {
       auth.logout();
-      window.location.href = (await UserService.logoutApiV1UserLogoutGet(
-        BASE_URL, false,
-      )).redirect_url;
+      window.location.href = (
+        await UserService.logoutApiV1UserLogoutGet(BASE_URL, false)
+      ).redirect_url;
     }
   });
 
-  return auth.loggedIn
-    ? (
-      <Result
-        icon={<Spin size="large" />}
-        title="Logging out..."
-      />
-    ) : (
-      <Redirect to="/" />
-    );
+  return auth.loggedIn ? (
+    <Result icon={<Spin size="large" />} title="Logging out..." />
+  ) : (
+    <Redirect to="/" />
+  );
 });

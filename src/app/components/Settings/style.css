@@ -5,7 +5,7 @@
 }
 
 .SettingsForm {
-  width: 60%
+  width: 60%;
 }
 
 .UserInfoHeader {
@@ -23,8 +23,6 @@
   }
 
   .SettingsForm {
-    width: 78%
+    width: 78%;
   }
 }
-
-

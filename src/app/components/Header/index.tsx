@@ -8,11 +8,7 @@ import style from './style.css';
 export const Header = observer(() => {
   const { t } = useTranslation();
   return (
-    <Menu
-      mode="horizontal"
-      id={style.Header}
-      selectable={false}
-    >
+    <Menu mode="horizontal" id={style.Header} selectable={false}>
       <Menu.Item key="test" className={style.HeaderItem}>
         <a href="/">{t('TEST')}</a>
       </Menu.Item>
