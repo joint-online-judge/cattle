@@ -28,7 +28,7 @@ export const Domains = observer(() => {
           title={t('DOMAINS.DOMAINS')}
           className="SettingsHeader"
           extra={[
-            <Button>
+            <Button key="domain-create">
               <Link to="/domain/create">
                 {t('DOMAINS.NEW_DOMAIN')}
               </Link>
