@@ -10,7 +10,7 @@ import style from './style.css';
 
 const { Title } = Typography;
 
-export const CreateDomain = observer(() => {
+export const CreateDomain = observer((props) => {
   const { t } = useTranslation();
   const history = useHistory();
   const onFinish = async ({
@@ -29,6 +29,7 @@ export const CreateDomain = observer(() => {
         onFinish={onFinish}
         layout="vertical"
         id={style.CreateForm}
+        {...props}
       >
         <Form.Item
           name="name"

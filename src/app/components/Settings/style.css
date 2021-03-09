@@ -1,9 +1,3 @@
-.NavBarMenu {
-  width: 85%;
-  border-radius: 6px;
-  border: 1px solid #f0f0f0;
-}
-
 .SettingsForm {
   width: 60%
 }
@@ -18,10 +12,6 @@
 }
 
 @media only screen and (max-width: 767px) {
-  .NavBarMenu {
-    width: 100%;
-  }
-
   .SettingsForm {
     width: 78%
   }

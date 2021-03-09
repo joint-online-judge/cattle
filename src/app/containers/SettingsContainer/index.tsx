@@ -1,17 +1,18 @@
 import { observer } from 'mobx-react';
 import React from 'react';
 import { Switch } from 'react-router-dom';
-import { Redirect, Route } from 'react-router';
+import { Redirect, Route, useRouteMatch } from 'react-router';
 import { Row, Col } from 'antd';
 import {
-  NavBar,
   General,
   SettingsHeader,
-} from 'app/components/Settings';
+  SettingsSideBar,
+} from 'app/components';
 import { Domains } from 'app/components/Domains';
 import style from './style.css';
 
 export const SettingsContainer = observer(() => {
+  const { path } = useRouteMatch();
   return (
     <div className={style.SettingContainer}>
       <Row>
@@ -23,7 +24,7 @@ export const SettingsContainer = observer(() => {
           sm={24}
           md={6}
         >
-          <NavBar />
+          <SettingsSideBar mode="personal" />
         </Col>
         <Col
           xs={24}
@@ -32,12 +33,12 @@ export const SettingsContainer = observer(() => {
         >
           <Route
             exact
-            path="/settings"
-            component={() => <Redirect to="/settings/general" />}
+            path={`${path}`}
+            component={() => <Redirect to={`${path}/general`} />}
           />
           <Switch>
-            <Route path="/settings/general" component={General} />
-            <Route path="/settings/domains" component={Domains} />
+            <Route path={`${path}/general`} component={General} />
+            <Route path={`${path}/domains`} component={Domains} />
           </Switch>
         </Col>
       </Row>
