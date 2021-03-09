@@ -20,6 +20,12 @@
       "GRAVATAR": "Gravatar Email",
       "BULLETIN": "Bulletin",
       "CREATE": "Create"
+    },
+    "HOME": {
+      "ASSIGNMENTS": "Assignments",
+      "PROBLEMS": "Problems",
+      "MEMBERS": "Members",
+      "SETTINGS": "Settings"
     }
   },
   "SETTINGS": {

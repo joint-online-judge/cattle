@@ -3,6 +3,11 @@
   margin: 60px auto auto auto;
 }
 
+#CreateTitle {
+  margin: auto;
+  text-align: center;
+}
+
 #CreateForm {
   max-width: 544px;
   margin: 0 auto;

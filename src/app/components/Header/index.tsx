@@ -1,4 +1,4 @@
-import { Menu } from 'antd';
+import { Image, Menu } from 'antd';
 import { observer } from 'mobx-react';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
@@ -14,6 +14,11 @@ export const Header = observer(() => {
       selectable={false}
     >
       <Menu.Item key="test" className={style.HeaderItem}>
+        <Image
+          src="https://i.loli.net/2021/03/09/hqnrlFcbAYDVWeN.gif"
+          height={20}
+          width={20}
+        />
         <a href="/">{t('TEST')}</a>
       </Menu.Item>
       <Menu.Item key="user" className={style.HeaderFloatRightItem}>

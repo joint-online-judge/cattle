@@ -20,6 +20,12 @@
       "GRAVATAR": "Gravatar 邮箱",
       "BULLETIN": "公告",
       "CREATE": "创建"
+    },
+    "HOME": {
+      "ASSIGNMENTS": "作业",
+      "PROBLEMS": "题目",
+      "MEMBERS": "成员",
+      "SETTINGS": "设置"
     }
   },
   "SETTINGS": {
