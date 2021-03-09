@@ -8,7 +8,7 @@ export const DomainContainer = observer(() => {
   return (
     <div className={style.DomainContainer}>
       <Switch>
-        <Route path="/domains/create" component={CreateDomain} />
+        <Route path="/domain/create" component={CreateDomain} />
       </Switch>
     </div>
   );
