@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react';
+import React, { ReactNode, Fragment } from 'react';
 import { observer } from 'mobx-react';
 import { useTranslation } from 'react-i18next';
 import { Menu } from 'antd';
@@ -36,7 +36,7 @@ export const NavBar = observer(() => {
     <Menu mode="vertical" className={style.NavBarMenu}>
       {
         MenuArrange.map((item, index) => (
-          <>
+          <Fragment key={`fragment-${item.key}`}>
             <Menu.Item key={item.key}>
               <Link to={item.path}>
                 {
@@ -49,7 +49,7 @@ export const NavBar = observer(() => {
                 ? <Menu.Divider key={`after-${item.key}`} />
                 : null
             }
-          </>
+          </Fragment>
         ))
       }
     </Menu>
