@@ -8,39 +8,57 @@ import {
   TeamOutlined,
   SettingOutlined,
 } from '@ant-design/icons';
-import { useParams, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import { useLocation, useRouteMatch } from 'react-router';
 import style from './style.css';
+
+const menuItems = [
+  {
+    key: 'DOMAINS.HOME.ASSIGNMENTS',
+    path: '',
+    icon: (<ReadOutlined />),
+  }, {
+    key: 'DOMAINS.HOME.PROBLEMS',
+    path: '/problems',
+    icon: (<FileOutlined />),
+  },
+  {
+    key: 'DOMAINS.HOME.MEMBERS',
+    path: '/members',
+    icon: (<TeamOutlined />),
+  },
+  {
+    key: 'DOMAINS.HOME.SETTINGS',
+    path: '/settings',
+    icon: (<SettingOutlined />),
+  },
+];
 
 export const Nav = observer(() => {
   const { t } = useTranslation();
-  const { url, section } = useParams<{ url: string; section: string }>();
+  const location = useLocation();
+  const { url } = useRouteMatch();
+  const defaultKey = (menuItems.find(
+    (item) => `${url}${item.path}` === `${location.pathname}`,
+  ))?.key;
   // todo: encapsulate Menu.Item to take consideration of access control
   return (
     <Menu
       mode="horizontal"
       id={style.HomeNav}
-      defaultSelectedKeys={[section || 'assignments']}
+      defaultSelectedKeys={[defaultKey || menuItems[0].key]}
     >
-      <Menu.Item key="assignments" icon={<ReadOutlined />}>
-        <Link to={`/domain/${url}/`}>
-          {t('DOMAINS.HOME.ASSIGNMENTS')}
-        </Link>
-      </Menu.Item>
-      <Menu.Item key="problems" icon={<FileOutlined />}>
-        <Link to={`/domain/${url}/problems`}>
-          {t('DOMAINS.HOME.PROBLEMS')}
-        </Link>
-      </Menu.Item>
-      <Menu.Item key="members" icon={<TeamOutlined />}>
-        <Link to={`/domain/${url}/members`}>
-          {t('DOMAINS.HOME.MEMBERS')}
-        </Link>
-      </Menu.Item>
-      <Menu.Item key="settings" icon={<SettingOutlined />}>
-        <Link to={`/domain/${url}/settings`}>
-          {t('DOMAINS.HOME.SETTINGS')}
-        </Link>
-      </Menu.Item>
+      {
+        menuItems.map((item) => {
+          return (
+            <Menu.Item key={item.key} icon={item.icon}>
+              <Link to={`${url}${item.path}`}>
+                {t(item.key)}
+              </Link>
+            </Menu.Item>
+          );
+        })
+      }
     </Menu>
   );
 });

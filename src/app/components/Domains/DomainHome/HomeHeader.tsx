@@ -7,12 +7,11 @@ import {
 import { gravatarImageUrl } from 'app/utils';
 import { useRequest } from 'ahooks';
 import { DomainService } from '@/client';
-import { Nav } from 'app/components/Domains/DomainHome/Nav';
 import style from './style.css';
 
 const { Title } = Typography;
 export const HomeHeader = observer(() => {
-  const { url } = useParams<{ url: string; section: string }>();
+  const { url } = useParams<{ url: string }>();
   const domainHook = useRequest(async () => {
     return DomainService.getDomainApiV1DomainsDomainGet(url);
   });
@@ -43,7 +42,6 @@ export const HomeHeader = observer(() => {
           </Row>
         </Typography>
       )}
-      <Nav />
     </Spin>
   );
 });

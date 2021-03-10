@@ -12,7 +12,7 @@ import { Domains } from 'app/components/Domains';
 import style from './style.css';
 
 export const SettingsContainer = observer(() => {
-  const { path } = useRouteMatch();
+  const { path, url } = useRouteMatch();
   return (
     <div className={style.SettingContainer}>
       <Row>
@@ -33,8 +33,8 @@ export const SettingsContainer = observer(() => {
         >
           <Route
             exact
-            path={`${path}`}
-            component={() => <Redirect to={`${path}/general`} />}
+            path={path}
+            component={() => <Redirect to={`${url}/general`} />}
           />
           <Switch>
             <Route path={`${path}/general`} component={General} />

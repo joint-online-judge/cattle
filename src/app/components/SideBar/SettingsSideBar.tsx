@@ -57,12 +57,12 @@ const menuArrange = {
 
 export const SettingsSideBar = observer(
   (props: SideBarProps): ReactElement<SideBarProps, any> => {
-    const { path } = useRouteMatch();
+    const { url } = useRouteMatch();
     const { t } = useTranslation();
     const location = useLocation();
     const items = menuArrange[props.mode];
     const defaultKey = (items.find(
-      (item) => item.path === `${location.pathname}`,
+      (item) => `${url}${item.path}` === `${location.pathname}`,
     ))?.key;
     return (
       <Menu
@@ -77,7 +77,7 @@ export const SettingsSideBar = observer(
                 key={item.key}
               >
                 {item.node ? item.node : (
-                  <Link to={`${path}${item.path}`}>
+                  <Link to={`${url}${item.path}`}>
                     {t(item.key)}
                   </Link>
                 )}
