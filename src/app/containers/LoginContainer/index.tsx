@@ -42,7 +42,7 @@ export const LoginContainer = observer(() => {
           : (
             <Result
               icon={<Spin size="large" />}
-              title={t('USERS.LOGIN.REDIRECTING')}
+              title={t('USER.LOGIN.REDIRECTING')}
             />
           )
       }

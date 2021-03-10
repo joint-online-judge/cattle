@@ -26,11 +26,11 @@ export const UserMenuItem = observer(() => {
     },
     'username-profile-divider',
     {
-      key: 'USERS.PROFILE',
+      key: 'USER.PROFILE',
       path: `/user/${auth.profile.uname}`,
     },
     {
-      key: 'DOMAINS.DOMAINS',
+      key: 'DOMAIN.DOMAINS',
       path: '/settings/domains',
     },
     'profile-setting-divider',
@@ -39,7 +39,7 @@ export const UserMenuItem = observer(() => {
       path: '/settings',
     },
     {
-      key: 'USERS.LOG_OUT',
+      key: 'USER.LOG_OUT',
       path: '/logout',
     },
   ];
@@ -80,6 +80,6 @@ export const UserMenuItem = observer(() => {
         </span>
       </Dropdown>
     ) : (
-      <Link to="/login">{t('USERS.LOGIN.JACCOUNT_LOG_IN')}</Link>
+      <Link to="/login">{t('USER.LOGIN.JACCOUNT_LOG_IN')}</Link>
     );
 });

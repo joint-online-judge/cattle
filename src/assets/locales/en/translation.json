@@ -1,6 +1,6 @@
 {
   "TEST": "Big SLL",
-  "USERS": {
+  "USER": {
     "PROFILE": "Profile",
     "LOGIN": {
       "JACCOUNT_LOG_IN": "jAccount Login",
@@ -8,7 +8,7 @@
     },
     "LOG_OUT": "Log out"
   },
-  "DOMAINS": {
+  "DOMAIN": {
     "DOMAINS": "Domains",
     "SETTINGS": "Settings",
     "NEW_DOMAIN": "New Domain",

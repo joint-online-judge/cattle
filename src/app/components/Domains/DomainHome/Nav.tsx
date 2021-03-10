@@ -14,21 +14,21 @@ import style from './style.css';
 
 const menuItems = [
   {
-    key: 'DOMAINS.HOME.ASSIGNMENTS',
+    key: 'DOMAIN.HOME.ASSIGNMENTS',
     path: '',
     icon: (<ReadOutlined />),
   }, {
-    key: 'DOMAINS.HOME.PROBLEMS',
+    key: 'DOMAIN.HOME.PROBLEMS',
     path: '/problems',
     icon: (<FileOutlined />),
   },
   {
-    key: 'DOMAINS.HOME.MEMBERS',
+    key: 'DOMAIN.HOME.MEMBERS',
     path: '/members',
     icon: (<TeamOutlined />),
   },
   {
-    key: 'DOMAINS.HOME.SETTINGS',
+    key: 'DOMAIN.HOME.SETTINGS',
     path: '/settings',
     icon: (<SettingOutlined />),
   },

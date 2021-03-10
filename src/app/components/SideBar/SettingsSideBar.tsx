@@ -30,7 +30,7 @@ const personal: (MenuItem)[] = [
     path: '/security',
   },
   {
-    key: 'DOMAINS.DOMAINS',
+    key: 'DOMAIN.DOMAINS',
     path: '/domains',
   },
 ];

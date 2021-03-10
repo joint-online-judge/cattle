@@ -26,12 +26,12 @@ export const Domains = observer(() => {
     <ConfigProvider autoInsertSpaceInButton={false}>
       <Spin spinning={domainListHook.loading}>
         <PageHeader
-          title={t('DOMAINS.DOMAINS')}
+          title={t('DOMAIN.DOMAINS')}
           className="SettingsHeader"
           extra={[
             <Button key="domain-create">
               <Link to="/domain/create">
-                {t('DOMAINS.NEW_DOMAIN')}
+                {t('DOMAIN.NEW_DOMAIN')}
               </Link>
             </Button>,
           ]}
@@ -45,10 +45,10 @@ export const Domains = observer(() => {
             <List.Item
               actions={[
                 <Button>
-                  {t('DOMAINS.SETTINGS')}
+                  {t('DOMAIN.SETTINGS')}
                 </Button>,
                 <Button>
-                  {t('DOMAINS.LEAVE')}
+                  {t('DOMAIN.LEAVE')}
                 </Button>,
               ]}
             >

@@ -1,6 +1,6 @@
 {
   "TEST": "大史历历",
-  "USERS": {
+  "USER": {
     "PROFILE": "我的资料",
     "LOGIN": {
       "JACCOUNT_LOG_IN": "jAccount 登录",
@@ -8,7 +8,7 @@
     },
     "LOG_OUT": "登出"
   },
-  "DOMAINS": {
+  "DOMAIN": {
     "DOMAINS": "我的域",
     "SETTINGS": "设置",
     "NEW_DOMAIN": "新建域",

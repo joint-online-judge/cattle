@@ -24,7 +24,7 @@ export const CreateDomain = observer((props) => {
   /* todo: add onChange on URL/ID field to ensure unique field */
   return (
     <div id={style.CreateDomain}>
-      <Title id={style.CreateTitle}>{t('DOMAINS.CREATE_A_NEW_DOMAIN')}</Title>
+      <Title id={style.CreateTitle}>{t('DOMAIN.CREATE_A_NEW_DOMAIN')}</Title>
       <Form
         onFinish={onFinish}
         layout="vertical"
@@ -33,7 +33,7 @@ export const CreateDomain = observer((props) => {
       >
         <Form.Item
           name="name"
-          label={t('DOMAINS.CREATE.NAME')}
+          label={t('DOMAIN.CREATE.NAME')}
           rules={[
             {
               required: true,
@@ -44,7 +44,7 @@ export const CreateDomain = observer((props) => {
         </Form.Item>
         <Form.Item
           name="url"
-          label={t('DOMAINS.CREATE.URL')}
+          label={t('DOMAIN.CREATE.URL')}
           rules={[
             {
               required: true,
@@ -55,13 +55,13 @@ export const CreateDomain = observer((props) => {
         </Form.Item>
         <Form.Item
           name="gravatar"
-          label={t('DOMAINS.CREATE.GRAVATAR')}
+          label={t('DOMAIN.CREATE.GRAVATAR')}
         >
           <Input />
         </Form.Item>
         <Form.Item
           name="bulletin"
-          label={t('DOMAINS.CREATE.BULLETIN')}
+          label={t('DOMAIN.CREATE.BULLETIN')}
         >
           {/* todo: make it a markdown editor */}
           <Input.TextArea
@@ -76,7 +76,7 @@ export const CreateDomain = observer((props) => {
             type="primary"
             id={style.SubmitButton}
           >
-            {t('DOMAINS.CREATE.CREATE')}
+            {t('DOMAIN.CREATE.CREATE')}
           </Button>
         </Form.Item>
       </Form>
