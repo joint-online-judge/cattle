@@ -10,7 +10,7 @@ import { DomainService } from '@/client';
 import style from './style.css';
 
 const { Title } = Typography;
-export const HomeHeader = observer(() => {
+export const DomainHomeHeader = observer(() => {
   const { url } = useParams<{ url: string }>();
   const domainHook = useRequest(async () => {
     return DomainService.getDomainApiV1DomainsDomainGet(url);

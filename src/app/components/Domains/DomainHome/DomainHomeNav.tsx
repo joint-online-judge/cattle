@@ -34,7 +34,7 @@ const menuItems = [
   },
 ];
 
-export const Nav = observer(() => {
+export const DomainHomeNav = observer(() => {
   const { t } = useTranslation();
   const location = useLocation();
   const { url } = useRouteMatch();
