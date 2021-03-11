@@ -9,7 +9,7 @@ import {
 } from 'app/containers';
 import { ConfigProvider } from 'antd';
 import React from 'react';
-import { useSettings } from 'app/components';
+import { useSettings } from 'app/contexts';
 import { SUPPORT_LANGUAGES } from 'app/constants/i18n';
 
 export const JOJRouters = observer(({ history }) => {

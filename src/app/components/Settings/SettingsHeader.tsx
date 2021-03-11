@@ -1,7 +1,7 @@
 import { observer } from 'mobx-react';
 import React, { ReactElement } from 'react';
 import { PageHeader, Spin } from 'antd';
-import { useAuth } from 'app/components/Auth';
+import { useAuth } from 'app/contexts';
 import { gravatarImageUrl } from 'app/utils';
 import { useParams } from 'react-router';
 import { useRequest } from 'ahooks';

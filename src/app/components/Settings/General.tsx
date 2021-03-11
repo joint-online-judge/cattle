@@ -6,7 +6,7 @@ import {
 import { useTranslation } from 'react-i18next';
 import { DisplaySettings } from 'app/models/SettingsModel';
 import { SUPPORT_LANGUAGES } from 'app/constants/i18n';
-import { useSettings } from 'app/components';
+import { useSettings } from 'app/contexts';
 import style from './style.css';
 
 const options = {

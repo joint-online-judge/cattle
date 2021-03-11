@@ -3,7 +3,7 @@ import { Spin, Result } from 'antd';
 import { observer } from 'mobx-react';
 import { useRequest } from 'ahooks';
 import { UserService } from '@/client';
-import { useAuth } from 'app/components/Auth';
+import { useAuth } from 'app/contexts';
 import { Redirect, useLocation } from 'react-router';
 import { BASE_URL } from 'app/constants';
 import { useTranslation } from 'react-i18next';

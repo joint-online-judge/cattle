@@ -5,7 +5,7 @@ import { Dropdown, Menu } from 'antd';
 import { Link } from 'react-router-dom';
 import { gravatarImageUrl } from 'app/utils';
 import { DownOutlined } from '@ant-design/icons';
-import { useAuth } from 'app/components/Auth';
+import { useAuth } from 'app/contexts';
 import style from './style.css';
 
 interface LoggedInSubMenuItem {
