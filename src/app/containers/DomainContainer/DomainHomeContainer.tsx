@@ -2,7 +2,7 @@ import { observer } from 'mobx-react';
 import React from 'react';
 import { Switch } from 'react-router-dom';
 import { Route } from 'react-router';
-import { DomainHomeHeader, DomainHomeNav } from 'app/components/Domains';
+import { DomainHomeHeader, DomainHomeNav } from 'app/components/Domain';
 import style from './style.css';
 
 export const DomainHomeContainer = observer(() => {
@@ -16,10 +16,7 @@ export const DomainHomeContainer = observer(() => {
       </div>
       <Switch>
         <Route exact path="/domain/:url/">
-          sb
-        </Route>
-        <Route path="/domain/:url/settings">
-          sb2
+          Home page
         </Route>
       </Switch>
     </div>

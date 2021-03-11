@@ -45,7 +45,9 @@ export const Domains = observer(() => {
             <List.Item
               actions={[
                 <Button>
-                  {t('DOMAIN.SETTINGS')}
+                  <Link to={`/domain/${item.url}/settings`}>
+                    {t('DOMAIN.SETTINGS')}
+                  </Link>
                 </Button>,
                 <Button>
                   {t('DOMAIN.LEAVE')}

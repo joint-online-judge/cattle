@@ -36,6 +36,12 @@
     "I18NLANG": "Language",
     "TIMEZONE": "Timezone",
     "UPDATE_SETTINGS": "Update Settings",
-    "DISPLAY_SETTINGS": "Display Settings"
+    "DISPLAY_SETTINGS": "Display Settings",
+    "DOMAIN": {
+      "PROFILE": "Profile",
+      "INVITATION": "Invitation",
+      "MEMBERS": "Members",
+      "UPDATE": "Update"
+    }
   }
 }

@@ -1,35 +1,41 @@
 import { observer } from 'mobx-react';
-import React from 'react';
+import React, { ReactElement } from 'react';
 import {
-  Button, Form, Input, Typography,
+  Button, Form, Input,
 } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { DomainService } from '@/client';
-import { useHistory } from 'react-router';
+import { useHistory, useParams } from 'react-router';
 import style from './style.css';
 
-const { Title } = Typography;
+export interface CreateUpdateDomainFormProps {
+  method: 'put' | 'post';
+}
 
-export const CreateDomain = observer((props) => {
-  const { t } = useTranslation();
-  const history = useHistory();
-  const onFinish = async ({
-                            url, name, gravatar, bulletin,
-                          }) => {
-    await DomainService.createDomainApiV1DomainsPost(url, name,
-      bulletin, gravatar);
-    history.push(`/domain/${url}`);
-  };
-  /* todo: add helper */
-  /* todo: add onChange on URL/ID field to ensure unique field */
-  return (
-    <div id={style.CreateDomain}>
-      <Title id={style.CreateTitle}>{t('DOMAIN.CREATE_A_NEW_DOMAIN')}</Title>
+export const CreateUpdateDomainForm = observer(
+  (props: CreateUpdateDomainFormProps): ReactElement<CreateUpdateDomainFormProps, any> => {
+    const params = useParams<{ url: string }>();
+    const updateMode = props.method === 'put' && Boolean(params.url);
+    const { t } = useTranslation();
+    const history = useHistory();
+    const onFinish = async ({
+                              url, name, gravatar, bulletin,
+                            }) => {
+      // redirect to the newly created form
+      if (updateMode) {
+        await DomainService.updateDomainApiV1DomainsDomainPatch(url,
+          { gravatar, bulletin, name });
+      } else {
+        await DomainService.createDomainApiV1DomainsPost(url, name,
+          bulletin, gravatar);
+        history.push(`/domain/${url}`);
+      }
+    };
+    return (
       <Form
         onFinish={onFinish}
         layout="vertical"
-        id={style.CreateForm}
-        {...props}
+        id={updateMode ? style.UpdateForm : style.CreateForm}
       >
         <Form.Item
           name="name"
@@ -76,10 +82,10 @@ export const CreateDomain = observer((props) => {
             type="primary"
             id={style.SubmitButton}
           >
-            {t('DOMAIN.CREATE.CREATE')}
+            {t(updateMode ? 'SETTINGS.DOMAIN.UPDATE' : 'DOMAIN.CREATE.CREATE')}
           </Button>
         </Form.Item>
       </Form>
-    </div>
-  );
-});
+    );
+  },
+);

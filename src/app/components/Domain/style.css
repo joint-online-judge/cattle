@@ -13,8 +13,18 @@
   margin: 0 auto;
 }
 
+#UpdateForm {
+  width: 60%;
+}
+
 #SubmitButton {
   width: 100% !important;
   height: 50px;
   margin-top: 20px;
+}
+
+@media only screen and (max-width: 767px) {
+  #UpdateForm {
+    width: 78%
+  }
 }

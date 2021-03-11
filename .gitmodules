@@ -1,4 +1,4 @@
 [submodule "openapi"]
 	path = openapi
 	url = git@github.com:joint-online-judge/horse.git
-	branch = openapi
+	branch = openapi-develop
