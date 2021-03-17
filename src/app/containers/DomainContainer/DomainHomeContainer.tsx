@@ -7,8 +7,8 @@ import style from './style.css';
 
 export const DomainHomeContainer = observer(() => {
   return (
-    <div id={style.DomainHome}>
-      <div id={style.DomainHomeHeaderWrapper}>
+    <div className={style.DomainHome}>
+      <div className={style.DomainHomeHeaderWrapper}>
         <DomainHomeHeader />
         <Route path="/domain/:url/">
           <DomainHomeNav />

@@ -10,7 +10,7 @@ export const Header = observer(() => {
   return (
     <Menu
       mode="horizontal"
-      id={style.Header}
+      className={style.Header}
       selectable={false}
     >
       <Menu.Item key="test" className={style.HeaderItem}>

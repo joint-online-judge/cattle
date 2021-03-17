@@ -2,12 +2,12 @@
   margin: 0 auto
 }
 
-#DomainHome {
+.DomainHome {
   margin: auto;
 
 }
 
-#DomainHomeHeaderWrapper {
+.DomainHomeHeaderWrapper {
   border-bottom: #eaecef 1px solid;
 }
 

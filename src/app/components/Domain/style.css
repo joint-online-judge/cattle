@@ -1,23 +1,23 @@
-#CreateDomain {
+.CreateDomain {
   max-width: 768px;
   margin: 60px auto auto auto;
 }
 
-#CreateTitle {
+.CreateTitle {
   margin: auto;
   text-align: center;
 }
 
-#CreateForm {
+.CreateForm {
   max-width: 544px;
   margin: 0 auto;
 }
 
-#UpdateForm {
+.UpdateForm {
   width: 60%;
 }
 
-#SubmitButton {
+.SubmitButton {
   width: 100% !important;
   height: 50px;
   margin-top: 20px;
@@ -33,7 +33,7 @@
 }
 
 @media only screen and (max-width: 767px) {
-  #UpdateForm {
+  .UpdateForm {
     width: 78%
   }
 }

@@ -1,13 +1,13 @@
-#HomeHeader {
+.HomeHeader {
   margin: auto;
   max-width: 1012px;
 }
 
-#HomeTitle {
+.HomeTitle {
   line-height: 100px;
 }
 
-#HomeNav {
+.HomeNav {
   max-width: 1012px;
   margin: auto;
   border: none;
@@ -20,24 +20,24 @@
 }
 
 @media screen and (min-width: 544px) {
-  #HomeHeader {
+  .HomeHeader {
     padding-left: 40px !important;
     padding-right: 40px !important;
   }
 
-  #HomeNav {
+  .HomeNav {
     padding-left: 40px !important;
     padding-right: 40px !important;
   }
 }
 
 @media screen and (min-width: 1012px) {
-  #HomeHeader {
+  .HomeHeader {
     padding-left: 16px !important;
     padding-right: 16px !important;
   }
 
-  #HomeNav {
+  .HomeNav {
     padding-left: 16px !important;
     padding-right: 16px !important;
   }

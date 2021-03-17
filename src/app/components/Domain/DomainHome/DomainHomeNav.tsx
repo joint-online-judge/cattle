@@ -45,7 +45,7 @@ export const DomainHomeNav = observer(() => {
   return (
     <Menu
       mode="horizontal"
-      id={style.HomeNav}
+      className={style.HomeNav}
       defaultSelectedKeys={[defaultKey || menuItems[0].key]}
     >
       {

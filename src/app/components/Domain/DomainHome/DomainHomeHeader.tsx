@@ -18,7 +18,7 @@ export const DomainHomeHeader = observer(() => {
   return (
     <Spin spinning={domainHook.loading}>
       {domainHook.loading ? null : (
-        <Typography id={style.HomeHeader}>
+        <Typography className={style.HomeHeader}>
           <Row
             gutter={{ xs: 16, md: 24 }}
             justify="center"
@@ -34,7 +34,7 @@ export const DomainHomeHeader = observer(() => {
             <Col flex="auto">
               <Title
                 level={3}
-                id={style.HomeTitle}
+                className={style.HomeTitle}
               >
                 {domainHook.data.name}
               </Title>
