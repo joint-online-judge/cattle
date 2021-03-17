@@ -13,6 +13,12 @@
   border: none;
 }
 
+.SettingsTitle {
+  border-bottom: #eaecef 1px solid;
+  padding: 0 0 8px 0 !important;
+  margin-bottom: 15px !important;
+}
+
 @media screen and (min-width: 544px) {
   #HomeHeader {
     padding-left: 40px !important;

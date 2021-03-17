@@ -23,6 +23,15 @@
   margin-top: 20px;
 }
 
+.DomainsTitle {
+  padding: 0 0 8px 0 !important;
+  margin-bottom: 15px !important;
+}
+
+.DomainListItem {
+  padding: 16px 8px 16px 16px !important;
+}
+
 @media only screen and (max-width: 767px) {
   #UpdateForm {
     width: 78%

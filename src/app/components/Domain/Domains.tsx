@@ -15,6 +15,7 @@ import { useRequest } from 'ahooks';
 
 import { DomainService } from '@/client';
 import { gravatarImageUrl } from 'app/utils';
+import style from './style.css';
 
 const { Text } = Typography;
 export const Domains = observer(() => {
@@ -27,7 +28,7 @@ export const Domains = observer(() => {
       <Spin spinning={domainListHook.loading}>
         <PageHeader
           title={t('DOMAIN.DOMAINS')}
-          className="SettingsHeader"
+          className={style.DomainsTitle}
           extra={[
             <Button key="domain-create">
               <Link to="/domain/create">
@@ -43,6 +44,7 @@ export const Domains = observer(() => {
           split
           renderItem={(item) => (
             <List.Item
+              className={style.DomainListItem}
               actions={[
                 <Button>
                   <Link to={`/domain/${item.url}/settings`}>
