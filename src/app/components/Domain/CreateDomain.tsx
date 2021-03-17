@@ -16,7 +16,7 @@ export const CreateDomain = observer(() => {
   return (
     <div id={style.CreateDomain}>
       <Title id={style.CreateTitle}>{t('DOMAIN.CREATE_A_NEW_DOMAIN')}</Title>
-      <CreateUpdateDomainForm method="post" />
+      <CreateUpdateDomainForm />
     </div>
   );
 });

@@ -5,17 +5,16 @@ import {
 } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { DomainService } from '@/client';
-import { useHistory, useParams } from 'react-router';
+import { useHistory } from 'react-router';
 import style from './style.css';
 
 export interface CreateUpdateDomainFormProps {
-  method: 'put' | 'post';
+  domainUrl?: string;
 }
 
 export const CreateUpdateDomainForm = observer(
   (props: CreateUpdateDomainFormProps): ReactElement<CreateUpdateDomainFormProps, any> => {
-    const params = useParams<{ url: string }>();
-    const updateMode = props.method === 'put' && Boolean(params.url);
+    const updateMode = Boolean(props.domainUrl);
     const { t } = useTranslation();
     const history = useHistory();
     const onFinish = async ({
