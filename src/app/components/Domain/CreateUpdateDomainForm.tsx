@@ -25,8 +25,12 @@ export const CreateUpdateDomainForm = observer(
         await DomainService.updateDomainApiV1DomainsDomainPatch(url,
           { gravatar, bulletin, name });
       } else {
-        await DomainService.createDomainApiV1DomainsPost(url, name,
-          bulletin, gravatar);
+        await DomainService.createDomainApiV1DomainsPost({
+          url,
+          name,
+          bulletin,
+          gravatar,
+        });
         history.push(`/domain/${url}`);
       }
     };
