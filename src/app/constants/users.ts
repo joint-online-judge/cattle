@@ -1,1 +1,1 @@
-export const LOCAL_STORAGE_USER_KEY = 'JOJ2.0_USER';
+export const LOCAL_STORAGE_USER_KEY = 'JOJ_USER';
