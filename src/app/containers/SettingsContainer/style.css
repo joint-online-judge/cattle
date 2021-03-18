@@ -1,20 +1,7 @@
 .SettingContainer {
   margin-right: auto;
   margin-left: auto;
-  width: 980px;
-  font-size: 14px;
-  line-height: 1.5;
+  max-width: 980px;
+  width: 90%;
 }
 
-
-@media only screen and (min-width: 768px) and (max-width: 1089px) {
-  .SettingContainer {
-    width: 90vw;
-  }
-}
-
-@media only screen and (max-width: 767px) {
-  .SettingContainer {
-    width: 85vw;
-  }
-}

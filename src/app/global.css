@@ -18,9 +18,3 @@
 .ant-space {
   width: 100%
 }
-
-@media only screen and (max-width: 767px) {
-  .ant-page-header {
-    padding-top: 30px;
-  }
-}

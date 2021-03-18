@@ -1,5 +1,6 @@
 .SettingsForm {
-  width: 60%
+  width: 90%;
+  max-width: 440px;
 }
 
 .UserInfoHeader {
@@ -13,10 +14,5 @@
   margin-bottom: 15px !important;
 }
 
-@media only screen and (max-width: 767px) {
-  .SettingsForm {
-    width: 78%
-  }
-}
 
 

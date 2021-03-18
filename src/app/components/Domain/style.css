@@ -11,10 +11,7 @@
 .CreateForm {
   max-width: 544px;
   margin: 0 auto;
-}
-
-.UpdateForm {
-  width: 60%;
+  width: 90%;
 }
 
 .SubmitButton {
@@ -32,8 +29,3 @@
   padding: 16px 8px 16px 16px !important;
 }
 
-@media only screen and (max-width: 767px) {
-  .UpdateForm {
-    width: 78%
-  }
-}

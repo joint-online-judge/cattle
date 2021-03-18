@@ -38,7 +38,7 @@ export const CreateUpdateDomainForm = observer(
       <Form
         onFinish={onFinish}
         layout="vertical"
-        className={updateMode ? style.UpdateForm : style.CreateForm}
+        className={updateMode ? null : style.CreateForm}
       >
         <Form.Item
           name="name"

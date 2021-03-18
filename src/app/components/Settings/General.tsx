@@ -7,6 +7,7 @@ import { useTranslation } from 'react-i18next';
 import { DisplaySettings } from 'app/models/SettingsModel';
 import { SUPPORT_LANGUAGES } from 'app/constants/i18n';
 import { useSettings } from 'app/contexts';
+import { SettingsStyleWrapper } from 'app/components';
 import style from './style.css';
 
 const options = {
@@ -32,46 +33,47 @@ export const General = observer(() => {
         title={t('SETTINGS.DISPLAY_SETTINGS')}
         className={style.SettingsTitle}
       />
-      <Form
-        form={form}
-        name="general-settings"
-        initialValues={settings.settings.displaySettings}
-        layout="vertical"
-        onFinish={onFinish}
-        className={style.SettingsForm}
-      >
-        {
-          (Object.keys(settings.settings.displaySettings)).map((key) => (
-            <Form.Item
-              label={(
-                <b>
-                  {t(`SETTINGS.${key.toUpperCase()}`)}
-                </b>
-              )}
-              name={key}
-              key={key}
-            >
-              <Select>
-                {
-                  options[key].map((_optionValue) => (
-                    <Select.Option
-                      value={_optionValue}
-                      key={_optionValue}
-                    >
-                      {_optionValue}
-                    </Select.Option>
-                  ))
-                }
-              </Select>
-            </Form.Item>
-          ))
-        }
-        <Form.Item>
-          <Button type="primary" htmlType="submit">
-            {t('SETTINGS.UPDATE_SETTINGS')}
-          </Button>
-        </Form.Item>
-      </Form>
+      <SettingsStyleWrapper type="form">
+        <Form
+          form={form}
+          name="general-settings"
+          initialValues={settings.settings.displaySettings}
+          layout="vertical"
+          onFinish={onFinish}
+        >
+          {
+            (Object.keys(settings.settings.displaySettings)).map((key) => (
+              <Form.Item
+                label={(
+                  <b>
+                    {t(`SETTINGS.${key.toUpperCase()}`)}
+                  </b>
+                )}
+                name={key}
+                key={key}
+              >
+                <Select>
+                  {
+                    options[key].map((_optionValue) => (
+                      <Select.Option
+                        value={_optionValue}
+                        key={_optionValue}
+                      >
+                        {_optionValue}
+                      </Select.Option>
+                    ))
+                  }
+                </Select>
+              </Form.Item>
+            ))
+          }
+          <Form.Item>
+            <Button type="primary" htmlType="submit">
+              {t('SETTINGS.UPDATE_SETTINGS')}
+            </Button>
+          </Form.Item>
+        </Form>
+      </SettingsStyleWrapper>
     </>
   );
 });

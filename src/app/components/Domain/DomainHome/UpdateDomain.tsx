@@ -1,6 +1,6 @@
 import { observer } from 'mobx-react';
 import React from 'react';
-import { CreateUpdateDomainForm } from 'app/components';
+import { CreateUpdateDomainForm, SettingsStyleWrapper } from 'app/components';
 import { PageHeader } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router';
@@ -15,7 +15,9 @@ export const UpdateDomain = observer(() => {
         title={t('SETTINGS.DOMAIN.PROFILE')}
         className={style.SettingsTitle}
       />
-      <CreateUpdateDomainForm domainUrl={url} />
+      <SettingsStyleWrapper type="form">
+        <CreateUpdateDomainForm domainUrl={url} />
+      </SettingsStyleWrapper>
     </>
   );
 });

@@ -26,18 +26,27 @@ export const SettingsContainer = observer(
         <Row>
           <SettingsHeader mode={mode} />
         </Row>
-        <Row>
+        <Row
+          gutter={[
+            {
+              md: 24,
+            }, {
+              xs: 16,
+              sm: 16,
+              md: 16,
+            }]}
+        >
           <Col
             xs={24}
             sm={24}
-            md={6}
+            md={5}
           >
             <SettingsSideBar items={items} />
           </Col>
           <Col
             xs={24}
             sm={24}
-            md={18}
+            md={19}
           >
             <Route
               exact

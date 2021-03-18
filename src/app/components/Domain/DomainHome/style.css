@@ -4,7 +4,7 @@
 }
 
 .HomeTitle {
-  line-height: 100px;
+  line-height: 100px !important;
 }
 
 .HomeNav {
@@ -17,29 +17,5 @@
   border-bottom: #eaecef 1px solid;
   padding: 0 0 8px 0 !important;
   margin-bottom: 15px !important;
-}
-
-@media screen and (min-width: 544px) {
-  .HomeHeader {
-    padding-left: 40px !important;
-    padding-right: 40px !important;
-  }
-
-  .HomeNav {
-    padding-left: 40px !important;
-    padding-right: 40px !important;
-  }
-}
-
-@media screen and (min-width: 1012px) {
-  .HomeHeader {
-    padding-left: 16px !important;
-    padding-right: 16px !important;
-  }
-
-  .HomeNav {
-    padding-left: 16px !important;
-    padding-right: 16px !important;
-  }
 }
 
