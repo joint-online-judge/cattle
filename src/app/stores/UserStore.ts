@@ -17,7 +17,7 @@ export const useUserStore = (user: UserModel) => {
     async login() {
       try {
         // assume that profile here is type<User>
-        const profile = await UserService.getUserApiV1UsersUidGet('me');
+        const profile = await UserService.getUserApiV1UserGet();
         if (profile) {
           store.setProfile(profile as User);
         }

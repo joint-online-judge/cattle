@@ -8,7 +8,7 @@ import {
   Typography,
   ConfigProvider,
 } from 'antd';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { useRequest } from 'ahooks';
@@ -20,12 +20,17 @@ import style from './style.css';
 const { Text } = Typography;
 export const Domains = observer(() => {
   const { t } = useTranslation();
-  const domainListHook = useRequest(async () => {
+  const { data, run } = useRequest(async () => {
     return DomainService.listDomainsApiV1DomainsGet();
-  });
+  }, { manual: true });
+  useEffect(() => {
+    (async () => {
+      await run();
+    })();
+  }, []);
   return (
     <ConfigProvider autoInsertSpaceInButton={false}>
-      <Spin spinning={domainListHook.loading}>
+      <Spin spinning={!data}>
         <PageHeader
           title={t('DOMAIN.DOMAINS')}
           className={style.DomainsTitle}
@@ -39,7 +44,7 @@ export const Domains = observer(() => {
         />
         <List
           itemLayout="horizontal"
-          dataSource={domainListHook.data}
+          dataSource={data}
           bordered
           split
           renderItem={(item) => (

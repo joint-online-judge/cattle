@@ -1,5 +1,5 @@
 import { observer } from 'mobx-react';
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useEffect } from 'react';
 import { PageHeader, Spin } from 'antd';
 import { useAuth } from 'app/contexts';
 import { gravatarImageUrl } from 'app/utils';
@@ -30,18 +30,22 @@ export const SettingsHeader = observer(
       }
       case 'domain': {
         const { url } = useParams<{ url: string }>();
-        const { loading, data } = useRequest(async () => {
+        const { run, data } = useRequest(async () => {
           return DomainService.getDomainApiV1DomainsDomainGet(url);
-        });
-        return loading ? <Spin />
-          : (
-            <PageHeader
-              className={style.UserInfoHeader}
-              title={data.name}
-              subTitle={data.url}
-              avatar={{ src: gravatarImageUrl(data.gravatar) }}
-            />
-          );
+        }, { manual: true });
+        useEffect(() => {
+          (async () => {
+            await run();
+          })();
+        }, []);
+        return data ? (
+          <PageHeader
+            className={style.UserInfoHeader}
+            title={data.name}
+            subTitle={data.url}
+            avatar={{ src: gravatarImageUrl(data.gravatar) }}
+          />
+        ) : <Spin />;
       }
     }
   },
