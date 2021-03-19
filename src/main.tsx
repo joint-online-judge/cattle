@@ -1,8 +1,8 @@
-import * as React from 'react';
-import * as ReactDOM from 'react-dom';
+import React from 'react';
+import ReactDOM from 'react-dom';
 import { createBrowserHistory } from 'history';
 import { App } from 'app';
-import './i18n';
+import 'app/i18n';
 
 // use history mode browser
 const history = createBrowserHistory();

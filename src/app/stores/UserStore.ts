@@ -1,6 +1,6 @@
 import { useLocalStore } from 'mobx-react';
 import { UserModel } from 'app/models';
-import { UserBase, UserService } from '@/client';
+import { User, UserService } from '@/client';
 import { LOCAL_STORAGE_USER_KEY } from 'app/constants';
 import { autoSaveJson } from 'app/utils';
 
@@ -16,13 +16,14 @@ export const useUserStore = (user: UserModel) => {
     },
     async login() {
       try {
-        const profile = await UserService.getUserApiV1UserUidGet('me');
+        // assume that profile here is type<User>
+        const profile = await UserService.getUserApiV1UserGet();
         if (profile) {
-          store.setProfile(profile);
+          store.setProfile(profile as User);
         }
-        return Promise.resolve();
+        return await Promise.resolve();
       } catch (err) {
-        return Promise.reject();
+        return await Promise.reject();
       }
     },
     logout() {
@@ -30,9 +31,11 @@ export const useUserStore = (user: UserModel) => {
         scope: '',
         uname: '',
         mail: '',
+        register_timestamp: '',
+        login_timestamp: '',
       });
     },
-    setProfile(_profile: UserBase): void {
+    setProfile(_profile: User): void {
       store.user.profile = _profile;
     },
   }));

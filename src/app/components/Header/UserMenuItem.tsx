@@ -5,8 +5,8 @@ import { Dropdown, Menu } from 'antd';
 import { Link } from 'react-router-dom';
 import { gravatarImageUrl } from 'app/utils';
 import { DownOutlined } from '@ant-design/icons';
-import { useAuth } from 'app/components/Auth';
-import * as style from './style.css';
+import { useAuth } from 'app/contexts';
+import style from './style.css';
 
 interface LoggedInSubMenuItem {
   key: string;
@@ -17,6 +17,7 @@ interface LoggedInSubMenuItem {
 export const UserMenuItem = observer(() => {
   const { t } = useTranslation();
   const auth = useAuth();
+  // divider name has no actual meaning just to be a key of the divider component to pass eslint
   const LoggedInSubMenuArrange: (LoggedInSubMenuItem | string)[] = [
     {
       key: 'username',
@@ -25,16 +26,20 @@ export const UserMenuItem = observer(() => {
     },
     'username-profile-divider',
     {
-      key: 'PROFILE',
+      key: 'USER.PROFILE',
       path: `/user/${auth.profile.uname}`,
+    },
+    {
+      key: 'DOMAIN.DOMAINS',
+      path: '/settings/domains',
     },
     'profile-setting-divider',
     {
-      key: 'SETTINGS',
-      path: '/settings/profile',
+      key: 'SETTINGS.SETTINGS',
+      path: '/settings',
     },
     {
-      key: 'LOG_OUT',
+      key: 'USER.LOG_OUT',
       path: '/logout',
     },
   ];
@@ -69,12 +74,12 @@ export const UserMenuItem = observer(() => {
           <img
             src={gravatarImageUrl(auth.profile.gravatar, 20)}
             alt={`@${auth.profile.uname}`}
-            id={style.Gravatar}
+            className={style.Gravatar}
           />
           <DownOutlined />
         </span>
       </Dropdown>
     ) : (
-      <Link to="/login">{t('JACCOUNT_LOG_IN')}</Link>
+      <Link to="/login">{t('USER.LOGIN.JACCOUNT_LOG_IN')}</Link>
     );
 });

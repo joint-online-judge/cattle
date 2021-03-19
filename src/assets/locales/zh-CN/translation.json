@@ -1,7 +1,47 @@
 {
   "TEST": "大史历历",
-  "PROFILE": "我的资料",
-  "SETTINGS": "偏好设置",
-  "JACCOUNT_LOG_IN": "jAccount 登录",
-  "LOG_OUT": "登出"
+  "USER": {
+    "PROFILE": "我的资料",
+    "LOGIN": {
+      "JACCOUNT_LOG_IN": "jAccount 登录",
+      "REDIRECTING": "正在跳转到登录界面..."
+    },
+    "LOG_OUT": "登出"
+  },
+  "DOMAIN": {
+    "DOMAINS": "我的域",
+    "SETTINGS": "设置",
+    "NEW_DOMAIN": "新建域",
+    "LEAVE": "退出",
+    "CREATE_A_NEW_DOMAIN": "创建域",
+    "CREATE": {
+      "NAME": "名字",
+      "URL": "域网址 (ID)",
+      "GRAVATAR": "Gravatar 邮箱",
+      "BULLETIN": "公告",
+      "CREATE": "创建"
+    },
+    "HOME": {
+      "ASSIGNMENTS": "作业",
+      "PROBLEMS": "题目",
+      "MEMBERS": "成员",
+      "SETTINGS": "设置"
+    }
+  },
+  "SETTINGS": {
+    "SETTINGS": "偏好设置",
+    "GENERAL_SETTINGS": "通用设置",
+    "ACCOUNT_SETTINGS": "账户设置",
+    "SECURITY_SETTINGS": "安全设置",
+    "I18NLANG": "语言",
+    "TIMEZONE": "时区",
+    "UPDATE_SETTINGS": "更新设置",
+    "DISPLAY_SETTINGS": "显示设置",
+    "DOMAIN": {
+      "PROFILE": "基本资料",
+      "INVITATION": "成员邀请",
+      "MEMBERS": "成员管理",
+      "UPDATE": "更新"
+    }
+  }
 }

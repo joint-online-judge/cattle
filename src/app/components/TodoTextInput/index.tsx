@@ -1,6 +1,6 @@
-import * as React from 'react';
-import * as classNames from 'classnames';
-import * as style from './style.css';
+import React from 'react';
+import classNames from 'classnames';
+import style from './style.css';
 
 export interface TodoTextInputProps {
   text?: string;

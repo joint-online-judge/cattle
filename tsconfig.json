@@ -21,7 +21,8 @@
       "app/*": ["./app/*"],
       "client/*": ["./client/*"],
       "@/*": ["./*"],
-    }
+    },
+    "resolveJsonModule": true
   },
   "exclude": ["dist", "build", "node_modules"]
 }

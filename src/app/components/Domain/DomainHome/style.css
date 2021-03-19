@@ -1,0 +1,21 @@
+.HomeHeader {
+  margin: auto;
+  max-width: 1012px;
+}
+
+.HomeTitle {
+  line-height: 100px !important;
+}
+
+.HomeNav {
+  max-width: 1012px;
+  margin: auto;
+  border: none;
+}
+
+.SettingsTitle {
+  border-bottom: #eaecef 1px solid;
+  padding: 0 0 8px 0 !important;
+  margin-bottom: 15px !important;
+}
+

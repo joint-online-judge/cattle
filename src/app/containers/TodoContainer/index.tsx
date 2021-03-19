@@ -1,5 +1,5 @@
-import * as React from 'react';
-// import * as style from './style.css';
+import React from 'react';
+// import style from './global.css';
 import { observer } from 'mobx-react';
 import { useLocation, useHistory } from 'react-router';
 import { Footer } from 'app/components/Footer';
@@ -9,7 +9,6 @@ import { useTodoStore } from 'app/stores/TodoStore';
 import { TODO_FILTER_LOCATION_HASH, TodoFilter } from 'app/constants';
 import { Button, Spin } from 'antd';
 import { useRequest } from 'ahooks';
-import { DomainService } from 'client';
 
 export const TodoContainer = observer(() => {
   const todoStore = useTodoStore([
@@ -22,7 +21,8 @@ export const TodoContainer = observer(() => {
   const [count, setCount] = React.useState(0);
 
   const { loading, run } = useRequest(async () => {
-    const res = await DomainService.listUserDomainsApiV1DomainListGet();
+    // const res = await DomainService.listUserDomainsApiV1DomainListGet();
+    const res = '';
     console.log(res);
   }, { manual: true });
 

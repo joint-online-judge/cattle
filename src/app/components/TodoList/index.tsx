@@ -1,7 +1,7 @@
-import * as React from 'react';
+import React from 'react';
 import { TodoItem, TodoActions } from 'app/components/TodoItem';
 import { TodoModel } from 'app/models/TodoModel';
-import * as style from './style.css';
+import style from './style.css';
 
 export interface TodoListProps extends TodoActions {
   todos: TodoModel[];

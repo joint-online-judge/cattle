@@ -1,0 +1,20 @@
+/* ant design modification */
+.ant-btn {
+  border-radius: 6px;
+}
+
+.ant-select > div {
+  border-radius: 6px !important;
+}
+
+.ant-input {
+  border-radius: 6px;
+}
+
+.ant-list {
+  border-radius: 6px;
+}
+
+.ant-space {
+  width: 100%
+}
