@@ -11,9 +11,14 @@
     "start": "webpack serve --mode development --hot --progress --host 127.0.0.1 --port 3000 --open --color",
     "build": "cross-env NODE_ENV=prod webpack --mode production --progress --color",
     "prettier": "prettier --write \"src/**/*.{ts,tsx,css}\"",
-    "lint": "eslint src/* --no-error-on-unmatched-pattern",
-    "pre-commit": "npm run lint",
+    "lint": "eslint src/* --no-error-on-unmatched-pattern --fix",
+    "pre-commit": "git-format-staged -f 'prettier --ignore-unknown' 'src/**/*.{ts,tsx,css}' && npm run lint",
     "postinstall": "husky install"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run pre-commit"
+    }
   },
   "license": "MIT",
   "devDependencies": {
@@ -43,6 +48,7 @@
     "eslint-plugin-react": "^7.21.5",
     "eslint-plugin-react-hooks": "^4.2.0",
     "file-loader": "^6.2.0",
+    "git-format-staged": "^2.1.1",
     "html-loader": "^2.1.1",
     "html-webpack-plugin": "^5.2.0",
     "husky": "^5.0.6",
