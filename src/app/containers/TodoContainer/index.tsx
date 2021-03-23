@@ -1,8 +1,7 @@
 import React from 'react';
 // import style from './global.css';
 import { observer } from 'mobx-react';
-import { useLocation, useHistory } from 'react-router';
-import { Footer } from 'app/components/Footer';
+import { useLocation } from 'react-router';
 import { TodoList } from 'app/components/TodoList';
 import { TodoModel } from 'app/models';
 import { useTodoStore } from 'app/stores/TodoStore';
@@ -15,7 +14,6 @@ export const TodoContainer = observer(() => {
     new TodoModel('Use MobX'),
     new TodoModel('Use React'),
   ]);
-  const history = useHistory();
   const location = useLocation();
   const [filter, setFilter] = React.useState(TodoFilter.ALL);
   const [count, setCount] = React.useState(0);
@@ -40,16 +38,6 @@ export const TodoContainer = observer(() => {
       .find((item) => TODO_FILTER_LOCATION_HASH[item] === location.hash);
     setFilter(nextFilter ?? TodoFilter.ALL);
   }, [location.hash, setFilter]);
-
-  // filter change callback
-  const handleFilterChange = React.useCallback(
-    (nextFilter: TodoFilter) => {
-      setFilter(nextFilter);
-      const nextHash = TODO_FILTER_LOCATION_HASH[nextFilter];
-      history.replace(nextHash);
-    },
-    [history, setFilter],
-  );
 
   const itemsToDisplay = filter === TodoFilter.ALL
     ? todoStore.todos
@@ -77,13 +65,6 @@ export const TodoContainer = observer(() => {
         completeAll={todoStore.completeAll}
         deleteTodo={todoStore.deleteTodo}
         editTodo={todoStore.editTodo}
-      />
-      <Footer
-        filter={filter}
-        activeCount={todoStore.activeTodos.length}
-        completedCount={todoStore.completedTodos.length}
-        onClearCompleted={todoStore.clearCompleted}
-        onChangeFilter={handleFilterChange}
       />
     </div>
   );
