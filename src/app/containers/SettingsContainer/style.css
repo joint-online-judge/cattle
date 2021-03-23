@@ -1,7 +1,8 @@
 .SettingContainer {
   margin-right: auto;
   margin-left: auto;
-  max-width: 980px;
+  max-width: 1012px;
+  padding: 0 16px;
   width: 90%;
 }
 

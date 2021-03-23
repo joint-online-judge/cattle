@@ -18,3 +18,7 @@
 .ant-space {
   width: 100%
 }
+
+.BodyWrapper {
+  max-width: 1012px;
+}
