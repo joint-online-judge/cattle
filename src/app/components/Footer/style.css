@@ -1,0 +1,26 @@
+.FooterWrapper {
+  border-top: 1px solid #f0f0f0;
+  padding: 20px 0;
+}
+
+.Footer {
+  margin: auto;
+  width: 90%;
+  max-width: 1012px;
+}
+
+.Link:hover {
+  text-decoration: underline rgba(0, 0, 0, 0.45);
+}
+
+.FooterItem {
+  border-right: 1px solid #d2d2d7;
+  padding-right: 10px;
+  margin-right: 10px;
+}
+
+.GithubIcon {
+  font-size: 20px;
+  margin: auto;
+  color: black;
+}

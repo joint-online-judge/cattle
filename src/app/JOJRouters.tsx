@@ -11,6 +11,7 @@ import { ConfigProvider } from 'antd';
 import React from 'react';
 import { useSettings } from 'app/contexts';
 import { SUPPORT_LANGUAGES } from 'app/constants/i18n';
+import { FooterContainer } from 'app/containers/FooterContainer';
 
 export const JOJRouters = observer(({ history }) => {
   const settings = useSettings();
@@ -35,6 +36,9 @@ export const JOJRouters = observer(({ history }) => {
           <PrivateRoute path="/domain">
             <DomainContainer />
           </PrivateRoute>
+        </Switch>
+        <Switch>
+          <Route path="/" component={FooterContainer} />
         </Switch>
       </Router>
     </ConfigProvider>
