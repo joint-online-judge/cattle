@@ -22,3 +22,14 @@
 .BodyWrapper {
   max-width: 1012px;
 }
+
+.PageLayout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+}
+
+.PageContent {
+  flex: 1;
+}
+

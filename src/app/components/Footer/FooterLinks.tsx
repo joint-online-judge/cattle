@@ -41,11 +41,9 @@ export const FooterLinks = observer(() => {
       {
         items.map((item) => {
           return (
-            <div className={style.FooterItem}>
+            <div className={style.FooterItem} key={`${item.name}${item.path}`}>
               <Link to={item.path}>
-                <Typography.Link>
-                  {t(item.name)}
-                </Typography.Link>
+                {t(item.name)}
               </Link>
             </div>
           );

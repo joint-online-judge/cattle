@@ -14,5 +14,18 @@
   margin-bottom: 15px !important;
 }
 
+.SettingsPage {
+  margin-right: auto;
+  margin-left: auto;
+  max-width: 1012px;
+  padding: 0 16px;
+  width: 90%;
+}
+
+.SettingsSideBar {
+  width: 100%;
+  border-radius: 6px;
+  border: 1px solid #f0f0f0;
+}
 
 

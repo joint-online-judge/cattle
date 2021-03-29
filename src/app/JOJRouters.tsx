@@ -22,7 +22,6 @@ export const JOJRouters = observer(({ history }) => {
           <Route path="/login" component={LoginContainer} />
           <Route path="/logout" component={LogoutContainer} />
           <Route exact path="/" component={TodoContainer} />
-          <PrivateRoute path="/test" component={TodoContainer} />
           {/* ---Settings--- */}
           <PrivateRoute path="/settings" component={SettingsContainer} />
           {/* ---Settings--- */}

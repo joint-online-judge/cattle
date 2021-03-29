@@ -56,7 +56,7 @@ export const UserMenuItem = observer(() => {
               </Link>
             </Menu.Item>
           ) : (
-            <Menu.Divider key={`${item}`} />
+            <Menu.Divider key={item} />
           )))
       }
     </Menu>

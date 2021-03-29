@@ -1,14 +1,8 @@
-import React, { ReactNode } from 'react';
+import React from 'react';
 import { Domains, General, UpdateDomain } from 'app/components';
+import { SettingsMenuItem } from '@/@types';
 
-export interface MenuItem {
-  key: string;
-  path?: string;
-  node?: ReactNode;
-  component?: ReactNode;
-}
-
-const personal: (MenuItem)[] = [
+const personal: SettingsMenuItem[] = [
   {
     key: 'SETTINGS.GENERAL_SETTINGS',
     path: '/general',
@@ -29,7 +23,7 @@ const personal: (MenuItem)[] = [
   },
 ];
 
-const domain: MenuItem[] = [
+const domain: SettingsMenuItem[] = [
   {
     key: 'SETTINGS.DOMAIN.PROFILE',
     path: '/profile',

@@ -21,6 +21,7 @@
       "app/*": ["./app/*"],
       "client/*": ["./client/*"],
       "@/*": ["./*"],
+      "@types/*": ["./@types/*"]
     },
     "resolveJsonModule": true
   },

@@ -8,6 +8,7 @@ import { useTodoStore } from 'app/stores/TodoStore';
 import { TODO_FILTER_LOCATION_HASH, TodoFilter } from 'app/constants';
 import { Button, Spin } from 'antd';
 import { useRequest } from 'ahooks';
+import { Footer, Header } from 'app/components';
 
 export const TodoContainer = observer(() => {
   const todoStore = useTodoStore([
@@ -45,27 +46,31 @@ export const TodoContainer = observer(() => {
       ? todoStore.activeTodos
       : todoStore.completedTodos;
   return (
-    <div>
-      <Spin />
-      <Button type="primary" onClick={run} loading={loading}>
-        useRequest
-      </Button>
-      <Button
-        type="primary"
-        onClick={() => {
-          setCount(count + 1);
-        }}
-        loading={loading}
-      >
-        No useRequest
-      </Button>
-      <pre>{count}</pre>
-      <TodoList
-        todos={itemsToDisplay}
-        completeAll={todoStore.completeAll}
-        deleteTodo={todoStore.deleteTodo}
-        editTodo={todoStore.editTodo}
-      />
+    <div className="PageLayout">
+      <Header />
+      <div className="PageContent">
+        <Spin />
+        <Button type="primary" onClick={run} loading={loading}>
+          useRequest
+        </Button>
+        <Button
+          type="primary"
+          onClick={() => {
+            setCount(count + 1);
+          }}
+          loading={loading}
+        >
+          No useRequest
+        </Button>
+        <pre>{count}</pre>
+        <TodoList
+          todos={itemsToDisplay}
+          completeAll={todoStore.completeAll}
+          deleteTodo={todoStore.deleteTodo}
+          editTodo={todoStore.editTodo}
+        />
+      </div>
+      <Footer />
     </div>
   );
 });
