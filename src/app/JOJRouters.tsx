@@ -5,13 +5,13 @@ import {
   DomainContainer,
   LoginContainer,
   LogoutContainer,
-  NavBarContainer, SettingsContainer, TodoContainer,
+  SettingsContainer,
+  TodoContainer,
 } from 'app/containers';
 import { ConfigProvider } from 'antd';
 import React from 'react';
 import { useSettings } from 'app/contexts';
 import { SUPPORT_LANGUAGES } from 'app/constants/i18n';
-import { FooterContainer } from 'app/containers/FooterContainer';
 
 export const JOJRouters = observer(({ history }) => {
   const settings = useSettings();
@@ -21,24 +21,12 @@ export const JOJRouters = observer(({ history }) => {
         <Switch>
           <Route path="/login" component={LoginContainer} />
           <Route path="/logout" component={LogoutContainer} />
-          <Route path="/" component={NavBarContainer} />
-        </Switch>
-        <Switch>
           <Route exact path="/" component={TodoContainer} />
-          <PrivateRoute path="/test">
-            <TodoContainer />
-          </PrivateRoute>
+          <PrivateRoute path="/test" component={TodoContainer} />
           {/* ---Settings--- */}
-          <PrivateRoute path="/settings">
-            <SettingsContainer />
-          </PrivateRoute>
+          <PrivateRoute path="/settings" component={SettingsContainer} />
           {/* ---Settings--- */}
-          <PrivateRoute path="/domain">
-            <DomainContainer />
-          </PrivateRoute>
-        </Switch>
-        <Switch>
-          <Route path="/" component={FooterContainer} />
+          <PrivateRoute path="/domain" component={DomainContainer} />
         </Switch>
       </Router>
     </ConfigProvider>
