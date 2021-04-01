@@ -1,12 +1,16 @@
 import React, { ReactElement } from 'react';
 import { Col, Image, Row } from 'antd';
 import {
- Redirect, Route, Switch, useRouteMatch
+  Redirect, Route, Switch, useRouteMatch,
 } from 'react-router';
 import { SettingsHeader, SettingsSideBar } from 'app/components/Settings';
-import { SettingsPageProps } from '@types';
+import { SettingsMode } from '@/types';
 import { menuArrange } from './MenuArrange';
 import style from './style.css';
+
+export interface SettingsPageProps {
+  mode: SettingsMode;
+}
 
 export const SettingsPage = (props: SettingsPageProps): ReactElement<SettingsPageProps, any> => {
   const { mode } = props;

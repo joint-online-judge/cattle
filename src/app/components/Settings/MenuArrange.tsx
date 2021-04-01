@@ -1,6 +1,6 @@
 import React from 'react';
 import { Domains, General, UpdateDomain } from 'app/components';
-import { SettingsMenuItem } from '@/@types';
+import { SettingsMenuItem } from '@/types';
 
 const personal: SettingsMenuItem[] = [
   {

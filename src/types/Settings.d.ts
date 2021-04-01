@@ -9,17 +9,4 @@ export interface SettingsMenuItem {
   component?: ReactNode;
 }
 
-export interface SettingsPageProps {
-  mode: SettingsMode;
-}
-
-export interface SettingsSideBarProps {
-  items: SettingsMenuItem[];
-}
-
 export declare type SettingsType = 'form';
-
-export interface SettingsFormStyleWrapperProps {
-  children?: ReactNode;
-  type?: SettingsType;
-}
