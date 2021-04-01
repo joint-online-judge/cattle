@@ -19,17 +19,17 @@
   width: 100%
 }
 
-.BodyWrapper {
+.bodyWrapper {
   max-width: 1012px;
 }
 
-.PageLayout {
+.pageLayout {
   display: flex;
   flex-direction: column;
   min-height: 100%;
 }
 
-.PageContent {
+.pageContent {
   flex: 1;
 }
 

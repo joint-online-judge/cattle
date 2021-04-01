@@ -8,9 +8,9 @@ import {
 
 export const SettingsContainer = observer(() => {
   return (
-    <div className="PageLayout">
+    <div className="pageLayout">
       <Header />
-      <div className="PageContent">
+      <div className="pageContent">
         <SettingsPage mode="personal" />
       </div>
       <Footer />

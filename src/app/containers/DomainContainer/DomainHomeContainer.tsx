@@ -8,8 +8,8 @@ import style from './style.css';
 
 export const DomainHomeContainer = observer(() => {
   return (
-    <div className={style.DomainHome}>
-      <div className={style.DomainHomeHeaderWrapper}>
+    <div className={style.domainHome}>
+      <div className={style.domainHomeHeaderWrapper}>
         <Row justify="center">
           <Col
             xs={23}

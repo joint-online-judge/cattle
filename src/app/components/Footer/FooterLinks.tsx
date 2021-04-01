@@ -41,7 +41,7 @@ export const FooterLinks = observer(() => {
       {
         items.map((item) => {
           return (
-            <div className={style.FooterItem} key={`${item.name}${item.path}`}>
+            <div className={style.footerItem} key={`${item.name}${item.path}`}>
               <Link to={item.path}>
                 {t(item.name)}
               </Link>
@@ -51,7 +51,7 @@ export const FooterLinks = observer(() => {
       }
       <Col>
         <Typography.Link href="https://github.com/joint-online-judge">
-          <GithubOutlined className={style.GithubIcon} />
+          <GithubOutlined className={style.githubIcon} />
         </Typography.Link>
       </Col>
     </Row>

@@ -17,7 +17,7 @@ export const SettingsPage = (props: SettingsPageProps): ReactElement<SettingsPag
   const { path, url } = useRouteMatch();
   const items = menuArrange[mode];
   return (
-    <div className={style.SettingsPage}>
+    <div className={style.settingsPage}>
       <Row>
         <SettingsHeader mode={mode} />
       </Row>

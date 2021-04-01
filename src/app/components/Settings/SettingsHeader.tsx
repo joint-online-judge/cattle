@@ -21,7 +21,7 @@ export const SettingsHeader = observer(
         const auth = useAuth();
         return (
           <PageHeader
-            className={style.UserInfoHeader}
+            className={style.userInfoHeader}
             title={auth.profile.real_name}
             subTitle={auth.profile.student_id}
             avatar={{ src: gravatarImageUrl(auth.profile.gravatar) }}
@@ -40,7 +40,7 @@ export const SettingsHeader = observer(
         }, []);
         return data ? (
           <PageHeader
-            className={style.UserInfoHeader}
+            className={style.userInfoHeader}
             title={data.name}
             subTitle={data.url}
             avatar={{ src: gravatarImageUrl(data.gravatar) }}

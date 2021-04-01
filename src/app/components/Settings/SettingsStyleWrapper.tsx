@@ -11,7 +11,7 @@ export interface SettingsFormStyleWrapperProps {
 export const SettingsStyleWrapper = observer(
   (props: SettingsFormStyleWrapperProps): ReactElement<SettingsFormStyleWrapperProps, any> => {
     return (
-      <div className={props.type ? style.SettingsForm : null}>
+      <div className={props.type ? style.settingsForm : null}>
         {props.children}
       </div>
     );

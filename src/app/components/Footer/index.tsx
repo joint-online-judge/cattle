@@ -9,8 +9,8 @@ import style from './style.css';
 const { Text } = Typography;
 export const Footer = observer(() => {
   return (
-    <div className={style.FooterWrapper}>
-      <div className={style.Footer}>
+    <div className={style.footerWrapper}>
+      <div className={style.footer}>
         <Row>
           <Col>
             <Text type="secondary">
@@ -29,7 +29,7 @@ export const Footer = observer(() => {
             href="http://net.sjtu.edu.cn"
             target="_blank"
             rel="noopener noreferrer"
-            className={style.Link}
+            className={style.link}
           >
             <Text type="secondary">
               沪交ICP备20190085号

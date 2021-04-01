@@ -14,8 +14,8 @@ export const CreateDomain = observer(() => {
   /* todo: add helper */
   /* todo: add onChange on URL/ID field to ensure unique field */
   return (
-    <div className={style.CreateDomain}>
-      <Title className={style.CreateTitle}>{t('DOMAIN.CREATE_A_NEW_DOMAIN')}</Title>
+    <div className={style.createDomain}>
+      <Title className={style.createTitle}>{t('DOMAIN.CREATE_A_NEW_DOMAIN')}</Title>
       <CreateUpdateDomainForm />
     </div>
   );

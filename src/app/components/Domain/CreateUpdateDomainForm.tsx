@@ -38,7 +38,7 @@ export const CreateUpdateDomainForm = observer(
       <Form
         onFinish={onFinish}
         layout="vertical"
-        className={updateMode ? null : style.CreateForm}
+        className={updateMode ? null : style.createForm}
       >
         <Form.Item
           name="name"
@@ -83,7 +83,7 @@ export const CreateUpdateDomainForm = observer(
           <Button
             htmlType="submit"
             type="primary"
-            className={style.SubmitButton}
+            className={style.submitButton}
           >
             {t(updateMode ? 'SETTINGS.DOMAIN.UPDATE' : 'DOMAIN.CREATE.CREATE')}
           </Button>

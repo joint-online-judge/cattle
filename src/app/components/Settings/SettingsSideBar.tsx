@@ -23,7 +23,7 @@ export const SettingsSideBar = observer(
     return (
       <Menu
         mode="vertical"
-        className={style.SettingsSideBar}
+        className={style.settingsSideBar}
         defaultSelectedKeys={[defaultKey || items[0].key]}
       >
         {

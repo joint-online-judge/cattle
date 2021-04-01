@@ -74,7 +74,7 @@ export const UserMenuItem = observer(() => {
           <img
             src={gravatarImageUrl(auth.profile.gravatar, 20)}
             alt={`@${auth.profile.uname}`}
-            className={style.Gravatar}
+            className={style.gravatar}
           />
           <DownOutlined />
         </span>

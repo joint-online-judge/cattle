@@ -12,7 +12,7 @@ export const DomainContainer = observer(() => {
   return (
     <div className="PageLayout">
       <Header />
-      <div className={`${style.DomainContainer} PageContent`}>
+      <div className={`${style.domainContainer} pageContent`}>
         <Switch>
           <Route path={`${path}/create`} component={CreateDomain} />
           <Route path={`${path}/:url/settings`}>

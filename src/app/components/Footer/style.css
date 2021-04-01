@@ -1,27 +1,27 @@
-.FooterWrapper {
+.footerWrapper {
   border-top: 1px solid #f0f0f0;
   padding: 20px 0;
   width: 100%;
   margin-top: 20px;
 }
 
-.Footer {
+.footer {
   margin: auto;
   width: 90%;
   max-width: 1012px;
 }
 
-.Link:hover {
+.link:hover {
   text-decoration: underline rgba(0, 0, 0, 0.45);
 }
 
-.FooterItem {
+.footerItem {
   border-right: 1px solid #d2d2d7;
   padding-right: 10px;
   margin-right: 10px;
 }
 
-.GithubIcon {
+.githubIcon {
   font-size: 20px;
   margin: auto;
   color: black;
