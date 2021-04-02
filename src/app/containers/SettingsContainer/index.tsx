@@ -5,15 +5,20 @@ import {
   Header,
   SettingsPage,
 } from 'app/components';
+import { Layout } from 'antd';
 
 export const SettingsContainer = observer(() => {
   return (
-    <div className="pageLayout">
-      <Header />
-      <div className="pageContent">
+    <Layout>
+      <Layout.Header>
+        <Header />
+      </Layout.Header>
+      <Layout.Content>
         <SettingsPage mode="personal" />
-      </div>
-      <Footer />
-    </div>
+      </Layout.Content>
+      <Layout.Footer>
+        <Footer />
+      </Layout.Footer>
+    </Layout>
   );
 });

@@ -1,5 +1,6 @@
-.header {
-  padding: 10px 32px 10px 32px !important;
+.menu {
+  border: none;
+  height: 100%;
 }
 
 .headerItem {

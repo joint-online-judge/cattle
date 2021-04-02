@@ -6,7 +6,7 @@ import { TodoList } from 'app/components/TodoList';
 import { TodoModel } from 'app/models';
 import { useTodoStore } from 'app/stores/TodoStore';
 import { TODO_FILTER_LOCATION_HASH, TodoFilter } from 'app/constants';
-import { Button, Spin } from 'antd';
+import { Button, Layout, Spin } from 'antd';
 import { useRequest } from 'ahooks';
 import { Footer, Header } from 'app/components';
 
@@ -46,9 +46,11 @@ export const TodoContainer = observer(() => {
       ? todoStore.activeTodos
       : todoStore.completedTodos;
   return (
-    <div className="PageLayout">
-      <Header />
-      <div className="PageContent">
+    <Layout>
+      <Layout.Header>
+        <Header />
+      </Layout.Header>
+      <Layout.Content>
         <Spin />
         <Button type="primary" onClick={run} loading={loading}>
           useRequest
@@ -69,8 +71,10 @@ export const TodoContainer = observer(() => {
           deleteTodo={todoStore.deleteTodo}
           editTodo={todoStore.editTodo}
         />
-      </div>
-      <Footer />
-    </div>
+      </Layout.Content>
+      <Layout.Footer>
+        <Footer />
+      </Layout.Footer>
+    </Layout>
   );
 });

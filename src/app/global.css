@@ -19,17 +19,24 @@
   width: 100%
 }
 
+.ant-layout-header {
+  border-bottom: 1px solid #f0f0f0;
+  background: inherit;
+}
+
+.ant-layout-footer {
+  background: inherit;
+  border-top: 1px solid #f0f0f0;
+}
+
+.ant-layout{
+  min-height: 100vh;
+  background: #ffffff;
+}
+
 .bodyWrapper {
   max-width: 1012px;
 }
 
-.pageLayout {
-  display: flex;
-  flex-direction: column;
-  min-height: 100%;
-}
 
-.pageContent {
-  flex: 1;
-}
 

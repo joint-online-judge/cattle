@@ -4,15 +4,18 @@ import { Route, Switch, useRouteMatch } from 'react-router';
 import {
   CreateDomain, Footer, Header, SettingsPage,
 } from 'app/components';
+import { Layout } from 'antd';
 import { DomainHomeContainer } from './DomainHomeContainer';
 import style from './style.css';
 
 export const DomainContainer = observer(() => {
   const { path } = useRouteMatch();
   return (
-    <div className="PageLayout">
-      <Header />
-      <div className={`${style.domainContainer} pageContent`}>
+    <Layout>
+      <Layout.Header>
+        <Header />
+      </Layout.Header>
+      <Layout.Content className={style.domainContainer}>
         <Switch>
           <Route path={`${path}/create`} component={CreateDomain} />
           <Route path={`${path}/:url/settings`}>
@@ -20,8 +23,10 @@ export const DomainContainer = observer(() => {
           </Route>
           <Route path={`${path}/:url/`} component={DomainHomeContainer} />
         </Switch>
-      </div>
-      <Footer />
-    </div>
+      </Layout.Content>
+      <Layout.Footer>
+        <Footer />
+      </Layout.Footer>
+    </Layout>
   );
 });
