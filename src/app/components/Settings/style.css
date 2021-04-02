@@ -14,14 +14,6 @@
   margin-bottom: 15px !important;
 }
 
-.settingsPage {
-  margin-right: auto;
-  margin-left: auto;
-  max-width: 1012px;
-  padding: 0 16px;
-  width: 90%;
-}
-
 .settingsSideBar {
   width: 100%;
   border-radius: 6px;

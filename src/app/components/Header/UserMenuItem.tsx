@@ -44,11 +44,11 @@ export const UserMenuItem = observer(() => {
     },
   ];
   const UserSubMenu = auth.loggedIn ? (
-    <Menu className={style.HeaderUserSubMenu}>
+    <Menu className={style.headerUserSubMenu}>
       {
         LoggedInSubMenuArrange.map((item) => (typeof (item) !== 'string'
           ? (
-            <Menu.Item key={item.key} className={style.HeaderUserSubMenuItem}>
+            <Menu.Item key={item.key} className={style.headerUserSubMenuItem}>
               <Link to={item.path}>
                 {
                   item.node ? item.node : t(item.key)

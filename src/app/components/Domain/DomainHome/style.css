@@ -1,6 +1,5 @@
 .homeHeader {
   margin: auto;
-  max-width: 1012px;
 }
 
 .homeTitle {
@@ -8,7 +7,6 @@
 }
 
 .homeNav {
-  max-width: 1012px;
   margin: auto;
   border: none;
 }

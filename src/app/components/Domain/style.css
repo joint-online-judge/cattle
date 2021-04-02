@@ -1,5 +1,4 @@
 .createDomain {
-  max-width: 768px;
   margin: 60px auto auto auto;
 }
 
@@ -8,13 +7,7 @@
   text-align: center;
 }
 
-.createForm {
-  max-width: 544px;
-  margin: 0 auto;
-  width: 90%;
-}
-
-.submitButton {
+.submitButtonCreate {
   width: 100% !important;
   height: 50px;
   margin-top: 20px;
