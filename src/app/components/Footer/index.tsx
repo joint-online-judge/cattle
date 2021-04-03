@@ -1,80 +1,43 @@
 import React from 'react';
-import classNames from 'classnames';
+import { observer } from 'mobx-react';
 import {
-  TodoFilter,
-  TODO_FILTER_TITLES,
-  TODO_FILTER_TYPES,
-} from 'app/constants';
+  Col, Row, Typography,
+} from 'antd';
+import { CONTENT_GRID_LAYOUT } from 'app/constants';
+import { FooterLinks } from './FooterLinks';
 import style from './style.css';
 
-export interface FooterProps {
-  filter: TodoFilter;
-  activeCount: number;
-  completedCount: number;
-  onChangeFilter: (filter: TodoFilter) => any;
-  onClearCompleted: () => any;
-}
-
-export interface FooterState {
-  /* empty */
-}
-
-export class Footer extends React.Component<FooterProps, FooterState> {
-  renderTodoCount() {
-    const { activeCount } = this.props;
-    const itemWord = activeCount === 1 ? 'item' : 'items';
-
-    return (
-      <span className={style.count}>
-        <strong>{activeCount || 'No'}</strong> {itemWord} left
-      </span>
-    );
-  }
-
-  renderFilterLink(filter: TodoFilter) {
-    const title = TODO_FILTER_TITLES[filter];
-    const { filter: selectedFilter, onChangeFilter } = this.props;
-    const className = classNames({
-      [style.selected]: filter === selectedFilter,
-    });
-
-    return (
-      <a
-        className={className}
-        style={{ cursor: 'pointer' }}
-        onClick={() => onChangeFilter(filter)}
-      >
-        {title}
-      </a>
-    );
-  }
-
-  renderClearButton() {
-    const { completedCount, onClearCompleted } = this.props;
-    if (completedCount > 0) {
-      return (
-        <button className={style.clearCompleted} onClick={onClearCompleted} />
-      );
-    } else {
-      return null;
-    }
-  }
-
-  render() {
-    return (
-      <footer className={style.normal}>
-        {this.renderTodoCount()}
-        <ul className={style.filters}>
-          {TODO_FILTER_TYPES.map((filter) => (
-            <li key={filter}>
-              {this.renderFilterLink(filter)}
-            </li>
-          ))}
-        </ul>
-        {this.renderClearButton()}
-      </footer>
-    );
-  }
-}
-
-export default Footer;
+const { Text } = Typography;
+export const Footer = observer(() => {
+  return (
+    <Row justify="center">
+      <Col {...CONTENT_GRID_LAYOUT}>
+        <Row>
+          <Col>
+            <Text type="secondary">
+              © 2021-{new Date().getFullYear()} Joint Online Judge.
+            </Text>
+          </Col>
+          <Col span={1} />
+          <Col>
+            <Row>
+              <FooterLinks />
+            </Row>
+          </Col>
+        </Row>
+        <Row>
+          <a
+            href="http://net.sjtu.edu.cn"
+            target="_blank"
+            rel="noopener noreferrer"
+            className={style.link}
+          >
+            <Text type="secondary">
+              沪交ICP备20190085号
+            </Text>
+          </a>
+        </Row>
+      </Col>
+    </Row>
+  );
+});

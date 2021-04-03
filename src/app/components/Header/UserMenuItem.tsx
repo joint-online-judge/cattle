@@ -44,11 +44,11 @@ export const UserMenuItem = observer(() => {
     },
   ];
   const UserSubMenu = auth.loggedIn ? (
-    <Menu className={style.HeaderUserSubMenu}>
+    <Menu className={style.headerUserSubMenu}>
       {
         LoggedInSubMenuArrange.map((item) => (typeof (item) !== 'string'
           ? (
-            <Menu.Item key={item.key} className={style.HeaderUserSubMenuItem}>
+            <Menu.Item key={item.key} className={style.headerUserSubMenuItem}>
               <Link to={item.path}>
                 {
                   item.node ? item.node : t(item.key)
@@ -56,7 +56,7 @@ export const UserMenuItem = observer(() => {
               </Link>
             </Menu.Item>
           ) : (
-            <Menu.Divider key={`${item}`} />
+            <Menu.Divider key={item} />
           )))
       }
     </Menu>
@@ -74,7 +74,7 @@ export const UserMenuItem = observer(() => {
           <img
             src={gravatarImageUrl(auth.profile.gravatar, 20)}
             alt={`@${auth.profile.uname}`}
-            className={style.Gravatar}
+            className={style.gravatar}
           />
           <DownOutlined />
         </span>

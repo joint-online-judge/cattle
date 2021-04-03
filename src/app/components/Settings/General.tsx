@@ -31,7 +31,7 @@ export const General = observer(() => {
     <>
       <PageHeader
         title={t('SETTINGS.DISPLAY_SETTINGS')}
-        className={style.SettingsTitle}
+        className={style.settingsTitle}
       />
       <SettingsStyleWrapper type="form">
         <Form

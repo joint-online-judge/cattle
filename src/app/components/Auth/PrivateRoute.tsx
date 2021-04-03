@@ -1,24 +1,20 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
-import { Redirect } from 'react-router';
+import { Redirect, RouteProps, useLocation } from 'react-router';
 import { useAuth } from 'app/contexts';
 
-export const PrivateRoute = ({ children, ...rest }) => {
+export const PrivateRoute = (props: RouteProps): Route<any, string> => {
   const auth = useAuth();
-  return (
+  const location = useLocation();
+  return auth.loggedIn ? (
     <Route
-      {...rest}
-      render={({ location }) => {
-        return (auth.loggedIn ? (
-          children
-        ) : (
-          <Redirect to={{
-            pathname: '/login',
-            state: { from: location },
-          }}
-          />
-        ));
-      }}
+      {...props}
+    />
+  ) : (
+    <Redirect to={{
+      pathname: '/login',
+      state: { from: location },
+    }}
     />
   );
 };

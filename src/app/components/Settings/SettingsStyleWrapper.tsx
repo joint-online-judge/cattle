@@ -1,10 +1,9 @@
 import { observer } from 'mobx-react';
 import React, { ReactElement, ReactNode } from 'react';
+import { SettingsType } from '@/types';
 import style from './style.css';
 
-export declare type SettingsType = 'form';
-
-interface SettingsFormStyleWrapperProps {
+export interface SettingsFormStyleWrapperProps {
   children?: ReactNode;
   type?: SettingsType;
 }
@@ -12,7 +11,7 @@ interface SettingsFormStyleWrapperProps {
 export const SettingsStyleWrapper = observer(
   (props: SettingsFormStyleWrapperProps): ReactElement<SettingsFormStyleWrapperProps, any> => {
     return (
-      <div className={props.type ? style.SettingsForm : null}>
+      <div className={props.type ? style.settingsForm : null}>
         {props.children}
       </div>
     );

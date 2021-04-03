@@ -13,7 +13,7 @@ export const UpdateDomain = observer(() => {
     <>
       <PageHeader
         title={t('SETTINGS.DOMAIN.PROFILE')}
-        className={style.SettingsTitle}
+        className={style.settingsTitle}
       />
       <SettingsStyleWrapper type="form">
         <CreateUpdateDomainForm domainUrl={url} />

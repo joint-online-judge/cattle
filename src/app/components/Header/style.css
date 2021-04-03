@@ -1,26 +1,26 @@
-.Header {
-  padding: 10px 32px 10px 32px !important;
+.menu {
+  border: none;
+  height: 100%;
 }
 
-.HeaderItem {
+.headerItem {
   font-size: 14px;
 }
 
-.HeaderFloatRightItem {
+.headerFloatRightItem {
   float: right;
 }
 
-.HeaderUserSubMenu {
+.headerUserSubMenu {
   border-radius: 6px;
-  width: 158px;
   padding-right: 4px;
 }
 
-.HeaderUserSubMenuItem {
-  padding: 4px 8px 4px 16px;
+.headerUserSubMenuItem {
+  padding: 4px 40px 4px 16px;
 }
 
 
-.Gravatar {
+.gravatar {
   border-radius: 10px;
 }

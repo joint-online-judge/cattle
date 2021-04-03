@@ -1,18 +1,23 @@
-.SettingsForm {
+.settingsForm {
   width: 90%;
   max-width: 440px;
 }
 
-.UserInfoHeader {
+.userInfoHeader {
   padding: 16px 24px 16px 0 !important;
   margin-bottom: 0 !important;
 }
 
-.SettingsTitle {
+.settingsTitle {
   border-bottom: #eaecef 1px solid;
   padding: 0 0 8px 0 !important;
   margin-bottom: 15px !important;
 }
 
+.settingsSideBar {
+  width: 100%;
+  border-radius: 6px;
+  border: 1px solid #f0f0f0;
+}
 
 

@@ -10,10 +10,10 @@ export const Header = observer(() => {
   return (
     <Menu
       mode="horizontal"
-      className={style.Header}
+      className={style.menu}
       selectable={false}
     >
-      <Menu.Item key="test" className={style.HeaderItem}>
+      <Menu.Item key="test" className={style.headerItem}>
         <Image
           src="https://i.loli.net/2021/03/09/hqnrlFcbAYDVWeN.gif"
           height={20}
@@ -21,7 +21,7 @@ export const Header = observer(() => {
         />
         <a href="/">{t('TEST')}</a>
       </Menu.Item>
-      <Menu.Item key="user" className={style.HeaderFloatRightItem}>
+      <Menu.Item key="user" className={style.headerFloatRightItem}>
         <UserMenuItem />
       </Menu.Item>
     </Menu>

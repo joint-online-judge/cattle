@@ -33,7 +33,7 @@ export const Domains = observer(() => {
       <Spin spinning={!data}>
         <PageHeader
           title={t('DOMAIN.DOMAINS')}
-          className={style.DomainsTitle}
+          className={style.domainsTitle}
           extra={[
             <Button key="domain-create">
               <Link to="/domain/create">
@@ -49,7 +49,7 @@ export const Domains = observer(() => {
           split
           renderItem={(item) => (
             <List.Item
-              className={style.DomainListItem}
+              className={style.domainListItem}
               actions={[
                 <Button>
                   <Link to={`/domain/${item.url}/settings`}>

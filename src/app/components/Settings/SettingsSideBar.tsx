@@ -4,16 +4,15 @@ import { useTranslation } from 'react-i18next';
 import { Menu } from 'antd';
 import { Link } from 'react-router-dom';
 import { useLocation, useRouteMatch } from 'react-router';
-import { MenuItem } from 'app/containers/SettingsContainer/MenuArrange';
+import { SettingsMenuItem } from '@/types';
 import style from './style.css';
 
-// todo: put it into @types
-export interface SideBarProps {
-  items: MenuItem[];
+export interface SettingsSideBarProps {
+  items: SettingsMenuItem[];
 }
 
 export const SettingsSideBar = observer(
-  (props: SideBarProps): ReactElement<SideBarProps, any> => {
+  (props: SettingsSideBarProps): ReactElement<SettingsSideBarProps, any> => {
     const { url } = useRouteMatch();
     const { t } = useTranslation();
     const location = useLocation();
@@ -24,7 +23,7 @@ export const SettingsSideBar = observer(
     return (
       <Menu
         mode="vertical"
-        className={style.SideBarMenu}
+        className={style.settingsSideBar}
         defaultSelectedKeys={[defaultKey || items[0].key]}
       >
         {

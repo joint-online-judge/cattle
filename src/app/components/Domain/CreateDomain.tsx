@@ -1,6 +1,8 @@
 import { observer } from 'mobx-react';
 import React from 'react';
 import {
+  Row,
+  Col,
   Typography,
 } from 'antd';
 import { CreateUpdateDomainForm } from 'app/components/Domain/CreateUpdateDomainForm';
@@ -14,9 +16,22 @@ export const CreateDomain = observer(() => {
   /* todo: add helper */
   /* todo: add onChange on URL/ID field to ensure unique field */
   return (
-    <div className={style.CreateDomain}>
-      <Title className={style.CreateTitle}>{t('DOMAIN.CREATE_A_NEW_DOMAIN')}</Title>
-      <CreateUpdateDomainForm />
-    </div>
+    <Row justify="center" className={style.createDomain}>
+      <Col
+        xs={22}
+        sm={18}
+        md={13}
+        lg={10}
+        xl={9}
+        xxl={7}
+      >
+        <Title className={style.createTitle}>
+          {t(
+            'DOMAIN.CREATE_A_NEW_DOMAIN',
+          )}
+        </Title>
+        <CreateUpdateDomainForm />
+      </Col>
+    </Row>
   );
 });
