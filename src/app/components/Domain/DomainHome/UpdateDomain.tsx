@@ -8,7 +8,7 @@ import style from './style.css';
 
 export const UpdateDomain = observer(() => {
   const { t } = useTranslation();
-  const { url } = useParams<{ url: string; }>();
+  const { domainUrl } = useParams<{ domainUrl: string; }>();
   return (
     <>
       <PageHeader
@@ -16,7 +16,7 @@ export const UpdateDomain = observer(() => {
         className={style.settingsTitle}
       />
       <SettingsStyleWrapper type="form">
-        <CreateUpdateDomainForm domainUrl={url} />
+        <CreateUpdateDomainForm domainUrl={domainUrl} />
       </SettingsStyleWrapper>
     </>
   );

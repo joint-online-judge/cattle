@@ -29,10 +29,6 @@ export const UserMenuItem = observer(() => {
       key: 'USER.PROFILE',
       path: `/user/${auth.profile.uname}`,
     },
-    {
-      key: 'DOMAIN.DOMAINS',
-      path: '/settings/domains',
-    },
     'profile-setting-divider',
     {
       key: 'SETTINGS.SETTINGS',

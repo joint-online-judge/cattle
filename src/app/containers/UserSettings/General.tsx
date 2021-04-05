@@ -20,7 +20,7 @@ const options = {
   ],
 };
 
-export const General = observer(() => {
+const General = observer(() => {
   const [form] = Form.useForm();
   const { t } = useTranslation();
   const settings = useSettings();
@@ -77,3 +77,5 @@ export const General = observer(() => {
     </>
   );
 });
+
+export default General;
