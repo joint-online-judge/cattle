@@ -3,11 +3,11 @@ import { Col, PageHeader, Row } from 'antd';
 import { SettingsSideBar } from 'app/components/Settings';
 import { CONTENT_GRID_LAYOUT } from 'app/constants';
 import { Domains } from 'app/components';
-import General from './General';
 import { useAuth } from 'app/contexts';
 import { gravatarImageUrl } from 'app/utils';
 import style from 'app/containers/UserSettings/style.css';
 import { SettingsMenuItem } from 'types';
+import General from './General';
 
 const menuItems: SettingsMenuItem[] = [
   {
@@ -57,11 +57,11 @@ export const UserSettings: React.FC = () => {
             <SettingsSideBar
               items={menuItems}
               selectedKeys={[key]}
-              onChange={({ key }) => setKey(key as string)}
+              onChange={({ key: menuKey }) => setKey(menuKey as string)}
             />
           </Col>
           <Col xs={24} sm={24} lg={18}>
-            {key ? menuItems.find(o => o.key === key)?.component : null}
+            {key ? menuItems.find((o) => o.key === key)?.component : null}
           </Col>
         </Row>
       </Col>

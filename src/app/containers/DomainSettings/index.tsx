@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { Col, PageHeader, Row, Spin } from 'antd';
+import {
+  Col, PageHeader, Row, Spin,
+} from 'antd';
 import { SettingsSideBar } from 'app/components/Settings';
 import { CONTENT_GRID_LAYOUT } from 'app/constants';
 import { UpdateDomain } from 'app/components';
@@ -65,11 +67,11 @@ export const DomainSettings: React.FC = () => {
             <SettingsSideBar
               items={menuItems}
               selectedKeys={[key]}
-              onChange={({ key }) => setKey(key as string)}
+              onChange={({ key: menuKey }) => setKey(menuKey as string)}
             />
           </Col>
           <Col xs={24} sm={24} lg={18}>
-            {key ? menuItems.find(o => o.key === key)?.component : null}
+            {key ? menuItems.find((o) => o.key === key)?.component : null}
           </Col>
         </Row>
       </Col>

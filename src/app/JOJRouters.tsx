@@ -37,18 +37,30 @@ export const JOJRouters = observer(({ history }) => {
               <Route exact path="/logout" component={LogoutContainer} />
 
               {/* User Settings */}
-              {/*TODO: default landing */}
-              <PrivateRoute exact path="/settings/domains"
-                            component={UserSettings} />
+              {/* TODO: default landing */}
+              <PrivateRoute
+                exact
+                path="/settings/domains"
+                component={UserSettings}
+              />
               <PrivateRoute exact path="/settings" component={UserSettings} />
 
               {/* Domain */}
-              <PrivateRoute exact path="/domain/create"
-                            component={CreateDomain} />
-              <PrivateRoute exact path="/domain/:domainUrl/settings"
-                            component={DomainSettings} />
-              <PrivateRoute exact path="/domain/:domainUrl"
-                            component={DomainHome} />
+              <PrivateRoute
+                exact
+                path="/domain/create"
+                component={CreateDomain}
+              />
+              <PrivateRoute
+                exact
+                path="/domain/:domainUrl/settings"
+                component={DomainSettings}
+              />
+              <PrivateRoute
+                exact
+                path="/domain/:domainUrl"
+                component={DomainHome}
+              />
               <PrivateRoute exact path="/domain" component={DomainList} />
 
               {/* Special Routes */}
