@@ -1,6 +1,6 @@
 import { observer } from 'mobx-react';
 import { PrivateRoute } from 'app/components/Auth';
-import { Route, Router, Switch } from 'react-router';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import {
   LoginContainer,
   LogoutContainer,
@@ -20,11 +20,12 @@ import { useSettings } from 'app/contexts';
 import { SUPPORT_LANGUAGES } from 'app/constants/i18n';
 import style from 'app/containers/DomainHome/style.css';
 
-export const JOJRouters = observer(({ history }) => {
+export const JOJRouters = observer(() => {
   const settings = useSettings();
+
   return (
     <ConfigProvider locale={SUPPORT_LANGUAGES[settings.i18nLang].antd}>
-      <Router history={history}>
+      <Router>
         <Layout>
           <Layout.Header>
             <Header />

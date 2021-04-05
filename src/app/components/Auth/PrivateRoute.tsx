@@ -3,7 +3,7 @@ import { Route } from 'react-router-dom';
 import { Redirect, RouteProps, useLocation } from 'react-router';
 import { useAuth } from 'app/contexts';
 
-export const PrivateRoute = (props: RouteProps): Route<any, string> => {
+export const PrivateRoute = (props: RouteProps) => {
   const auth = useAuth();
   const location = useLocation();
   return auth.loggedIn ? (

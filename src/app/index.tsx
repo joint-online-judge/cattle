@@ -7,14 +7,14 @@ import { AuthContext, SettingsContext } from 'app/contexts';
 import './global.css';
 
 // render react DOM
-export const App = hot(({ history }) => {
+export const App = hot(() => {
   const userStore = useUserStore(new UserModel());
   const settingsStore = useSettingsStore(new SettingsModel());
 
   return (
     <SettingsContext.Provider value={settingsStore}>
       <AuthContext.Provider value={userStore}>
-        <JOJRouters history={history} />
+        <JOJRouters />
       </AuthContext.Provider>
     </SettingsContext.Provider>
   );

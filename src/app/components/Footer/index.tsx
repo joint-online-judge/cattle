@@ -12,13 +12,12 @@ export const Footer = observer(() => {
   return (
     <Row justify="center">
       <Col {...CONTENT_GRID_LAYOUT}>
-        <Row>
+        <Row justify="space-between">
           <Col>
             <Text type="secondary">
               © 2021-{new Date().getFullYear()} Joint Online Judge.
             </Text>
           </Col>
-          <Col span={1} />
           <Col>
             <Row>
               <FooterLinks />
