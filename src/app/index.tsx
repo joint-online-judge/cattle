@@ -1,17 +1,21 @@
 import React from 'react';
 import { hot } from 'react-hot-loader/root';
-import { ProvideSettings } from 'app/components/Settings';
 import { JOJRouters } from 'app/JOJRouters';
-import { ProvideAuth } from 'app/components/Auth';
+import { useUserStore, useSettingsStore } from 'app/stores';
+import { UserModel, SettingsModel } from 'app/models';
+import { AuthContext, SettingsContext } from 'app/contexts';
 import './global.css';
 
 // render react DOM
-export const App = hot(({ history }) => {
+export const App = hot(() => {
+  const userStore = useUserStore(new UserModel());
+  const settingsStore = useSettingsStore(new SettingsModel());
+
   return (
-    <ProvideSettings>
-      <ProvideAuth>
-        <JOJRouters history={history} />
-      </ProvideAuth>
-    </ProvideSettings>
+    <SettingsContext.Provider value={settingsStore}>
+      <AuthContext.Provider value={userStore}>
+        <JOJRouters />
+      </AuthContext.Provider>
+    </SettingsContext.Provider>
   );
 });

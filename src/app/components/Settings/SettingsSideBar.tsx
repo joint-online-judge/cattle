@@ -1,30 +1,27 @@
-import React, { ReactElement, Fragment } from 'react';
+import React, { Fragment } from 'react';
 import { observer } from 'mobx-react';
 import { useTranslation } from 'react-i18next';
-import { Menu } from 'antd';
-import { Link } from 'react-router-dom';
-import { useLocation, useRouteMatch } from 'react-router';
+import { Menu, MenuProps } from 'antd';
 import { SettingsMenuItem } from '@/types';
 import style from './style.css';
 
 export interface SettingsSideBarProps {
   items: SettingsMenuItem[];
+  selectedKeys: string[];
+  onChange?: MenuProps['onClick'];
 }
 
-export const SettingsSideBar = observer(
-  (props: SettingsSideBarProps): ReactElement<SettingsSideBarProps, any> => {
-    const { url } = useRouteMatch();
+export const SettingsSideBar: React.FC<SettingsSideBarProps> = observer(
+  (props) => {
     const { t } = useTranslation();
-    const location = useLocation();
-    const { items } = props;
-    const defaultKey = (items.find(
-      (item) => `${url}${item.path}` === `${location.pathname}`,
-    ))?.key;
+    const { items, selectedKeys, onChange } = props;
+
     return (
       <Menu
+        onClick={(e) => onChange && onChange(e)}
         mode="vertical"
         className={style.settingsSideBar}
-        defaultSelectedKeys={[defaultKey || items[0].key]}
+        selectedKeys={selectedKeys}
       >
         {
           items.map((item, index) => (
@@ -32,11 +29,7 @@ export const SettingsSideBar = observer(
               <Menu.Item
                 key={item.key}
               >
-                {item.node ? item.node : (
-                  <Link to={`${url}${item.path}`}>
-                    {t(item.key)}
-                  </Link>
-                )}
+                {item.node ? item.node : t(item.key)}
               </Menu.Item>
               {
                 index < items.length - 1
