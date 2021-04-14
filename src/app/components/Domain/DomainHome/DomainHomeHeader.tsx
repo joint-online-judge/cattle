@@ -11,9 +11,9 @@ import style from './style.css';
 
 const { Title } = Typography;
 export const DomainHomeHeader = observer(() => {
-  const { url } = useParams<{ url: string }>();
+  const { domainUrl } = useParams<{ domainUrl: string }>();
   const { data, run } = useRequest(async () => {
-    return DomainService.getDomainApiV1DomainsDomainGet(url);
+    return DomainService.getDomainApiV1DomainsDomainGet(domainUrl);
   }, { manual: true });
   useEffect(() => {
     (async () => {
