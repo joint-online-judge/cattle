@@ -1,14 +1,14 @@
-var webpack = require('webpack');
-var path = require('path');
+const webpack = require('webpack');
+const path = require('path');
 
 // variables
-var isProduction = process.env.NODE_ENV === 'prod';
-var sourcePath = path.join(__dirname, './src');
-var outPath = path.join(__dirname, './build');
+const isProduction = process.env.NODE_ENV === 'prod';
+const sourcePath = path.join(__dirname, './src');
+const outPath = path.join(__dirname, './build');
 
 // plugins
-var HtmlWebpackPlugin = require('html-webpack-plugin');
-var MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 const plugins = [
   new webpack.EnvironmentPlugin({
@@ -52,9 +52,9 @@ module.exports = {
       client: path.resolve(__dirname, 'src/client/'),
     },
     fallback: {
-      'crypto': require.resolve('crypto-browserify'),
-      'buffer': require.resolve('buffer/'),
-      'stream': require.resolve('stream-browserify'),
+      crypto: require.resolve('crypto-browserify'),
+      buffer: require.resolve('buffer/'),
+      stream: require.resolve('stream-browserify'),
     },
   },
   module: {
@@ -89,6 +89,9 @@ module.exports = {
                     return 'pure';
                   }
                   if (/global.css$/i.test(resourcePath)) {
+                    return 'global';
+                  }
+                  if (/react-markdown-editor-lite/g.test(resourcePath)) {
                     return 'global';
                   }
                   return 'local';

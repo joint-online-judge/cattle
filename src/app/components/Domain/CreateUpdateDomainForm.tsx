@@ -1,11 +1,14 @@
 import { observer } from 'mobx-react';
-import React, { ReactElement } from 'react';
+import React from 'react';
 import {
   Button, Form, Input,
 } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { DomainService } from '@/client';
 import { useHistory } from 'react-router';
+import MarkdownIt from 'markdown-it';
+import MdEditor from 'react-markdown-editor-lite';
+import 'react-markdown-editor-lite/lib/index.css';
 import style from './style.css';
 
 export interface CreateUpdateDomainFormProps {
@@ -13,7 +16,7 @@ export interface CreateUpdateDomainFormProps {
 }
 
 export const CreateUpdateDomainForm = observer(
-  (props: CreateUpdateDomainFormProps): ReactElement<CreateUpdateDomainFormProps, any> => {
+  (props: CreateUpdateDomainFormProps) => {
     const updateMode = Boolean(props.domainUrl);
     const { t } = useTranslation();
     const history = useHistory();
@@ -34,6 +37,7 @@ export const CreateUpdateDomainForm = observer(
         history.push(`/domain/${url}`);
       }
     };
+    const mdParser = new MarkdownIt();
     return (
       <Form
         onFinish={onFinish}
@@ -70,12 +74,13 @@ export const CreateUpdateDomainForm = observer(
         <Form.Item
           name="bulletin"
           label={t('DOMAIN.CREATE.BULLETIN')}
+          getValueFromEvent={(value) => {
+            console.log(value);
+            return value?.text;
+          }}
         >
-          {/* todo: make it a markdown editor */}
-          <Input.TextArea
-            autoSize={{
-              minRows: 5,
-            }}
+          <MdEditor
+            renderHTML={(text) => mdParser.render(text)}
           />
         </Form.Item>
         <Form.Item>
