@@ -9,6 +9,7 @@ const outPath = path.join(__dirname, './build');
 // plugins
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const MonacoWebpackPlugin = require('monaco-editor-webpack-plugin');
 
 const plugins = [
   new webpack.EnvironmentPlugin({
@@ -18,6 +19,7 @@ const plugins = [
   new HtmlWebpackPlugin({
     template: 'assets/index.html',
   }),
+  new MonacoWebpackPlugin(),
 ];
 if (isProduction) {
   // use mini-css-extract-plugin for css only when production
@@ -31,6 +33,7 @@ module.exports = {
   entry: {
     app: './main.tsx',
   },
+  // todo: probably here
   output: {
     path: outPath,
     publicPath: '/',
@@ -92,6 +95,9 @@ module.exports = {
                     return 'global';
                   }
                   if (/react-markdown-editor-lite/g.test(resourcePath)) {
+                    return 'global';
+                  }
+                  if (/monaco-editor/g.test(resourcePath)) {
                     return 'global';
                   }
                   return 'local';
