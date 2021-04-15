@@ -6,9 +6,7 @@ import {
 import { useTranslation } from 'react-i18next';
 import { DomainService } from '@/client';
 import { useHistory } from 'react-router';
-import MarkdownIt from 'markdown-it';
-import MdEditor from 'react-markdown-editor-lite';
-import 'react-markdown-editor-lite/lib/index.css';
+import { MarkdownEditor } from 'app/components/Editors';
 import style from './style.css';
 
 export interface CreateUpdateDomainFormProps {
@@ -37,7 +35,6 @@ export const CreateUpdateDomainForm = observer(
         history.push(`/domain/${url}`);
       }
     };
-    const mdParser = new MarkdownIt();
     return (
       <Form
         onFinish={onFinish}
@@ -79,9 +76,7 @@ export const CreateUpdateDomainForm = observer(
             return value?.text;
           }}
         >
-          <MdEditor
-            renderHTML={(text) => mdParser.render(text)}
-          />
+          {MarkdownEditor}
         </Form.Item>
         <Form.Item>
           <Button
