@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Form, Input } from 'antd';
+import { Button, Form, Input, Row, Col } from 'antd';
 import { history, useIntl } from 'umi';
 import { DomainService } from '@/client';
 // import { MarkdownEditor } from 'app/components/Editors';
@@ -70,15 +70,26 @@ const Index: React.FC<IProps> = (props) => {
       >
         {/*{MarkdownEditor}*/}
         {'TODO: Here should be a markdown editor'}
+        <Input.TextArea />
       </Form.Item>
       <Form.Item>
-        <Button
-          htmlType="submit"
-          type="primary"
-          className={updateMode ? null : style.submitButtonCreate}
-        >
-          {intl.formatMessage({ id: updateMode ? 'SETTINGS.DOMAIN.UPDATE' : 'DOMAIN.CREATE.CREATE' })}
-        </Button>
+        <Row>
+          <Col xs={9} sm={8} md={6}>
+            <Button
+              htmlType="submit"
+              type="primary"
+              className={updateMode ? null : style.submitButtonCreate}
+              size='large'
+              block
+            >
+              {intl.formatMessage({
+                id: updateMode
+                  ? 'SETTINGS.DOMAIN.UPDATE'
+                  : 'DOMAIN.CREATE.CREATE',
+              })}
+            </Button>
+          </Col>
+        </Row>
       </Form.Item>
     </Form>
   );

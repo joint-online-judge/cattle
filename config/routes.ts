@@ -9,7 +9,7 @@
       { exact: true, path: '/settings', component: '@/pages/UserSettings' },
       { exact: true, path: '/settings/domain', component: '@/pages/UserSettings' },
 
-      { exact: true, path: '/domain/create', component: '@/components/Domain/CreateDomain' },
+      { exact: true, path: '/domain/create', component: '@/pages/CreateDomain' },
       { exact: true, path: '/domain/:domainUrl/settings', component: '@/pages/DomainSettings' },
       { exact: true, path: '/domain/:domainUrl', component: '@/pages/DomainHome' },
       { exact: true, path: '/domain', component: '@/pages/DomainList' },

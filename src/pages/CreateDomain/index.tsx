@@ -20,7 +20,7 @@ const Index: React.FC = () => {
         xl={9}
         xxl={7}
       >
-        <Title className={style.createTitle}>
+        <Title level={2}>
           {intl.formatMessage({ id: 'DOMAIN.CREATE_A_NEW_DOMAIN' })}
         </Title>
         <CreateUpdateDomainForm />
