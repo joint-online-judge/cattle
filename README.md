@@ -1,31 +1,30 @@
-# cattle
+# Cattle
 
-The new generation of JOJ Frontend. Cattle are commonly raised as livestock for M(obx)eat and M(aterial U)Ilk, and also used as R(eact)iding animals.
+The new generation of JOJ Frontend. Powered by [Umi.js](https://umijs.org/).
 
 ## Requirements
 
-* node.js/npm
+* node.js >= 10.13
+* yarn
 
-## Setup
+## Getting Started
 
-``` bash
-npm install
+Please install `yarn` first. This project uses `yarn` as package manager. You can modify your registry to boost downloading or install `tyarn` if you are in China following this [page](https://umijs.org/zh-CN/docs/getting-started).  
+
+Install dependencies,
+
+```bash
+$ yarn
 ```
 
-## Running
+Start the dev server,
 
-``` bash
-npm start
+```bash
+$ yarn start
 ```
 
-## Build
+To build and deploy,
 
-``` bash
-npm run build
-```
-
-## Code Format
-
-``` bash
-npm run prettier
+```bash
+$ yarn build
 ```
