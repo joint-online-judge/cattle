@@ -1,5 +1,19 @@
 export default {
+  // Simple Noun
+  'DOMAIN': 'Domain',
+  'PROBLEM': 'Problem',
+  'CREATION': 'Creation',
+  'HOMEWORK': 'Homework',
   'TEST': 'Big SLL',
+  // Simple Verb
+  'CREATE': 'Create',
+  'ADD': 'Add',
+  'VIEW': 'View',
+  'VISIT': 'Visit',
+  'UPDATE': 'Update',
+  'DELETE': 'Delete',
+  'SUBMIT': 'Submit',
+  'MANAGE': 'Manage',
   // User
   'USER.PROFILE': 'Profile',
   'USER.LOGIN.JACCOUNT_LOG_IN': 'jAccount Login',
@@ -40,4 +54,12 @@ export default {
   'SETTINGS.DOMAIN.INVITATION': 'Invitation',
   'SETTINGS.DOMAIN.MEMBERS': 'Members',
   'SETTINGS.DOMAIN.UPDATE': 'Update',
+  // Admin
+  'ADMIN.ADMIN': 'Admin',
+  // Footer
+  'FOOTER.ABOUT': 'About',
+  'FOOTER.API': 'API',
+  'FOOTER.DOCS': 'Docs',
+  'FOOTER.ISSUE': 'Issue',
+  'FOOTER.CONTACT': 'Contact',
 };
