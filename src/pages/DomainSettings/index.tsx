@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'umi';
-import { Col, PageHeader, Row, Spin } from 'antd';
+import { Col, PageHeader, Row, Spin, Card } from 'antd';
 import SettingsSideBar from '@/components/Settings/SettingsSideBar';
 import UpdateDomain from '@/components/Domain/DomainHome/UpdateDomain';
 import { SettingsMenuItem } from '@/components/Settings/typings';
 import { useRequest } from 'ahooks';
 import { DomainService } from '@/client';
 import { gravatarImageUrl } from '@/utils';
-import { CONTENT_GRID_LAYOUT } from '@/constants';
 import style from './style.css';
 
 const menuItems: SettingsMenuItem[] = [
@@ -39,40 +38,39 @@ export const DomainSettings: React.FC = () => {
   }, []);
 
   return (
-    <Row justify="center">
-      <Col {...CONTENT_GRID_LAYOUT}>
-        <Row>
-          {data ? (
-            <PageHeader
-              className={style.userInfoHeader}
-              title={data.name}
-              subTitle={data.url}
-              avatar={{ src: gravatarImageUrl(data.gravatar) }}
-            />
-          ) : <Spin />}
-        </Row>
-        <Row
-          gutter={[
-            {
-              lg: 24,
-            }, {
-              xs: 16,
-              sm: 16,
-              lg: 16,
-            }]}
-        >
-          <Col xs={24} sm={24} lg={6}>
-            <SettingsSideBar
-              items={menuItems}
-              selectedKeys={[key]}
-              onChange={({ key: menuKey }) => setKey(menuKey as string)}
-            />
-          </Col>
-          <Col xs={24} sm={24} lg={18}>
-            {key ? menuItems.find((o) => o.key === key)?.component : null}
-          </Col>
-        </Row>
-      </Col>
-    </Row>
+    <Card
+      title={(
+        data ? (
+          <PageHeader
+            className={style.userInfoHeader}
+            title={data.name}
+            subTitle={data.url}
+            avatar={{ src: gravatarImageUrl(data.gravatar) }}
+          />
+        ) : <Spin />
+      )}
+    >
+      <Row
+        gutter={[
+          {
+            lg: 24,
+            xl: 32,
+          }, {
+            xs: 16,
+            sm: 16,
+          }]}
+      >
+        <Col xs={24} sm={24} lg={6}>
+          <SettingsSideBar
+            items={menuItems}
+            selectedKeys={[key]}
+            onChange={({ key: menuKey }) => setKey(menuKey as string)}
+          />
+        </Col>
+        <Col xs={24} sm={24} lg={18}>
+          {key ? menuItems.find((o) => o.key === key)?.component : null}
+        </Col>
+      </Row>
+    </Card>
   );
 };

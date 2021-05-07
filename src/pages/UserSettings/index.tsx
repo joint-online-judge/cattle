@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
-import { Col, PageHeader, Row } from 'antd';
+import { Col, PageHeader, Row, Card } from 'antd';
 import { useModel } from 'umi';
 import SettingsSideBar from '@/components/Settings/SettingsSideBar';
 import Domains from '@/components/Domain/Domains';
 import General from './General';
 import { gravatarImageUrl } from '@/utils';
-import { CONTENT_GRID_LAYOUT } from '@/constants';
 import { SettingsMenuItem } from '@/components/Settings/typings';
 import style from './style.css';
 
@@ -33,39 +32,31 @@ const Index: React.FC = () => {
   const { initialState } = useModel('@@initialState');
 
   return (
-    <Row justify="center">
-      <Col {...CONTENT_GRID_LAYOUT}>
-        <Row>
-          <PageHeader
-            className={style.userInfoHeader}
-            title={initialState?.user?.real_name || ''}
-            subTitle={initialState?.user?.student_id || ''}
-            avatar={{ src: gravatarImageUrl(initialState?.user?.gravatar || '') }}
+    <div>
+      <Row
+        gutter={[
+          {
+            lg: 24,
+            xl: 32,
+          }, {
+            xs: 16,
+            sm: 16,
+          }]}
+      >
+        <Col xs={24} sm={24} lg={6}>
+          <SettingsSideBar
+            items={menuItems}
+            selectedKeys={[key]}
+            onChange={({ key: menuKey }) => setKey(menuKey as string)}
           />
-        </Row>
-        <Row
-          gutter={[
-            {
-              lg: 24,
-            }, {
-              xs: 16,
-              sm: 16,
-              lg: 16,
-            }]}
-        >
-          <Col xs={24} sm={24} lg={6}>
-            <SettingsSideBar
-              items={menuItems}
-              selectedKeys={[key]}
-              onChange={({ key: menuKey }) => setKey(menuKey as string)}
-            />
-          </Col>
-          <Col xs={24} sm={24} lg={18}>
+        </Col>
+        <Col xs={24} sm={24} lg={18}>
+          <Card>
             {key ? menuItems.find((o) => o.key === key)?.component : null}
-          </Col>
-        </Row>
-      </Col>
-    </Row>
+          </Card>
+        </Col>
+      </Row>
+    </div>
   );
 };
 

@@ -12,6 +12,7 @@ export interface IProps {
 const Index: React.FC<IProps> = (props) => {
   const updateMode = Boolean(props.domainUrl);
   const intl = useIntl();
+  // @ts-ignore
   const onFinish = async ({ url, name, gravatar, bulletin }) => {
     // redirect to the newly created form
     if (updateMode) {
