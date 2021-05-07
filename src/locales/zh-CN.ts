@@ -1,5 +1,19 @@
 export default {
+  // 简单名词
+  'DOMAIN': '域',
+  'PROBLEM': '题目',
+  'CREATION': '创建',
+  'HOMEWORK': '作业',
   'TEST': '大史历历',
+  // 简单动词
+  'CREATE': '创建',
+  'ADD': '增加',
+  'VIEW': '查看',
+  'VISIT': '查看',
+  'UPDATE': '更新',
+  'DELETE': '删除',
+  'SUBMIT': '提交',
+  'MANAGE': '管理',
   // User
   'USER.PROFILE': '我的资料',
   'USER.LOGIN.JACCOUNT_LOG_IN': 'jAccount 登录',
@@ -33,4 +47,12 @@ export default {
   'SETTINGS.DOMAIN.INVITATION': '成员邀请',
   'SETTINGS.DOMAIN.MEMBERS': '成员管理',
   'SETTINGS.DOMAIN.UPDATE': '更新',
+  // Admin
+  'ADMIN.ADMIN': '管理',
+  // Footer
+  'FOOTER.ABOUT': '关于',
+  'FOOTER.API': 'API',
+  'FOOTER.DOCS': '文档',
+  'FOOTER.ISSUE': 'Bug反馈',
+  'FOOTER.CONTACT': '联系我们',
 };

@@ -1,33 +1,53 @@
 import React from 'react';
-import { Button, Form, Input, Row, Col } from 'antd';
+import { Button, Form, Input, Row, Col, message } from 'antd';
 import { history, useIntl } from 'umi';
-import { DomainService } from '@/client';
+import { useRequest } from 'ahooks';
+import { DomainService, Domain, DomainCreate, DomainEdit } from '@/client';
 // import { MarkdownEditor } from 'app/components/Editors';
 import style from './style.css';
 
 export interface IProps {
-  domainUrl?: string;
+  initialValues?: Partial<Domain>;
 }
 
 const Index: React.FC<IProps> = (props) => {
-  const updateMode = Boolean(props.domainUrl);
+  const { initialValues } = props;
   const intl = useIntl();
-  // @ts-ignore
-  const onFinish = async ({ url, name, gravatar, bulletin }) => {
-    // redirect to the newly created form
-    if (updateMode) {
-      await DomainService.updateDomainApiV1DomainsDomainPatch(url,
-        { gravatar, bulletin, name });
-    } else {
-      await DomainService.createDomainApiV1DomainsPost({
-        url,
-        name,
-        bulletin,
-        gravatar,
-      });
-      history.push(`/domain/${url}`);
+
+  const { run: createDomain, loading: creatingDomain } = useRequest(
+    (domain: DomainCreate) => DomainService.createDomainApiV1DomainsPost(domain),
+    {
+      manual: true,
+      onSuccess: (res) => {
+        message.success('create success');
+        history.push(`/domain/${res.url}`);
+      },
+      onError: () => {
+        message.error('create failed');
+      },
+    },
+  );
+
+  const { run: updateDomain, loading: updatingDomain } = useRequest(
+    (url: string, domain: DomainEdit) => DomainService.updateDomainApiV1DomainsDomainPatch(url, domain),
+    {
+      manual: true,
+      onSuccess: () => {
+      },
+      onError: () => {
+      },
+    },
+  );
+
+  const onFinish = (values: Partial<Domain>) => {
+    if (initialValues?.url) {
+      return updateDomain(initialValues?.url, values);
+    }
+    if (values.url) {
+      return createDomain(values as DomainCreate);
     }
   };
+
   return (
     <Form
       onFinish={onFinish}
@@ -79,12 +99,13 @@ const Index: React.FC<IProps> = (props) => {
             <Button
               htmlType="submit"
               type="primary"
-              className={updateMode ? null : style.submitButtonCreate}
+              className={initialValues?.url ? null : style.submitButtonCreate}
               size='large'
+              loading={updatingDomain || creatingDomain}
               block
             >
               {intl.formatMessage({
-                id: updateMode
+                id: initialValues?.url
                   ? 'SETTINGS.DOMAIN.UPDATE'
                   : 'DOMAIN.CREATE.CREATE',
               })}
