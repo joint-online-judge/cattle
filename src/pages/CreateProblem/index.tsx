@@ -10,7 +10,7 @@ import {
   Col,
   Button,
 } from 'antd';
-import { useIntl } from '@@/plugin-locale/localeExports';
+import { useIntl } from 'umi';
 import style from './style.css';
 import { CreateUpdateProblem } from '@/components/Problem';
 import { useParams } from 'umi';

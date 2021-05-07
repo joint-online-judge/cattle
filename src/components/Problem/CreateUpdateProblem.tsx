@@ -8,7 +8,7 @@ import {
   Col,
   Button,
 } from 'antd';
-import { useIntl } from '@@/plugin-locale/localeExports';
+import { useIntl } from 'umi';
 import { SUPPORT_PROGRAMMING_LANGUAGE } from '@/constants';
 import { useRequest } from 'ahooks';
 import style from './style.css';
@@ -30,8 +30,9 @@ export const CreateUpdateProblem: React.FC<IProps> = (props) => {
   });
 
   const { run: createProblem, loading: creatingProblem } = useRequest(
-    (problem: ProblemCreate) => ProblemService.createProblemApiV1ProblemsPost(
-      problem), {
+    (problem: ProblemCreate) =>
+      ProblemService.createProblemApiV1ProblemsPost(problem),
+    {
       manual: true,
       onSuccess: (res) => {
         console.log('create success');
@@ -39,10 +40,9 @@ export const CreateUpdateProblem: React.FC<IProps> = (props) => {
     });
 
   const { run: updateProblem, loading: updatingProblem } = useRequest(
-    (
-      id: string,
-      problem: ProblemEdit) => ProblemService.updateProblemApiV1ProblemsProblemPatch(
-      id, problem), {
+    (id: string, problem: ProblemEdit) =>
+      ProblemService.updateProblemApiV1ProblemsProblemPatch(id, problem),
+    {
       manual: true,
       onSuccess: (res) => {
         // todo: add errCode
