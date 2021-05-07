@@ -20,6 +20,13 @@ export default {
   'DOMAIN.HOME.PROBLEMS': 'Problems',
   'DOMAIN.HOME.MEMBERS': 'Members',
   'DOMAIN.HOME.SETTINGS': 'Settings',
+  // Problems
+  'PROBLEM.CREATE.TITLE': 'Create a new problem',
+  'PROBLEM.CREATE.FORM.TITLE': 'Title',
+  'PROBLEM.CREATE.FORM.CONTENT': 'Content',
+  'PROBLEM.CREATE.FORM.HIDDEN': 'Hidden',
+  'PROBLEM.CREATE.FORM.LANGUAGES': 'Languages',
+  'PROBLEM.CREATE.FORM.SUBMIT': 'Submit',
   // Settings
   'SETTINGS.SETTINGS': 'Settings',
   'SETTINGS.GENERAL_SETTINGS': 'General',

@@ -6,3 +6,9 @@ export const CONTENT_GRID_LAYOUT = {
   md: 16,
   xxl: 14,
 };
+export const SUPPORT_PROGRAMMING_LANGUAGE = [
+  'python',
+  'JavaScript',
+  'c++11',
+  'c99',
+  'matlab'];
