@@ -2,16 +2,10 @@ import React from 'react';
 import {
   Card,
   Typography,
-  Form,
-  Input,
-  Select,
-  Checkbox,
   Row,
   Col,
-  Button,
 } from 'antd';
 import { useIntl } from 'umi';
-import style from './style.css';
 import { CreateUpdateProblem } from '@/components/Problem';
 import { useParams } from 'umi';
 
