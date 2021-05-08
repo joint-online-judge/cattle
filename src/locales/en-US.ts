@@ -62,4 +62,8 @@ export default {
   'FOOTER.DOCS': 'Docs',
   'FOOTER.ISSUE': 'Issue',
   'FOOTER.CONTACT': 'Contact',
+  // Languages
+  // Languages
+  'zh-CN': '简体中文',
+  'en-US': 'English',
 };

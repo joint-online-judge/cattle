@@ -62,4 +62,7 @@ export default {
   'FOOTER.DOCS': '文档',
   'FOOTER.ISSUE': 'Bug反馈',
   'FOOTER.CONTACT': '联系我们',
+  // Languages
+  'zh-CN': '简体中文',
+  'en-US': 'English',
 };

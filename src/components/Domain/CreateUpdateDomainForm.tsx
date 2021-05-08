@@ -1,8 +1,8 @@
 import React from 'react';
-import { Button, Form, Input, Row, Col, message } from 'antd';
+import { Button, Col, Form, Input, message, Row } from 'antd';
 import { history, useIntl } from 'umi';
 import { useRequest } from 'ahooks';
-import { DomainService, Domain, DomainCreate, DomainEdit } from '@/client';
+import { Domain, DomainCreate, DomainEdit, DomainService, ErrorCode } from '@/client';
 // import { MarkdownEditor } from 'app/components/Editors';
 import style from './style.css';
 
@@ -19,8 +19,14 @@ const Index: React.FC<IProps> = (props) => {
     {
       manual: true,
       onSuccess: (res) => {
-        message.success('create success');
-        history.push(`/domain/${res.url}`);
+        if (res.errorCode === ErrorCode.SUCCESS) {
+          if (res.data?.url) {
+            history.push(`/domain/${res.data.url}`);
+          }
+          message.success('create success');
+        } else if (res.errorCode === ErrorCode.DOMAIN_URL_NOT_UNIQUE_ERROR) {
+          message.error('domain url already exists');
+        }
       },
       onError: () => {
         message.error('create failed');

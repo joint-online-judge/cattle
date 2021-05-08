@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useParams } from 'umi';
 import { useRequest } from 'ahooks';
 import {
-  Avatar, Typography, Row, Col, Spin,
+  Avatar, Typography, Row, Col, Spin, message
 } from 'antd';
 import { gravatarImageUrl } from '@/utils';
 import { DomainService } from '@/client';
@@ -13,8 +13,14 @@ const { Title } = Typography;
 const Index: React.FC = () => {
   const { domainUrl } = useParams<{ domainUrl: string }>();
   const { data, run } = useRequest(async () => {
-    return await DomainService.getDomainApiV1DomainsDomainGet(domainUrl);
-  }, { manual: true });
+    const res = await DomainService.getDomainApiV1DomainsDomainGet(domainUrl);
+    return res.data;
+  }, {
+    manual: true,
+    onError: () => {
+      message.error('failed to fetch domain info')
+    }
+  });
 
   useEffect(() => {
     (async () => {

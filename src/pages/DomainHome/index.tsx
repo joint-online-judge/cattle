@@ -1,6 +1,4 @@
 import React from 'react';
-import { Switch } from 'react-router-dom';
-import { Route } from 'react-router';
 import DomainHomeHeader from '@/components/Domain/DomainHome/DomainHomeHeader';
 import DomainHomeNav from '@/components/Domain/DomainHome/DomainHomeNav';
 import { Col, Row, Card } from 'antd';
@@ -11,16 +9,10 @@ const Index: React.FC = () => {
     <div>
       <Card className={style.contentCard}>
         <DomainHomeHeader />
-        <Route path="/domain/:url/">
-          <DomainHomeNav />
-        </Route>
+        <DomainHomeNav />
       </Card>
       <Card className={style.contentCard}>
-        <Switch>
-          <Route exact path="/domain/:url/">
-            Home page
-          </Route>
-        </Switch>
+        Home page
       </Card>
     </div>
   );
