@@ -2,7 +2,7 @@ import React, { ReactNode } from 'react';
 import { useModel, useIntl, useLocation } from 'umi';
 import { Dropdown, Menu } from 'antd';
 import { Link } from 'react-router-dom';
-import { gravatarImageUrl } from '@/utils';
+import Gravatar from '@/components/Gravatar';
 import { DownOutlined } from '@ant-design/icons';
 import style from './style.css';
 
@@ -67,10 +67,9 @@ export const Index: React.FC = () => {
         arrow
       >
         <span>
-          <img
-            src={gravatarImageUrl(initialState?.user?.gravatar || '', 20)}
-            alt={`@${initialState?.user?.uname || ''}`}
-            className={style.gravatar}
+          <Gravatar
+            user={initialState?.user}
+            size={20}
           />
           <DownOutlined />
         </span>

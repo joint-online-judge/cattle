@@ -23,7 +23,7 @@
       { exact: true, path: '/domain', component: '@/pages/DomainList' },
 
       // todo: decide the final route url
-      { exact: true, path:'/problem/:problemId', component: '@/pages/ProblemHome' },
+      { exact: true, path:'/problem/:problemId', component: '@/pages/Problem' },
 
       { exact: true, path: '/admin/domain/create', component: '@/pages/CreateDomain' },
 
