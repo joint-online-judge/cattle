@@ -1,7 +1,15 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link, useIntl } from 'umi';
 import { useRequest } from 'ahooks';
-import { message, Card, Table, Space, Typography, Divider, TableColumnProps } from 'antd';
+import {
+  message,
+  Card,
+  Table,
+  Space,
+  Typography,
+  Divider,
+  TableColumnProps,
+} from 'antd';
 import { DomainService, Domain } from '@/client';
 import { gravatarImageUrl } from '@/utils';
 // import {
@@ -61,8 +69,10 @@ const Index: React.FC = () => {
       fixed: 'right',
       render: (text, record) => (
         <Space split={<Divider type="vertical" />}>
-          <Link to={`/domain/${record.url}`}>{intl.formatMessage({ id: 'VISIT' })}</Link>
-          <Link to={`/domain/${record.url}/settings`}>{intl.formatMessage({ id: 'MANAGE' })}</Link>
+          <Link to={`/domain/${record.url}`}>{intl.formatMessage(
+            { id: 'VISIT' })}</Link>
+          <Link to={`/domain/${record.url}/settings`}>{intl.formatMessage(
+            { id: 'MANAGE' })}</Link>
         </Space>
       ),
     },

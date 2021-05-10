@@ -1,5 +1,5 @@
 import React, { ReactNode } from 'react';
-import { useModel, useIntl } from 'umi';
+import { useModel, useIntl, useLocation } from 'umi';
 import { Dropdown, Menu } from 'antd';
 import { Link } from 'react-router-dom';
 import { gravatarImageUrl } from '@/utils';
@@ -15,6 +15,7 @@ interface LoggedInSubMenuItem {
 export const Index: React.FC = () => {
   const { initialState } = useModel('@@initialState');
   const intl = useIntl();
+  const location = useLocation();
 
   // divider name has no actual meaning just to be a key of the divider component to pass eslint
   const LoggedInSubMenuArrange: (LoggedInSubMenuItem | string)[] = [
@@ -75,7 +76,9 @@ export const Index: React.FC = () => {
         </span>
       </Dropdown>
     ) : (
-      <Link to="/login">{intl.formatMessage({ id: 'USER.LOGIN.JACCOUNT_LOG_IN' })}</Link>
+      <Link to={`/login?from=${location.pathname}`}>
+        {intl.formatMessage({ id: 'USER.LOGIN.JACCOUNT_LOG_IN' })}
+      </Link>
     );
 };
 
