@@ -19,7 +19,8 @@ const { Text } = Typography;
 const Index: React.FC = () => {
   const intl = useIntl();
   const { data, run } = useRequest(async () => {
-    return DomainService.listDomainsApiV1DomainsGet();
+    const res = await DomainService.listDomainsApiV1DomainsGet();
+    return res.data?.results;
   }, { manual: true });
 
   useEffect(() => {
