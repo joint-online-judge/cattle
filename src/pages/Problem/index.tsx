@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import {
   Row,
   Col,
-  Typography,
 } from 'antd';
 import { useParams } from 'umi';
 import { useRequest } from 'ahooks';
@@ -10,6 +9,7 @@ import { ProblemService, UserService } from '@/client';
 import { SettingsMenuItem } from '@/components/Settings/typings';
 import SideBar from './SideBar';
 import Home from './Home';
+import Submit from './Submit';
 
 const Index: React.FC = () => {
   const { problemId } = useParams<{ problemId: string }>();
@@ -48,11 +48,7 @@ const Index: React.FC = () => {
     },
     {
       key: 'PROBLEM.SUBMIT_CODE',
-      // TODO: component: (<General />),
-    },
-    {
-      key: 'PROBLEM.SUBMIT_RECORD',
-      // TODO: component: (<General />),
+      component: (<Submit problem={problemResp?.data} />),
     },
     {
       key: 'PROBLEM.SETTINGS',
@@ -65,10 +61,18 @@ const Index: React.FC = () => {
   return (
     <>
       <Row gutter={[{ lg: 24, xl: 32 }, 24]}>
-        <Col xs={24} sm={24} lg={18}>
+        <Col
+          xs={{ span: 24, order: 1 }}
+          sm={{ span: 24, order: 1 }}
+          xl={{ span: 18, order: 0 }}
+        >
           {key ? menuItems.find((o) => o.key === key)?.component : null}
         </Col>
-        <Col xs={24} sm={24} lg={6}>
+        <Col
+          xs={{ span: 24, order: 0 }}
+          sm={{ span: 24, order: 0 }}
+          xl={{ span: 6, order: 1 }}
+        >
           <SideBar
             user={ownerUserResp?.data}
             items={menuItems}

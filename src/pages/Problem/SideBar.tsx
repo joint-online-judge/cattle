@@ -1,6 +1,7 @@
 import React from 'react';
-import { Card, Col, Descriptions, Menu, Row } from 'antd';
+import { Card, Col, Descriptions, Row } from 'antd';
 import { CheckOutlined } from '@ant-design/icons';
+import { useIntl } from 'umi';
 import Gravatar from '@/components/Gravatar';
 import { User, UserBase } from '@/client';
 import { SettingsSideBarProps } from '@/components/Settings/typings';
@@ -12,7 +13,7 @@ interface SideBarProps extends SettingsSideBarProps {
 
 const Index: React.FC<SideBarProps> = (props) => {
   const { user, items, onChange, selectedKeys } = props;
-  // todo： try to use components
+  const intl = useIntl();
   return (
     <>
       <Row>
@@ -29,13 +30,20 @@ const Index: React.FC<SideBarProps> = (props) => {
       <Row>
         <Card>
           <Descriptions column={1}>
-            <Descriptions.Item label="Record">
+            <Descriptions.Item
+              label={intl.formatHTMLMessage({ id: 'PROBLEM.STATUS' })}
+            >
+              {/* todo: make status component */}
               <CheckOutlined /> Accepted
             </Descriptions.Item>
-            <Descriptions.Item label="Problem Group">
+            <Descriptions.Item
+              label={intl.formatHTMLMessage({ id: 'PROBLEM.PROBLEM_GROUP' })}
+            >
               不知道
             </Descriptions.Item>
-            <Descriptions.Item label="Upload">
+            <Descriptions.Item
+              label={intl.formatHTMLMessage({ id: 'PROBLEM.OWNER' })}
+            >
               <Gravatar
                 size={20}
                 user={user}
