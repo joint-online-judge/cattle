@@ -7,11 +7,9 @@
     "build": "cross-env UMI_ENV=prod umi build",
     "postinstall": "umi generate tmp",
     "prettier": "prettier --write '**/*.{js,jsx,tsx,ts,less,md,json}'",
+    "lint": "yarn eslint src --ext .ts,.tsx",
     "test": "umi-test",
     "test:coverage": "umi-test --coverage"
-  },
-  "gitHooks": {
-    "pre-commit": "lint-staged"
   },
   "lint-staged": {
     "*.{js,jsx,less,md,json}": [
@@ -20,6 +18,9 @@
     "*.ts?(x)": [
       "prettier --parser=typescript --write"
     ]
+  },
+  "gitHooks": {
+    "pre-commit": "yarn run lint && yarn run prettier"
   },
   "dependencies": {
     "@ant-design/pro-layout": "^6.5.0",
@@ -32,6 +33,7 @@
     "@types/crypto-js": "^4.0.1",
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
+    "@umijs/fabric": "^2.5.13",
     "@umijs/test": "^3.4.14",
     "ahooks": "^2.10.2",
     "lint-staged": "^10.0.7",
