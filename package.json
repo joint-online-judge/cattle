@@ -3,7 +3,7 @@
   "scripts": {
     "gen:api": "openapi --input ./openapi/openapi.json --output ./src/client",
     "prestart": "npm run gen:api",
-    "start": "cross-env UMI_ENV=dev umi dev",
+    "start": "cross-env UMI_ENV=dev HOST=127.0.0.1 umi dev",
     "build": "cross-env UMI_ENV=prod umi build",
     "postinstall": "umi generate tmp",
     "prettier": "prettier --write '**/*.{js,jsx,tsx,ts,less,md,json}'",

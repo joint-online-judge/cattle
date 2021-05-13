@@ -45,7 +45,7 @@ const Index: React.FC = () => {
         />
         <List
           itemLayout="horizontal"
-          dataSource={data}
+          dataSource={data?.results || []}
           bordered
           split
           renderItem={(item) => (
@@ -63,7 +63,7 @@ const Index: React.FC = () => {
               ]}
             >
               <Space>
-                <Avatar src={gravatarImageUrl(item.gravatar)} />
+                <Avatar src={gravatarImageUrl(item.gravatar || '')} />
                 <Link
                   to={`/domain/${item.url}`}
                 >
