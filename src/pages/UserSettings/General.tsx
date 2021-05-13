@@ -20,7 +20,7 @@ const Index: React.FC = () => {
   const [form] = Form.useForm();
   const intl = useIntl();
   const { currentLang, switchLang, allLang } = useModel('lang');
-  const onFinish = (values) => {
+  const onFinish = (values: any) => {
     console.log(values);
     // settings.updateDisplaySettings(values);
   };

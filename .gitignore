@@ -19,6 +19,10 @@
 /src/.umi-production
 /src/.umi-test
 /.env.local
+/build
 
 # openapi
 /src/client
+
+# husky
+/.husky

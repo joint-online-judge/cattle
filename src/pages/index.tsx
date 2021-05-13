@@ -2,6 +2,7 @@ import { IRouteComponentProps } from 'umi';
 import styles from './index.less';
 import { Button } from 'antd';
 import { useIntl, setLocale, useModel } from 'umi';
+import LangSelect from '@/components/LangSelect';
 
 export default function IndexPage({ history }: IRouteComponentProps) {
   const { initialState, loading, error } = useModel('@@initialState');
@@ -16,6 +17,7 @@ export default function IndexPage({ history }: IRouteComponentProps) {
       <Button type="primary" onClick={() => history.push('/logout')}>Logout</Button>
       <Button type="primary" onClick={() => setLocale('zh-CN', false)}>zh-CN</Button>
       <Button type="primary" onClick={() => setLocale('en-US', false)}>en-US</Button>
+      <LangSelect style={{ width: 200 }} />
     </div>
   );
 }

@@ -19,7 +19,8 @@ const { Text } = Typography;
 const Index: React.FC = () => {
   const intl = useIntl();
   const { data, run } = useRequest(async () => {
-    return DomainService.listDomainsApiV1DomainsGet();
+    const res = await DomainService.listDomainsApiV1DomainsGet();
+    return res.data?.results;
   }, { manual: true });
 
   useEffect(() => {
@@ -44,7 +45,7 @@ const Index: React.FC = () => {
         />
         <List
           itemLayout="horizontal"
-          dataSource={data}
+          dataSource={data?.results || []}
           bordered
           split
           renderItem={(item) => (
@@ -62,7 +63,7 @@ const Index: React.FC = () => {
               ]}
             >
               <Space>
-                <Avatar src={gravatarImageUrl(item.gravatar)} />
+                <Avatar src={gravatarImageUrl(item.gravatar || '')} />
                 <Link
                   to={`/domain/${item.url}`}
                 >

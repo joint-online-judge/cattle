@@ -1,15 +1,4 @@
-.createDomain {
-  margin: 60px auto auto auto;
-}
-
-.createTitle {
-  margin: auto;
-  text-align: center;
-}
-
 .submitButtonCreate {
-  width: 100% !important;
-  height: 50px;
   margin-top: 20px;
 }
 

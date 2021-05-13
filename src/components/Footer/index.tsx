@@ -13,7 +13,7 @@ const Index: React.FC = () => {
         <Row justify="space-between">
           <Col>
             <Text type="secondary">
-              © 2021-{new Date().getFullYear()} Joint Online Judge.
+              © 2021-{new Date().getFullYear()} Joint Online Judge
             </Text>
             <br/>
             <a

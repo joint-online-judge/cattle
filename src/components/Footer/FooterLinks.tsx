@@ -12,23 +12,23 @@ interface LinkItem {
 
 const items: LinkItem[] = [
   {
-    name: 'ABOUT',
+    name: 'FOOTER.ABOUT',
     path: '/about',
   },
   {
-    name: 'API',
+    name: 'FOOTER.API',
     path: '/api',
   },
   {
-    name: 'DOCS',
+    name: 'FOOTER.DOCS',
     path: '/docs',
   },
   {
-    name: 'ISSUE',
+    name: 'FOOTER.ISSUE',
     path: '/issue',
   },
   {
-    name: 'CONTACT',
+    name: 'FOOTER.CONTACT',
     path: '/contact',
   },
 ];

@@ -1,4 +1,4 @@
-import { User, UserService, DomainService } from '@/client';
+import { ErrorCode, User, UserService } from '@/client';
 
 export interface InitialState {
   user: User | null
@@ -32,9 +32,9 @@ export interface InitialState {
 
 export async function getInitialState(): Promise<InitialState> {
   try {
-    const profile = await UserService.getUserApiV1UserGet();
-    if (profile) {
-      return { user: profile };
+    const res = await UserService.getUserApiV1UserGet();
+    if (res.errorCode === ErrorCode.SUCCESS && res.data) {
+      return { user: res.data };
     }
   } catch (e) {
     return { user: null };

@@ -1,32 +1,59 @@
 import React from 'react';
-import { Button, Form, Input } from 'antd';
+import { Button, Col, Form, Input, message, Row } from 'antd';
 import { history, useIntl } from 'umi';
-import { DomainService } from '@/client';
+import { useRequest } from 'ahooks';
+import { Domain, DomainCreate, DomainEdit, DomainService, ErrorCode } from '@/client';
 // import { MarkdownEditor } from 'app/components/Editors';
 import style from './style.css';
 
 export interface IProps {
-  domainUrl?: string;
+  initialValues?: Partial<Domain>;
 }
 
 const Index: React.FC<IProps> = (props) => {
-  const updateMode = Boolean(props.domainUrl);
+  const { initialValues } = props;
   const intl = useIntl();
-  const onFinish = async ({ url, name, gravatar, bulletin }) => {
-    // redirect to the newly created form
-    if (updateMode) {
-      await DomainService.updateDomainApiV1DomainsDomainPatch(url,
-        { gravatar, bulletin, name });
-    } else {
-      await DomainService.createDomainApiV1DomainsPost({
-        url,
-        name,
-        bulletin,
-        gravatar,
-      });
-      history.push(`/domain/${url}`);
+
+  const { run: createDomain, loading: creatingDomain } = useRequest(
+    (domain: DomainCreate) => DomainService.createDomainApiV1DomainsPost(domain),
+    {
+      manual: true,
+      onSuccess: (res) => {
+        if (res.errorCode === ErrorCode.SUCCESS) {
+          if (res.data?.url) {
+            history.push(`/domain/${res.data.url}`);
+          }
+          message.success('create success');
+        } else if (res.errorCode === ErrorCode.DOMAIN_URL_NOT_UNIQUE_ERROR) {
+          message.error('domain url already exists');
+        }
+      },
+      onError: () => {
+        message.error('create failed');
+      },
+    },
+  );
+
+  const { run: updateDomain, loading: updatingDomain } = useRequest(
+    (url: string, domain: DomainEdit) => DomainService.updateDomainApiV1DomainsDomainPatch(url, domain),
+    {
+      manual: true,
+      onSuccess: () => {
+      },
+      onError: () => {
+      },
+    },
+  );
+
+  const onFinish = (values: Partial<Domain>) => {
+    if (initialValues?.url) {
+      return updateDomain(initialValues?.url, values);
+    }
+    if (values.url) {
+      return createDomain(values as DomainCreate);
     }
   };
+
   return (
     <Form
       onFinish={onFinish}
@@ -70,15 +97,27 @@ const Index: React.FC<IProps> = (props) => {
       >
         {/*{MarkdownEditor}*/}
         {'TODO: Here should be a markdown editor'}
+        <Input.TextArea />
       </Form.Item>
       <Form.Item>
-        <Button
-          htmlType="submit"
-          type="primary"
-          className={updateMode ? null : style.submitButtonCreate}
-        >
-          {intl.formatMessage({ id: updateMode ? 'SETTINGS.DOMAIN.UPDATE' : 'DOMAIN.CREATE.CREATE' })}
-        </Button>
+        <Row>
+          <Col xs={9} sm={8} md={6}>
+            <Button
+              htmlType="submit"
+              type="primary"
+              className={initialValues?.url ? null : style.submitButtonCreate}
+              size='large'
+              loading={updatingDomain || creatingDomain}
+              block
+            >
+              {intl.formatMessage({
+                id: initialValues?.url
+                  ? 'SETTINGS.DOMAIN.UPDATE'
+                  : 'DOMAIN.CREATE.CREATE',
+              })}
+            </Button>
+          </Col>
+        </Row>
       </Form.Item>
     </Form>
   );
