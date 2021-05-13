@@ -1,36 +1,35 @@
 import React, { useEffect } from 'react';
 import { Spin, Result } from 'antd';
-import { Redirect, useLocation, useModel, useRequest } from 'umi';
+import { Redirect, useLocation, useModel, useRequest, history } from 'umi';
 import { UserService } from '@/client';
 import { DOMAIN_HOST } from '@/constants';
 
 const useQuery = () => {
-  console.log(useLocation().search);
   return new URLSearchParams(useLocation().search);
 };
 
 const Index: React.FC = () => {
   const { initialState } = useModel('@@initialState');
-  const location = useLocation<{ from: Location }>();
   const query = useQuery();
 
-  const { run } = useRequest(async () => {
-    // either fetch profile fails or try to login normally
+  const { run: login } = useRequest(() => {
     if (!initialState?.user) {
-      const { from } = location.state || { from: { pathname: '/' } };
-      UserService.jaccountLoginApiV1UserJaccountLoginGet(
-        `${DOMAIN_HOST}/login/?action=profile&from=${from.pathname}`, false,
+      const from = query.get('from') || '/';
+      return UserService.jaccountLoginApiV1UserJaccountLoginGet(
+        `${DOMAIN_HOST}${from}`, false,
       ).then(res => {
         window.location.href = res.redirect_url;
-      }).catch(err => {
-        console.log(err);
-        // TODO: message user
       });
     }
-  }, { manual: true });
+  }, {
+    manual: true,
+    onError: (res) => {
+      console.error(res);
+    },
+  });
 
   useEffect(() => {
-    run();
+    login();
   }, []);
 
   return (

@@ -1,14 +1,15 @@
 import React, { ReactNode } from 'react';
-import { useModel, useIntl } from 'umi';
-import { Dropdown, Menu, Avatar, Space } from 'antd';
+import { useModel, useIntl, useLocation } from 'umi';
+import { Dropdown, Menu } from 'antd';
 import { Link } from 'react-router-dom';
-import { gravatarImageUrl } from '@/utils';
+import Gravatar from '@/components/Gravatar';
 import { DownOutlined } from '@ant-design/icons';
 import style from './style.css';
 
 export const Index: React.FC = () => {
   const { initialState } = useModel('@@initialState');
   const intl = useIntl();
+  const location = useLocation();
 
   const subMenu = (
     <Menu>
@@ -40,21 +41,23 @@ export const Index: React.FC = () => {
   return initialState?.user
     ? (
       <Dropdown
-        overlay={subMenu}
+        overlay={UserSubMenu}
         placement="bottomRight"
         trigger={['click']}
         arrow
       >
-        <Space>
-          <Avatar
-            src={gravatarImageUrl(initialState?.user?.gravatar || '', 20)}
-            alt={initialState?.user?.uname || ''}
+        <span>
+          <Gravatar
+            user={initialState?.user}
+            size={20}
           />
           <DownOutlined />
-        </Space>
+        </span>
       </Dropdown>
     ) : (
-      <Link to="/login">{intl.formatMessage({ id: 'USER.LOGIN.JACCOUNT_LOG_IN' })}</Link>
+      <Link to={`/login?from=${location.pathname}`}>
+        {intl.formatMessage({ id: 'USER.LOGIN.JACCOUNT_LOG_IN' })}
+      </Link>
     );
 };
 

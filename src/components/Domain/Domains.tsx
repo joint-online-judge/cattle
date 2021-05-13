@@ -20,7 +20,7 @@ const Index: React.FC = () => {
   const intl = useIntl();
   const { data, run } = useRequest(async () => {
     const res = await DomainService.listDomainsApiV1DomainsGet();
-    return res.data;
+    return res.data?.results;
   }, { manual: true });
 
   useEffect(() => {

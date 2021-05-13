@@ -1,14 +1,8 @@
 import React, { Fragment } from 'react';
 import { useIntl } from 'umi';
 import { Menu, MenuProps } from 'antd';
-import { SettingsMenuItem } from './typings';
+import { SettingsSideBarProps } from './typings';
 import style from './style.css';
-
-export interface SettingsSideBarProps {
-  items: SettingsMenuItem[];
-  selectedKeys: string[];
-  onChange?: MenuProps['onClick'];
-}
 
 const Index: React.FC<SettingsSideBarProps> = (props) => {
   const intl = useIntl();

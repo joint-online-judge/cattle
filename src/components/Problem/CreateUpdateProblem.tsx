@@ -89,7 +89,7 @@ export const CreateUpdateProblem: React.FC<IProps> = (props) => {
       <Form.Item
         name='languages'
         label={intl.formatMessage(
-          { id: 'PROBLEM.CREATE.FORM.LANGUAGES' })}
+          { id: 'PROBLEM.LANGUAGES' })}
       >
         <Select
           allowClear
@@ -116,7 +116,7 @@ export const CreateUpdateProblem: React.FC<IProps> = (props) => {
               className={style.submitButton}
             >
               {intl.formatMessage({
-                id: 'PROBLEM.CREATE.FORM.SUBMIT',
+                id: 'PROBLEM.SUBMIT',
               })}
             </Button>
           </Col>

@@ -26,6 +26,8 @@
     "@umijs/preset-react": "1.x",
     "cross-env": "^7.0.3",
     "crypto-js": "^4.0.0",
+    "react-markdown": "^6.0.2",
+    "remark-gfm": "^1.0.0",
     "umi": "^3.4.14"
   },
   "devDependencies": {
