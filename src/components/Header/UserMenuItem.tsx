@@ -41,7 +41,7 @@ export const Index: React.FC = () => {
   return initialState?.user
     ? (
       <Dropdown
-        overlay={UserSubMenu}
+        overlay={subMenu}
         placement="bottomRight"
         trigger={['click']}
         arrow
