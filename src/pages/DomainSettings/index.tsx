@@ -1,41 +1,37 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'umi';
-import { Col, PageHeader, Row, Spin, Card } from 'antd';
+import { Col, PageHeader, Row, Spin, Card, Tabs } from 'antd';
 import SettingsSideBar from '@/components/Settings/SettingsSideBar';
-import UpdateDomain from '@/components/Domain/DomainHome/UpdateDomain';
+import UpdateDomain from './UpdateDomain';
 import { SettingsMenuItem } from '@/components/Settings/typings';
 import { useRequest } from 'ahooks';
 import { DomainService } from '@/client';
 import { gravatarImageUrl } from '@/utils';
 import style from './style.css';
 
-const menuItems: SettingsMenuItem[] = [
-  {
-    key: 'SETTINGS.DOMAIN.PROFILE',
-    path: '/profile',
-    component: (<UpdateDomain />),
-  },
-  {
-    key: 'SETTINGS.DOMAIN.INVITATION',
-    path: '/invitation',
-  },
-  {
-    key: 'SETTINGS.DOMAIN.MEMBERS',
-    path: '/members',
-  },
-];
-
-export const DomainSettings: React.FC = () => {
-  const [key, setKey] = useState<string>(menuItems[0].key);
+const Index: React.FC = () => {
   const { domainUrl } = useParams<{ domainUrl: string }>();
-  const { run, data } = useRequest(async () => {
-    return DomainService.getDomainApiV1DomainsDomainGet(domainUrl);
-  }, { manual: true });
-  useEffect(() => {
-    (async () => {
-      await run();
-    })();
-  }, []);
+  const { data, refresh } = useRequest(async () => {
+    const res = await DomainService.getDomainApiV1DomainsDomainGet(domainUrl);
+    return res.data;
+  });
+
+  const menuItems: SettingsMenuItem[] = [
+    {
+      key: 'SETTINGS.DOMAIN.PROFILE',
+      path: '/profile',
+      component: (<UpdateDomain refresh={refresh} />),
+    },
+    {
+      key: 'SETTINGS.DOMAIN.INVITATION',
+      path: '/invitation',
+    },
+    {
+      key: 'SETTINGS.DOMAIN.MEMBERS',
+      path: '/members',
+    },
+  ];
+  const [key, setKey] = useState<string>(menuItems[0].key);
 
   return (
     <Card
@@ -64,7 +60,7 @@ export const DomainSettings: React.FC = () => {
           <SettingsSideBar
             items={menuItems}
             selectedKeys={[key]}
-            onChange={({ key: menuKey }) => setKey(menuKey as string)}
+            onClick={e => setKey(e.key.toString())}
           />
         </Col>
         <Col xs={24} sm={24} lg={18}>
@@ -74,3 +70,5 @@ export const DomainSettings: React.FC = () => {
     </Card>
   );
 };
+
+export default Index;

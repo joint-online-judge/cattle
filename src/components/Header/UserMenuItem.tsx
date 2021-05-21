@@ -49,7 +49,6 @@ export const Index: React.FC = () => {
         <span>
           <Gravatar
             user={initialState?.user}
-            size={20}
           />
           <DownOutlined />
         </span>

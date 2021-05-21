@@ -10,10 +10,8 @@ export interface SettingsMenuItem {
   component?: ReactNode;
 }
 
-export interface SettingsSideBarProps {
+export interface SettingsSideBarProps extends MenuProps {
   items: SettingsMenuItem[];
-  selectedKeys: string[];
-  onChange?: MenuProps['onClick'];
 }
 
 export declare type SettingsType = 'form';

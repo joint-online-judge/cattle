@@ -45,7 +45,7 @@ const Index: React.FC = () => {
         />
         <List
           itemLayout="horizontal"
-          dataSource={data?.results || []}
+          dataSource={data || []}
           bordered
           split
           renderItem={(item) => (

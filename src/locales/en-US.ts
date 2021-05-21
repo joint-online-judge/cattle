@@ -4,6 +4,7 @@ export default {
   'PROBLEM': 'Problem',
   'CREATION': 'Creation',
   'HOMEWORK': 'Homework',
+  'HOME': 'Home',
   'TEST': 'Big SLL',
   // Simple Verb
   'CREATE': 'Create',

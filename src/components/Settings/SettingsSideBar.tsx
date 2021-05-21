@@ -1,24 +1,24 @@
 import React, { Fragment } from 'react';
 import { useIntl } from 'umi';
-import { Menu, MenuProps } from 'antd';
+import { Menu } from 'antd';
 import { SettingsSideBarProps } from './typings';
-import style from './style.css';
+import style from './style.less';
 
 const Index: React.FC<SettingsSideBarProps> = (props) => {
   const intl = useIntl();
-  const { items, selectedKeys, onChange } = props;
+  const { items, ...otherProps } = props;
 
   return (
     <Menu
-      onClick={(e) => onChange && onChange(e)}
       mode="vertical"
       className={style.settingsSideBar}
-      selectedKeys={selectedKeys}
+      {...otherProps}
     >
       {
         items.map((item, index) => (
           <Fragment key={`${item.key}-fragment`}>
             <Menu.Item
+              style={{ margin: 0 }}
               key={item.key}
             >
               {item.node ? item.node : intl.formatMessage({ id: item.key })}

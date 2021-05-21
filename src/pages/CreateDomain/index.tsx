@@ -1,7 +1,7 @@
 import React from 'react';
 import { Row, Col, Card } from 'antd';
 import { useIntl, useLocation, useRouteMatch } from 'umi';
-import CreateUpdateDomainForm from '@/components/Domain/CreateUpdateDomainForm';
+import UpsertDomainForm from '@/components/Domain/UpsertDomainForm';
 import PageHeaderIntl from '@/components/PageHeaderIntl';
 import style from './style.css';
 
@@ -40,7 +40,7 @@ const Index: React.FC = () => {
       <Card>
         <Row justify="center" className={style.createDomain}>
           <Col span={12}>
-            <CreateUpdateDomainForm />
+            <UpsertDomainForm />
           </Col>
         </Row>
       </Card>

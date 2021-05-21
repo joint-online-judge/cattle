@@ -1,6 +1,6 @@
 import React from 'react';
 import { SettingsType } from './typings';
-import style from './style.css';
+import style from './style.less';
 
 export interface IProps {
   type?: SettingsType;

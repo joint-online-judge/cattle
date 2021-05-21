@@ -4,6 +4,7 @@ export default {
   'PROBLEM': '题目',
   'CREATION': '创建',
   'HOMEWORK': '作业',
+  'HOME': '首页',
   'TEST': '大史历历',
   // 简单动词
   'CREATE': '创建',

@@ -11,4 +11,5 @@ export const SUPPORT_PROGRAMMING_LANGUAGE = [
   'JavaScript',
   'c++11',
   'c99',
-  'matlab'];
+  'matlab',
+];
