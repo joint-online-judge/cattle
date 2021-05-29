@@ -19,7 +19,7 @@
       { exact: true, path: '/problem-set/:problemSetId/system-test', component: '@/pages/CreateProblem' },
       { exact: true, path: '/problem-set/:problemSetId/scoreboard', component: '@/pages/CreateProblem' },
       { exact: true, path: '/problem-set/:problemSetId/settings', component: '@/pages/CreateProblem' },
-      { exact: true, path: '/problem-set/:problemSetId', component: '@/pages/CreateProblem' },
+      { exact: true, path: '/problem-set/:problemSetId', component: '@/pages/ProblemSetDetail' },
 
       // todo: decide the final route url
       { exact: true, path: '/problem/:problemId/submit', component: '@/pages/Problem' },

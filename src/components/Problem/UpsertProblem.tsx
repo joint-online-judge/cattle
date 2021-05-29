@@ -18,7 +18,7 @@ export interface IProps {
   initialValues?: Partial<Problem>;
 }
 
-export const CreateUpdateProblem: React.FC<IProps> = (props) => {
+export const UpsertProblem: React.FC<IProps> = (props) => {
   const { initialValues } = props;
   const intl = useIntl();
   const languageOptions = SUPPORT_PROGRAMMING_LANGUAGE.map((lang) => {

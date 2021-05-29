@@ -6,7 +6,7 @@ import {
   Col,
 } from 'antd';
 import { useIntl } from 'umi';
-import { CreateUpdateProblem } from '@/components/Problem';
+import { UpsertProblem } from '@/components/Problem';
 import { useParams } from 'umi';
 
 const Index: React.FC = () => {
@@ -22,7 +22,7 @@ const Index: React.FC = () => {
             </Typography.Title>
           )}
         >
-          <CreateUpdateProblem initialValues={{ domain: domainUrl }} />
+          <UpsertProblem initialValues={{ domain: domainUrl }} />
         </Card>
       </Col>
     </Row>
