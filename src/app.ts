@@ -33,7 +33,7 @@ export interface InitialState {
 export async function getInitialState(): Promise<InitialState> {
   try {
     const res = await UserService.getUserApiV1UserGet();
-    if (res.errorCode === ErrorCode.SUCCESS && res.data) {
+    if (res.error_code === ErrorCode.SUCCESS && res.data) {
       return { user: res.data };
     }
   } catch (e) {

@@ -12,7 +12,7 @@ interface SideBarProps extends SettingsSideBarProps {
 }
 
 const Index: React.FC<SideBarProps> = (props) => {
-  const { user, items, onChange, selectedKeys } = props;
+  const { user, items, onClick, selectedKeys } = props;
   const intl = useIntl();
   return (
     <>
@@ -21,7 +21,7 @@ const Index: React.FC<SideBarProps> = (props) => {
           <SettingsSideBar
             items={items}
             selectedKeys={selectedKeys}
-            onChange={onChange}
+            onClick={onClick}
           />
         </Col>
       </Row>

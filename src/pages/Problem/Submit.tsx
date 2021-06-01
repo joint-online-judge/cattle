@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Card, Table, Select, Row, Col, Form, Button, Upload } from 'antd';
 import { useIntl } from 'umi';
 import { InboxOutlined } from '@ant-design/icons';
 import { Problem } from '@/client';
+import { submitProblem } from '@/utils/service';
+import { isArray } from 'lodash-es';
 
 interface IProps {
   problem: Problem | undefined
@@ -11,6 +13,7 @@ interface IProps {
 const Index: React.FC<IProps> = (props) => {
   const intl = useIntl();
   const { problem } = props;
+
   const columns = [
     {
       title: intl.formatMessage({ id: 'PROBLEM.STATUS' }),
@@ -33,8 +36,10 @@ const Index: React.FC<IProps> = (props) => {
       key: 'submit_at',
     },
   ];
+
   const data = [
     {
+      id: '1',
       status: 'ac',
       memory_kb: '1kb',
       time_ms: '1ms',
@@ -42,15 +47,23 @@ const Index: React.FC<IProps> = (props) => {
     }];
 
   const onFinish = (values: any) => {
-    // todo: make API work
+    submitProblem(problem?.id || '', values);
     console.log(values);
   };
+
+  const languageOptions = useMemo(() => {
+    return isArray(problem?.languages) ? problem?.languages.map(lang => (
+      <Select.Option value={lang} key={lang}>{lang}</Select.Option>
+    )) : null;
+  }, [problem]);
+
   return (
     <>
       <Card
         title={intl.formatHTMLMessage({ id: 'PROBLEM.RECENT_RECORD' })}
       >
         <Table
+          rowKey="id"
           columns={columns}
           dataSource={data}
           pagination={false}
@@ -66,7 +79,6 @@ const Index: React.FC<IProps> = (props) => {
             <Form
               layout='vertical'
               onFinish={onFinish}
-              initialValues={{ language: problem?.languages[0] }}
             >
               <Form.Item
                 label={intl.formatHTMLMessage({ id: 'PROBLEM.LANGUAGES' })}
@@ -79,10 +91,14 @@ const Index: React.FC<IProps> = (props) => {
                 ]}
               >
                 <Select
+                  placeholder={
+                    intl.formatMessage(
+                      { id: 'FORM.SELECT_PLACEHOLDER' },
+                      { field: intl.formatMessage({ id: 'PROBLEM.LANGUAGES' }) },
+                    )
+                  }
                 >
-                  {problem?.languages.map((lang) => (
-                    <Select.Option value={lang}>{lang}</Select.Option>
-                  ))}
+                  {languageOptions}
                 </Select>
               </Form.Item>
               <Form.Item

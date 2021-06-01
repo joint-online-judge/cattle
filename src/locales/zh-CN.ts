@@ -63,6 +63,7 @@ export default {
   'SETTINGS.SECURITY_SETTINGS': '安全设置',
   'SETTINGS.I18N_LANG': '语言',
   'SETTINGS.TIMEZONE': '时区',
+  'SETTINGS.SWITCH_LANG': '切换语言',
   'SETTINGS.UPDATE_SETTINGS': '更新设置',
   'SETTINGS.DISPLAY_SETTINGS': '显示设置',
   'SETTINGS.DOMAIN.PROFILE': '基本资料',
@@ -80,4 +81,7 @@ export default {
   // Languages
   'zh-CN': '简体中文',
   'en-US': 'English',
+  // Form
+  'FORM.INPUT_PLACEHOLDER': '请输入{field}',
+  'FORM.SELECT_PLACEHOLDER': '请选择{field}',
 };

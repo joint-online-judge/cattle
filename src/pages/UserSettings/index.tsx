@@ -45,7 +45,7 @@ const Index: React.FC = () => {
           <SettingsSideBar
             items={menuItems}
             selectedKeys={[key]}
-            onChange={({ key: menuKey }) => setKey(menuKey as string)}
+            onClick={({ key: menuKey }) => setKey(menuKey as string)}
           />
         </Col>
         <Col xs={24} sm={24} lg={18}>

@@ -56,7 +56,7 @@ const Index: React.FC = () => {
     },
   ];
 
-  const [key, setKey] = useState<string>(menuItems[0].key);
+  const [key, setKey] = useState<string>(menuItems[1].key);
 
   return (
     <>
@@ -77,7 +77,7 @@ const Index: React.FC = () => {
             user={ownerUserResp?.data}
             items={menuItems}
             selectedKeys={[key]}
-            onChange={({ key: menuKey }) => setKey(menuKey as string)}
+            onClick={({ key: menuKey }) => setKey(menuKey as string)}
           />
         </Col>
       </Row>

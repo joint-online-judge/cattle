@@ -63,6 +63,7 @@ export default {
   'SETTINGS.SECURITY_SETTINGS': 'Security',
   'SETTINGS.I18N_LANG': 'Language',
   'SETTINGS.TIMEZONE': 'Timezone',
+  'SETTINGS.SWITCH_LANG': 'Switch Language',
   'SETTINGS.UPDATE_SETTINGS': 'Update Settings',
   'SETTINGS.DISPLAY_SETTINGS': 'Display Settings',
   'SETTINGS.DOMAIN.PROFILE': 'Profile',
@@ -78,7 +79,9 @@ export default {
   'FOOTER.ISSUE': 'Issue',
   'FOOTER.CONTACT': 'Contact',
   // Languages
-  // Languages
   'zh-CN': '简体中文',
   'en-US': 'English',
+  // Form
+  'FORM.INPUT_PLACEHOLDER': 'please input {field}',
+  'FORM.SELECT_PLACEHOLDER': 'please select {field}',
 };

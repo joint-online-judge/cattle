@@ -22,13 +22,13 @@ const Index: React.FC<IProps> = (props) => {
     {
       manual: true,
       onSuccess: (res) => {
-        if (res.errorCode === ErrorCode.SUCCESS) {
+        if (res.error_code === ErrorCode.SUCCESS) {
           if (res.data?.url) {
             history.push(`/domain/${res.data.url}`);
           }
           message.success('create success');
           onCreateSuccess && onCreateSuccess(res.data);
-        } else if (res.errorCode === ErrorCode.DOMAIN_URL_NOT_UNIQUE_ERROR) {
+        } else if (res.error_code === ErrorCode.URL_NOT_UNIQUE_ERROR) {
           message.error('domain url already exists');
         }
       },
@@ -43,7 +43,7 @@ const Index: React.FC<IProps> = (props) => {
     {
       manual: true,
       onSuccess: res => {
-        if (res.errorCode === ErrorCode.SUCCESS) {
+        if (res.error_code === ErrorCode.SUCCESS) {
           message.success('update domain success');
           onUpdateSuccess && onUpdateSuccess(res.data);
         } else {
