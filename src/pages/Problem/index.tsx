@@ -1,11 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import {
-  Row,
-  Col,
-} from 'antd';
+import { Row, Col } from 'antd';
 import { useParams } from 'umi';
 import { useRequest } from 'ahooks';
-import { ProblemService, UserService } from '@/client';
+import { Horse } from '@/utils/service';
 import { SettingsMenuItem } from '@/components/Settings/typings';
 import SideBar from './SideBar';
 import Home from './Home';
@@ -15,27 +12,31 @@ const Index: React.FC = () => {
   const { problemId } = useParams<{ problemId: string }>();
 
   const { data: ownerUserResp, run: getOwner } = useRequest(
-    (uid: string) => UserService.getUserApiV1UsersUidGet(uid), {
+    (uid: string) => Horse.user.getUserApiV1UsersUidGet(uid),
+    {
       manual: true,
       onSuccess: (res) => {
         // todo: errCode
         console.info('get owner success');
       },
-    });
+    },
+  );
 
   const { data: problemResp, run: getProblem } = useRequest(
-    (problem: string) => ProblemService.getProblemApiV1ProblemsProblemGet(
-      problem), {
+    (problem: string) =>
+      Horse.problem.getProblemApiV1ProblemsProblemGet(problem),
+    {
       manual: true,
       onSuccess: (res) => {
         // todo: errCode
         console.info('get problem success');
-        getOwner(res.data?.owner as string);
+        getOwner(res?.data?.data?.owner as string);
       },
       onError: (res) => {
         console.error('get problem fail');
       },
-    });
+    },
+  );
 
   useEffect(() => {
     getProblem(problemId);
@@ -44,11 +45,11 @@ const Index: React.FC = () => {
   const menuItems: SettingsMenuItem[] = [
     {
       key: 'PROBLEM.HOME',
-      component: (<Home problem={problemResp?.data} />),
+      component: <Home problem={problemResp?.data?.data} />,
     },
     {
       key: 'PROBLEM.SUBMIT_CODE',
-      component: (<Submit problem={problemResp?.data} />),
+      component: <Submit problem={problemResp?.data?.data} />,
     },
     {
       key: 'PROBLEM.SETTINGS',
@@ -56,7 +57,7 @@ const Index: React.FC = () => {
     },
   ];
 
-  const [key, setKey] = useState<string>(menuItems[1].key);
+  const [key, setKey] = useState<string>(menuItems[0].key);
 
   return (
     <>
@@ -74,7 +75,7 @@ const Index: React.FC = () => {
           xl={{ span: 6, order: 1 }}
         >
           <SideBar
-            user={ownerUserResp?.data}
+            user={ownerUserResp?.data.data}
             items={menuItems}
             selectedKeys={[key]}
             onClick={({ key: menuKey }) => setKey(menuKey as string)}

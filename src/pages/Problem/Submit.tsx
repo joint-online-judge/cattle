@@ -2,12 +2,11 @@ import React, { useMemo } from 'react';
 import { Card, Table, Select, Row, Col, Form, Button, Upload } from 'antd';
 import { useIntl } from 'umi';
 import { InboxOutlined } from '@ant-design/icons';
-import { Problem } from '@/client';
-import { submitProblem } from '@/utils/service';
+import { Problem, Horse } from '@/utils/service';
 import { isArray } from 'lodash-es';
 
 interface IProps {
-  problem: Problem | undefined
+  problem: Problem | undefined;
 }
 
 const Index: React.FC<IProps> = (props) => {
@@ -44,24 +43,31 @@ const Index: React.FC<IProps> = (props) => {
       memory_kb: '1kb',
       time_ms: '1ms',
       submit_at: '2019',
-    }];
+    },
+  ];
 
   const onFinish = (values: any) => {
-    submitProblem(problem?.id || '', values);
+    Horse.api.submitSolutionToProblemApiV1ProblemsProblemPost(
+      problem?.id || '',
+      values,
+    );
+    // submitProblem(problem?.id || '', values);
     console.log(values);
   };
 
   const languageOptions = useMemo(() => {
-    return isArray(problem?.languages) ? problem?.languages.map(lang => (
-      <Select.Option value={lang} key={lang}>{lang}</Select.Option>
-    )) : null;
+    return isArray(problem?.languages)
+      ? problem?.languages.map((lang) => (
+          <Select.Option value={lang} key={lang}>
+            {lang}
+          </Select.Option>
+        ))
+      : null;
   }, [problem]);
 
   return (
     <>
-      <Card
-        title={intl.formatHTMLMessage({ id: 'PROBLEM.RECENT_RECORD' })}
-      >
+      <Card title={intl.formatHTMLMessage({ id: 'PROBLEM.RECENT_RECORD' })}>
         <Table
           rowKey="id"
           columns={columns}
@@ -71,18 +77,13 @@ const Index: React.FC<IProps> = (props) => {
       </Card>
       <br />
       <br />
-      <Card
-        title={intl.formatHTMLMessage({ id: 'PROBLEM.SUBMIT' })}
-      >
+      <Card title={intl.formatHTMLMessage({ id: 'PROBLEM.SUBMIT' })}>
         <Row>
           <Col span={10}>
-            <Form
-              layout='vertical'
-              onFinish={onFinish}
-            >
+            <Form layout="vertical" onFinish={onFinish}>
               <Form.Item
                 label={intl.formatHTMLMessage({ id: 'PROBLEM.LANGUAGES' })}
-                name='language'
+                name="language"
                 required={true}
                 rules={[
                   {
@@ -91,12 +92,10 @@ const Index: React.FC<IProps> = (props) => {
                 ]}
               >
                 <Select
-                  placeholder={
-                    intl.formatMessage(
-                      { id: 'FORM.SELECT_PLACEHOLDER' },
-                      { field: intl.formatMessage({ id: 'PROBLEM.LANGUAGES' }) },
-                    )
-                  }
+                  placeholder={intl.formatMessage(
+                    { id: 'FORM.SELECT_PLACEHOLDER' },
+                    { field: intl.formatMessage({ id: 'PROBLEM.LANGUAGES' }) },
+                  )}
                 >
                   {languageOptions}
                 </Select>
@@ -106,7 +105,7 @@ const Index: React.FC<IProps> = (props) => {
                 getValueFromEvent={({ file }) => {
                   return file;
                 }}
-                name='file'
+                name="file"
                 rules={[
                   {
                     required: true,
@@ -133,10 +132,7 @@ const Index: React.FC<IProps> = (props) => {
                 </Upload.Dragger>
               </Form.Item>
               <Form.Item>
-                <Button
-                  type="primary"
-                  htmlType='submit'
-                >
+                <Button type="primary" htmlType="submit">
                   {intl.formatMessage({ id: 'PROBLEM.SUBMIT' })}
                 </Button>
               </Form.Item>

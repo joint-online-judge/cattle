@@ -3,7 +3,7 @@ import { List, message, Typography, Button } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import { Link, useIntl, history, useParams } from 'umi';
 import { useRequest } from 'ahooks';
-import { ProblemSetService, SortEnum } from '@/client';
+import { Horse, SortEnum } from '@/utils/service';
 
 interface IProps {
   domainId: string;
@@ -14,16 +14,22 @@ const { Text } = Typography;
 const Index: React.FC<IProps> = ({ domainId }) => {
   const { domainUrl } = useParams<{ domainUrl: string }>();
 
-  const { data: problemSets, run } = useRequest(async () => {
-    if (!domainId) return [];
-    const res = await ProblemSetService.listProblemSetsApiV1ProblemSetsGet(domainId, SortEnum['_-1']);
-    return res.data?.results;
-  }, {
-    manual: true,
-    onError: () => {
-      message.error('failed to fetch problem sets');
+  const { data: problemSets, run } = useRequest(
+    async () => {
+      if (!domainId) return [];
+      const res = await Horse.problemSet.listProblemSetsApiV1ProblemSetsGet({
+        domain: domainId,
+        sort: -1,
+      });
+      return res?.data?.data?.results || [];
     },
-  });
+    {
+      manual: true,
+      onError: () => {
+        message.error('failed to fetch problem sets');
+      },
+    },
+  );
 
   useEffect(() => {
     run();
@@ -45,9 +51,7 @@ const Index: React.FC<IProps> = ({ domainId }) => {
         dataSource={problemSets || []}
         renderItem={(item) => (
           <List.Item>
-            <Link
-              to={`/problem-set/${item.id}`}
-            >
+            <Link to={`/problem-set/${item.id}`}>
               <strong>{item.title}</strong>
             </Link>
           </List.Item>

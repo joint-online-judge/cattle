@@ -44,7 +44,6 @@ const Index: React.FC = () => {
           </Col>
         </Row>
       </Card>
-
     </>
   );
 };

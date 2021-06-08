@@ -2,7 +2,13 @@ import React, { useEffect } from 'react';
 import { Button, Row, Col, Form, Input, message, Spin } from 'antd';
 import { history, useIntl } from 'umi';
 import { useRequest } from 'ahooks';
-import { Domain, DomainCreate, DomainEdit, DomainService, ErrorCode } from '@/client';
+import {
+  Horse,
+  Domain,
+  DomainCreate,
+  DomainEdit,
+  ErrorCode,
+} from '@/utils/service';
 // import { MarkdownEditor } from 'app/components/Editors';
 import style from './style.css';
 
@@ -18,17 +24,17 @@ const Index: React.FC<IProps> = (props) => {
   const [form] = Form.useForm();
 
   const { run: createDomain, loading: creatingDomain } = useRequest(
-    (domain: DomainCreate) => DomainService.createDomainApiV1DomainsPost(domain),
+    (domain: DomainCreate) => Horse.domain.createDomainApiV1DomainsPost(domain),
     {
       manual: true,
       onSuccess: (res) => {
-        if (res.error_code === ErrorCode.SUCCESS) {
-          if (res.data?.url) {
-            history.push(`/domain/${res.data.url}`);
+        if (res.data.error_code === ErrorCode.Success) {
+          if (res?.data?.data?.url) {
+            history.push(`/domain/${res?.data?.data?.url}`);
           }
           message.success('create success');
-          onCreateSuccess && onCreateSuccess(res.data);
-        } else if (res.error_code === ErrorCode.URL_NOT_UNIQUE_ERROR) {
+          onCreateSuccess && onCreateSuccess(res.data.data);
+        } else if (res.data.error_code === ErrorCode.UrlNotUniqueError) {
           message.error('domain url already exists');
         }
       },
@@ -39,13 +45,14 @@ const Index: React.FC<IProps> = (props) => {
   );
 
   const { run: updateDomain, loading: updatingDomain } = useRequest(
-    (url: string, domain: DomainEdit) => DomainService.updateDomainApiV1DomainsDomainPatch(url, domain),
+    (url: string, domain: DomainEdit) =>
+      Horse.domain.updateDomainApiV1DomainsDomainPatch(url, domain),
     {
       manual: true,
-      onSuccess: res => {
-        if (res.error_code === ErrorCode.SUCCESS) {
+      onSuccess: (res) => {
+        if (res.data.error_code === ErrorCode.Success) {
           message.success('update domain success');
-          onUpdateSuccess && onUpdateSuccess(res.data);
+          onUpdateSuccess && onUpdateSuccess(res.data.data);
         } else {
           message.error('update domain failed');
         }
@@ -70,11 +77,7 @@ const Index: React.FC<IProps> = (props) => {
 
   return (
     <Spin spinning={updatingDomain || creatingDomain}>
-      <Form
-        form={form}
-        onFinish={onFinish}
-        layout="vertical"
-      >
+      <Form form={form} onFinish={onFinish} layout="vertical">
         <Form.Item
           name="name"
           label={intl.formatMessage({ id: 'DOMAIN.CREATE.NAME' })}
@@ -117,7 +120,7 @@ const Index: React.FC<IProps> = (props) => {
                 htmlType="submit"
                 type="primary"
                 className={initialValues?.url ? null : style.submitButtonCreate}
-                size='large'
+                size="large"
                 loading={updatingDomain || creatingDomain}
                 block
               >

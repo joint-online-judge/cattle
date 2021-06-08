@@ -1,7 +1,5 @@
 import React from 'react';
-import {
-  Button, Form, PageHeader, Select,
-} from 'antd';
+import { Button, Form, PageHeader, Select } from 'antd';
 import { useIntl, useModel } from 'umi';
 import SettingsStyleWrapper from '@/components/Settings/SettingsStyleWrapper';
 import style from './style.css';

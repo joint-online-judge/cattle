@@ -14,9 +14,15 @@ export default function IndexPage({ history }: IRouteComponentProps) {
       <h1>{intl.formatMessage({ id: 'TEST' })}</h1>
       <h1>{JSON.stringify(loading)}</h1>
       <h1>{JSON.stringify(error)}</h1>
-      <Button type="primary" onClick={() => history.push('/logout')}>Logout</Button>
-      <Button type="primary" onClick={() => setLocale('zh-CN', false)}>zh-CN</Button>
-      <Button type="primary" onClick={() => setLocale('en-US', false)}>en-US</Button>
+      <Button type="primary" onClick={() => history.push('/logout')}>
+        Logout
+      </Button>
+      <Button type="primary" onClick={() => setLocale('zh-CN', false)}>
+        zh-CN
+      </Button>
+      <Button type="primary" onClick={() => setLocale('en-US', false)}>
+        en-US
+      </Button>
       <LangSelect style={{ width: 200 }} />
     </div>
   );

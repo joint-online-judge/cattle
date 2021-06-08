@@ -2,7 +2,7 @@ import React from 'react';
 import { Col, Row, Card, message, Typography, Avatar, Spin } from 'antd';
 import { useParams } from 'umi';
 import { useRequest } from 'ahooks';
-import { DomainService, ProblemSetService } from '@/client';
+import { Horse } from '@/utils/service';
 import { gravatarImageUrl } from '@/utils';
 import ProblemSetList from './ProblemSetList';
 import style from './style.css';
@@ -12,15 +12,17 @@ const { Title, Paragraph } = Typography;
 const Index: React.FC = () => {
   const { domainUrl } = useParams<{ domainUrl: string }>();
 
-  const { data: domain } = useRequest(async () => {
-    const res = await DomainService.getDomainApiV1DomainsDomainGet(domainUrl);
-    return res.data;
-  }, {
-    onError: () => {
-      message.error('failed to fetch domain info');
+  const { data: domain } = useRequest(
+    async () => {
+      const res = await Horse.domain.getDomainApiV1DomainsDomainGet(domainUrl);
+      return res.data.data;
     },
-  });
-
+    {
+      onError: () => {
+        message.error('failed to fetch domain info');
+      },
+    },
+  );
 
   return (
     <div>
@@ -28,10 +30,7 @@ const Index: React.FC = () => {
         <Spin spinning={!domain}>
           {domain ? (
             <Typography className={style.homeHeader}>
-              <Row
-                gutter={{ xs: 16, md: 24 }}
-                justify="center"
-              >
+              <Row gutter={{ xs: 16, md: 24 }} justify="center">
                 <Col flex="100px">
                   <Avatar
                     shape="square"
@@ -41,10 +40,10 @@ const Index: React.FC = () => {
                   />
                 </Col>
                 <Col flex="1">
-                  <Title level={3}>
-                    {domain.name}
-                  </Title>
-                  <Paragraph ellipsis={{ rows: 2, expandable: true }}>{domain.bulletin}</Paragraph>
+                  <Title level={3}>{domain.name}</Title>
+                  <Paragraph ellipsis={{ rows: 2, expandable: true }}>
+                    {domain.bulletin}
+                  </Paragraph>
                 </Col>
               </Row>
             </Typography>

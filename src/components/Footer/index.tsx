@@ -1,7 +1,5 @@
 import React from 'react';
-import {
-  Col, Row, Typography,
-} from 'antd';
+import { Col, Row, Typography } from 'antd';
 import FooterLinks from './FooterLinks';
 import style from './style.css';
 
@@ -15,16 +13,14 @@ const Index: React.FC = () => {
             <Text type="secondary">
               © 2021-{new Date().getFullYear()} Joint Online Judge
             </Text>
-            <br/>
+            <br />
             <a
               href="http://net.sjtu.edu.cn"
               target="_blank"
               rel="noopener noreferrer"
               className={style.link}
             >
-              <Text type="secondary">
-                沪交ICP备20190085号
-              </Text>
+              <Text type="secondary">沪交ICP备20190085号</Text>
             </a>
           </Col>
           <Col>

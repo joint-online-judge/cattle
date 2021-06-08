@@ -9,7 +9,7 @@ import { SettingsMenuItem } from '@/components/Settings/typings';
 const menuItems: SettingsMenuItem[] = [
   {
     key: 'SETTINGS.GENERAL_SETTINGS',
-    component: (<General />),
+    component: <General />,
   },
   {
     key: 'SETTINGS.ACCOUNT_SETTINGS',
@@ -21,7 +21,7 @@ const menuItems: SettingsMenuItem[] = [
   },
   {
     key: 'DOMAIN.DOMAINS',
-    component: (<Domains />),
+    component: <Domains />,
   },
 ];
 
@@ -36,10 +36,12 @@ const Index: React.FC = () => {
           {
             lg: 24,
             xl: 32,
-          }, {
+          },
+          {
             xs: 16,
             sm: 16,
-          }]}
+          },
+        ]}
       >
         <Col xs={24} sm={24} lg={6}>
           <SettingsSideBar

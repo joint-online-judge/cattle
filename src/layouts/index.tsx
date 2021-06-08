@@ -12,10 +12,8 @@ const Index: React.FC = ({ children }) => {
         <Header />
       </Layout.Header>
       <Layout.Content className={style.pageContent}>
-        <Row justify='center'>
-          <Col {...CONTENT_GRID_LAYOUT}>
-            {children}
-          </Col>
+        <Row justify="center">
+          <Col {...CONTENT_GRID_LAYOUT}>{children}</Col>
         </Row>
       </Layout.Content>
       <Layout.Footer className={style.pageFooter}>

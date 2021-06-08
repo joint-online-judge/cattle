@@ -1,12 +1,8 @@
-import {
-  List,
-  Typography,
-  message, Button,
-} from 'antd';
+import { List, Typography, message, Button } from 'antd';
 import React, { useEffect } from 'react';
 import { useIntl, Link, useParams } from 'umi';
 import { useRequest } from 'ahooks';
-import { ProblemService } from '@/client';
+import { Horse } from '@/utils/service';
 import { PlusOutlined } from '@ant-design/icons';
 import { history } from '@@/core/history';
 
@@ -19,16 +15,21 @@ const { Text } = Typography;
 const Index: React.FC<IProps> = ({ problemSetId }) => {
   const intl = useIntl();
 
-  const { data: problems, run } = useRequest(async () => {
-    if (!problemSetId) return [];
-    const res = await ProblemService.listProblemsApiV1ProblemsGet(undefined, problemSetId);
-    return res.data?.results;
-  }, {
-    manual: true,
-    onError: () => {
-      message.error('failed to fetch problem sets');
+  const { data: problems, run } = useRequest(
+    async () => {
+      if (!problemSetId) return [];
+      const res = await Horse.problem.listProblemsApiV1ProblemsGet({
+        problem_set: problemSetId,
+      });
+      return res?.data?.data?.results || [];
     },
-  });
+    {
+      manual: true,
+      onError: () => {
+        message.error('failed to fetch problem sets');
+      },
+    },
+  );
 
   useEffect(() => {
     run();
@@ -38,7 +39,9 @@ const Index: React.FC<IProps> = ({ problemSetId }) => {
     <>
       <Button
         icon={<PlusOutlined />}
-        onClick={() => history.push(`/problem-set/${problemSetId}/create-problem`)}
+        onClick={() =>
+          history.push(`/problem-set/${problemSetId}/create-problem`)
+        }
         type="primary"
         style={{ marginBottom: 16 }}
       >
@@ -50,9 +53,7 @@ const Index: React.FC<IProps> = ({ problemSetId }) => {
         dataSource={problems || []}
         renderItem={(item) => (
           <List.Item>
-            <Link
-              to={`/problem/${item.id}`}
-            >
+            <Link to={`/problem/${item.id}`}>
               <strong>{item.title}</strong>
             </Link>
           </List.Item>

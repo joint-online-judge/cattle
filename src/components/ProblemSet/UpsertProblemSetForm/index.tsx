@@ -3,7 +3,7 @@ import {
   Form,
   Input,
   DatePicker,
-  Checkbox,
+  Switch,
   Row,
   Col,
   Button,
@@ -12,7 +12,12 @@ import {
 import { useIntl, history } from 'umi';
 import { useRequest } from 'ahooks';
 import style from './style.css';
-import { ProblemSetService, ProblemSet, ProblemSetCreate, ProblemSetEdit } from '@/client';
+import {
+  Horse,
+  ProblemSet,
+  ProblemSetCreate,
+  ProblemSetEdit,
+} from '@/utils/service';
 
 export interface IProps {
   initialValues?: Partial<ProblemSet>;
@@ -24,27 +29,32 @@ export const UpsertProblemSetForm: React.FC<IProps> = (props) => {
 
   const { run: createProblemSet, loading: creatingProblemSet } = useRequest(
     (problemSet: ProblemSetCreate) =>
-      ProblemSetService.createProblemSetApiV1ProblemSetsPost(problemSet),
+      Horse.problemSet.createProblemSetApiV1ProblemSetsPost(problemSet),
     {
       manual: true,
       onSuccess: (res) => {
-        if (res.data?.id) {
+        if (res?.data?.data?.id) {
           message.success('create success');
-          history.push(`/problem-set/${res.data.id}`);
+          history.push(`/problem-set/${res.data.data.id}`);
         }
       },
-    });
+    },
+  );
 
   const { run: updateProblemSet, loading: updatingProblemSet } = useRequest(
     (id: string, problemSet: ProblemSetEdit) =>
-      ProblemSetService.updateProblemSetApiV1ProblemSetsProblemSetPatch(id, problemSet),
+      Horse.problemSet.updateProblemSetApiV1ProblemSetsProblemSetPatch(
+        id,
+        problemSet,
+      ),
     {
       manual: true,
       onSuccess: (res) => {
         // todo: add errCode
         message.success('update success');
       },
-    });
+    },
+  );
 
   const onFinish = (values: Partial<ProblemSet>) => {
     if (initialValues?.domain) {
@@ -58,65 +68,84 @@ export const UpsertProblemSetForm: React.FC<IProps> = (props) => {
   };
 
   return (
-    <Form
-      layout='vertical'
-      onFinish={onFinish}
-    >
+    <Form layout="vertical" onFinish={onFinish}>
       <Form.Item
-        name='title'
-        label={intl.formatMessage(
-          { id: 'PROBLEM.CREATE.FORM.TITLE' })}
+        name="title"
+        label={intl.formatMessage({ id: 'TITLE' })}
+        rules={[{ required: true }]}
       >
         <Input />
       </Form.Item>
+      <Form.Item
+        name="url"
+        label={intl.formatMessage({ id: 'PROBLEM_SET.CREATE.FORM.URL' })}
+        tooltip={'The url of a problem set must be unique within a domain.'}
+      >
+        <Input />
+      </Form.Item>
+
       <Row>
-        <Col span={8}>
+        <Col span={12}>
           <Form.Item
-            name='hidden'
-            label={intl.formatMessage(
-              { id: 'PROBLEM.CREATE.FORM.HIDDEN' })}
-            valuePropName='checked'
+            name="available_time"
+            label={intl.formatMessage({
+              id: 'PROBLEM_SET.CREATE.FORM.AVAILABLE_TIME',
+            })}
+            rules={[{ required: true }]}
           >
-            <Checkbox />
+            <DatePicker showTime format="YYYY-MM-DD HH:mm:ss" />
           </Form.Item>
         </Col>
-        <Col span={16}>
+        <Col span={12}>
           <Form.Item
-            name='scoreboard_hidden'
-            label={intl.formatMessage({ id: 'PROBLEM.CREATE.FORM.SCOREBOARD_HIDDEN' })}
-            valuePropName='checked'
+            name="due_time"
+            label={intl.formatMessage({
+              id: 'PROBLEM_SET.CREATE.FORM.DUE_TIME',
+            })}
+            rules={[{ required: true }]}
           >
-            <Checkbox />
+            <DatePicker showTime format="YYYY-MM-DD HH:mm:ss" />
           </Form.Item>
         </Col>
       </Row>
-      <Form.Item name="available_time" label={intl.formatMessage({ id: 'PROBLEM.CREATE.FORM.AVAILABLE_TIME' })}>
-        <DatePicker showTime format="YYYY-MM-DD HH:mm:ss" />
-      </Form.Item>
-      <Form.Item name="due_time" label={intl.formatMessage({ id: 'PROBLEM.CREATE.FORM.DUE_TIME' })}>
-        <DatePicker showTime format="YYYY-MM-DD HH:mm:ss" />
-      </Form.Item>
+
+      <Row>
+        <Col span={12}>
+          <Form.Item
+            name="hidden"
+            label={intl.formatMessage({ id: 'PROBLEM.CREATE.FORM.HIDDEN' })}
+            rules={[{ required: true }]}
+          >
+            <Switch />
+          </Form.Item>
+        </Col>
+        <Col span={12}>
+          <Form.Item
+            name="scoreboard_hidden"
+            label={intl.formatMessage({
+              id: 'PROBLEM_SET.CREATE.FORM.SCOREBOARD_HIDDEN',
+            })}
+            rules={[{ required: true }]}
+          >
+            <Switch />
+          </Form.Item>
+        </Col>
+      </Row>
+
       <Form.Item
-        name='url'
-        label={intl.formatMessage(
-          { id: 'PROBLEM.CREATE.FORM.URL' })}
-      >
-        <Input />
-      </Form.Item>
-      <Form.Item
-        name='content'
+        name="content"
         label={intl.formatMessage({ id: 'PROBLEM.CREATE.FORM.CONTENT' })}
         extra={'TODO: there should be a markdown editor here.'}
       >
         <Input.TextArea />
       </Form.Item>
       <Form.Item>
-        <Row justify='center'>
+        <Row justify="center">
           <Col xs={9} sm={8} md={6}>
             <Button
               htmlType="submit"
               type="primary"
-              size='large'
+              size="large"
               block
               className={style.submitButton}
             >

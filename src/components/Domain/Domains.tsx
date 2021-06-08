@@ -2,7 +2,8 @@ import {
   Avatar,
   Button,
   List,
-  PageHeader, Space,
+  PageHeader,
+  Space,
   Spin,
   Typography,
   ConfigProvider,
@@ -10,7 +11,7 @@ import {
 import React, { useEffect } from 'react';
 import { useIntl, Link } from 'umi';
 import { useRequest } from 'ahooks';
-import { DomainService } from '@/client';
+import { Horse } from '@/utils/service';
 import { gravatarImageUrl } from '@/utils';
 import style from './style.css';
 
@@ -18,10 +19,13 @@ const { Text } = Typography;
 
 const Index: React.FC = () => {
   const intl = useIntl();
-  const { data, run } = useRequest(async () => {
-    const res = await DomainService.listDomainsApiV1DomainsGet();
-    return res.data?.results;
-  }, { manual: true });
+  const { data, run } = useRequest(
+    async () => {
+      const res = await Horse.domain.listDomainsApiV1DomainsGet();
+      return res?.data?.data?.results;
+    },
+    { manual: true },
+  );
 
   useEffect(() => {
     (async () => {
@@ -57,21 +61,15 @@ const Index: React.FC = () => {
                     {intl.formatMessage({ id: 'DOMAIN.SETTINGS' })}
                   </Link>
                 </Button>,
-                <Button>
-                  {intl.formatMessage({ id: 'DOMAIN.LEAVE' })}
-                </Button>,
+                <Button>{intl.formatMessage({ id: 'DOMAIN.LEAVE' })}</Button>,
               ]}
             >
               <Space>
                 <Avatar src={gravatarImageUrl(item.gravatar || '')} />
-                <Link
-                  to={`/domain/${item.url}`}
-                >
+                <Link to={`/domain/${item.url}`}>
                   <strong>{item.name}</strong>
                 </Link>
-                <Text type="secondary">
-                  {item.name} Owner
-                </Text>
+                <Text type="secondary">{item.name} Owner</Text>
               </Space>
             </List.Item>
           )}

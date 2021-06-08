@@ -44,10 +44,7 @@ const Index: React.FC<SideBarProps> = (props) => {
             <Descriptions.Item
               label={intl.formatHTMLMessage({ id: 'PROBLEM.OWNER' })}
             >
-              <Gravatar
-                size={20}
-                user={user}
-              />
+              <Gravatar size={20} user={user} />
               {user?.real_name || ''}
             </Descriptions.Item>
           </Descriptions>

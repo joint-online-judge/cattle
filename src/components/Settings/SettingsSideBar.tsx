@@ -9,28 +9,17 @@ const Index: React.FC<SettingsSideBarProps> = (props) => {
   const { items, ...otherProps } = props;
 
   return (
-    <Menu
-      mode="vertical"
-      className={style.settingsSideBar}
-      {...otherProps}
-    >
-      {
-        items.map((item, index) => (
-          <Fragment key={`${item.key}-fragment`}>
-            <Menu.Item
-              style={{ margin: 0 }}
-              key={item.key}
-            >
-              {item.node ? item.node : intl.formatMessage({ id: item.key })}
-            </Menu.Item>
-            {
-              index < items.length - 1
-                ? <Menu.Divider key={`after-${item.key}`} />
-                : null
-            }
-          </Fragment>
-        ))
-      }
+    <Menu mode="vertical" className={style.settingsSideBar} {...otherProps}>
+      {items.map((item, index) => (
+        <Fragment key={`${item.key}-fragment`}>
+          <Menu.Item style={{ margin: 0 }} key={item.key}>
+            {item.node ? item.node : intl.formatMessage({ id: item.key })}
+          </Menu.Item>
+          {index < items.length - 1 ? (
+            <Menu.Divider key={`after-${item.key}`} />
+          ) : null}
+        </Fragment>
+      ))}
     </Menu>
   );
 };

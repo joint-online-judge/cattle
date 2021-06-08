@@ -3,7 +3,12 @@ import { PageHeader, PageHeaderProps } from 'antd';
 import { Route } from 'antd/lib/breadcrumb/Breadcrumb';
 import { useIntl, useModel, Link } from 'umi';
 
-function itemRender(route: Route, params: any, routes: Route[], paths: string[]) {
+function itemRender(
+  route: Route,
+  params: any,
+  routes: Route[],
+  paths: string[],
+) {
   console.log(routes, paths, paths.join('/'));
   const last = routes.indexOf(route) === routes.length - 1;
   return last ? (
@@ -20,7 +25,7 @@ function itemRender(route: Route, params: any, routes: Route[], paths: string[])
  * @description This component translate title and breadcrumb text automatically by
  * passing in their keys directly.
  */
-const Index: React.FC<PageHeaderProps> = props => {
+const Index: React.FC<PageHeaderProps> = (props) => {
   const { title, breadcrumb, ...otherProps } = props;
   const intl = useIntl();
   const { currentLang } = useModel('lang');
@@ -29,7 +34,7 @@ const Index: React.FC<PageHeaderProps> = props => {
     if (breadcrumb && breadcrumb?.routes) {
       return {
         ...breadcrumb,
-        routes: breadcrumb.routes.map(route => ({
+        routes: breadcrumb.routes.map((route) => ({
           ...route,
           breadcrumbName: intl.formatMessage({ id: route.breadcrumbName }),
         })),
@@ -47,7 +52,11 @@ const Index: React.FC<PageHeaderProps> = props => {
 
   return (
     <PageHeader
-      title={title && typeof title === 'string' ? intl.formatMessage({ id: title }) : undefined}
+      title={
+        title && typeof title === 'string'
+          ? intl.formatMessage({ id: title })
+          : undefined
+      }
       breadcrumb={breadCrumbProps}
       {...otherProps}
     />

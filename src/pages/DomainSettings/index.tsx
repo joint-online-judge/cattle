@@ -5,22 +5,22 @@ import SettingsSideBar from '@/components/Settings/SettingsSideBar';
 import UpdateDomain from './UpdateDomain';
 import { SettingsMenuItem } from '@/components/Settings/typings';
 import { useRequest } from 'ahooks';
-import { DomainService } from '@/client';
+import { Horse } from '@/utils/service';
 import { gravatarImageUrl } from '@/utils';
 import style from './style.css';
 
 const Index: React.FC = () => {
   const { domainUrl } = useParams<{ domainUrl: string }>();
   const { data, refresh } = useRequest(async () => {
-    const res = await DomainService.getDomainApiV1DomainsDomainGet(domainUrl);
-    return res.data;
+    const res = await Horse.domain.getDomainApiV1DomainsDomainGet(domainUrl);
+    return res.data.data;
   });
 
   const menuItems: SettingsMenuItem[] = [
     {
       key: 'SETTINGS.DOMAIN.PROFILE',
       path: '/profile',
-      component: (<UpdateDomain refresh={refresh} />),
+      component: <UpdateDomain refresh={refresh} />,
     },
     {
       key: 'SETTINGS.DOMAIN.INVITATION',
@@ -35,7 +35,7 @@ const Index: React.FC = () => {
 
   return (
     <Card
-      title={(
+      title={
         data ? (
           <PageHeader
             className={style.userInfoHeader}
@@ -43,24 +43,28 @@ const Index: React.FC = () => {
             subTitle={data.url}
             avatar={{ src: gravatarImageUrl(data.gravatar) }}
           />
-        ) : <Spin />
-      )}
+        ) : (
+          <Spin />
+        )
+      }
     >
       <Row
         gutter={[
           {
             lg: 24,
             xl: 32,
-          }, {
+          },
+          {
             xs: 16,
             sm: 16,
-          }]}
+          },
+        ]}
       >
         <Col xs={24} sm={24} lg={6}>
           <SettingsSideBar
             items={menuItems}
             selectedKeys={[key]}
-            onClick={e => setKey(e.key.toString())}
+            onClick={(e) => setKey(e.key.toString())}
           />
         </Col>
         <Col xs={24} sm={24} lg={18}>

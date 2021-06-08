@@ -10,7 +10,8 @@ import {
   Divider,
   TableColumnProps,
 } from 'antd';
-import { DomainService, Domain } from '@/client';
+import { Horse, Domain, DomainUser } from '@/utils/service';
+import { isArray, omit } from 'lodash-es';
 import { gravatarImageUrl } from '@/utils';
 // import {
 //   CreateDomain,
@@ -21,26 +22,30 @@ const { Title } = Typography;
 
 const Index: React.FC = () => {
   const intl = useIntl();
-  const { data, loading } = useRequest(async () => {
-    const res = await DomainService.listDomainsApiV1DomainsGet();
-    return res.data?.results;
-  }, {
-    onError: () => {
-      message.error('failed to fetch domain info');
+
+  const { data, loading } = useRequest(
+    async () => {
+      const res = await Horse.domain.listDomainsApiV1DomainsGet();
+      return res?.data?.data?.results || [];
     },
-  });
+    {
+      onError: () => {
+        message.error('failed to fetch domain info');
+      },
+    },
+  );
 
   const columns: Array<TableColumnProps<Domain>> = [
     {
       title: 'Name',
       dataIndex: 'name',
-      key: 'name',
+      key: 'domain.url',
     },
     {
       title: 'My Role',
       dataIndex: 'role',
       key: 'role',
-      render: text => text || '-',
+      render: (text) => text || '-',
     },
     // TODO: render role as tags
     // {
@@ -69,10 +74,12 @@ const Index: React.FC = () => {
       fixed: 'right',
       render: (text, record) => (
         <Space split={<Divider type="vertical" />}>
-          <Link to={`/domain/${record.url}`}>{intl.formatMessage(
-            { id: 'VISIT' })}</Link>
-          <Link to={`/domain/${record.url}/settings`}>{intl.formatMessage(
-            { id: 'MANAGE' })}</Link>
+          <Link to={`/domain/${record.url}`}>
+            {intl.formatMessage({ id: 'VISIT' })}
+          </Link>
+          <Link to={`/domain/${record.url}/settings`}>
+            {intl.formatMessage({ id: 'MANAGE' })}
+          </Link>
         </Space>
       ),
     },
@@ -84,7 +91,7 @@ const Index: React.FC = () => {
         <Title level={3}>{intl.formatMessage({ id: 'DOMAIN.DOMAINS' })}</Title>
         <Table
           columns={columns}
-          dataSource={data || []}
+          dataSource={data}
           loading={loading}
           rowKey="id"
           pagination={false}

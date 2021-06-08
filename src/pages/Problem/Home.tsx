@@ -13,18 +13,16 @@ interface ProblemHomeProps {
 const Index: React.FC<ProblemHomeProps> = (props) => {
   const { problem } = props;
   return (
-    <Card title={(
-      <Title level={2}>
-        {problem?.title || <Spin size='default' />}
-      </Title>)
-    }>
-      {
-        problem
-          ? <ReactMarkdown
-            remarkPlugins={[gfm]}
-            children={problem.content || ''}
-          /> : <Spin size='default' />
+    <Card
+      title={
+        <Title level={2}>{problem?.title || <Spin size="default" />}</Title>
       }
+    >
+      {problem ? (
+        <ReactMarkdown remarkPlugins={[gfm]} children={problem.content || ''} />
+      ) : (
+        <Spin size="default" />
+      )}
     </Card>
   );
 };

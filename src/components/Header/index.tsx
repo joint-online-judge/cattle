@@ -9,10 +9,6 @@ const Index = () => {
   const history = useHistory();
   const intl = useIntl();
 
-  console.log(history);
-  console.log(useLocation());
-  console.log(useRouteMatch());
-
   const menuItems = React.useMemo(() => {
     // TODO: render different menu for different path
     // e.g. if (location.pathname.startswith('/domain')) return ...
@@ -35,11 +31,7 @@ const Index = () => {
   //      to rerun the function only when the first url string changes.
 
   return (
-    <Menu
-      mode="horizontal"
-      className={style.menu}
-      selectable={false}
-    >
+    <Menu mode="horizontal" className={style.menu} selectable={false}>
       {menuItems}
     </Menu>
   );

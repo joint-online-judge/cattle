@@ -30,50 +30,46 @@ export const Index: React.FC = () => {
           {intl.formatMessage({ id: 'SETTINGS.SETTINGS' })}
         </Link>
       </Menu.Item>
-      <Menu.Item key="SETTINGS.SWITCH_LANG" onClick={() => setModalVisible(true)}>
-        <Link to={'/settings'}>
-          {intl.formatMessage({ id: 'SETTINGS.SWITCH_LANG' })}
-        </Link>
+      <Menu.Item
+        key="SETTINGS.SWITCH_LANG"
+        onClick={() => setModalVisible(true)}
+      >
+        {intl.formatMessage({ id: 'SETTINGS.SWITCH_LANG' })}
       </Menu.Item>
       <Menu.Divider key="divider-3" />
       <Menu.Item key="USER.LOG_OUT">
-        <Link to={'/logout'}>
-          {intl.formatMessage({ id: 'USER.LOG_OUT' })}
-        </Link>
+        <Link to={'/logout'}>{intl.formatMessage({ id: 'USER.LOG_OUT' })}</Link>
       </Menu.Item>
     </Menu>
   );
 
-  return initialState?.user
-    ? (
-      <>
-        <Dropdown
-          overlay={subMenu}
-          placement="bottomRight"
-          trigger={['click']}
-          arrow
-        >
+  return initialState?.user ? (
+    <>
+      <Dropdown
+        overlay={subMenu}
+        placement="bottomRight"
+        trigger={['click']}
+        arrow
+      >
         <span>
-          <Gravatar
-            user={initialState?.user}
-          />
+          <Gravatar user={initialState?.user} />
           <DownOutlined />
         </span>
-        </Dropdown>
-        <Modal
-          title={intl.formatMessage({ id: 'SETTINGS.SWITCH_LANG' })}
-          visible={modalVisible}
-          onOk={() => setModalVisible(false)}
-          onCancel={() => setModalVisible(false)}
-        >
-          <LangSelect style={{ width: '50%' }} />
-        </Modal>
-      </>
-    ) : (
-      <Link to={`/login?from=${location.pathname}`}>
-        {intl.formatMessage({ id: 'USER.LOGIN.JACCOUNT_LOG_IN' })}
-      </Link>
-    );
+      </Dropdown>
+      <Modal
+        title={intl.formatMessage({ id: 'SETTINGS.SWITCH_LANG' })}
+        visible={modalVisible}
+        onOk={() => setModalVisible(false)}
+        onCancel={() => setModalVisible(false)}
+      >
+        <LangSelect style={{ width: '50%' }} />
+      </Modal>
+    </>
+  ) : (
+    <Link to={`/login?from=${location.pathname}`}>
+      {intl.formatMessage({ id: 'USER.LOGIN.JACCOUNT_LOG_IN' })}
+    </Link>
+  );
 };
 
 export default Index;

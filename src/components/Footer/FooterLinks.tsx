@@ -37,20 +37,18 @@ const Index: React.FC = () => {
   const intl = useIntl();
   return (
     <Row>
-      {
-        items.map((item) => {
-          return (
-            <div className={style.footerItem} key={`${item.name}${item.path}`}>
-              <Link to={item.path}>
-                {console.log(item.name)}
-                {intl.formatMessage({ id: item.name })}
-              </Link>
-            </div>
-          );
-        })
-      }
+      {items.map((item) => {
+        return (
+          <div className={style.footerItem} key={`${item.name}${item.path}`}>
+            <Link to={item.path}>{intl.formatMessage({ id: item.name })}</Link>
+          </div>
+        );
+      })}
       <Col>
-        <Typography.Link href="https://github.com/joint-online-judge" target="_blank">
+        <Typography.Link
+          href="https://github.com/joint-online-judge"
+          target="_blank"
+        >
           <GithubOutlined className={style.githubIcon} />
         </Typography.Link>
       </Col>
