@@ -1,14 +1,19 @@
 import React from 'react';
-import { Card, CardProps } from 'antd';
+import { CardProps } from 'antd';
+import ShadowCard from '@/components/ShadowCard';
 import { PageContentProps } from './PageContent';
 
-const ContentCard: React.FC<PageContentProps & CardProps> = (props) => {
-  const { children } = props;
+interface IProps extends PageContentProps {
+  cardProps: CardProps;
+}
+
+const ContentCard: React.FC<IProps> = (props) => {
+  const { children, cardProps } = props;
 
   return (
-    <Card>
+    <ShadowCard {...cardProps}>
       {children}
-    </Card>
+    </ShadowCard>
   );
 };
 

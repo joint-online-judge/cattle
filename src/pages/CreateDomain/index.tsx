@@ -1,8 +1,9 @@
 import React from 'react';
-import { Row, Col, Card } from 'antd';
+import { Row, Col } from 'antd';
 import { useIntl, useLocation, useRouteMatch } from 'umi';
 import UpsertDomainForm from '@/components/Domain/UpsertDomainForm';
 import PageHeaderIntl from '@/components/PageHeaderIntl';
+import ShadowCard from '@/components/ShadowCard';
 import style from './style.css';
 
 const routes = [
@@ -37,13 +38,13 @@ const Index: React.FC = () => {
           />
         </Col>
       </Row>
-      <Card title={213}>
+      <ShadowCard title={213}>
         <Row justify="center" className={style.createDomain}>
           <Col span={12}>
             <UpsertDomainForm />
           </Col>
         </Row>
-      </Card>
+      </ShadowCard>
     </>
   );
 };

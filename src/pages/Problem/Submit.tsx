@@ -1,8 +1,9 @@
 import React, { useMemo } from 'react';
-import { Card, Table, Select, Row, Col, Form, Button, Upload } from 'antd';
+import { Table, Select, Row, Col, Form, Button, Upload } from 'antd';
 import { useIntl } from 'umi';
 import { InboxOutlined } from '@ant-design/icons';
 import { Problem, Horse } from '@/utils/service';
+import ShadowCard from '@/components/ShadowCard';
 import { isArray } from 'lodash-es';
 
 interface IProps {
@@ -47,7 +48,7 @@ const Index: React.FC<IProps> = (props) => {
   ];
 
   const onFinish = (values: any) => {
-    Horse.api.submitSolutionToProblemApiV1ProblemsProblemPost(
+    Horse.problem.submitSolutionToProblemApiV1ProblemsProblemPost(
       problem?.id || '',
       values,
     );
@@ -67,17 +68,17 @@ const Index: React.FC<IProps> = (props) => {
 
   return (
     <>
-      <Card title={intl.formatHTMLMessage({ id: 'PROBLEM.RECENT_RECORD' })}>
+      <ShadowCard title={intl.formatHTMLMessage({ id: 'PROBLEM.RECENT_RECORD' })}>
         <Table
           rowKey="id"
           columns={columns}
           dataSource={data}
           pagination={false}
         />
-      </Card>
+      </ShadowCard>
       <br />
       <br />
-      <Card title={intl.formatHTMLMessage({ id: 'PROBLEM.SUBMIT' })}>
+      <ShadowCard title={intl.formatHTMLMessage({ id: 'PROBLEM.SUBMIT' })}>
         <Row>
           <Col span={10}>
             <Form layout="vertical" onFinish={onFinish}>
@@ -139,7 +140,7 @@ const Index: React.FC<IProps> = (props) => {
             </Form>
           </Col>
         </Row>
-      </Card>
+      </ShadowCard>
     </>
   );
 };

@@ -1,14 +1,15 @@
 import React, { useState, useMemo } from 'react';
-import { Row, Col } from 'antd';
+import { Row, Col, Space } from 'antd';
 import SettingsSideBar, { SettingsMenuItem } from '@/components/Settings/SettingsSideBar';
 import ContentCard from './ContentCard';
 import PageContent, { PageContentProps } from './PageContent';
 
 interface IProps {
   children: React.ReactElement<PageContentProps>[];
+  extra?: React.ReactElement | React.ReactNode;
 }
 
-const Index: React.FC<IProps> = ({ children }) => {
+const Index: React.FC<IProps> = ({ children, extra }) => {
   const [key, setKey] = useState<string>((() => {
     const firstValidChild = children.find(o => o.props.menuKey);
     return firstValidChild && firstValidChild.props.menuKey ? firstValidChild.props.menuKey : '';
@@ -42,7 +43,7 @@ const Index: React.FC<IProps> = ({ children }) => {
         </Col>
         <Col
           xs={{ span: 24, order: 0 }}
-          sm={{ span: 6, order: 0 }}
+          sm={{ span: 6, order: 1 }}
           xl={{ span: 6, order: 1 }}
         >
           <SettingsSideBar
@@ -50,6 +51,7 @@ const Index: React.FC<IProps> = ({ children }) => {
             selectedKeys={[key]}
             onClick={(e) => setKey(e.key.toString())}
           />
+          {extra}
         </Col>
       </Row>
     </>

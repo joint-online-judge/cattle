@@ -1,10 +1,11 @@
 import React from 'react';
-import { Col, Row, Card, message, Typography, Avatar, Spin } from 'antd';
+import { Col, Row, message, Typography, Avatar, Spin } from 'antd';
 import { useParams } from 'umi';
 import { useRequest } from 'ahooks';
 import { Horse } from '@/utils/service';
 import { gravatarImageUrl } from '@/utils';
 import ProblemSetList from './ProblemSetList';
+import ShadowCard from '@/components/ShadowCard';
 import style from './style.css';
 
 const { Title, Paragraph } = Typography;
@@ -26,7 +27,7 @@ const Index: React.FC = () => {
 
   return (
     <div>
-      <Card className={style.contentCard}>
+      <ShadowCard className={style.contentCard}>
         <Spin spinning={!domain}>
           {domain ? (
             <Typography className={style.homeHeader}>
@@ -49,10 +50,10 @@ const Index: React.FC = () => {
             </Typography>
           ) : null}
         </Spin>
-      </Card>
-      <Card className={style.contentCard}>
+      </ShadowCard>
+      <ShadowCard className={style.contentCard}>
         <ProblemSetList domainId={domain?.id || ''} />
-      </Card>
+      </ShadowCard>
     </div>
   );
 };

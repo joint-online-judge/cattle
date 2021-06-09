@@ -6,9 +6,11 @@ import { ErrorCode, Horse } from '@/utils/service';
 import ProblemList from './ProblemList';
 import AfterDue from './AfterDue';
 import BeforeAvailable from './BeforeAvailable';
-import style from './style.css';
+import ShadowCard from '@/components/ShadowCard';
+import gfm from 'remark-gfm';
+import ReactMarkdown from 'react-markdown';
 
-const { Title, Paragraph } = Typography;
+const { Title } = Typography;
 
 const Index: React.FC = () => {
   const { problemSetId } = useParams<{ problemSetId: string }>();
@@ -38,21 +40,21 @@ const Index: React.FC = () => {
   return (
     afterDue ? <AfterDue /> :
       (beforeAvailable ? <BeforeAvailable /> : <div>
-        <Card className={style.contentCard}>
+        <ShadowCard title={'作业介绍'}>
           <Spin spinning={!problemSet}>
-            {problemSet ? (
-              <Typography className={style.homeHeader}>
-                <Title level={3}>{problemSet.title}</Title>
-                <Paragraph ellipsis={{ rows: 2, expandable: true }}>
-                  {problemSet.content}
-                </Paragraph>
-              </Typography>
-            ) : null}
+            {
+              problemSet ? (
+                <Typography>
+                  <Title level={3}>{problemSet.title}</Title>
+                  <ReactMarkdown remarkPlugins={[gfm]} children={problemSet.content || ''} />
+                </Typography>
+              ) : null
+            }
           </Spin>
-        </Card>
-        <Card className={style.contentCard}>
+        </ShadowCard>
+        <ShadowCard style={{ marginTop: 24 }}>
           <ProblemList problemSetId={problemSet?.id || ''} />
-        </Card>
+        </ShadowCard>
       </div>)
   );
 };

@@ -1,7 +1,8 @@
 import React from 'react';
-import { Card, Typography, Row, Col } from 'antd';
+import { Typography, Row, Col } from 'antd';
 import { useIntl } from 'umi';
 import { UpsertProblem } from '@/components/Problem';
+import ShadowCard from '@/components/ShadowCard';
 import { useParams } from 'umi';
 
 const Index: React.FC = () => {
@@ -10,7 +11,7 @@ const Index: React.FC = () => {
   return (
     <Row justify="center">
       <Col span={16}>
-        <Card
+        <ShadowCard
           title={
             <Typography.Title level={2}>
               {intl.formatMessage({ id: 'PROBLEM.CREATE.TITLE' })}
@@ -18,7 +19,7 @@ const Index: React.FC = () => {
           }
         >
           <UpsertProblem initialValues={{ domain: domainUrl }} />
-        </Card>
+        </ShadowCard>
       </Col>
     </Row>
   );

@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'umi';
-import { Col, PageHeader, Row, Spin, Card, Tabs } from 'antd';
+import { Col, PageHeader, Row, Spin } from 'antd';
 import SettingsSideBar from '@/components/Settings/SettingsSideBar';
 import UpdateDomain from './UpdateDomain';
 import { SettingsMenuItem } from '@/components/Settings/SettingsSideBar';
 import { useRequest } from 'ahooks';
 import { Horse } from '@/utils/service';
 import { gravatarImageUrl } from '@/utils';
+import ShadowCard from '@/components/ShadowCard';
 import style from './style.css';
 
 const Index: React.FC = () => {
@@ -36,7 +37,7 @@ const Index: React.FC = () => {
   const [key, setKey] = useState<string>(menuItems[0].key);
 
   return (
-    <Card
+    <ShadowCard
       title={
         data ? (
           <PageHeader
@@ -73,7 +74,7 @@ const Index: React.FC = () => {
           {key ? menuItems.find((o) => o.menuKey === key)?.component : null}
         </Col>
       </Row>
-    </Card>
+    </ShadowCard>
   );
 };
 

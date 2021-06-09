@@ -3,7 +3,6 @@ import { Link, useIntl } from 'umi';
 import { useRequest } from 'ahooks';
 import {
   message,
-  Card,
   Table,
   Space,
   Typography,
@@ -11,6 +10,7 @@ import {
   TableColumnProps,
 } from 'antd';
 import { Horse, Domain } from '@/utils/service';
+import ShadowCard from '@/components/ShadowCard';
 import { gravatarImageUrl } from '@/utils';
 // import {
 //   CreateDomain,
@@ -85,7 +85,7 @@ const Index: React.FC = () => {
 
   return (
     <>
-      <Card style={{ marginTop: 24 }}>
+      <ShadowCard style={{ marginTop: 24 }}>
         <Title level={3}>{intl.formatMessage({ id: 'DOMAIN.DOMAINS' })}</Title>
         <Table
           columns={columns}
@@ -94,7 +94,7 @@ const Index: React.FC = () => {
           rowKey="id"
           pagination={false}
         />
-      </Card>
+      </ShadowCard>
     </>
   );
 };

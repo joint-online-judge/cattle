@@ -1,26 +1,27 @@
 import React, { useState } from 'react';
-import { Col, PageHeader, Row, Card } from 'antd';
+import { Col, PageHeader, Row } from 'antd';
 import { useModel } from 'umi';
 import SettingsSideBar from '@/components/Settings/SettingsSideBar';
 import Domains from '@/components/Domain/Domains';
 import General from './General';
 import { SettingsMenuItem } from '@/components/Settings/SettingsSideBar';
+import ShadowCard from '@/components/ShadowCard';
 
 const menuItems: SettingsMenuItem[] = [
   {
-    key: 'SETTINGS.GENERAL_SETTINGS',
+    menuKey: 'SETTINGS.GENERAL_SETTINGS',
     component: <General />,
   },
   {
-    key: 'SETTINGS.ACCOUNT_SETTINGS',
+    menuKey: 'SETTINGS.ACCOUNT_SETTINGS',
     // TODO: component: (<General />),
   },
   {
-    key: 'SETTINGS.SECURITY_SETTINGS',
+    menuKey: 'SETTINGS.SECURITY_SETTINGS',
     // TODO: component: (<General />),
   },
   {
-    key: 'DOMAIN.DOMAINS',
+    menuKey: 'DOMAIN.DOMAINS',
     component: <Domains />,
   },
 ];
@@ -51,9 +52,9 @@ const Index: React.FC = () => {
           />
         </Col>
         <Col xs={24} sm={24} lg={18}>
-          <Card>
+          <ShadowCard>
             {key ? menuItems.find((o) => o.key === key)?.component : null}
-          </Card>
+          </ShadowCard>
         </Col>
       </Row>
     </div>

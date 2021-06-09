@@ -1,15 +1,15 @@
 import React from 'react';
-import { Card, Typography, Row, Col } from 'antd';
-import { useIntl } from 'umi';
+import { Typography, Row, Col } from 'antd';
+import { useIntl, useParams } from 'umi';
 import { UpsertProblemSetForm } from '@/components/ProblemSet';
-import { useParams } from 'umi';
+import ShadowCard from '@/components/ShadowCard';
 
 const Index: React.FC = () => {
   const intl = useIntl();
   const { domainUrl } = useParams<{ domainUrl: string }>();
 
   return (
-    <Card
+    <ShadowCard
       title={
         <Typography.Title level={2}>
           {intl.formatMessage({ id: 'PROBLEM_SET.CREATE.TITLE' })}
@@ -17,7 +17,7 @@ const Index: React.FC = () => {
       }
     >
       <UpsertProblemSetForm initialValues={{ domain: domainUrl }} />
-    </Card>
+    </ShadowCard>
   );
 };
 export default Index;
