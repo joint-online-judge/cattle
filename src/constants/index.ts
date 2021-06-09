@@ -3,8 +3,8 @@ export const LOCAL_STORAGE_SETTINGS_KEY = 'JOJ_SETTINGS';
 export const CONTENT_GRID_LAYOUT = {
   xs: 23,
   sm: 22,
-  lg: 16,
-  xxl: 14,
+  lg: 18,
+  xxl: 16,
 };
 export const SUPPORT_PROGRAMMING_LANGUAGE = [
   'python',

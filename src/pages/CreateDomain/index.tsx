@@ -37,7 +37,7 @@ const Index: React.FC = () => {
           />
         </Col>
       </Row>
-      <Card>
+      <Card title={213}>
         <Row justify="center" className={style.createDomain}>
           <Col span={12}>
             <UpsertDomainForm />
