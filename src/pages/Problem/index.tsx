@@ -3,10 +3,11 @@ import { Row, Col } from 'antd';
 import { useParams } from 'umi';
 import { useRequest } from 'ahooks';
 import { Horse } from '@/utils/service';
-import { SettingsMenuItem } from '@/components/Settings/typings';
+import { SettingsMenuItem } from '@/components/Settings/SettingsSideBar';
 import SideBar from './SideBar';
 import Home from './Home';
 import Submit from './Submit';
+import SideMenuPage, { PageContent } from '@/components/SideMenuPage';
 
 const Index: React.FC = () => {
   const { problemId } = useParams<{ problemId: string }>();
@@ -42,46 +43,19 @@ const Index: React.FC = () => {
     getProblem(problemId);
   }, [problemId]);
 
-  const menuItems: SettingsMenuItem[] = [
-    {
-      key: 'PROBLEM.HOME',
-      component: <Home problem={problemResp?.data?.data} />,
-    },
-    {
-      key: 'PROBLEM.SUBMIT_CODE',
-      component: <Submit problem={problemResp?.data?.data} />,
-    },
-    {
-      key: 'PROBLEM.SETTINGS',
-      // TODO: component: (<General />),
-    },
-  ];
-
-  const [key, setKey] = useState<string>(menuItems[0].key);
-
   return (
     <>
-      <Row gutter={[{ lg: 24, xl: 32 }, 24]}>
-        <Col
-          xs={{ span: 24, order: 1 }}
-          sm={{ span: 24, order: 1 }}
-          xl={{ span: 18, order: 0 }}
-        >
-          {key ? menuItems.find((o) => o.key === key)?.component : null}
-        </Col>
-        <Col
-          xs={{ span: 24, order: 0 }}
-          sm={{ span: 24, order: 0 }}
-          xl={{ span: 6, order: 1 }}
-        >
-          <SideBar
-            user={ownerUserResp?.data.data}
-            items={menuItems}
-            selectedKeys={[key]}
-            onClick={({ key: menuKey }) => setKey(menuKey as string)}
-          />
-        </Col>
-      </Row>
+      <SideMenuPage>
+        <PageContent menuKey="PROBLEM.HOME" text="123">
+          <Home problem={problemResp?.data?.data} />
+        </PageContent>
+        <PageContent menuKey="PROBLEM.SUBMIT_CODE">
+          <Submit problem={problemResp?.data?.data} />
+        </PageContent>
+        <PageContent menuKey="PROBLEM.SETTINGS">
+          123
+        </PageContent>
+      </SideMenuPage>
     </>
   );
 };

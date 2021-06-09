@@ -3,7 +3,7 @@ import { useParams } from 'umi';
 import { Col, PageHeader, Row, Spin, Card, Tabs } from 'antd';
 import SettingsSideBar from '@/components/Settings/SettingsSideBar';
 import UpdateDomain from './UpdateDomain';
-import { SettingsMenuItem } from '@/components/Settings/typings';
+import { SettingsMenuItem } from '@/components/Settings/SettingsSideBar';
 import { useRequest } from 'ahooks';
 import { Horse } from '@/utils/service';
 import { gravatarImageUrl } from '@/utils';
@@ -18,16 +18,18 @@ const Index: React.FC = () => {
 
   const menuItems: SettingsMenuItem[] = [
     {
-      key: 'SETTINGS.DOMAIN.PROFILE',
+      menuKey: 'SETTINGS.DOMAIN.PROFILE',
       path: '/profile',
       component: <UpdateDomain refresh={refresh} />,
     },
     {
-      key: 'SETTINGS.DOMAIN.INVITATION',
+      menuKey: 'SETTINGS.DOMAIN.INVITATION',
+      component: <UpdateDomain refresh={refresh} />,
       path: '/invitation',
     },
     {
-      key: 'SETTINGS.DOMAIN.MEMBERS',
+      menuKey: 'SETTINGS.DOMAIN.MEMBERS',
+      component: <UpdateDomain refresh={refresh} />,
       path: '/members',
     },
   ];
@@ -68,7 +70,7 @@ const Index: React.FC = () => {
           />
         </Col>
         <Col xs={24} sm={24} lg={18}>
-          {key ? menuItems.find((o) => o.key === key)?.component : null}
+          {key ? menuItems.find((o) => o.menuKey === key)?.component : null}
         </Col>
       </Row>
     </Card>

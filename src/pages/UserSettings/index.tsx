@@ -4,7 +4,7 @@ import { useModel } from 'umi';
 import SettingsSideBar from '@/components/Settings/SettingsSideBar';
 import Domains from '@/components/Domain/Domains';
 import General from './General';
-import { SettingsMenuItem } from '@/components/Settings/typings';
+import { SettingsMenuItem } from '@/components/Settings/SettingsSideBar';
 
 const menuItems: SettingsMenuItem[] = [
   {

@@ -4,7 +4,7 @@ import { CheckOutlined } from '@ant-design/icons';
 import { useIntl } from 'umi';
 import Gravatar from '@/components/Gravatar';
 import { User, UserBase } from '@/client';
-import { SettingsSideBarProps } from '@/components/Settings/typings';
+import { SettingsSideBarProps } from '@/components/Settings/SettingsSideBar';
 import SettingsSideBar from '@/components/Settings/SettingsSideBar';
 
 interface SideBarProps extends SettingsSideBarProps {

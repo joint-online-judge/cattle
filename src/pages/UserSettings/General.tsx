@@ -1,7 +1,6 @@
 import React from 'react';
 import { Button, Form, PageHeader, Select } from 'antd';
 import { useIntl, useModel } from 'umi';
-import SettingsStyleWrapper from '@/components/Settings/SettingsStyleWrapper';
 import style from './style.css';
 
 // const options = {
@@ -28,47 +27,45 @@ const Index: React.FC = () => {
         title={intl.formatMessage({ id: 'SETTINGS.DISPLAY_SETTINGS' })}
         className={style.settingsTitle}
       />
-      <SettingsStyleWrapper type="form">
-        <Form
-          form={form}
-          name="general-settings"
-          // initialValues={settings.settings.displaySettings}
-          layout="vertical"
-          onFinish={onFinish}
-        >
-          {/*{*/}
-          {/*  (Object.keys(settings.settings.displaySettings)).map((key) => (*/}
-          {/*    <Form.Item*/}
-          {/*      label={(*/}
-          {/*        <b>*/}
-          {/*          {intl.formatMessage({ id: `SETTINGS.${key.toUpperCase()}` })}*/}
-          {/*        </b>*/}
-          {/*      )}*/}
-          {/*      name={key}*/}
-          {/*      key={key}*/}
-          {/*    >*/}
-          {/*      <Select>*/}
-          {/*        {*/}
-          {/*          options[key].map((_optionValue) => (*/}
-          {/*            <Select.Option*/}
-          {/*              value={_optionValue}*/}
-          {/*              key={_optionValue}*/}
-          {/*            >*/}
-          {/*              {_optionValue}*/}
-          {/*            </Select.Option>*/}
-          {/*          ))*/}
-          {/*        }*/}
-          {/*      </Select>*/}
-          {/*    </Form.Item>*/}
-          {/*  ))*/}
-          {/*}*/}
-          <Form.Item>
-            <Button type="primary" htmlType="submit">
-              {intl.formatMessage({ id: 'SETTINGS.UPDATE_SETTINGS' })}
-            </Button>
-          </Form.Item>
-        </Form>
-      </SettingsStyleWrapper>
+      <Form
+        form={form}
+        name="general-settings"
+        // initialValues={settings.settings.displaySettings}
+        layout="vertical"
+        onFinish={onFinish}
+      >
+        {/*{*/}
+        {/*  (Object.keys(settings.settings.displaySettings)).map((key) => (*/}
+        {/*    <Form.Item*/}
+        {/*      label={(*/}
+        {/*        <b>*/}
+        {/*          {intl.formatMessage({ id: `SETTINGS.${key.toUpperCase()}` })}*/}
+        {/*        </b>*/}
+        {/*      )}*/}
+        {/*      name={key}*/}
+        {/*      key={key}*/}
+        {/*    >*/}
+        {/*      <Select>*/}
+        {/*        {*/}
+        {/*          options[key].map((_optionValue) => (*/}
+        {/*            <Select.Option*/}
+        {/*              value={_optionValue}*/}
+        {/*              key={_optionValue}*/}
+        {/*            >*/}
+        {/*              {_optionValue}*/}
+        {/*            </Select.Option>*/}
+        {/*          ))*/}
+        {/*        }*/}
+        {/*      </Select>*/}
+        {/*    </Form.Item>*/}
+        {/*  ))*/}
+        {/*}*/}
+        <Form.Item>
+          <Button type="primary" htmlType="submit">
+            {intl.formatMessage({ id: 'SETTINGS.UPDATE_SETTINGS' })}
+          </Button>
+        </Form.Item>
+      </Form>
     </>
   );
 };
