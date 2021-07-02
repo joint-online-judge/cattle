@@ -67,8 +67,10 @@ export const UpsertProblemSetForm: React.FC<IProps> = (props) => {
     }
   };
 
+  console.log(initialValues)
+
   return (
-    <Form layout="vertical" onFinish={onFinish}>
+    <Form layout="vertical" onFinish={onFinish} initialValues={initialValues}>
       <Form.Item
         name="title"
         label={intl.formatMessage({ id: 'TITLE' })}
@@ -113,6 +115,7 @@ export const UpsertProblemSetForm: React.FC<IProps> = (props) => {
         <Col span={12}>
           <Form.Item
             name="hidden"
+            valuePropName="checked"
             label={intl.formatMessage({ id: 'PROBLEM.CREATE.FORM.HIDDEN' })}
             rules={[{ required: true }]}
           >
@@ -122,6 +125,7 @@ export const UpsertProblemSetForm: React.FC<IProps> = (props) => {
         <Col span={12}>
           <Form.Item
             name="scoreboard_hidden"
+            valuePropName="checked"
             label={intl.formatMessage({
               id: 'PROBLEM_SET.CREATE.FORM.SCOREBOARD_HIDDEN',
             })}
@@ -137,7 +141,7 @@ export const UpsertProblemSetForm: React.FC<IProps> = (props) => {
         label={intl.formatMessage({ id: 'PROBLEM.CREATE.FORM.CONTENT' })}
         extra={'TODO: there should be a markdown editor here.'}
       >
-        <Input.TextArea />
+        <Input.TextArea rows={6} />
       </Form.Item>
       <Form.Item>
         <Row justify="center">

@@ -38,7 +38,7 @@ const Index: React.FC = () => {
           />
         </Col>
       </Row>
-      <ShadowCard title={213}>
+      <ShadowCard title={'创建域'}>
         <Row justify="center" className={style.createDomain}>
           <Col span={12}>
             <UpsertDomainForm />

@@ -52,11 +52,11 @@ const Index: React.FC<PageHeaderProps> = (props) => {
 
   return (
     <PageHeader
-      title={
-        title && typeof title === 'string'
-          ? intl.formatMessage({ id: title })
-          : undefined
-      }
+      // title={
+      //   title && typeof title === 'string'
+      //     ? intl.formatMessage({ id: title })
+      //     : undefined
+      // }
       breadcrumb={breadCrumbProps}
       {...otherProps}
     />

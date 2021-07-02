@@ -52,7 +52,7 @@ const Index: React.FC = () => {
             }
           </Spin>
         </ShadowCard>
-        <ShadowCard style={{ marginTop: 24 }}>
+        <ShadowCard  title={'题目'} style={{ marginTop: 24 }}>
           <ProblemList problemSetId={problemSet?.id || ''} />
         </ShadowCard>
       </div>)

@@ -7,7 +7,7 @@ import { useParams } from 'umi';
 
 const Index: React.FC = () => {
   const intl = useIntl();
-  const { domainUrl } = useParams<{ domainUrl: string }>();
+  const { problemSetId } = useParams<{ problemSetId: string }>();
   return (
     <Row justify="center">
       <Col span={16}>
@@ -18,7 +18,7 @@ const Index: React.FC = () => {
             </Typography.Title>
           }
         >
-          <UpsertProblem initialValues={{ domain: domainUrl }} />
+          <UpsertProblem initialValues={{ problem_set: problemSetId }} />
         </ShadowCard>
       </Col>
     </Row>

@@ -16,7 +16,11 @@ const Index: React.FC = () => {
         </Typography.Title>
       }
     >
-      <UpsertProblemSetForm initialValues={{ domain: domainUrl }} />
+      <UpsertProblemSetForm initialValues={{
+        domain: domainUrl,
+        hidden: true,
+        scoreboard_hidden: true
+      }} />
     </ShadowCard>
   );
 };
