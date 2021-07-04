@@ -1,7 +1,8 @@
 import React from 'react';
 import { PageHeader, PageHeaderProps } from 'antd';
+import { useLocation } from 'react-router-dom';
 import { Route } from 'antd/lib/breadcrumb/Breadcrumb';
-import { useIntl, useModel, Link } from 'umi';
+import { Link, useIntl, useModel } from 'umi';
 
 function itemRender(
   route: Route,
@@ -9,7 +10,7 @@ function itemRender(
   routes: Route[],
   paths: string[],
 ) {
-  console.log(routes, paths, paths.join('/'));
+  // console.log(routes, paths, paths.join('/'));
   const last = routes.indexOf(route) === routes.length - 1;
   return last ? (
     <span>{route.breadcrumbName}</span>
@@ -23,14 +24,21 @@ function itemRender(
  * @param {string} props.title - i18n key of title
  * @param {string} props.breadcrumb.routes.breadcrumbName - i18n key of breadcrumb title
  * @description This component translate title and breadcrumb text automatically by
- * passing in their keys directly.
+ * passing in their keys directly. If routes is not defined in breadcrumb,
+ * it will generate the breadcrumb according to current url
  */
 const Index: React.FC<PageHeaderProps> = (props) => {
   const { title, breadcrumb, ...otherProps } = props;
   const intl = useIntl();
+  const location = useLocation();
+  const paths = location.pathname.split('/').slice(1);
+  const isHome = location.pathname === '/';
   const { currentLang } = useModel('lang');
 
   const breadCrumbProps = React.useMemo(() => {
+    if (isHome) {
+      return undefined;
+    }
     if (breadcrumb && breadcrumb?.routes) {
       return {
         ...breadcrumb,
@@ -41,22 +49,25 @@ const Index: React.FC<PageHeaderProps> = (props) => {
         itemRender,
       };
     } else if (breadcrumb) {
+      const routes = paths.map((path) => {
+        return {
+          path,
+          // assume that the default key is the upper case of the url path
+          breadcrumbName: intl.formatMessage({ id: path.toUpperCase() }),
+        };
+      });
       return {
         ...breadcrumb,
+        routes,
         itemRender,
       };
     } else {
       return breadcrumb;
     }
-  }, [currentLang]);
+  }, [currentLang, location]);
 
   return (
     <PageHeader
-      // title={
-      //   title && typeof title === 'string'
-      //     ? intl.formatMessage({ id: title })
-      //     : undefined
-      // }
       breadcrumb={breadCrumbProps}
       {...otherProps}
     />
