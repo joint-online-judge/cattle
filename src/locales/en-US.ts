@@ -6,6 +6,7 @@ export default {
   HOMEWORK: 'Homework',
   HOME: 'Home',
   TITLE: 'Title',
+  ADMIN: 'Admin',
   // Simple Verb
   CREATE: 'Create',
   ADD: 'Add',

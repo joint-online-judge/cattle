@@ -6,6 +6,7 @@ export default {
   HOMEWORK: '作业',
   HOME: '首页',
   TITLE: '标题',
+  ADMIN: '管理',
   // 简单动词
   CREATE: '创建',
   ADD: '增加',
