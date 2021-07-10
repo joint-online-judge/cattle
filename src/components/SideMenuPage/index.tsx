@@ -1,5 +1,6 @@
-import React, { useState, useMemo } from 'react';
-import { Row, Col, Space } from 'antd';
+import React, { useMemo } from 'react';
+import {useLocation,useHistory} from 'react-router-dom';
+import { Row, Col } from 'antd';
 import SettingsSideBar, { SettingsMenuItem } from '@/components/Settings/SettingsSideBar';
 import ContentCard from './ContentCard';
 import PageContent, { PageContentProps } from './PageContent';
@@ -9,12 +10,13 @@ interface IProps {
   extra?: React.ReactElement | React.ReactNode;
 }
 
-const Index: React.FC<IProps> = ({ children, extra }) => {
-  const [key, setKey] = useState<string>((() => {
-    const firstValidChild = children.find(o => o.props.menuKey);
-    return firstValidChild && firstValidChild.props.menuKey ? firstValidChild.props.menuKey : '';
-  })());
 
+const Index: React.FC<IProps> = ({ children, extra }) => {
+  const location:any = useLocation();
+  const history = useHistory();
+  const firstValidChild = children.find(o => o.props.menuKey);
+  const defaultSideKey = firstValidChild && firstValidChild.props.menuKey ? firstValidChild.props.menuKey : '';
+  const key = location.query?.tab ? location.query?.tab : defaultSideKey;
   const menuItems = useMemo<SettingsMenuItem[]>(() => {
     return React.Children.map(children, (child: React.ReactElement<PageContentProps>) => {
       if (typeof child === 'object' && child?.props?.menuKey) {
@@ -49,7 +51,12 @@ const Index: React.FC<IProps> = ({ children, extra }) => {
           <SettingsSideBar
             items={menuItems}
             selectedKeys={[key]}
-            onClick={(e) => setKey(e.key.toString())}
+            onClick={(e) => {
+              history.push({
+                pathname:location.pathname,
+                query:{tab:e.key.toString()},
+              } as any);
+            }}
           />
           {extra}
         </Col>
