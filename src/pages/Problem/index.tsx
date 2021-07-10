@@ -70,13 +70,13 @@ const Index: React.FC = () => {
           </Descriptions>
         </ShadowCard>
       }>
-        <PageContent menuKey="PROBLEM.HOME">
+        <PageContent menuKey="home" i18nKey="PROBLEM.HOME">
           <Home problem={problemResp?.data?.data} />
         </PageContent>
-        <PageContent menuKey="PROBLEM.SUBMIT_CODE">
+        <PageContent menuKey="submit" i18nKey="PROBLEM.SUBMIT_CODE">
           <Submit problem={problemResp?.data?.data} />
         </PageContent>
-        <PageContent menuKey="PROBLEM.SETTINGS">
+        <PageContent menuKey="settings" i18nKey="PROBLEM.SETTINGS">
           123
         </PageContent>
       </SideMenuPage>

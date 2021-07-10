@@ -1,16 +1,22 @@
-import React, { useState, useMemo } from 'react';
-import { Row, Col, Space } from 'antd';
+import React, { useMemo, useState } from 'react';
+import { useLocation, history, Location } from 'umi';
+import { Row, Col } from 'antd';
 import SettingsSideBar, { SettingsMenuItem } from '@/components/Settings/SettingsSideBar';
 import ContentCard from './ContentCard';
 import PageContent, { PageContentProps } from './PageContent';
 
 interface IProps {
   children: React.ReactElement<PageContentProps>[];
-  extra?: React.ReactElement | React.ReactNode;
+  extra?: React.ReactElement | React.ReactNode; // extra component below SideBar
+  urlQuery?: boolean; // whether to modify url query on switching
 }
 
-const Index: React.FC<IProps> = ({ children, extra }) => {
+
+const Index: React.FC<IProps> = ({ children, extra, urlQuery = true }) => {
+  const location: Location = useLocation();
+
   const [key, setKey] = useState<string>((() => {
+    if (urlQuery && location.query?.tab && typeof location.query?.tab === 'string') return location.query?.tab;
     const firstValidChild = children.find(o => o.props.menuKey);
     return firstValidChild && firstValidChild.props.menuKey ? firstValidChild.props.menuKey : '';
   })());
@@ -24,6 +30,7 @@ const Index: React.FC<IProps> = ({ children, extra }) => {
           text: child.props.text,
           path: child.props.path,
           node: child.props.node,
+          menuItemProps: child.props.menuItemProps,
           component: child,
         };
       }
@@ -49,7 +56,15 @@ const Index: React.FC<IProps> = ({ children, extra }) => {
           <SettingsSideBar
             items={menuItems}
             selectedKeys={[key]}
-            onClick={(e) => setKey(e.key.toString())}
+            onClick={(e) => {
+              setKey(e.key);
+              if (urlQuery) {
+                history.replace({
+                  pathname: location.pathname,
+                  query: { tab: e.key.toString() },
+                });
+              }
+            }}
           />
           {extra}
         </Col>

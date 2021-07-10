@@ -1,12 +1,7 @@
-import React, { ReactNode } from 'react';
+import React from 'react';
+import { SettingsMenuItem } from '@/components/Settings/SettingsSideBar';
 
-export interface PageContentProps {
-  menuKey: string;
-  i18nKey?: string; // use menuKey as default
-  text?: string; // use i18n(i18nKey) as default
-  path?: string;
-  node?: ReactNode;
-}
+export type PageContentProps = SettingsMenuItem;
 
 const PageContent: React.FC<PageContentProps> = (props) => {
   const { children } = props;
