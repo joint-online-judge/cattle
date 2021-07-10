@@ -31,8 +31,8 @@ const Index: React.FC<PageHeaderProps> = (props) => {
   const { title, breadcrumb, ...otherProps } = props;
   const intl = useIntl();
   const location = useLocation();
-  const paths = location.pathname.split('/').slice(1);
-  const isHome = location.pathname === '/';
+  const paths = location.pathname.split('/').filter(path => path);
+  const isHome = paths.length === 0;
   const { currentLang } = useModel('lang');
 
   const breadCrumbProps = React.useMemo(() => {
