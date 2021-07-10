@@ -6,6 +6,7 @@
     "prestart:staging": "npm run gen:api",
     "start": "cross-env MOCK=none UMI_ENV=dev HOST=127.0.0.1 umi dev",
     "start:staging": "cross-env MOCK=none UMI_ENV=staging HOST=127.0.0.1 umi dev",
+    "prebuild": "npm run gen:api",
     "build": "cross-env UMI_ENV=prod umi build",
     "postinstall": "umi generate tmp",
     "prettier": "prettier --write '**/*.{js,jsx,tsx,ts,less,md,json}'",
