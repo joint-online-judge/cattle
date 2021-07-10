@@ -1,8 +1,7 @@
 import React from 'react';
 import { PageHeader, PageHeaderProps } from 'antd';
-import { useLocation } from 'react-router-dom';
 import { Route } from 'antd/lib/breadcrumb/Breadcrumb';
-import { Link, useIntl, useModel } from 'umi';
+import { Link, useIntl, useModel, useLocation } from 'umi';
 
 function itemRender(
   route: Route,
