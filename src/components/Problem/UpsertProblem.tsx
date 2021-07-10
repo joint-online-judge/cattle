@@ -1,54 +1,46 @@
 import React from 'react';
-import {
-  Form,
-  Input,
-  Select,
-  Checkbox,
-  Row,
-  Col,
-  Button,
-} from 'antd';
+import { Form, Input, Select, Checkbox, Row, Col, Button } from 'antd';
 import { useIntl } from 'umi';
 import { SUPPORT_PROGRAMMING_LANGUAGE } from '@/constants';
 import { useRequest } from 'ahooks';
 import style from './style.css';
-import { ProblemService, ProblemCreate, Problem, ProblemEdit } from '@/client';
+import { Horse, ProblemCreate, Problem, ProblemEdit } from '@/utils/service';
 
 export interface IProps {
   initialValues?: Partial<Problem>;
 }
 
-export const CreateUpdateProblem: React.FC<IProps> = (props) => {
+export const UpsertProblem: React.FC<IProps> = (props) => {
   const { initialValues } = props;
   const intl = useIntl();
   const languageOptions = SUPPORT_PROGRAMMING_LANGUAGE.map((lang) => {
-    return (
-      {
-        value: lang,
-      }
-    );
+    return {
+      value: lang,
+    };
   });
 
   const { run: createProblem, loading: creatingProblem } = useRequest(
     (problem: ProblemCreate) =>
-      ProblemService.createProblemApiV1ProblemsPost(problem),
+      Horse.problem.createProblemApiV1ProblemsPost(problem),
     {
       manual: true,
       onSuccess: (res) => {
         console.log('create success');
       },
-    });
+    },
+  );
 
   const { run: updateProblem, loading: updatingProblem } = useRequest(
     (id: string, problem: ProblemEdit) =>
-      ProblemService.updateProblemApiV1ProblemsProblemPatch(id, problem),
+      Horse.problem.updateProblemApiV1ProblemsProblemPatch(id, problem),
     {
       manual: true,
       onSuccess: (res) => {
         // todo: add errCode
         console.log('update success');
       },
-    });
+    },
+  );
 
   const onFinish = (values: Partial<Problem>) => {
     if (initialValues?.domain) {
@@ -61,57 +53,48 @@ export const CreateUpdateProblem: React.FC<IProps> = (props) => {
     }
   };
   return (
-    <Form
-      layout='vertical'
-      onFinish={onFinish}
-    >
+    <Form layout="vertical" onFinish={onFinish}>
       <Row>
         <Col span={16}>
-          <Form.Item
-            name='title'
-            label={intl.formatMessage(
-              { id: 'PROBLEM.CREATE.FORM.TITLE' })}
-          >
+          <Form.Item name="title" label={intl.formatMessage({ id: 'TITLE' })}>
             <Input />
           </Form.Item>
         </Col>
         <Col push={2}>
           <Form.Item
-            name='hidden'
-            label={intl.formatMessage(
-              { id: 'PROBLEM.CREATE.FORM.HIDDEN' })}
-            valuePropName='checked'
+            name="hidden"
+            label={intl.formatMessage({ id: 'PROBLEM.CREATE.FORM.HIDDEN' })}
+            valuePropName="checked"
           >
             <Checkbox />
           </Form.Item>
         </Col>
       </Row>
       <Form.Item
-        name='languages'
-        label={intl.formatMessage(
-          { id: 'PROBLEM.LANGUAGES' })}
+        name="languages"
+        label={intl.formatMessage({ id: 'PROBLEM.LANGUAGES' })}
       >
         <Select
           allowClear
-          mode='multiple'
+          mode="multiple"
           showArrow
           options={languageOptions}
         />
       </Form.Item>
       <Form.Item
-        name='content'
+        name="content"
         label={intl.formatMessage({ id: 'PROBLEM.CREATE.FORM.CONTENT' })}
         extra={'TODO: there should be a markdown editor here.'}
       >
         <Input.TextArea />
       </Form.Item>
       <Form.Item>
-        <Row justify='center'>
+        <Row justify="center">
           <Col xs={9} sm={8} md={6}>
             <Button
               htmlType="submit"
               type="primary"
-              size='large'
+              size="large"
               block
               className={style.submitButton}
             >

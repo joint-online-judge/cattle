@@ -1,24 +1,19 @@
 import React from 'react';
-import { Avatar } from 'antd';
+import { Avatar, AvatarProps } from 'antd';
 import { gravatarImageUrl } from '@/utils';
-import style from './style.css';
 import { User, UserBase } from '@/client';
 
-export interface GravatarProps {
-  user: UserBase | User | undefined,
-  size: number,
+export interface GravatarProps extends AvatarProps {
+  user: UserBase | User | undefined;
 }
 
 const Index: React.FC<GravatarProps> = (props) => {
-  const { user, size } = props;
+  const { user, ...otherProps } = props;
   const imageUrl = user?.gravatar ? gravatarImageUrl(user.gravatar) : undefined;
   return (
-    <Avatar
-      src={imageUrl}
-      alt={user?.uname}
-      shape='circle'
-      size={size}
-    />
+    <Avatar src={imageUrl} alt={user?.uname || 'user'} {...otherProps}>
+      {user?.uname ? user.uname.slice(0, 1).toUpperCase() : ''}
+    </Avatar>
   );
 };
 

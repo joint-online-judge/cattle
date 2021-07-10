@@ -1,36 +1,39 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, ReactNode } from 'react';
 import { useIntl } from 'umi';
-import { Menu, MenuProps } from 'antd';
-import { SettingsSideBarProps } from './typings';
-import style from './style.css';
+import { Menu, MenuProps, MenuItemProps } from 'antd';
+import style from './style.less';
+
+export interface SettingsMenuItem {
+  menuKey: string;
+  i18nKey?: string; // use menuKey as default
+  text?: string; // use i18n(i18nKey) as default
+  path?: string;
+  node?: ReactNode;
+  menuItemProps?: MenuItemProps
+}
+
+export interface SettingsSideBarProps extends MenuProps {
+  items: SettingsMenuItem[];
+}
 
 const Index: React.FC<SettingsSideBarProps> = (props) => {
   const intl = useIntl();
-  const { items, selectedKeys, onChange } = props;
+  const { items, ...otherProps } = props;
 
   return (
-    <Menu
-      onClick={(e) => onChange && onChange(e)}
-      mode="vertical"
-      className={style.settingsSideBar}
-      selectedKeys={selectedKeys}
-    >
-      {
-        items.map((item, index) => (
-          <Fragment key={`${item.key}-fragment`}>
-            <Menu.Item
-              key={item.key}
-            >
-              {item.node ? item.node : intl.formatMessage({ id: item.key })}
-            </Menu.Item>
+    <Menu mode="vertical" className={style.settingsSideBar} {...otherProps}>
+      {items.map((item, index) => (
+        <Fragment key={`${item.menuKey}-fragment`}>
+          <Menu.Item style={{ margin: 0 }} key={item.menuKey} {...item.menuItemProps}>
             {
-              index < items.length - 1
-                ? <Menu.Divider key={`after-${item.key}`} />
-                : null
+              item.node || item.text || (item.i18nKey && intl.formatMessage({ id: item.i18nKey })) || intl.formatMessage({ id: item.menuKey })
             }
-          </Fragment>
-        ))
-      }
+          </Menu.Item>
+          {index < items.length - 1 ? (
+            <Menu.Divider key={`after-${item.menuKey}`} />
+          ) : null}
+        </Fragment>
+      ))}
     </Menu>
   );
 };

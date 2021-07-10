@@ -11,13 +11,13 @@ interface IProps extends SelectProps<string> {
  * @param {boolean} props.changeOnSelect - whether to switch language on select, default to true
  * @description Language Select. Can be used alone, or be controlled by <Form.Item>.
  */
-const Index: React.FC<IProps> = props => {
+const Index: React.FC<IProps> = (props) => {
   const { value, onChange, changeOnSelect, ...otherProps } = props;
   const { currentLang, switchLang, allLang } = useModel('lang');
   const intl = useIntl();
 
   const options = React.useMemo(() => {
-    return (allLang || []).map(lang => ({
+    return (allLang || []).map((lang) => ({
       label: `${intl.formatMessage({ id: lang })} (${lang})`,
       value: lang,
     }));

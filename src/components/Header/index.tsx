@@ -1,11 +1,12 @@
 import React from 'react';
-import { Image, Menu } from 'antd';
-import { useIntl, Link, useLocation } from 'umi';
+import { Menu } from 'antd';
+import { HomeOutlined, AppstoreOutlined } from '@ant-design/icons';
+import { useIntl, Link, useHistory, useLocation, useRouteMatch } from 'umi';
 import UserMenuItem from './UserMenuItem';
 import style from './style.css';
 
 const Index = () => {
-  const location = useLocation();
+  const history = useHistory();
   const intl = useIntl();
 
   const menuItems = React.useMemo(() => {
@@ -13,13 +14,11 @@ const Index = () => {
     // e.g. if (location.pathname.startswith('/domain')) return ...
     return (
       <>
-        <Menu.Item key="test" className={style.headerItem}>
-          <Image
-            src="https://i.loli.net/2021/03/09/hqnrlFcbAYDVWeN.gif"
-            height={20}
-            width={20}
-          />
-          <Link to="/">{intl.formatMessage({id: 'TEST'})}</Link>
+        <Menu.Item key="home" icon={<HomeOutlined />}>
+          <Link to="/">{intl.formatMessage({ id: 'HOME' })}</Link>
+        </Menu.Item>
+        <Menu.Item key="domain" icon={<AppstoreOutlined />}>
+          <Link to="/domain">{intl.formatMessage({ id: 'DOMAIN' })}</Link>
         </Menu.Item>
         <Menu.Item key="user" className={style.headerFloatRightItem}>
           <UserMenuItem />
@@ -32,11 +31,7 @@ const Index = () => {
   //      to rerun the function only when the first url string changes.
 
   return (
-    <Menu
-      mode="horizontal"
-      className={style.menu}
-      selectable={false}
-    >
+    <Menu mode="horizontal" className={style.menu} selectable={false}>
       {menuItems}
     </Menu>
   );

@@ -1,24 +1,25 @@
 import React from 'react';
-import { Row, Col, Card } from 'antd';
+import { Col, Row } from 'antd';
 import { useIntl, useLocation, useRouteMatch } from 'umi';
-import CreateUpdateDomainForm from '@/components/Domain/CreateUpdateDomainForm';
-import PageHeaderIntl from '@/components/PageHeaderIntl';
+import UpsertDomainForm from '@/components/Domain/UpsertDomainForm';
+import ShadowCard from '@/components/ShadowCard';
 import style from './style.css';
 
-const routes = [
-  {
-    path: 'admin',
-    breadcrumbName: 'ADMIN.ADMIN',
-  },
-  {
-    path: 'domain',
-    breadcrumbName: 'DOMAIN',
-  },
-  {
-    path: 'create',
-    breadcrumbName: 'CREATE',
-  },
-];
+//todo: delete it or uncomment it
+// const routes = [
+//   {
+//     path: 'admin',
+//     breadcrumbName: 'ADMIN.ADMIN',
+//   },
+//   {
+//     path: 'domain',
+//     breadcrumbName: 'DOMAIN',
+//   },
+//   {
+//     path: 'create',
+//     breadcrumbName: 'CREATE',
+//   },
+// ];
 
 const Index: React.FC = () => {
   const intl = useIntl();
@@ -29,22 +30,13 @@ const Index: React.FC = () => {
   /* todo: add onChange on URL/ID field to ensure unique field */
   return (
     <>
-      <Row>
-        <Col>
-          <PageHeaderIntl
-            title={'DOMAIN.CREATE_A_NEW_DOMAIN'}
-            breadcrumb={{ routes }}
-          />
-        </Col>
-      </Row>
-      <Card>
+      <ShadowCard title={'创建域'}>
         <Row justify="center" className={style.createDomain}>
           <Col span={12}>
-            <CreateUpdateDomainForm />
+            <UpsertDomainForm />
           </Col>
         </Row>
-      </Card>
-
+      </ShadowCard>
     </>
   );
 };

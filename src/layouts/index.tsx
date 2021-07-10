@@ -1,9 +1,10 @@
 import React from 'react';
-import { Layout, Row, Col } from 'antd';
+import { Col, Layout, Row } from 'antd';
 import Footer from '@/components/Footer';
 import Header from '@/components/Header';
 import style from './style.less';
 import { CONTENT_GRID_LAYOUT } from '@/constants';
+import PageHeaderIntl from '@/components/PageHeaderIntl';
 
 const Index: React.FC = ({ children }) => {
   return (
@@ -12,8 +13,9 @@ const Index: React.FC = ({ children }) => {
         <Header />
       </Layout.Header>
       <Layout.Content className={style.pageContent}>
-        <Row justify='center'>
+        <Row justify="center">
           <Col {...CONTENT_GRID_LAYOUT}>
+            <PageHeaderIntl breadcrumb={{}} />
             {children}
           </Col>
         </Row>

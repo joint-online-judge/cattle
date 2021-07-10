@@ -1,19 +1,21 @@
 export default {
   // 简单名词
-  'DOMAIN': '域',
-  'PROBLEM': '题目',
-  'CREATION': '创建',
-  'HOMEWORK': '作业',
-  'TEST': '大史历历',
+  DOMAIN: '域',
+  PROBLEM: '题目',
+  CREATION: '创建',
+  HOMEWORK: '作业',
+  HOME: '首页',
+  TITLE: '标题',
+  ADMIN: '管理',
   // 简单动词
-  'CREATE': '创建',
-  'ADD': '增加',
-  'VIEW': '查看',
-  'VISIT': '查看',
-  'UPDATE': '更新',
-  'DELETE': '删除',
-  'SUBMIT': '提交',
-  'MANAGE': '管理',
+  CREATE: '创建',
+  ADD: '增加',
+  VIEW: '查看',
+  VISIT: '查看',
+  UPDATE: '更新',
+  DELETE: '删除',
+  SUBMIT: '提交',
+  MANAGE: '管理',
   // User
   'USER.PROFILE': '我的资料',
   'USER.LOGIN.JACCOUNT_LOG_IN': 'jAccount 登录',
@@ -36,7 +38,6 @@ export default {
   'DOMAIN.HOME.SETTINGS': '设置',
   // Problems
   'PROBLEM.CREATE.TITLE': '创建问题',
-  'PROBLEM.CREATE.FORM.TITLE': '标题',
   'PROBLEM.CREATE.FORM.CONTENT': '内容',
   'PROBLEM.CREATE.FORM.HIDDEN': '隐藏',
   'PROBLEM.LANGUAGES': '编程语言',
@@ -55,6 +56,12 @@ export default {
   'PROBLEM.MEMORY_KB': '峰值内存',
   'PROBLEM.TIME_MS': '总耗时',
   'PROBLEM.SUBMIT_AT': '递交时间',
+  // ProblemSet
+  'PROBLEM_SET.CREATE.TITLE': '创建问题集',
+  'PROBLEM_SET.CREATE.FORM.SCOREBOARD_HIDDEN': '隐藏排行榜',
+  'PROBLEM_SET.CREATE.FORM.AVAILABLE_TIME': '可提交时间',
+  'PROBLEM_SET.CREATE.FORM.DUE_TIME': '截止时间',
+  'PROBLEM_SET.CREATE.FORM.URL': '问题集URL',
   // Settings
   'SETTINGS.SETTINGS': '偏好设置',
   'SETTINGS.GENERAL_SETTINGS': '通用设置',
@@ -62,6 +69,7 @@ export default {
   'SETTINGS.SECURITY_SETTINGS': '安全设置',
   'SETTINGS.I18N_LANG': '语言',
   'SETTINGS.TIMEZONE': '时区',
+  'SETTINGS.SWITCH_LANG': '切换语言',
   'SETTINGS.UPDATE_SETTINGS': '更新设置',
   'SETTINGS.DISPLAY_SETTINGS': '显示设置',
   'SETTINGS.DOMAIN.PROFILE': '基本资料',
@@ -79,4 +87,7 @@ export default {
   // Languages
   'zh-CN': '简体中文',
   'en-US': 'English',
+  // Form
+  'FORM.INPUT_PLACEHOLDER': '请输入{field}',
+  'FORM.SELECT_PLACEHOLDER': '请选择{field}',
 };

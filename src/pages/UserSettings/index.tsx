@@ -1,27 +1,28 @@
 import React, { useState } from 'react';
-import { Col, PageHeader, Row, Card } from 'antd';
+import { Col, PageHeader, Row } from 'antd';
 import { useModel } from 'umi';
 import SettingsSideBar from '@/components/Settings/SettingsSideBar';
 import Domains from '@/components/Domain/Domains';
 import General from './General';
-import { SettingsMenuItem } from '@/components/Settings/typings';
+import { SettingsMenuItem } from '@/components/Settings/SettingsSideBar';
+import ShadowCard from '@/components/ShadowCard';
 
 const menuItems: SettingsMenuItem[] = [
   {
-    key: 'SETTINGS.GENERAL_SETTINGS',
-    component: (<General />),
+    menuKey: 'SETTINGS.GENERAL_SETTINGS',
+    component: <General />,
   },
   {
-    key: 'SETTINGS.ACCOUNT_SETTINGS',
+    menuKey: 'SETTINGS.ACCOUNT_SETTINGS',
     // TODO: component: (<General />),
   },
   {
-    key: 'SETTINGS.SECURITY_SETTINGS',
+    menuKey: 'SETTINGS.SECURITY_SETTINGS',
     // TODO: component: (<General />),
   },
   {
-    key: 'DOMAIN.DOMAINS',
-    component: (<Domains />),
+    menuKey: 'DOMAIN.DOMAINS',
+    component: <Domains />,
   },
 ];
 
@@ -36,22 +37,24 @@ const Index: React.FC = () => {
           {
             lg: 24,
             xl: 32,
-          }, {
+          },
+          {
             xs: 16,
             sm: 16,
-          }]}
+          },
+        ]}
       >
         <Col xs={24} sm={24} lg={6}>
           <SettingsSideBar
             items={menuItems}
             selectedKeys={[key]}
-            onChange={({ key: menuKey }) => setKey(menuKey as string)}
+            onClick={({ key: menuKey }) => setKey(menuKey as string)}
           />
         </Col>
         <Col xs={24} sm={24} lg={18}>
-          <Card>
+          <ShadowCard>
             {key ? menuItems.find((o) => o.key === key)?.component : null}
-          </Card>
+          </ShadowCard>
         </Col>
       </Row>
     </div>

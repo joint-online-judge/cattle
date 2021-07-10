@@ -1,86 +1,85 @@
-import React, { useEffect, useState } from 'react';
-import {
-  Row,
-  Col,
-} from 'antd';
-import { useParams } from 'umi';
+import React, { useEffect } from 'react';
+import { Descriptions } from 'antd';
+import { useIntl, useParams } from 'umi';
 import { useRequest } from 'ahooks';
-import { ProblemService, UserService } from '@/client';
-import { SettingsMenuItem } from '@/components/Settings/typings';
-import SideBar from './SideBar';
+import { Horse } from '@/utils/service';
 import Home from './Home';
 import Submit from './Submit';
+import SideMenuPage, { PageContent } from '@/components/SideMenuPage';
+import ShadowCard from '@/components/ShadowCard';
+import { CheckOutlined } from '@ant-design/icons';
+import Gravatar from '@/components/Gravatar';
 
 const Index: React.FC = () => {
   const { problemId } = useParams<{ problemId: string }>();
+  const intl = useIntl();
 
   const { data: ownerUserResp, run: getOwner } = useRequest(
-    (uid: string) => UserService.getUserApiV1UsersUidGet(uid), {
+    (uid: string) => Horse.user.getUserApiV1UsersUidGet(uid),
+    {
       manual: true,
       onSuccess: (res) => {
         // todo: errCode
         console.info('get owner success');
       },
-    });
+    },
+  );
 
   const { data: problemResp, run: getProblem } = useRequest(
-    (problem: string) => ProblemService.getProblemApiV1ProblemsProblemGet(
-      problem), {
+    (problem: string) =>
+      Horse.problem.getProblemApiV1ProblemsProblemGet(problem),
+    {
       manual: true,
       onSuccess: (res) => {
         // todo: errCode
         console.info('get problem success');
-        getOwner(res.data?.owner as string);
+        getOwner(res?.data?.data?.owner as string);
       },
       onError: (res) => {
         console.error('get problem fail');
       },
-    });
+    },
+  );
 
   useEffect(() => {
     getProblem(problemId);
   }, [problemId]);
 
-  const menuItems: SettingsMenuItem[] = [
-    {
-      key: 'PROBLEM.HOME',
-      component: (<Home problem={problemResp?.data} />),
-    },
-    {
-      key: 'PROBLEM.SUBMIT_CODE',
-      component: (<Submit problem={problemResp?.data} />),
-    },
-    {
-      key: 'PROBLEM.SETTINGS',
-      // TODO: component: (<General />),
-    },
-  ];
-
-  const [key, setKey] = useState<string>(menuItems[0].key);
-
   return (
     <>
-      <Row gutter={[{ lg: 24, xl: 32 }, 24]}>
-        <Col
-          xs={{ span: 24, order: 1 }}
-          sm={{ span: 24, order: 1 }}
-          xl={{ span: 18, order: 0 }}
-        >
-          {key ? menuItems.find((o) => o.key === key)?.component : null}
-        </Col>
-        <Col
-          xs={{ span: 24, order: 0 }}
-          sm={{ span: 24, order: 0 }}
-          xl={{ span: 6, order: 1 }}
-        >
-          <SideBar
-            user={ownerUserResp?.data}
-            items={menuItems}
-            selectedKeys={[key]}
-            onChange={({ key: menuKey }) => setKey(menuKey as string)}
-          />
-        </Col>
-      </Row>
+      <SideMenuPage extra={
+        <ShadowCard style={{ marginTop: 16 }}>
+          <Descriptions column={1}>
+            <Descriptions.Item
+              label={intl.formatHTMLMessage({ id: 'PROBLEM.STATUS' })}
+            >
+              {/* todo: make status component */}
+              <CheckOutlined /> Accepted
+            </Descriptions.Item>
+            <Descriptions.Item
+              label={intl.formatHTMLMessage({ id: 'PROBLEM.PROBLEM_GROUP' })}
+            >
+              不知道
+            </Descriptions.Item>
+            <Descriptions.Item
+              label={intl.formatHTMLMessage({ id: 'PROBLEM.OWNER' })}
+            >
+              <Gravatar size={20} user={ownerUserResp?.data?.data} />
+              {ownerUserResp?.data?.data?.real_name || ''}
+            </Descriptions.Item>
+          </Descriptions>
+        </ShadowCard>
+      }>
+        <PageContent menuKey="home" i18nKey="PROBLEM.HOME">
+          <Home problem={problemResp?.data?.data} />
+        </PageContent>
+        <PageContent menuKey="submit" i18nKey="PROBLEM.SUBMIT_CODE">
+          <Submit problem={problemResp?.data?.data} />
+        </PageContent>
+        <PageContent menuKey="settings" i18nKey="PROBLEM.SETTINGS">
+          123
+        </PageContent>
+      </SideMenuPage>
     </>
   );
 };

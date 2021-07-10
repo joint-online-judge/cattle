@@ -1,7 +1,7 @@
 import { InitialState } from './app';
 
-export default function(initialState: InitialState) {
-  const { user } = initialState;
+export default function (initialState: InitialState) {
+  const { user } = initialState || {};
 
   return {
     authenticated: !!user,

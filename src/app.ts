@@ -1,7 +1,7 @@
-import { ErrorCode, User, UserService } from '@/client';
+import { ErrorCode, User, Horse } from '@/utils/service';
 
 export interface InitialState {
-  user: User | null
+  user: User | undefined;
 }
 
 // will be run before render each route
@@ -32,12 +32,12 @@ export interface InitialState {
 
 export async function getInitialState(): Promise<InitialState> {
   try {
-    const res = await UserService.getUserApiV1UserGet();
-    if (res.errorCode === ErrorCode.SUCCESS && res.data) {
-      return { user: res.data };
+    const res = await Horse.user.getUserApiV1UserGet();
+    if (res.data.error_code === ErrorCode.Success && res.data) {
+      return { user: res.data.data };
     }
   } catch (e) {
-    return { user: null };
+    return { user: undefined };
   }
-  return { user: null };
+  return { user: undefined };
 }

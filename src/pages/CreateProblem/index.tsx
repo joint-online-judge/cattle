@@ -1,29 +1,25 @@
 import React from 'react';
-import {
-  Card,
-  Typography,
-  Row,
-  Col,
-} from 'antd';
+import { Typography, Row, Col } from 'antd';
 import { useIntl } from 'umi';
-import { CreateUpdateProblem } from '@/components/Problem';
+import { UpsertProblem } from '@/components/Problem';
+import ShadowCard from '@/components/ShadowCard';
 import { useParams } from 'umi';
 
 const Index: React.FC = () => {
   const intl = useIntl();
-  const { domainUrl } = useParams<{ domainUrl: string }>();
+  const { problemSetId } = useParams<{ problemSetId: string }>();
   return (
-    <Row justify='center'>
+    <Row justify="center">
       <Col span={16}>
-        <Card
-          title={(
+        <ShadowCard
+          title={
             <Typography.Title level={2}>
               {intl.formatMessage({ id: 'PROBLEM.CREATE.TITLE' })}
             </Typography.Title>
-          )}
+          }
         >
-          <CreateUpdateProblem initialValues={{ domain: domainUrl }} />
-        </Card>
+          <UpsertProblem initialValues={{ problem_set: problemSetId }} />
+        </ShadowCard>
       </Col>
     </Row>
   );

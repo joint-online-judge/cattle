@@ -1,19 +1,21 @@
 export default {
   // Simple Noun
-  'DOMAIN': 'Domain',
-  'PROBLEM': 'Problem',
-  'CREATION': 'Creation',
-  'HOMEWORK': 'Homework',
-  'TEST': 'Big SLL',
+  DOMAIN: 'Domain',
+  PROBLEM: 'Problem',
+  CREATION: 'Creation',
+  HOMEWORK: 'Homework',
+  HOME: 'Home',
+  TITLE: 'Title',
+  ADMIN: 'Admin',
   // Simple Verb
-  'CREATE': 'Create',
-  'ADD': 'Add',
-  'VIEW': 'View',
-  'VISIT': 'Visit',
-  'UPDATE': 'Update',
-  'DELETE': 'Delete',
-  'SUBMIT': 'Submit',
-  'MANAGE': 'Manage',
+  CREATE: 'Create',
+  ADD: 'Add',
+  VIEW: 'View',
+  VISIT: 'Visit',
+  UPDATE: 'Update',
+  DELETE: 'Delete',
+  SUBMIT: 'Submit',
+  MANAGE: 'Manage',
   // User
   'USER.PROFILE': 'Profile',
   'USER.LOGIN.JACCOUNT_LOG_IN': 'jAccount Login',
@@ -36,7 +38,6 @@ export default {
   'DOMAIN.HOME.SETTINGS': 'Settings',
   // Problems
   'PROBLEM.CREATE.TITLE': 'Create a new problem',
-  'PROBLEM.CREATE.FORM.TITLE': 'Title',
   'PROBLEM.CREATE.FORM.CONTENT': 'Content',
   'PROBLEM.CREATE.FORM.HIDDEN': 'Hidden',
   'PROBLEM.LANGUAGES': 'Languages',
@@ -55,6 +56,12 @@ export default {
   'PROBLEM.MEMORY_KB': 'Peak Memory',
   'PROBLEM.TIME_MS': 'Total Time',
   'PROBLEM.SUBMIT_AT': 'Submit At',
+  // ProblemSet
+  'PROBLEM_SET.CREATE.TITLE': 'Create a new problem set',
+  'PROBLEM_SET.CREATE.FORM.SCOREBOARD_HIDDEN': 'Hide Scoreboard',
+  'PROBLEM_SET.CREATE.FORM.AVAILABLE_TIME': 'Available Time',
+  'PROBLEM_SET.CREATE.FORM.DUE_TIME': 'Due Time',
+  'PROBLEM_SET.CREATE.FORM.URL': 'Problem Set URL',
   // Settings
   'SETTINGS.SETTINGS': 'Settings',
   'SETTINGS.GENERAL_SETTINGS': 'General',
@@ -62,6 +69,7 @@ export default {
   'SETTINGS.SECURITY_SETTINGS': 'Security',
   'SETTINGS.I18N_LANG': 'Language',
   'SETTINGS.TIMEZONE': 'Timezone',
+  'SETTINGS.SWITCH_LANG': 'Switch Language',
   'SETTINGS.UPDATE_SETTINGS': 'Update Settings',
   'SETTINGS.DISPLAY_SETTINGS': 'Display Settings',
   'SETTINGS.DOMAIN.PROFILE': 'Profile',
@@ -77,7 +85,9 @@ export default {
   'FOOTER.ISSUE': 'Issue',
   'FOOTER.CONTACT': 'Contact',
   // Languages
-  // Languages
   'zh-CN': '简体中文',
   'en-US': 'English',
+  // Form
+  'FORM.INPUT_PLACEHOLDER': 'please input {field}',
+  'FORM.SELECT_PLACEHOLDER': 'please select {field}',
 };
