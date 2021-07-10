@@ -1,5 +1,5 @@
-import React, { useMemo } from 'react';
-import {useLocation,useHistory} from 'react-router-dom';
+import React, { useMemo, useState } from 'react';
+import { useLocation, history, Location } from 'umi';
 import { Row, Col } from 'antd';
 import SettingsSideBar, { SettingsMenuItem } from '@/components/Settings/SettingsSideBar';
 import ContentCard from './ContentCard';
@@ -7,16 +7,20 @@ import PageContent, { PageContentProps } from './PageContent';
 
 interface IProps {
   children: React.ReactElement<PageContentProps>[];
-  extra?: React.ReactElement | React.ReactNode;
+  extra?: React.ReactElement | React.ReactNode; // extra component below SideBar
+  urlQuery?: boolean; // whether to modify url query on switching
 }
 
 
-const Index: React.FC<IProps> = ({ children, extra }) => {
-  const location:any = useLocation();
-  const history = useHistory();
-  const firstValidChild = children.find(o => o.props.menuKey);
-  const defaultSideKey = firstValidChild && firstValidChild.props.menuKey ? firstValidChild.props.menuKey : '';
-  const key = location.query?.tab ? location.query?.tab : defaultSideKey;
+const Index: React.FC<IProps> = ({ children, extra, urlQuery = true }) => {
+  const location: Location = useLocation();
+
+  const [key, setKey] = useState<string>((() => {
+    if (urlQuery && location.query?.tab && typeof location.query?.tab === 'string') return location.query?.tab;
+    const firstValidChild = children.find(o => o.props.menuKey);
+    return firstValidChild && firstValidChild.props.menuKey ? firstValidChild.props.menuKey : '';
+  })());
+
   const menuItems = useMemo<SettingsMenuItem[]>(() => {
     return React.Children.map(children, (child: React.ReactElement<PageContentProps>) => {
       if (typeof child === 'object' && child?.props?.menuKey) {
@@ -26,6 +30,7 @@ const Index: React.FC<IProps> = ({ children, extra }) => {
           text: child.props.text,
           path: child.props.path,
           node: child.props.node,
+          menuItemProps: child.props.menuItemProps,
           component: child,
         };
       }
@@ -52,10 +57,13 @@ const Index: React.FC<IProps> = ({ children, extra }) => {
             items={menuItems}
             selectedKeys={[key]}
             onClick={(e) => {
-              history.push({
-                pathname:location.pathname,
-                query:{tab:e.key.toString()},
-              } as any);
+              setKey(e.key);
+              if (urlQuery) {
+                history.replace({
+                  pathname: location.pathname,
+                  query: { tab: e.key.toString() },
+                });
+              }
             }}
           />
           {extra}
