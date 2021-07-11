@@ -31,6 +31,6 @@ jobs:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
           password: ${{ secrets.PASSWORD }}
-          port: ${{ secrets.PORT }}
+          key: ${{ secrets.KEY }}
           source: "dist"
-          target: "/root/cattle-build"
+          target: ${{ secrets.BUILD_TARGET }}
