@@ -31,5 +31,16 @@ jobs:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.KEY }}
+          port: ${{ secrets.PORT }}
           source: "dist"
-          target: ${{ secrets.BUILD_TARGET }}
+          target: "/tmp"
+      - name: execute remote ssh commands via ssh key
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.KEY }}
+          port: ${{ secrets.PORT }}
+          script: |
+            mv ${{ secrets.BUILD_TARGET }} ${{ secrets.BUILD_TARGET }}-bak
+            mv /tmp/dist ${{ secrets.BUILD_TARGET }}
