@@ -15,15 +15,8 @@ jobs:
         with:
           node-version: 14.x
       - run: echo ${{github.ref}}
-      - name: Cache node modules
-        uses: actions/cache@v2
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
       - run: npm install
-      - name: Pull & update submodules recursively
+      - name: pull & update submodules recursively
         run: |
           git submodule update --init --recursive
           git submodule update --recursive --remote
@@ -45,5 +38,6 @@ jobs:
           key: ${{ secrets.KEY }}
           port: ${{ secrets.PORT }}
           script: |
-            mv ${{ secrets.BUILD_TARGET }} ${{ secrets.BUILD_TARGET }}-bak
+            rm -rf ${{ secrets.BUILD_TARGET }}-bak
+            mv ${{ secrets.BUILD_TARGET }} ${{ secrets.BUILD_TARGET }}-bak; true
             mv /tmp/dist ${{ secrets.BUILD_TARGET }}
