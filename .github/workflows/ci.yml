@@ -15,12 +15,12 @@ jobs:
         with:
           node-version: 14.x
       - run: echo ${{github.ref}}
-      - run: npm install
+      - run: yarn install
       - name: pull & update submodules recursively
         run: |
           git submodule update --init --recursive
           git submodule update --recursive --remote
-      - run: yarn run build
+      - run: yarn build
       - name: copy file via ssh key
         uses: appleboy/scp-action@master
         with:
