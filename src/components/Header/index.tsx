@@ -1,13 +1,13 @@
 import React from 'react';
 import { Menu } from 'antd';
 import { HomeOutlined, AppstoreOutlined } from '@ant-design/icons';
-import { useIntl, Link, useHistory, useLocation, useRouteMatch } from 'umi';
+import { useIntl, Link, useHistory, useModel } from 'umi';
 import UserMenuItem from './UserMenuItem';
 import style from './style.css';
 
 const Index = () => {
-  const history = useHistory();
   const intl = useIntl();
+  const { currentLang } = useModel('lang');
 
   const menuItems = React.useMemo(() => {
     // TODO: render different menu for different path
@@ -25,7 +25,7 @@ const Index = () => {
         </Menu.Item>
       </>
     );
-  }, [location.pathname]);
+  }, [location.pathname, currentLang]);
   // p.s. Here, the function will be run each time location.pathname is changed.
   //      We can be more aggressive to change this value to location.pathname.split('/')[1],
   //      to rerun the function only when the first url string changes.
