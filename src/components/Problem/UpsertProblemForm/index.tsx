@@ -1,17 +1,19 @@
 import React from 'react';
-import { Form, Input, Select, Checkbox, Row, Col, Button } from 'antd';
+import { Form, Input, Select, Checkbox, Row, Col, Button, message } from 'antd';
 import { useIntl } from 'umi';
 import { SUPPORT_PROGRAMMING_LANGUAGE } from '@/constants';
 import { useRequest } from 'ahooks';
-import style from './style.css';
+import style from '../style.css';
 import { Horse, ProblemCreate, Problem, ProblemEdit } from '@/utils/service';
+import { history } from '@@/core/history';
 
 export interface IProps {
   initialValues?: Partial<Problem>;
+  domainUrl: string;
 }
 
-export const UpsertProblem: React.FC<IProps> = (props) => {
-  const { initialValues } = props;
+export const UpsertProblemForm: React.FC<IProps> = (props) => {
+  const { domainUrl, initialValues } = props;
   const intl = useIntl();
   const languageOptions = SUPPORT_PROGRAMMING_LANGUAGE.map((lang) => {
     return {
@@ -21,18 +23,21 @@ export const UpsertProblem: React.FC<IProps> = (props) => {
 
   const { run: createProblem, loading: creatingProblem } = useRequest(
     (problem: ProblemCreate) =>
-      Horse.problem.createProblemApiV1ProblemsPost(problem),
+      Horse.problem.createProblemApiV1DomainsDomainProblemsPost(domainUrl, problem),
     {
       manual: true,
       onSuccess: (res) => {
-        console.log('create success');
+        if (res?.data?.data?.id) {
+          message.success('create success');
+          history.push(`/problem-set/${res.data.data.id}`);
+        }
       },
     },
   );
 
   const { run: updateProblem, loading: updatingProblem } = useRequest(
     (id: string, problem: ProblemEdit) =>
-      Horse.problem.updateProblemApiV1ProblemsProblemPatch(id, problem),
+      Horse.problem.updateProblemApiV1DomainsDomainProblemsProblemPatch(domainUrl, id, problem),
     {
       manual: true,
       onSuccess: (res) => {
@@ -43,13 +48,10 @@ export const UpsertProblem: React.FC<IProps> = (props) => {
   );
 
   const onFinish = (values: Partial<Problem>) => {
-    if (initialValues?.domain) {
-      values.domain = initialValues.domain;
-      if (initialValues?.id) {
-        return updateProblem(initialValues?.id, values);
-      } else {
-        return createProblem(values as ProblemCreate);
-      }
+    if (initialValues?.id) {
+      return updateProblem(initialValues?.id, values);
+    } else {
+      return createProblem(values as ProblemCreate);
     }
   };
   return (

@@ -87,8 +87,7 @@ const Index: React.FC = () => {
 
   return (
     <>
-      <ShadowCard style={{ marginTop: 24 }}>
-        <Title level={3}>{intl.formatMessage({ id: 'DOMAIN.DOMAINS' })}</Title>
+      <ShadowCard style={{ marginTop: 24 }} title={intl.formatMessage({ id: 'DOMAIN.DOMAINS' })}>
         <Table
           columns={columns}
           dataSource={data}

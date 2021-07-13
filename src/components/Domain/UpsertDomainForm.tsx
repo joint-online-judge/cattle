@@ -9,7 +9,7 @@ import {
   DomainEdit,
   ErrorCode,
 } from '@/utils/service';
-// import { MarkdownEditor } from 'app/components/Editors';
+// import { MarkdownRender } from 'app/components/Editors';
 import style from './style.css';
 
 export interface IProps {
@@ -110,7 +110,7 @@ const Index: React.FC<IProps> = (props) => {
           name="bulletin"
           label={intl.formatMessage({ id: 'DOMAIN.CREATE.BULLETIN' })}
         >
-          {/*{MarkdownEditor}*/}
+          {/*{MarkdownRender}*/}
           <Input.TextArea rows={3} />
         </Form.Item>
         <Form.Item>
@@ -120,7 +120,6 @@ const Index: React.FC<IProps> = (props) => {
                 htmlType="submit"
                 type="primary"
                 className={initialValues?.url ? null : style.submitButtonCreate}
-                size="large"
                 loading={updatingDomain || creatingDomain}
                 block
               >

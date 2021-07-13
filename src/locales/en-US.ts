@@ -37,7 +37,7 @@ export default {
   'DOMAIN.HOME.MEMBERS': 'Members',
   'DOMAIN.HOME.SETTINGS': 'Settings',
   // Problems
-  'PROBLEM.CREATE.TITLE': 'Create a new problem',
+  'PROBLEM.CREATE.TITLE': 'Create Problem',
   'PROBLEM.CREATE.FORM.CONTENT': 'Content',
   'PROBLEM.CREATE.FORM.HIDDEN': 'Hidden',
   'PROBLEM.LANGUAGES': 'Languages',
@@ -57,7 +57,9 @@ export default {
   'PROBLEM.TIME_MS': 'Total Time',
   'PROBLEM.SUBMIT_AT': 'Submit At',
   // ProblemSet
-  'PROBLEM_SET.CREATE.TITLE': 'Create a new problem set',
+  'PROBLEM_SET.PROBLEM_SET': 'Problem Set',
+  'PROBLEM_SET.INTRODUCTION': 'Problem Set Introduction',
+  'PROBLEM_SET.CREATE.TITLE': 'Create Problem Set',
   'PROBLEM_SET.CREATE.FORM.SCOREBOARD_HIDDEN': 'Hide Scoreboard',
   'PROBLEM_SET.CREATE.FORM.AVAILABLE_TIME': 'Available Time',
   'PROBLEM_SET.CREATE.FORM.DUE_TIME': 'Due Time',

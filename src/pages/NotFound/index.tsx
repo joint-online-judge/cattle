@@ -6,7 +6,7 @@ const Index: React.FC = () => {
   return (
     <Row justify={'center'} align="middle" style={{ marginTop: 200 }}>
       <Col>
-        <Typography.Title>You Fucked Up!</Typography.Title>
+        <Typography.Title>404 Not Found</Typography.Title>
       </Col>
     </Row>
   );

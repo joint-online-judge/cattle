@@ -39,27 +39,27 @@
 
       {
         exact: true,
-        path: '/problem-set/:problemSetId/create-problem',
+        path: '/domain/:domainUrl/problem-set/:problemSetId/create-problem',
         component: '@/pages/CreateProblem',
       },
       {
         exact: true,
-        path: '/problem-set/:problemSetId/system-test',
+        path: '/domain/:domainUrl/problem-set/:problemSetId/system-test',
         component: '@/pages/CreateProblem',
       },
       {
         exact: true,
-        path: '/problem-set/:problemSetId/scoreboard',
+        path: '/domain/:domainUrl/problem-set/:problemSetId/scoreboard',
         component: '@/pages/CreateProblem',
       },
       {
         exact: true,
-        path: '/problem-set/:problemSetId/settings',
+        path: '/domain/:domainUrl/problem-set/:problemSetId/settings',
         component: '@/pages/CreateProblem',
       },
       {
         exact: true,
-        path: '/problem-set/:problemSetId',
+        path: '/domain/:domainUrl/problem-set/:problemSetId',
         component: '@/pages/ProblemSetDetail',
       },
 
