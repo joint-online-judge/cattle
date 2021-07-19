@@ -29,7 +29,7 @@ export const UpsertProblemForm: React.FC<IProps> = (props) => {
       onSuccess: (res) => {
         if (res?.data?.data?.id) {
           message.success('create success');
-          history.push(`/problem-set/${res.data.data.id}`);
+          history.push(`/domain/${domainUrl}/problem/${res.data.data.id}`);
         }
       },
     },

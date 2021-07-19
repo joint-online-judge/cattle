@@ -1,13 +1,14 @@
 import React from 'react';
 import { Menu } from 'antd';
 import { HomeOutlined, AppstoreOutlined } from '@ant-design/icons';
-import { useIntl, Link, useHistory, useModel } from 'umi';
+import { useIntl, Link, useModel, useParams } from 'umi';
 import UserMenuItem from './UserMenuItem';
 import style from './style.css';
 
 const Index = () => {
   const intl = useIntl();
   const { currentLang } = useModel('lang');
+  const { domainUrl, problemSetId } = useParams<{ problemSetId: string, domainUrl: string }>();
 
   const menuItems = React.useMemo(() => {
     // TODO: render different menu for different path

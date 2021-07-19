@@ -62,26 +62,15 @@
         path: '/domain/:domainUrl/problem-set/:problemSetId',
         component: '@/pages/ProblemSetDetail',
       },
+      {
+        exact: true,
+        path: '/domain/:domainUrl/problem-set/:problemSetId/:problemId',
+        component: '@/pages/Problem',
+      },
 
-      // todo: decide the final route url
       {
         exact: true,
-        path: '/problem/:problemId/submit',
-        component: '@/pages/Problem',
-      },
-      {
-        exact: true,
-        path: '/problem/:problemId/edit',
-        component: '@/pages/Problem',
-      },
-      {
-        exact: true,
-        path: '/problem/:problemId/settings',
-        component: '@/pages/Problem',
-      },
-      {
-        exact: true,
-        path: '/problem/:problemId',
+        path: '/domain/:domainUrl/problem/:problemId',
         component: '@/pages/Problem',
       },
 
