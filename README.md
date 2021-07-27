@@ -69,9 +69,9 @@ to proxy the local frontend to the staging domain:
 ![omega](https://github.com/joint-online-judge/cattle/tree/master/img/omega.png)
 * Start whistle and type in a single proxy rule:
 ```
-jitech.icu 127.0.0.1:8000
+xiaou.tech 127.0.0.1:8000
 ```
-Then you should have your `127.0.0.1:8000` proxied to `jitech.icu`.
+Then you should have your `127.0.0.1:8000` proxied to `xiaou.tech`.
 ### Production Staging
 
 TODO: In the future, we may setup a staging development environment which runs frontend locally, while connecting to 

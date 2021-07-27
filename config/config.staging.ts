@@ -5,7 +5,7 @@ export default defineConfig({
   proxy: {
     '/api': {
       // url of backend dev server
-      target: 'http://jitech.icu:34765/',
+      target: 'http://xiaou.tech/',
       changeOrigin: true,
       // 'pathRewrite': { '^/api': '' },
     },

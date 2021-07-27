@@ -39,49 +39,38 @@
 
       {
         exact: true,
-        path: '/problem-set/:problemSetId/create-problem',
+        path: '/domain/:domainUrl/problem-set/:problemSetId/create-problem',
         component: '@/pages/CreateProblem',
       },
       {
         exact: true,
-        path: '/problem-set/:problemSetId/system-test',
+        path: '/domain/:domainUrl/problem-set/:problemSetId/system-test',
         component: '@/pages/CreateProblem',
       },
       {
         exact: true,
-        path: '/problem-set/:problemSetId/scoreboard',
+        path: '/domain/:domainUrl/problem-set/:problemSetId/scoreboard',
         component: '@/pages/CreateProblem',
       },
       {
         exact: true,
-        path: '/problem-set/:problemSetId/settings',
+        path: '/domain/:domainUrl/problem-set/:problemSetId/settings',
         component: '@/pages/CreateProblem',
       },
       {
         exact: true,
-        path: '/problem-set/:problemSetId',
+        path: '/domain/:domainUrl/problem-set/:problemSetId',
         component: '@/pages/ProblemSetDetail',
       },
+      {
+        exact: true,
+        path: '/domain/:domainUrl/problem-set/:problemSetId/:problemId',
+        component: '@/pages/Problem',
+      },
 
-      // todo: decide the final route url
       {
         exact: true,
-        path: '/problem/:problemId/submit',
-        component: '@/pages/Problem',
-      },
-      {
-        exact: true,
-        path: '/problem/:problemId/edit',
-        component: '@/pages/Problem',
-      },
-      {
-        exact: true,
-        path: '/problem/:problemId/settings',
-        component: '@/pages/Problem',
-      },
-      {
-        exact: true,
-        path: '/problem/:problemId',
+        path: '/domain/:domainUrl/problem/:problemId',
         component: '@/pages/Problem',
       },
 

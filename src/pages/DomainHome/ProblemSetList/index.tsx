@@ -18,10 +18,7 @@ const Index: React.FC<IProps> = ({ domainId }) => {
   const { data: problemSets, run, loading } = useRequest(
     async () => {
       if (!domainId) return [];
-      const res = await Horse.problemSet.listProblemSetsApiV1ProblemSetsGet({
-        domain: domainId,
-        sort: -1,
-      });
+      const res = await Horse.problemSet.listProblemSetsApiV1DomainsDomainProblemSetsGet(domainId);
       return res?.data?.data?.results || [];
     },
     {
@@ -32,7 +29,11 @@ const Index: React.FC<IProps> = ({ domainId }) => {
     },
   );
 
-  const getStatusBadge = (availableTimeStr: string, dueTimeStr: string) => {
+  const getStatusBadge = (availableTimeStr: string | undefined, dueTimeStr: string | undefined) => {
+    if (!availableTimeStr || !dueTimeStr) {
+      return <Badge status="default" text="Unknown" />;
+    }
+
     const now = (new Date()).getTime();
     const availableTime = (new Date(availableTimeStr)).getTime();
     const dueTime = (new Date(dueTimeStr)).getTime();
@@ -54,28 +55,19 @@ const Index: React.FC<IProps> = ({ domainId }) => {
 
   return (
     <>
-      <Row justify="end">
-        <Button
-          icon={<PlusOutlined />}
-          onClick={() => history.push(`/domain/${domainUrl}/create-problem-set`)}
-          type="primary"
-        >
-          Add Problem Sets
-        </Button>
-      </Row>
       <List
         itemLayout="horizontal"
         size="large"
         dataSource={problemSets || []}
         renderItem={(item) => (
           <List.Item actions={[
-            <Link to={`/problem-set/${item.id}`}>Detail</Link>,
-            <Link to={`/problem-set/${item.id}/settings`}>Edit</Link>,
+            <Link to={`/domain/${domainUrl}/problem-set/${item.id}`}>Detail</Link>,
+            <Link to={`/domain/${domainUrl}/problem-set/${item.id}/settings`}>Edit</Link>,
           ]}>
             <Skeleton title={false} loading={loading} active>
               <List.Item.Meta
                 title={
-                  <Link to={`/problem-set/${item.id}`}>
+                  <Link to={`/domain/${domainUrl}/problem-set/${item.id}`}>
                     <Title level={4}>{item.title}</Title>
                   </Link>
                 }

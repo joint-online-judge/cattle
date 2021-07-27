@@ -21,21 +21,22 @@ import {
 
 export interface IProps {
   initialValues?: Partial<ProblemSet>;
+  domainUrl: string;
 }
 
 export const UpsertProblemSetForm: React.FC<IProps> = (props) => {
-  const { initialValues } = props;
+  const { domainUrl, initialValues } = props;
   const intl = useIntl();
 
   const { run: createProblemSet, loading: creatingProblemSet } = useRequest(
     (problemSet: ProblemSetCreate) =>
-      Horse.problemSet.createProblemSetApiV1ProblemSetsPost(problemSet),
+      Horse.problemSet.createProblemSetApiV1DomainsDomainProblemSetsPost(domainUrl, problemSet),
     {
       manual: true,
       onSuccess: (res) => {
         if (res?.data?.data?.id) {
           message.success('create success');
-          history.push(`/problem-set/${res.data.data.id}`);
+          history.push(`/domain/${domainUrl}/problem-set/${res.data.data.id}`);
         }
       },
     },
@@ -43,7 +44,8 @@ export const UpsertProblemSetForm: React.FC<IProps> = (props) => {
 
   const { run: updateProblemSet, loading: updatingProblemSet } = useRequest(
     (id: string, problemSet: ProblemSetEdit) =>
-      Horse.problemSet.updateProblemSetApiV1ProblemSetsProblemSetPatch(
+      Horse.problemSet.updateProblemSetApiV1DomainsDomainProblemSetsProblemSetPatch(
+        domainUrl,
         id,
         problemSet,
       ),
@@ -57,17 +59,12 @@ export const UpsertProblemSetForm: React.FC<IProps> = (props) => {
   );
 
   const onFinish = (values: Partial<ProblemSet>) => {
-    if (initialValues?.domain) {
-      values.domain = initialValues.domain;
-      if (initialValues?.id) {
-        return updateProblemSet(initialValues?.id, values);
-      } else {
-        return createProblemSet(values as ProblemSetCreate);
-      }
+    if (initialValues?.id) {
+      return updateProblemSet(initialValues?.id, values);
+    } else {
+      return createProblemSet(values as ProblemSetCreate);
     }
   };
-
-  console.log(initialValues)
 
   return (
     <Form layout="vertical" onFinish={onFinish} initialValues={initialValues}>
@@ -150,6 +147,7 @@ export const UpsertProblemSetForm: React.FC<IProps> = (props) => {
               htmlType="submit"
               type="primary"
               size="large"
+              loading={creatingProblemSet || updatingProblemSet}
               block
               className={style.submitButton}
             >

@@ -1,5 +1,5 @@
 import React from 'react';
-import { PageHeader, PageHeaderProps } from 'antd';
+import { PageHeader, PageHeaderProps, BreadcrumbProps } from 'antd';
 import { Route } from 'antd/lib/breadcrumb/Breadcrumb';
 import { Link, useIntl, useModel, useLocation } from 'umi';
 
@@ -9,7 +9,6 @@ function itemRender(
   routes: Route[],
   paths: string[],
 ) {
-  // console.log(routes, paths, paths.join('/'));
   const last = routes.indexOf(route) === routes.length - 1;
   return last ? (
     <span>{route.breadcrumbName}</span>
@@ -38,9 +37,12 @@ const Index: React.FC<PageHeaderProps> = (props) => {
     if (isHome) {
       return undefined;
     }
+
+    // @ts-ignore
     if (breadcrumb && breadcrumb?.routes) {
       return {
         ...breadcrumb,
+        // @ts-ignore
         routes: breadcrumb.routes.map((route) => ({
           ...route,
           breadcrumbName: intl.formatMessage({ id: route.breadcrumbName }),
@@ -55,6 +57,7 @@ const Index: React.FC<PageHeaderProps> = (props) => {
           breadcrumbName: intl.formatMessage({ id: path.toUpperCase() }),
         };
       });
+
       return {
         ...breadcrumb,
         routes,

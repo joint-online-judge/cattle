@@ -1,9 +1,8 @@
 import React from 'react';
 import { Spin, Typography } from 'antd';
-import ReactMarkdown from 'react-markdown';
-import gfm from 'remark-gfm';
 import { Problem } from '@/client';
 import ShadowCard from '@/components/ShadowCard';
+import MarkdownRender from '@/components/MarkdownRender';
 
 const { Title } = Typography;
 
@@ -16,17 +15,13 @@ const Index: React.FC<ProblemHomeProps> = (props) => {
   return (
     <ShadowCard
       title={
-        <Title level={2}>{problem?.title || <Spin size="default" />}</Title>
+        <Title level={3}>{problem?.title || <Spin size="default" />}</Title>
       }
     >
       {problem ? (
         <Typography>
-          <ReactMarkdown
-            remarkPlugins={[gfm]}
+          <MarkdownRender
             children={problem.content || ''}
-            components={{
-              code: 'kbd'
-            }}
           />
         </Typography>
       ) : (

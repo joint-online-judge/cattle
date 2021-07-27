@@ -10,17 +10,14 @@ const Index: React.FC = () => {
 
   return (
     <ShadowCard
-      title={
-        <Typography.Title level={2}>
-          {intl.formatMessage({ id: 'PROBLEM_SET.CREATE.TITLE' })}
-        </Typography.Title>
-      }
+      title={intl.formatMessage({ id: 'PROBLEM_SET.CREATE.TITLE' })}
     >
-      <UpsertProblemSetForm initialValues={{
-        domain: domainUrl,
-        hidden: true,
-        scoreboard_hidden: true
-      }} />
+      <UpsertProblemSetForm
+        domainUrl={domainUrl}
+        initialValues={{
+          hidden: true,
+          scoreboard_hidden: true,
+        }} />
     </ShadowCard>
   );
 };

@@ -1,24 +1,18 @@
 import { List, Typography, message, Button } from 'antd';
 import React, { useEffect } from 'react';
-import { useIntl, Link, useParams } from 'umi';
+import { useIntl, Link, useParams, history } from 'umi';
 import { useRequest } from 'ahooks';
 import { Horse } from '@/utils/service';
-import { PlusOutlined } from '@ant-design/icons';
-import { history } from '@@/core/history';
 
-interface IProps {
-  problemSetId: string;
-}
 
-const { Text } = Typography;
-
-const Index: React.FC<IProps> = ({ problemSetId }) => {
+const Index: React.FC = () => {
   const intl = useIntl();
+  const { domainUrl, problemSetId } = useParams<{ problemSetId: string, domainUrl: string }>();
 
   const { data: problems, run } = useRequest(
     async () => {
       if (!problemSetId) return [];
-      const res = await Horse.problem.listProblemsApiV1ProblemsGet({
+      const res = await Horse.problem.listProblemsApiV1DomainsDomainProblemsGet(domainUrl, {
         problem_set: problemSetId,
       });
       return res?.data?.data?.results || [];
@@ -37,16 +31,6 @@ const Index: React.FC<IProps> = ({ problemSetId }) => {
 
   return (
     <>
-      <Button
-        icon={<PlusOutlined />}
-        onClick={() =>
-          history.push(`/problem-set/${problemSetId}/create-problem`)
-        }
-        type="primary"
-        style={{ marginBottom: 16 }}
-      >
-        Add Problems
-      </Button>
       <List
         itemLayout="horizontal"
         size="large"
