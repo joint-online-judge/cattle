@@ -8,6 +8,7 @@ import style from './style.css';
 interface LinkItem {
   name: string;
   path: string;
+  external?: boolean;
 }
 
 const items: LinkItem[] = [
@@ -17,19 +18,23 @@ const items: LinkItem[] = [
   },
   {
     name: 'FOOTER.API',
-    path: '/api',
+    path: '/api/v1',
+    external: true,
   },
   {
     name: 'FOOTER.DOCS',
-    path: '/docs',
+    path: 'https://joint-online-judge.github.io/',
+    external: true,
   },
   {
     name: 'FOOTER.ISSUE',
-    path: '/issue',
+    path: 'https://github.com/joint-online-judge/cattle/issues',
+    external: true,
   },
   {
     name: 'FOOTER.CONTACT',
-    path: '/contact',
+    path: 'mailto:liuyh615@126.com',
+    external: true,
   },
 ];
 
@@ -40,7 +45,13 @@ const Index: React.FC = () => {
       {items.map((item) => {
         return (
           <div className={style.footerItem} key={`${item.name}${item.path}`}>
-            <Link to={item.path}>{intl.formatMessage({ id: item.name })}</Link>
+            {item.external ? (
+              <a href={item.path}>{intl.formatMessage({ id: item.name })}</a>
+            ) : (
+              <Link to={item.path}>
+                {intl.formatMessage({ id: item.name })}
+              </Link>
+            )}
           </div>
         );
       })}
