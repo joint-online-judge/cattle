@@ -2,12 +2,6 @@
   text-decoration: underline rgba(0, 0, 0, 0.45);
 }
 
-.footerItem {
-  border-right: 1px solid #d2d2d7;
-  padding-right: 10px;
-  margin-right: 10px;
-}
-
 .githubIcon {
   font-size: 20px;
   margin: auto;

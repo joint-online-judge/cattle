@@ -1,7 +1,7 @@
 import React from 'react';
 import { useIntl } from 'umi';
 import { Link } from 'react-router-dom';
-import { Col, Row, Typography } from 'antd';
+import { Space, Divider, Typography } from 'antd';
 import { GithubOutlined } from '@ant-design/icons';
 import style from './style.css';
 
@@ -41,7 +41,7 @@ const items: LinkItem[] = [
 const Index: React.FC = () => {
   const intl = useIntl();
   return (
-    <Row>
+    <Space split={<Divider type="vertical" />} wrap={true}>
       {items.map((item) => {
         return (
           <div className={style.footerItem} key={`${item.name}${item.path}`}>
@@ -55,15 +55,13 @@ const Index: React.FC = () => {
           </div>
         );
       })}
-      <Col>
-        <Typography.Link
-          href="https://github.com/joint-online-judge"
-          target="_blank"
-        >
-          <GithubOutlined className={style.githubIcon} />
-        </Typography.Link>
-      </Col>
-    </Row>
+      <Typography.Link
+        href="https://github.com/joint-online-judge"
+        target="_blank"
+      >
+        <GithubOutlined className={style.githubIcon} />
+      </Typography.Link>
+    </Space>
   );
 };
 
