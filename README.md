@@ -66,7 +66,7 @@ We need some extra setup to overcome the same-origin policy. Install [whistle](h
 to proxy the local frontend to the staging domain:
 * Install [whistle](https://github.com/avwo/whistle)
 * Install [SwitchyOmega](https://chrome.google.com/webstore/detail/proxy-switchyomega/padekgcemlokbadohgkifijomclgjgif) if you are using chrome. (For other browsers please refer to docs). And in settings of SwitchyOmega, have such config:
-![omega](https://github.com/joint-online-judge/cattle/tree/master/img/omega.png)
+![omega](https://github.com/joint-online-judge/cattle/blob/master/img/omega.png?raw=true)
 * Start whistle and type in a single proxy rule:
 ```
 xiaou.tech 127.0.0.1:8000
