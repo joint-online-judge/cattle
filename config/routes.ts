@@ -1,6 +1,6 @@
 ﻿export default [
+  { path: '/login', component: '@/pages/Login' },
   {
-    exact: false,
     path: '/',
     component: '@/layouts/index',
     routes: [

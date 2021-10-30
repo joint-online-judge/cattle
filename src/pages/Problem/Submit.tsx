@@ -4,7 +4,7 @@ import { useIntl } from 'umi';
 import { InboxOutlined } from '@ant-design/icons';
 import { Problem, Horse } from '@/utils/service';
 import ShadowCard from '@/components/ShadowCard';
-import { isArray } from 'lodash-es';
+import { isArray } from 'lodash';
 
 interface IProps {
   problem: Problem | undefined;
@@ -68,7 +68,9 @@ const Index: React.FC<IProps> = (props) => {
 
   return (
     <>
-      <ShadowCard title={intl.formatHTMLMessage({ id: 'PROBLEM.RECENT_RECORD' })}>
+      <ShadowCard
+        title={intl.formatHTMLMessage({ id: 'PROBLEM.RECENT_RECORD' })}
+      >
         <Table
           rowKey="id"
           columns={columns}

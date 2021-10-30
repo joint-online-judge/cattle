@@ -1,19 +1,19 @@
 import React from 'react';
 import ReactMarkdown, { ReactMarkdownOptions } from 'react-markdown';
-import { merge } from 'lodash-es';
+import { merge } from 'lodash';
 
 const Index: React.FC<ReactMarkdownOptions> = (props) => {
-
   return (
     <ReactMarkdown
-      {
-        ...merge({
+      {...merge(
+        {
           children: '',
           components: {
             code: 'kbd',
           },
-        }, props)
-      }
+        },
+        props,
+      )}
     />
   );
 };

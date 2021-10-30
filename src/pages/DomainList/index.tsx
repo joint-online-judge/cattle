@@ -10,7 +10,7 @@ import {
   TableColumnProps,
 } from 'antd';
 import { Horse, Domain, DomainUser } from '@/utils/service';
-import { isArray, omit } from 'lodash-es';
+import { isArray, omit } from 'lodash';
 import { gravatarImageUrl } from '@/utils';
 import ShadowCard from '@/components/ShadowCard';
 // import {
@@ -30,7 +30,12 @@ const Index: React.FC = () => {
     },
     {
       onError: () => {
-        message.error('failed to fetch domain info');
+        message.error(
+          intl.formatMessage(
+            { id: 'msg.error.fetch' },
+            { data: intl.formatMessage({ id: 'domain' }) },
+          ),
+        );
       },
     },
   );
@@ -87,7 +92,7 @@ const Index: React.FC = () => {
 
   return (
     <>
-      <ShadowCard style={{ marginTop: 24 }} title={intl.formatMessage({ id: 'DOMAIN.DOMAINS' })}>
+      <ShadowCard title={intl.formatMessage({ id: 'DOMAIN.DOMAINS' })}>
         <Table
           columns={columns}
           dataSource={data}

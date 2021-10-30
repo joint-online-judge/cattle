@@ -1,24 +1,26 @@
-/* ant design modification */
-//.ant-btn {
-//  border-radius: 6px;
-//}
+@import '~antd/es/style/themes/default.less';
 
-/*.ant-select > div {*/
-/*  border-radius: 6px !important;*/
-/*}*/
+html,
+body,
+#root {
+  height: 100%;
+}
 
-/*.ant-input {*/
-/*  border-radius: 6px;*/
-/*}*/
+.colorWeak {
+  filter: invert(80%);
+}
 
-/*.ant-list {*/
-/*  border-radius: 6px;*/
-/*}*/
-
-/*.ant-space {*/
-/*  width: 100%*/
-/*}*/
+.ant-layout {
+  min-height: 100vh;
+}
 
 .mainBoxShadow {
   box-shadow: 0 2px 8px #d9d9d9;
+}
+
+// Compatible with IE11
+@media screen and(-ms-high-contrast: active), (-ms-high-contrast: none) {
+  body .ant-design-pro > .ant-layout {
+    min-height: 100vh;
+  }
 }

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useModel, useIntl, useLocation, Link } from 'umi';
-import { Dropdown, Menu, Modal } from 'antd';
+import { Dropdown, Menu, Modal, Space } from 'antd';
 import { DownOutlined } from '@ant-design/icons';
 import Gravatar from '@/components/Gravatar';
 import LangSelect from '@/components/LangSelect';
@@ -45,16 +45,11 @@ export const Index: React.FC = () => {
 
   return initialState?.user ? (
     <>
-      <Dropdown
-        overlay={subMenu}
-        placement="bottomRight"
-        trigger={['click']}
-        arrow
-      >
-        <span>
+      <Dropdown overlay={subMenu} placement="bottomRight" arrow>
+        <Space>
           <Gravatar user={initialState?.user} />
-          <DownOutlined />
-        </span>
+          <span>{initialState?.user?.real_name}</span>
+        </Space>
       </Dropdown>
       <Modal
         title={intl.formatMessage({ id: 'SETTINGS.SWITCH_LANG' })}

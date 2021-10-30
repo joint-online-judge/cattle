@@ -1,4 +1,6 @@
 export default {
+  // small-case noun
+  domain: '域',
   // 简单名词
   DOMAIN: '域',
   PROBLEM: '题目',
@@ -92,4 +94,11 @@ export default {
   // Form
   'FORM.INPUT_PLACEHOLDER': '请输入{field}',
   'FORM.SELECT_PLACEHOLDER': '请选择{field}',
+  // Messages
+  'msg.error.fetch': '获取{data}失败',
+  'msg.error.create': '创建{data}失败',
+  'msg.error.update': '更新{data}失败',
+  'msg.error.delete': '删除{data}失败',
+  // Menu
+  'menu.domains': '我的域',
 };

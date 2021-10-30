@@ -1,12 +1,12 @@
 import React from 'react';
 import { Col, Row, Typography } from 'antd';
 import FooterLinks from './FooterLinks';
-import style from './style.css';
+import style from './style.less';
 
 const { Text } = Typography;
 const Index: React.FC = () => {
   return (
-    <Row justify="center">
+    <Row justify="center" className={style.footerLayout}>
       <Col span={16}>
         <Row justify="space-between">
           <Col>
