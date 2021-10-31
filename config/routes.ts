@@ -1,20 +1,12 @@
 ﻿export default [
   { path: '/login', component: '@/pages/Login' },
+
+  // @chujie: this route tree should be separated.
+  // Otherwise, 'domainUrl' cannot be matched in the layout component.
   {
-    path: '/',
+    path: '/domain/:domainUrl',
     component: '@/layouts/index',
     routes: [
-      { exact: true, path: '/', component: '@/pages/DomainList' },
-      { exact: true, path: '/login', component: '@/pages/Login' },
-      { exact: true, path: '/logout', component: '@/pages/Logout' },
-
-      { exact: true, path: '/settings', component: '@/pages/UserSettings' },
-      {
-        exact: true,
-        path: '/settings/domain',
-        component: '@/pages/UserSettings',
-      },
-
       {
         exact: true,
         path: '/domain/:domainUrl/create-problem-set',
@@ -35,6 +27,17 @@
         path: '/domain/:domainUrl',
         component: '@/pages/DomainHome',
       },
+    ],
+  },
+
+  {
+    path: '/',
+    component: '@/layouts/index',
+    routes: [
+      { exact: true, path: '/', component: '@/pages/DomainList' },
+      { exact: true, path: '/login', component: '@/pages/Login' },
+      { exact: true, path: '/logout', component: '@/pages/Logout' },
+      { exact: true, path: '/settings', component: '@/pages/UserSettings' },
       { exact: true, path: '/domain', component: '@/pages/DomainList' },
 
       {

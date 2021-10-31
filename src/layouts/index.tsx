@@ -1,19 +1,30 @@
-import React from 'react';
-import { Col, Layout, Row, Alert } from 'antd';
-import { useModel, Link } from 'umi';
+import React, { useEffect } from 'react';
+import { Col, Layout, Row, Alert, BackTop } from 'antd';
+import { useModel, Link, useParams } from 'umi';
 import Footer from '@/components/Footer';
 import Header from '@/components/Header';
 import { CONTENT_GRID_LAYOUT } from '@/constants';
 import PageHeaderIntl from '@/components/PageHeaderIntl';
 import style from './style.less';
 import Logo from '@/assets/logo.svg';
+import DomainHeader from '@/components/DomainHeader';
 
 const Index: React.FC = ({ children }) => {
+  const { domainUrl } = useParams<{ domainUrl: string }>();
   const { initialState } = useModel('@@initialState');
+  const { fetchDomain } = useModel('domain');
+
+  useEffect(() => {
+    if (domainUrl) {
+      fetchDomain(domainUrl);
+    }
+  }, [domainUrl]);
 
   return (
     <Layout className={style.pageLayout}>
-      <Layout.Header className={style.pageHeader}>
+      <Layout.Header
+        className={domainUrl ? style.domainLayoutHeader : style.pageHeader}
+      >
         {/* TODO: responsive nav */}
         <Row wrap={false} align={'middle'} gutter={12}>
           <Col flex={'none'}>
@@ -41,6 +52,7 @@ const Index: React.FC = ({ children }) => {
             closable
           />
         ) : null}
+        {domainUrl ? <DomainHeader /> : null}
         <Row justify="center" className={style.pageContent}>
           <Col {...CONTENT_GRID_LAYOUT}>
             <PageHeaderIntl breadcrumb={{}} />
@@ -51,6 +63,7 @@ const Index: React.FC = ({ children }) => {
       <Layout.Footer className={style.pageFooter}>
         <Footer />
       </Layout.Footer>
+      <BackTop />
     </Layout>
   );
 };

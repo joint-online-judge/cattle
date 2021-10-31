@@ -1,31 +1,18 @@
 import React from 'react';
-import { Col, Row, message, Typography, Avatar, Spin, Button } from 'antd';
-import { useParams, useIntl, history } from 'umi';
-import { useRequest } from 'ahooks';
-import { Horse } from '@/utils/service';
+import { Col, Row, Typography, Avatar, Spin, Button } from 'antd';
+import { useParams, useIntl, useModel, history } from 'umi';
 import { gravatarImageUrl } from '@/utils';
 import ProblemSetList from './ProblemSetList';
 import ShadowCard from '@/components/ShadowCard';
-import style from './style.css';
 import { PlusOutlined } from '@ant-design/icons';
+import style from './style.css';
 
 const { Title, Paragraph } = Typography;
 
 const Index: React.FC = () => {
-  const { domainUrl } = useParams<{ domainUrl: string }>();
   const intl = useIntl();
-
-  const { data: domain } = useRequest(
-    async () => {
-      const res = await Horse.domain.getDomainApiV1DomainsDomainGet(domainUrl);
-      return res.data.data;
-    },
-    {
-      onError: () => {
-        message.error('failed to fetch domain info');
-      },
-    },
-  );
+  const { domainUrl } = useParams<{ domainUrl: string }>();
+  const { domain } = useModel('domain');
 
   return (
     <div>
@@ -59,10 +46,12 @@ const Index: React.FC = () => {
         extra={
           <Button
             icon={<PlusOutlined />}
-            onClick={() => history.push(`/domain/${domainUrl}/create-problem-set`)}
+            onClick={() =>
+              history.push(`/domain/${domainUrl}/create-problem-set`)
+            }
             type="primary"
           >
-            {intl.formatMessage({id: 'PROBLEM_SET.CREATE.TITLE'})}
+            {intl.formatMessage({ id: 'PROBLEM_SET.CREATE.TITLE' })}
           </Button>
         }
       >

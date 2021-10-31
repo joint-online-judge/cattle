@@ -28,4 +28,8 @@ export default defineConfig({
   history: {
     type: 'browser',
   },
+  theme: {
+    '@primary-color': '#6543a9',
+    '@border-radius-base': '6px',
+  },
 });

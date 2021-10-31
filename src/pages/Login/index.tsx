@@ -68,7 +68,7 @@ const Index: React.FC = () => {
         <h2 className={style.loginSubtitle}>New generation of Online Judge</h2>
         <Form layout="vertical">
           <Tabs
-            id="loginTabs"
+            centered
             activeKey={opType}
             onChange={(activeKey) => setOpType(activeKey as OperationType)}
           >
