@@ -24,7 +24,7 @@ const Index: React.FC = () => {
       <ShadowCard className={style.contentCard}>
         <Spin spinning={!domain}>
           {domain ? (
-            <Typography className={style.homeHeader}>
+            <Typography>
               <Row gutter={{ xs: 16, md: 24 }} justify="center">
                 <Col flex="100px">
                   <Avatar

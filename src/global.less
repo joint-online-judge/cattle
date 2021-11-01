@@ -1,5 +1,9 @@
 @import '~antd/es/style/themes/default.less';
 
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 html,
 body,
 #root {
@@ -24,3 +28,20 @@ body,
     min-height: 100vh;
   }
 }
+
+/**  Restore some styles normalized by Tailwind  **/
+a {
+  color: @primary-color;
+}
+
+img,
+svg,
+video,
+canvas,
+audio,
+iframe,
+embed,
+object {
+  display: inline;
+}
+/**  Restore some styles normalized by Tailwind  **/

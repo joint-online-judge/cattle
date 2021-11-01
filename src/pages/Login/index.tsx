@@ -5,7 +5,6 @@ import { Horse } from '@/utils/service';
 import { DOMAIN_HOST } from '@/constants';
 import style from './style.less';
 import Logo from '@/assets/logo.svg';
-import JAccount from '@/assets/jaccount.png';
 
 const useQuery = () => {
   return new URLSearchParams(useLocation().search);

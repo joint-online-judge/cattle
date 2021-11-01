@@ -32,4 +32,5 @@ export default defineConfig({
     '@primary-color': '#6543a9',
     '@border-radius-base': '6px',
   },
+  extraPostCSSPlugins: [require('tailwindcss'), require('autoprefixer')],
 });
