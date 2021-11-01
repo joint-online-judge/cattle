@@ -10,9 +10,10 @@ import {
   TableColumnProps,
 } from 'antd';
 import { Horse, Domain, DomainUser } from '@/utils/service';
-import { isArray, omit } from 'lodash';
+import { isArray, omit, set } from 'lodash';
 import { gravatarImageUrl } from '@/utils';
 import ShadowCard from '@/components/ShadowCard';
+import { useModel } from '@@/plugin-model/useModel';
 // import {
 //   CreateDomain,
 // } from 'app/components';
@@ -22,6 +23,13 @@ const { Title } = Typography;
 
 const Index: React.FC = () => {
   const intl = useIntl();
+  const { setHeader } = useModel('pageHeader');
+
+  useEffect(() => {
+    setHeader({
+      titleI18nKey: 'DOMAIN.DOMAINS',
+    });
+  }, []);
 
   const { data, loading } = useRequest(
     async () => {
@@ -92,7 +100,7 @@ const Index: React.FC = () => {
 
   return (
     <>
-      <ShadowCard title={intl.formatMessage({ id: 'DOMAIN.DOMAINS' })}>
+      <ShadowCard>
         <Table
           columns={columns}
           dataSource={data}

@@ -4,7 +4,7 @@ import { useModel, Link, useParams } from 'umi';
 import Footer from '@/components/Footer';
 import Header from '@/components/Header';
 import { CONTENT_GRID_LAYOUT } from '@/constants';
-import PageHeaderIntl from '@/components/PageHeaderIntl';
+import GlobalPageHeader from '@/components/GlobalPageHeader';
 import style from './style.less';
 import Logo from '@/assets/logo.svg';
 import DomainHeader from '@/components/DomainHeader';
@@ -13,6 +13,13 @@ const Index: React.FC = ({ children }) => {
   const { domainUrl } = useParams<{ domainUrl: string }>();
   const { initialState } = useModel('@@initialState');
   const { fetchDomain } = useModel('domain');
+  const { headerVisible } = useModel('pageHeader');
+
+  useEffect(() => {
+    if (domainUrl) {
+      fetchDomain(domainUrl);
+    }
+  }, [domainUrl]);
 
   useEffect(() => {
     if (domainUrl) {
@@ -53,9 +60,16 @@ const Index: React.FC = ({ children }) => {
           />
         ) : null}
         {domainUrl ? <DomainHeader /> : null}
-        <Row justify="center" className={style.pageContent}>
+        <Row
+          justify="center"
+          className={
+            headerVisible
+              ? style.pageContentWithHeader
+              : style.pageContentNoHeader
+          }
+        >
           <Col {...CONTENT_GRID_LAYOUT}>
-            <PageHeaderIntl breadcrumb={{}} />
+            {headerVisible ? <GlobalPageHeader /> : null}
             {children}
           </Col>
         </Row>

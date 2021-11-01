@@ -1,15 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import {
-  Row,
-  Col,
-  Result,
-  Space,
-  Tabs,
-  Form,
-  Input,
-  Divider,
-  Button,
-} from 'antd';
+import { Row, Col, Tabs, Form, Input, Divider, Button } from 'antd';
 import { Redirect, useLocation, useModel, useRequest, history } from 'umi';
 import { Horse } from '@/utils/service';
 import { DOMAIN_HOST } from '@/constants';
@@ -41,6 +31,9 @@ const Index: React.FC = () => {
           .then((res) => {
             window.location.href = res.data.redirect_url;
           });
+      } else {
+        history.replace('/');
+        return Promise.resolve();
       }
     },
     {

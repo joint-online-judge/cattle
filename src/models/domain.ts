@@ -1,5 +1,4 @@
-import { useState, useEffect } from 'react';
-import { getAllLocales, getLocale, setLocale } from 'umi';
+import { useState } from 'react';
 import { Horse } from '@/utils/service';
 import { useRequest } from 'ahooks';
 import { message } from 'antd';
@@ -12,7 +11,7 @@ import { message } from 'antd';
  * in the site URL.
  */
 export default function DomainModel() {
-  const [domainUrl, setDomainUrl] = useState<string>(getLocale());
+  const [domainUrl, setDomainUrl] = useState<string>();
 
   const {
     data: domain,
