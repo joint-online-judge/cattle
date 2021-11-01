@@ -1,21 +1,13 @@
-import React from 'react';
-import ReactMarkdown, { ReactMarkdownOptions } from 'react-markdown';
-import { merge } from 'lodash';
+import { dynamic } from 'umi';
 
-const Index: React.FC<ReactMarkdownOptions> = (props) => {
-  return (
-    <ReactMarkdown
-      {...merge(
-        {
-          children: '',
-          components: {
-            code: 'kbd',
-          },
-        },
-        props,
-      )}
-    />
-  );
-};
+const AsyncMarkdownRender = dynamic({
+  loader: async function () {
+    // 这里的注释 webpackChunkName 可以指导 webpack 将该组件 HugeA 以这个名字单独拆出去
+    const { default: MR } = await import(
+      /* webpackChunkName: "external_markdown_render" */ './MarkdownRenderer'
+    );
+    return MR;
+  },
+});
 
-export default Index;
+export default AsyncMarkdownRender;

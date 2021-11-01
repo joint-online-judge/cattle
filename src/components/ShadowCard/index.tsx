@@ -9,9 +9,9 @@ const Index: React.FC<CardProps> = (props) => {
     <Card
       bordered={false}
       {...merge(otherProps, {
-        style: {
-          boxShadow: '0 2px 8px #dfdfdf',
-        },
+        className: otherProps.className
+          ? `shadow-md ${otherProps.className}`
+          : 'shadow-md',
       })}
     >
       {children}

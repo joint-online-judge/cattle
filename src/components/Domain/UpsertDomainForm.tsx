@@ -111,7 +111,7 @@ const Index: React.FC<IProps> = (props) => {
           label={intl.formatMessage({ id: 'DOMAIN.CREATE.BULLETIN' })}
         >
           {/*{MarkdownRender}*/}
-          <Input.TextArea rows={3} />
+          <Input.TextArea rows={5} />
         </Form.Item>
         <Form.Item>
           <Row>
