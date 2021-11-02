@@ -6,7 +6,7 @@ import { gravatarImageUrl } from '@/utils';
 import SideMenuPage, { PageContent } from '@/components/SideMenuPage';
 import ShadowCard from '@/components/ShadowCard';
 import MarkdownRender from '@/components/MarkdownRender';
-// import style from './style.css';
+import style from './style.css';
 
 const Index: React.FC = () => {
   const { domainUrl } = useParams<{ domainUrl: string }>();
@@ -50,19 +50,21 @@ const Index: React.FC = () => {
         domain.bulletin.length > 0 ? (
           <>
             <Divider />
-            <MarkdownRender children={domain?.bulletin || ''} />
+            <div className={style.domainSettingsBulletin}>
+              <MarkdownRender children={domain?.bulletin || ''} />
+            </div>
           </>
         ) : null}
       </ShadowCard>
       <SideMenuPage>
-        <PageContent menuKey="SETTINGS.DOMAIN.PROFILE">
+        <PageContent menuKey="profile" i18nKey="SETTINGS.DOMAIN.PROFILE">
           <UpdateDomain refresh={refresh} />
         </PageContent>
-        <PageContent menuKey="SETTINGS.DOMAIN.INVITATION">
-          <UpdateDomain refresh={refresh} />
+        <PageContent menuKey="invitation" i18nKey="SETTINGS.DOMAIN.INVITATION">
+          <h1>Invitation</h1>
         </PageContent>
-        <PageContent menuKey="SETTINGS.DOMAIN.MEMBERS">
-          <UpdateDomain refresh={refresh} />
+        <PageContent menuKey="members" i18nKey="SETTINGS.DOMAIN.MEMBERS">
+          <h1>Members</h1>
         </PageContent>
       </SideMenuPage>
     </>

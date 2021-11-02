@@ -1,7 +1,6 @@
 import React from 'react';
 import { useParams } from 'umi';
 import { message } from 'antd';
-import ShadowCard from '@/components/ShadowCard';
 import UpsertDomainForm from '@/components/Domain/UpsertDomainForm';
 import { useRequest } from 'ahooks';
 import { Horse } from '@/utils/service';
@@ -25,11 +24,7 @@ const Index: React.FC<IProps> = ({ refresh }) => {
     },
   );
 
-  return (
-    <ShadowCard>
-      <UpsertDomainForm initialValues={data} onUpdateSuccess={refresh} />
-    </ShadowCard>
-  );
+  return <UpsertDomainForm initialValues={data} onUpdateSuccess={refresh} />;
 };
 
 export default Index;

@@ -4,7 +4,6 @@ import { Row, Col } from 'antd';
 import SettingsSideBar, {
   SettingsMenuItem,
 } from '@/components/Settings/SettingsSideBar';
-import ContentCard from './ContentCard';
 import PageContent, { PageContentProps } from './PageContent';
 import globalStyle from '@/global.less';
 
@@ -89,4 +88,4 @@ const Index: React.FC<IProps> = ({ children, extra, urlQuery = true }) => {
 };
 
 export default Index;
-export { ContentCard, PageContent };
+export { PageContent };

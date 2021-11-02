@@ -4,6 +4,7 @@ import { useParams, useIntl, useModel, history } from 'umi';
 import { gravatarImageUrl } from '@/utils';
 import ProblemSetList from './ProblemSetList';
 import ShadowCard from '@/components/ShadowCard';
+import MarkdownRender from '@/components/MarkdownRender';
 import { PlusOutlined } from '@ant-design/icons';
 import style from './style.css';
 
@@ -26,7 +27,7 @@ const Index: React.FC = () => {
           {domain ? (
             <Typography>
               <Row gutter={{ xs: 16, md: 24 }} justify="center">
-                <Col flex="100px">
+                <Col span={4}>
                   <Avatar
                     shape="square"
                     size={100}
@@ -34,11 +35,12 @@ const Index: React.FC = () => {
                     alt={`@${domain.name}`}
                   />
                 </Col>
-                <Col flex="1">
+                <Col span={20}>
                   <Title level={3}>{domain.name}</Title>
-                  <Paragraph ellipsis={{ rows: 2, expandable: true }}>
-                    {domain.bulletin}
-                  </Paragraph>
+                  <MarkdownRender children={domain?.bulletin || ''} />
+                  {/* <Paragraph ellipsis={{ rows: 2, expandable: true }}>
+                    <MarkdownRender children={domain?.bulletin || ''} />
+                  </Paragraph> */}
                 </Col>
               </Row>
             </Typography>

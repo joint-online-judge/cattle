@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { Typography, Row, Col } from 'antd';
 import { useIntl, useParams } from 'umi';
+import SidePage from '@/components/SidePage';
 import { UpsertProblemSetForm } from '@/components/ProblemSet';
 import ShadowCard from '@/components/ShadowCard';
 import { useModel } from '@@/plugin-model/useModel';
@@ -33,7 +34,7 @@ const Index: React.FC = () => {
   }, []);
 
   return (
-    <ShadowCard>
+    <SidePage>
       <UpsertProblemSetForm
         domainUrl={domainUrl}
         initialValues={{
@@ -41,7 +42,7 @@ const Index: React.FC = () => {
           scoreboard_hidden: true,
         }}
       />
-    </ShadowCard>
+    </SidePage>
   );
 };
 export default Index;

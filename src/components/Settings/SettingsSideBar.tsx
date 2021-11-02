@@ -24,7 +24,7 @@ const Index: React.FC<SettingsSideBarProps> = (props) => {
   return (
     <ShadowCard bodyStyle={{ padding: 0 }} style={{ overflow: 'hidden' }}>
       <Menu mode="inline" className={style.settingsSideBar} {...otherProps}>
-        {items.map((item, index) => (
+        {items.map((item) => (
           <Fragment key={`${item.menuKey}-fragment`}>
             <Menu.Item
               style={{ margin: 0 }}

@@ -1,4 +1,5 @@
 import React from 'react';
+import ShadowCard from '@/components/ShadowCard';
 import { SettingsMenuItem } from '@/components/Settings/SettingsSideBar';
 
 export type PageContentProps = SettingsMenuItem;
@@ -8,7 +9,7 @@ const PageContent: React.FC<PageContentProps> = (props) => {
 
   return (
     <React.Fragment>
-      {children}
+      <ShadowCard>{children}</ShadowCard>
     </React.Fragment>
   );
 };
