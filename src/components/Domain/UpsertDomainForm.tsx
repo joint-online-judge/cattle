@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { Button, Row, Col, Form, Input, message, Spin } from 'antd';
 import { history, useIntl } from 'umi';
 import { useRequest } from 'ahooks';
+import style from './style.css';
 import {
   Horse,
   Domain,
@@ -10,7 +11,6 @@ import {
   ErrorCode,
 } from '@/utils/service';
 // import { MarkdownRender } from 'app/components/Editors';
-import style from './style.css';
 
 export interface IProps {
   initialValues?: Partial<Domain>;
@@ -24,7 +24,8 @@ const Index: React.FC<IProps> = (props) => {
   const [form] = Form.useForm();
 
   const { run: createDomain, loading: creatingDomain } = useRequest(
-    (domain: DomainCreate) => Horse.domain.createDomainApiV1DomainsPost(domain),
+    async (domain: DomainCreate) =>
+      Horse.domain.createDomainApiV1DomainsPost(domain),
     {
       manual: true,
       onSuccess: (res) => {
@@ -32,8 +33,9 @@ const Index: React.FC<IProps> = (props) => {
           if (res?.data?.data?.url) {
             history.push(`/domain/${res?.data?.data?.url}`);
           }
+
           message.success('create success');
-          onCreateSuccess && onCreateSuccess(res.data.data);
+          onCreateSuccess?.(res.data.data);
         } else if (res.data.error_code === ErrorCode.UrlNotUniqueError) {
           message.error('domain url already exists');
         }
@@ -45,14 +47,14 @@ const Index: React.FC<IProps> = (props) => {
   );
 
   const { run: updateDomain, loading: updatingDomain } = useRequest(
-    (url: string, domain: DomainEdit) =>
+    async (url: string, domain: DomainEdit) =>
       Horse.domain.updateDomainApiV1DomainsDomainPatch(url, domain),
     {
       manual: true,
       onSuccess: (res) => {
         if (res.data.error_code === ErrorCode.Success) {
           message.success('update domain success');
-          onUpdateSuccess && onUpdateSuccess(res.data.data);
+          onUpdateSuccess?.(res.data.data);
         } else {
           message.error('update domain failed');
         }
@@ -73,7 +75,7 @@ const Index: React.FC<IProps> = (props) => {
 
   useEffect(() => {
     form.setFieldsValue(initialValues);
-  }, [initialValues]);
+  }, [form, initialValues]);
 
   return (
     <Spin spinning={updatingDomain || creatingDomain}>
@@ -98,7 +100,7 @@ const Index: React.FC<IProps> = (props) => {
             },
           ]}
         >
-          <Input disabled={!!initialValues?.id} />
+          <Input disabled={Boolean(initialValues?.id)} />
         </Form.Item>
         <Form.Item
           name="gravatar"
@@ -110,8 +112,8 @@ const Index: React.FC<IProps> = (props) => {
           name="bulletin"
           label={intl.formatMessage({ id: 'DOMAIN.CREATE.BULLETIN' })}
         >
-          {/*{MarkdownRender}*/}
-          <Input.TextArea rows={3} />
+          {/* {MarkdownRender} */}
+          <Input.TextArea rows={5} />
         </Form.Item>
         <Form.Item>
           <Row>

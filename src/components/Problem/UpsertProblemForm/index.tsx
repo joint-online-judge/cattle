@@ -1,11 +1,10 @@
 import React from 'react';
 import { Form, Input, Select, Checkbox, Row, Col, Button, message } from 'antd';
-import { useIntl } from 'umi';
-import { SUPPORT_PROGRAMMING_LANGUAGE } from '@/constants';
+import { useIntl, history } from 'umi';
 import { useRequest } from 'ahooks';
 import style from '../style.css';
+import { SUPPORT_PROGRAMMING_LANGUAGE } from '@/constants';
 import { Horse, ProblemCreate, Problem, ProblemEdit } from '@/utils/service';
-import { history } from '@@/core/history';
 
 export interface IProps {
   initialValues?: Partial<Problem>;
@@ -21,9 +20,12 @@ export const UpsertProblemForm: React.FC<IProps> = (props) => {
     };
   });
 
-  const { run: createProblem, loading: creatingProblem } = useRequest(
-    (problem: ProblemCreate) =>
-      Horse.problem.createProblemApiV1DomainsDomainProblemsPost(domainUrl, problem),
+  const { run: createProblem } = useRequest(
+    async (problem: ProblemCreate) =>
+      Horse.problem.createProblemApiV1DomainsDomainProblemsPost(
+        domainUrl,
+        problem,
+      ),
     {
       manual: true,
       onSuccess: (res) => {
@@ -35,25 +37,28 @@ export const UpsertProblemForm: React.FC<IProps> = (props) => {
     },
   );
 
-  const { run: updateProblem, loading: updatingProblem } = useRequest(
-    (id: string, problem: ProblemEdit) =>
-      Horse.problem.updateProblemApiV1DomainsDomainProblemsProblemPatch(domainUrl, id, problem),
+  const { run: updateProblem } = useRequest(
+    async (id: string, problem: ProblemEdit) =>
+      Horse.problem.updateProblemApiV1DomainsDomainProblemsProblemPatch(
+        domainUrl,
+        id,
+        problem,
+      ),
     {
       manual: true,
       onSuccess: (res) => {
         // todo: add errCode
-        console.log('update success');
+        console.log(res);
       },
     },
   );
 
-  const onFinish = (values: Partial<Problem>) => {
-    if (initialValues?.id) {
-      return updateProblem(initialValues?.id, values);
-    } else {
-      return createProblem(values as ProblemCreate);
-    }
+  const onFinish = async (values: Partial<Problem>) => {
+    return initialValues?.id
+      ? updateProblem(initialValues?.id, values)
+      : createProblem(values as ProblemCreate);
   };
+
   return (
     <Form layout="vertical" onFinish={onFinish}>
       <Row>

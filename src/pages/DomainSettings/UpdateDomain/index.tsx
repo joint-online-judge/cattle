@@ -1,9 +1,8 @@
 import React from 'react';
 import { useParams } from 'umi';
 import { message } from 'antd';
-import ShadowCard from '@/components/ShadowCard';
-import UpsertDomainForm from '@/components/Domain/UpsertDomainForm';
 import { useRequest } from 'ahooks';
+import UpsertDomainForm from '@/components/Domain/UpsertDomainForm';
 import { Horse } from '@/utils/service';
 
 interface IProps {
@@ -15,21 +14,19 @@ const Index: React.FC<IProps> = ({ refresh }) => {
 
   const { data } = useRequest(
     async () => {
-      const res = await Horse.domain.getDomainApiV1DomainsDomainGet(domainUrl);
-      return res.data.data;
+      const response = await Horse.domain.getDomainApiV1DomainsDomainGet(
+        domainUrl,
+      );
+      return response.data.data;
     },
     {
-      onError: (e) => {
+      onError: () => {
         message.error('fetch domain failed');
       },
     },
   );
 
-  return (
-    <ShadowCard>
-      <UpsertDomainForm initialValues={data} onUpdateSuccess={refresh} />
-    </ShadowCard>
-  );
+  return <UpsertDomainForm initialValues={data} onUpdateSuccess={refresh} />;
 };
 
 export default Index;

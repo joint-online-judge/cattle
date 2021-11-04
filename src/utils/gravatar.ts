@@ -9,5 +9,5 @@ export const gravatarImageUrl = (
   const trimMail = mail.trim().toLowerCase();
   const hash = md5(trimMail);
   const query = size ? `/?size=${size}` : '';
-  return `https://sdn.geekzu.org/avatar/${hash}.jpg${query}`;
+  return `https://sdn.geekzu.org/avatar/${hash.toString()}.jpg${query}`;
 };

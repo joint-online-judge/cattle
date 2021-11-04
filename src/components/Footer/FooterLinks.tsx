@@ -3,7 +3,7 @@ import { useIntl } from 'umi';
 import { Link } from 'react-router-dom';
 import { Col, Row, Typography } from 'antd';
 import { GithubOutlined } from '@ant-design/icons';
-import style from './style.css';
+import style from './style.less';
 
 interface LinkItem {
   name: string;

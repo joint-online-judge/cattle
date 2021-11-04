@@ -1,6 +1,10 @@
-import { useState, useCallback, useMemo } from 'react';
+import { useState, useCallback } from 'react';
 import { getAllLocales, getLocale, setLocale } from 'umi';
 
+/**
+ * Global language model.
+ * Encapsulation of umi locale plugin.
+ */
 export default function LangModel() {
   const [currentLang, setCurrentLang] = useState<string>(getLocale());
   const allLang = getAllLocales(); // no plural because of spell checking

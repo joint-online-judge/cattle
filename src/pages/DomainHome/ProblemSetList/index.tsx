@@ -1,10 +1,9 @@
 import React, { useEffect } from 'react';
-import { Row, List, message, Typography, Button, Skeleton, Divider, Badge } from 'antd';
-import { PlusOutlined } from '@ant-design/icons';
-import { Link, useIntl, history, useParams } from 'umi';
+import { List, message, Typography, Skeleton, Divider, Badge } from 'antd';
+import { Link } from 'umi';
 import { useRequest } from 'ahooks';
-import { Horse } from '@/utils/service';
 import mm from 'moment';
+import { Horse } from '@/utils/service';
 
 interface IProps {
   domainId: string;
@@ -13,13 +12,18 @@ interface IProps {
 const { Title } = Typography;
 
 const Index: React.FC<IProps> = ({ domainId }) => {
-  const { domainUrl } = useParams<{ domainUrl: string }>();
-
-  const { data: problemSets, run, loading } = useRequest(
+  const {
+    data: problemSets,
+    run,
+    loading,
+  } = useRequest(
     async () => {
       if (!domainId) return [];
-      const res = await Horse.problemSet.listProblemSetsApiV1DomainsDomainProblemSetsGet(domainId);
-      return res?.data?.data?.results || [];
+      const res =
+        await Horse.problemSet.listProblemSetsApiV1DomainsDomainProblemSetsGet(
+          domainId,
+        );
+      return res?.data?.data?.results ?? [];
     },
     {
       manual: true,
@@ -29,14 +33,17 @@ const Index: React.FC<IProps> = ({ domainId }) => {
     },
   );
 
-  const getStatusBadge = (availableTimeStr: string | undefined, dueTimeStr: string | undefined) => {
-    if (!availableTimeStr || !dueTimeStr) {
+  const getStatusBadge = (
+    availableTimeString: string | undefined,
+    dueTimeString: string | undefined,
+  ) => {
+    if (!availableTimeString || !dueTimeString) {
       return <Badge status="default" text="Unknown" />;
     }
 
-    const now = (new Date()).getTime();
-    const availableTime = (new Date(availableTimeStr)).getTime();
-    const dueTime = (new Date(dueTimeStr)).getTime();
+    const now = Date.now();
+    const availableTime = new Date(availableTimeString).getTime();
+    const dueTime = new Date(dueTimeString).getTime();
 
     if (now < availableTime) {
       return <Badge status="default" text="Not Started" />;
@@ -58,16 +65,22 @@ const Index: React.FC<IProps> = ({ domainId }) => {
       <List
         itemLayout="horizontal"
         size="large"
-        dataSource={problemSets || []}
+        dataSource={problemSets ?? []}
         renderItem={(item) => (
-          <List.Item actions={[
-            <Link to={`/domain/${domainUrl}/problem-set/${item.id}`}>Detail</Link>,
-            <Link to={`/domain/${domainUrl}/problem-set/${item.id}/settings`}>Edit</Link>,
-          ]}>
+          <List.Item
+            actions={[
+              <Link to={`/domain/${domainId}/problem-set/${item.id}`}>
+                Detail
+              </Link>,
+              <Link to={`/domain/${domainId}/problem-set/${item.id}/settings`}>
+                Edit
+              </Link>,
+            ]}
+          >
             <Skeleton title={false} loading={loading} active>
               <List.Item.Meta
                 title={
-                  <Link to={`/domain/${domainUrl}/problem-set/${item.id}`}>
+                  <Link to={`/domain/${domainId}/problem-set/${item.id}`}>
                     <Title level={4}>{item.title}</Title>
                   </Link>
                 }

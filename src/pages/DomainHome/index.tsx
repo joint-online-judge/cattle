@@ -1,40 +1,33 @@
-import React from 'react';
-import { Col, Row, message, Typography, Avatar, Spin, Button } from 'antd';
-import { useParams, useIntl, history } from 'umi';
-import { useRequest } from 'ahooks';
-import { Horse } from '@/utils/service';
-import { gravatarImageUrl } from '@/utils';
-import ProblemSetList from './ProblemSetList';
-import ShadowCard from '@/components/ShadowCard';
-import style from './style.css';
+import React, { useEffect } from 'react';
+import { Col, Row, Typography, Avatar, Spin, Button } from 'antd';
+import { useParams, useIntl, useModel, history } from 'umi';
 import { PlusOutlined } from '@ant-design/icons';
+import ProblemSetList from './ProblemSetList';
+import style from './style.css';
+import { gravatarImageUrl } from '@/utils';
+import ShadowCard from '@/components/ShadowCard';
+import MarkdownRender from '@/components/MarkdownRender';
 
-const { Title, Paragraph } = Typography;
+const { Title } = Typography;
 
 const Index: React.FC = () => {
-  const { domainUrl } = useParams<{ domainUrl: string }>();
   const intl = useIntl();
+  const { domainUrl } = useParams<{ domainUrl: string }>();
+  const { domain } = useModel('domain');
+  const { removeHeader } = useModel('pageHeader');
 
-  const { data: domain } = useRequest(
-    async () => {
-      const res = await Horse.domain.getDomainApiV1DomainsDomainGet(domainUrl);
-      return res.data.data;
-    },
-    {
-      onError: () => {
-        message.error('failed to fetch domain info');
-      },
-    },
-  );
+  useEffect(() => {
+    removeHeader();
+  }, []);
 
   return (
     <div>
       <ShadowCard className={style.contentCard}>
         <Spin spinning={!domain}>
           {domain ? (
-            <Typography className={style.homeHeader}>
+            <Typography>
               <Row gutter={{ xs: 16, md: 24 }} justify="center">
-                <Col flex="100px">
+                <Col span={4}>
                   <Avatar
                     shape="square"
                     size={100}
@@ -42,11 +35,12 @@ const Index: React.FC = () => {
                     alt={`@${domain.name}`}
                   />
                 </Col>
-                <Col flex="1">
+                <Col span={20}>
                   <Title level={3}>{domain.name}</Title>
-                  <Paragraph ellipsis={{ rows: 2, expandable: true }}>
-                    {domain.bulletin}
-                  </Paragraph>
+                  <MarkdownRender>{domain?.bulletin ?? ''}</MarkdownRender>
+                  {/* <Paragraph ellipsis={{ rows: 2, expandable: true }}>
+                    <MarkdownRender children={domain?.bulletin || ''} />
+                  </Paragraph> */}
                 </Col>
               </Row>
             </Typography>
@@ -59,16 +53,19 @@ const Index: React.FC = () => {
         extra={
           <Button
             icon={<PlusOutlined />}
-            onClick={() => history.push(`/domain/${domainUrl}/create-problem-set`)}
+            onClick={() => {
+              history.push(`/domain/${domainUrl}/create-problem-set`);
+            }}
             type="primary"
           >
-            {intl.formatMessage({id: 'PROBLEM_SET.CREATE.TITLE'})}
+            {intl.formatMessage({ id: 'PROBLEM_SET.CREATE.TITLE' })}
           </Button>
         }
       >
-        <ProblemSetList domainId={domain?.id || ''} />
+        <ProblemSetList domainId={domain?.id ?? ''} />
       </ShadowCard>
     </div>
   );
 };
+
 export default Index;

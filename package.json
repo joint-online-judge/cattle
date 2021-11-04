@@ -2,16 +2,19 @@
   "private": true,
   "scripts": {
     "gen:api": "swagger-typescript-api --axios --module-name-first-tag -p ./openapi/openapi.json -o ./src/client -n index.ts",
+    "gen:api-staging": "swagger-typescript-api --axios --module-name-first-tag -p http://nichujie.xyz/api/v1/openapi.json -o ./src/client -n index.ts",
     "prestart": "npm run gen:api",
-    "prestart:staging": "npm run gen:api",
+    "prestart:staging": "npm run gen:api-staging",
     "start": "cross-env MOCK=none UMI_ENV=dev HOST=127.0.0.1 umi dev",
-    "start:staging": "cross-env MOCK=none UMI_ENV=staging HOST=127.0.0.1 umi dev",
+    "start:staging": "cross-env MOCK=none UMI_ENV=staging umi dev",
     "prebuild": "npm run gen:api",
     "build": "cross-env UMI_ENV=prod umi build",
     "postinstall": "umi generate tmp",
     "prettier": "prettier --write '**/*.{js,jsx,tsx,ts,less,md,json}'",
     "test": "umi-test",
-    "test:coverage": "umi-test --coverage"
+    "test:coverage": "umi-test --coverage",
+    "lint": "xo",
+    "lint:fix": "xo --fix"
   },
   "gitHooks": {
     "pre-commit": "lint-staged"
@@ -25,30 +28,40 @@
     ]
   },
   "dependencies": {
+    "@ant-design/pro-form": "^1.45.0",
     "@ant-design/pro-layout": "^6.5.0",
+    "@ant-design/pro-list": "^1.17.6",
+    "@ant-design/pro-table": "^2.56.6",
     "@umijs/preset-react": "1.x",
-    "axios": "^0.21.1",
+    "autoprefixer": "^9",
+    "axios": "^0.24.0",
     "cross-env": "^7.0.3",
     "crypto-js": "^4.0.0",
-    "lodash-es": "^4.17.21",
+    "postcss": "^7",
     "react-markdown": "^6.0.2",
     "react-markdown-editor-lite": "^1.2.4",
+    "react-syntax-highlighter": "^15.4.4",
     "remark-gfm": "^1.0.0",
-    "swagger-typescript-api": "^9.1.1",
+    "swagger-typescript-api": "^9.3.1",
+    "tailwindcss": "npm:@tailwindcss/postcss7-compat",
     "umi": "^3.4.14"
   },
   "devDependencies": {
     "@types/crypto-js": "^4.0.1",
-    "@types/lodash-es": "^4.17.4",
+    "@types/lodash": "^4.14.176",
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
+    "@types/react-syntax-highlighter": "^13.5.2",
     "@umijs/test": "^3.4.14",
     "ahooks": "^2.10.2",
+    "eslint-plugin-react": "^7.26.1",
+    "eslint-plugin-react-hooks": "^4.2.1-alpha-255221c86-20211103",
     "lint-staged": "^10.0.7",
     "prettier": "^2.2.0",
     "react": "17.x",
     "react-dom": "17.x",
     "typescript": "^4.1.2",
+    "xo": "^0.46.4",
     "yorkie": "^2.0.0"
   }
 }

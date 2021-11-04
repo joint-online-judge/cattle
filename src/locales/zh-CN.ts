@@ -1,4 +1,6 @@
 export default {
+  // small-case noun
+  domain: '域',
   // 简单名词
   DOMAIN: '域',
   PROBLEM: '题目',
@@ -74,6 +76,7 @@ export default {
   'SETTINGS.SWITCH_LANG': '切换语言',
   'SETTINGS.UPDATE_SETTINGS': '更新设置',
   'SETTINGS.DISPLAY_SETTINGS': '显示设置',
+  'SETTINGS.DOMAIN': '域设置',
   'SETTINGS.DOMAIN.PROFILE': '基本资料',
   'SETTINGS.DOMAIN.INVITATION': '成员邀请',
   'SETTINGS.DOMAIN.MEMBERS': '成员管理',
@@ -92,4 +95,11 @@ export default {
   // Form
   'FORM.INPUT_PLACEHOLDER': '请输入{field}',
   'FORM.SELECT_PLACEHOLDER': '请选择{field}',
+  // Messages
+  'msg.error.fetch': '获取{data}失败',
+  'msg.error.create': '创建{data}失败',
+  'msg.error.update': '更新{data}失败',
+  'msg.error.delete': '删除{data}失败',
+  // Menu
+  'menu.domains': '我的域',
 };

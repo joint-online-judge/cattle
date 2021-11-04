@@ -1,75 +1,83 @@
 import React, { useEffect } from 'react';
 import { Descriptions } from 'antd';
-import { useIntl, useParams } from 'umi';
+import { useIntl, useParams, useModel } from 'umi';
 import { useRequest } from 'ahooks';
-import { Horse } from '@/utils/service';
+import { CheckOutlined } from '@ant-design/icons';
 import Home from './Home';
 import Submit from './Submit';
+import { Horse } from '@/utils/service';
 import SideMenuPage, { PageContent } from '@/components/SideMenuPage';
 import ShadowCard from '@/components/ShadowCard';
-import { CheckOutlined } from '@ant-design/icons';
 import Gravatar from '@/components/Gravatar';
 
 const Index: React.FC = () => {
-  const { problemId } = useParams<{ problemId: string }>();
   const intl = useIntl();
+  const { domainUrl } = useModel('domain');
+  const { problemId } = useParams<{ problemId: string }>();
 
   const { data: ownerUserResp, run: getOwner } = useRequest(
-    (uid: string) => Horse.user.getUserApiV1UsersUidGet(uid),
+    async (uid: string) => Horse.user.getUserApiV1UsersUidGet(uid),
     {
       manual: true,
       onSuccess: (res) => {
         // todo: errCode
-        console.info('get owner success');
+        console.log(res);
       },
     },
   );
 
   const { data: problemResp, run: getProblem } = useRequest(
-    (problem: string) =>
-      Horse.problem.getProblemApiV1ProblemsProblemGet(problem),
+    async (problem: string) => {
+      if (domainUrl)
+        return Horse.problem.getProblemApiV1DomainsDomainProblemsProblemGet(
+          domainUrl,
+          problem,
+        );
+    },
     {
       manual: true,
       onSuccess: (res) => {
         // todo: errCode
         console.info('get problem success');
-        getOwner(res?.data?.data?.owner as string);
+        getOwner(res?.data?.data?.owner_id ?? '');
       },
       onError: (res) => {
-        console.error('get problem fail');
+        console.log('get problem fail', res);
       },
     },
   );
 
   useEffect(() => {
     getProblem(problemId);
-  }, [problemId]);
+  }, [problemId, getProblem]);
 
   return (
     <>
-      <SideMenuPage extra={
-        <ShadowCard style={{ marginTop: 16 }}>
-          <Descriptions column={1}>
-            <Descriptions.Item
-              label={intl.formatHTMLMessage({ id: 'PROBLEM.STATUS' })}
-            >
-              {/* todo: make status component */}
-              <CheckOutlined /> Accepted
-            </Descriptions.Item>
-            <Descriptions.Item
-              label={intl.formatHTMLMessage({ id: 'PROBLEM.PROBLEM_GROUP' })}
-            >
-              不知道
-            </Descriptions.Item>
-            <Descriptions.Item
-              label={intl.formatHTMLMessage({ id: 'PROBLEM.OWNER' })}
-            >
-              <Gravatar size={20} user={ownerUserResp?.data?.data} />
-              {ownerUserResp?.data?.data?.real_name || ''}
-            </Descriptions.Item>
-          </Descriptions>
-        </ShadowCard>
-      }>
+      <SideMenuPage
+        extra={
+          <ShadowCard style={{ marginTop: 16 }}>
+            <Descriptions column={1}>
+              <Descriptions.Item
+                label={intl.formatHTMLMessage({ id: 'PROBLEM.STATUS' })}
+              >
+                {/* todo: make status component */}
+                <CheckOutlined /> Accepted
+              </Descriptions.Item>
+              <Descriptions.Item
+                label={intl.formatHTMLMessage({ id: 'PROBLEM.PROBLEM_GROUP' })}
+              >
+                不知道
+              </Descriptions.Item>
+              <Descriptions.Item
+                label={intl.formatHTMLMessage({ id: 'PROBLEM.OWNER' })}
+              >
+                <Gravatar size={20} user={ownerUserResp?.data?.data} />
+                {ownerUserResp?.data?.data?.real_name ?? ''}
+              </Descriptions.Item>
+            </Descriptions>
+          </ShadowCard>
+        }
+      >
         <PageContent menuKey="home" i18nKey="PROBLEM.HOME">
           <Home problem={problemResp?.data?.data} />
         </PageContent>

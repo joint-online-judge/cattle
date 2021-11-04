@@ -1,39 +1,41 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Menu } from 'antd';
-import { HomeOutlined, AppstoreOutlined } from '@ant-design/icons';
-import { useIntl, Link, useModel, useParams } from 'umi';
+import { useIntl, Link, useLocation } from 'umi';
 import UserMenuItem from './UserMenuItem';
 import style from './style.css';
 
-const Index = () => {
-  const intl = useIntl();
-  const { currentLang } = useModel('lang');
-  const { domainUrl, problemSetId } = useParams<{ problemSetId: string, domainUrl: string }>();
+const extractPath = (path: string) => {
+  try {
+    const p = path.split('/').find((o) => Boolean(o));
+    return p ?? 'home';
+  } catch {
+    return 'home';
+  }
+};
 
-  const menuItems = React.useMemo(() => {
-    // TODO: render different menu for different path
-    // e.g. if (location.pathname.startswith('/domain')) return ...
-    return (
-      <>
-        <Menu.Item key="home" icon={<HomeOutlined />}>
-          <Link to="/">{intl.formatMessage({ id: 'HOME' })}</Link>
-        </Menu.Item>
-        <Menu.Item key="domain" icon={<AppstoreOutlined />}>
-          <Link to="/domain">{intl.formatMessage({ id: 'DOMAIN' })}</Link>
-        </Menu.Item>
-        <Menu.Item key="user" className={style.headerFloatRightItem}>
-          <UserMenuItem />
-        </Menu.Item>
-      </>
-    );
-  }, [location.pathname, currentLang]);
-  // p.s. Here, the function will be run each time location.pathname is changed.
-  //      We can be more aggressive to change this value to location.pathname.split('/')[1],
-  //      to rerun the function only when the first url string changes.
+const Index: React.FC = () => {
+  const location = useLocation();
+  const intl = useIntl();
+  const [current, setCurrent] = useState(extractPath(location.pathname));
 
   return (
-    <Menu mode="horizontal" className={style.menu} selectable={false}>
-      {menuItems}
+    <Menu
+      mode="horizontal"
+      className={style.menu}
+      selectedKeys={[current]}
+      onClick={(e) => {
+        setCurrent(e.key);
+      }}
+    >
+      <Menu.Item key="home">
+        <Link to="/">{intl.formatMessage({ id: 'HOME' })}</Link>
+      </Menu.Item>
+      <Menu.Item key="domain">
+        <Link to="/domain">{intl.formatMessage({ id: 'menu.domains' })}</Link>
+      </Menu.Item>
+      <Menu.Item key="user" className={style.headerFloatRightItem}>
+        <UserMenuItem />
+      </Menu.Item>
     </Menu>
   );
 };

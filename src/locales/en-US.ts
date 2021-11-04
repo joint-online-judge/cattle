@@ -1,4 +1,6 @@
 export default {
+  // small-case noun
+  domain: 'domain',
   // Simple Noun
   DOMAIN: 'Domain',
   PROBLEM: 'Problem',
@@ -92,4 +94,11 @@ export default {
   // Form
   'FORM.INPUT_PLACEHOLDER': 'please input {field}',
   'FORM.SELECT_PLACEHOLDER': 'please select {field}',
+  // Messages
+  'msg.error.fetch': 'failed to fetch {data}',
+  'msg.error.create': 'failed to create {data}',
+  'msg.error.update': 'failed to update {data}',
+  'msg.error.delete': 'failed to delete {data}',
+  // Menu
+  'menu.domains': 'Domains',
 };

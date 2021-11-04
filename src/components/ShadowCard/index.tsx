@@ -1,6 +1,6 @@
 import React from 'react';
 import { Card, CardProps } from 'antd';
-import { merge } from 'lodash-es';
+import { merge } from 'lodash';
 
 const Index: React.FC<CardProps> = (props) => {
   const { children, ...otherProps } = props;
@@ -8,13 +8,11 @@ const Index: React.FC<CardProps> = (props) => {
   return (
     <Card
       bordered={false}
-      {
-        ...merge(otherProps, {
-          style: {
-            boxShadow: '0 2px 8px #dfdfdf',
-          },
-        })
-      }
+      {...merge(otherProps, {
+        className: otherProps.className
+          ? `shadow-md ${otherProps.className}`
+          : 'shadow-md',
+      })}
     >
       {children}
     </Card>

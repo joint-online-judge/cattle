@@ -1,36 +1,34 @@
 import React, { useEffect } from 'react';
 import { Link, useIntl } from 'umi';
 import { useRequest } from 'ahooks';
-import {
-  message,
-  Table,
-  Space,
-  Typography,
-  Divider,
-  TableColumnProps,
-} from 'antd';
-import { Horse, Domain, DomainUser } from '@/utils/service';
-import { isArray, omit } from 'lodash-es';
-import { gravatarImageUrl } from '@/utils';
+import { message, Table, Space, Divider, TableColumnProps } from 'antd';
+import { useModel } from '@@/plugin-model/useModel';
+import { Horse, Domain } from '@/utils/service';
 import ShadowCard from '@/components/ShadowCard';
-// import {
-//   CreateDomain,
-// } from 'app/components';
-// import { DomainHomeContainer } from './DomainHomeContainer';
-
-const { Title } = Typography;
 
 const Index: React.FC = () => {
   const intl = useIntl();
+  const { setHeader } = useModel('pageHeader');
+
+  useEffect(() => {
+    setHeader({
+      titleI18nKey: 'DOMAIN.DOMAINS',
+    });
+  }, [setHeader]);
 
   const { data, loading } = useRequest(
     async () => {
       const res = await Horse.domain.listDomainsApiV1DomainsGet();
-      return res?.data?.data?.results || [];
+      return res?.data?.data?.results ?? [];
     },
     {
       onError: () => {
-        message.error('failed to fetch domain info');
+        message.error(
+          intl.formatMessage(
+            { id: 'msg.error.fetch' },
+            { data: intl.formatMessage({ id: 'domain' }) },
+          ),
+        );
       },
     },
   );
@@ -45,7 +43,7 @@ const Index: React.FC = () => {
       title: 'My Role',
       dataIndex: 'role',
       key: 'role',
-      render: (text) => text || '-',
+      render: (text: string) => text || '-',
     },
     // TODO: render role as tags
     // {
@@ -87,7 +85,7 @@ const Index: React.FC = () => {
 
   return (
     <>
-      <ShadowCard style={{ marginTop: 24 }} title={intl.formatMessage({ id: 'DOMAIN.DOMAINS' })}>
+      <ShadowCard>
         <Table
           columns={columns}
           dataSource={data}

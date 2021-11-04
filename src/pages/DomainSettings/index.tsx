@@ -1,69 +1,66 @@
-import React, { useEffect, useState } from 'react';
-import { useParams } from 'umi';
-import { Card, Col, Divider, PageHeader, Row, Spin } from 'antd';
-import SettingsSideBar from '@/components/Settings/SettingsSideBar';
+import React, { useEffect, useMemo } from 'react';
+import { useParams, useModel } from 'umi';
+import { Divider, PageHeader } from 'antd';
 import UpdateDomain from './UpdateDomain';
-import { SettingsMenuItem } from '@/components/Settings/SettingsSideBar';
-import { useRequest } from 'ahooks';
-import { Horse } from '@/utils/service';
-import { gravatarImageUrl } from '@/utils';
 import style from './style.css';
-import { CheckOutlined } from '@ant-design/icons';
+import { gravatarImageUrl } from '@/utils';
 import SideMenuPage, { PageContent } from '@/components/SideMenuPage';
 import ShadowCard from '@/components/ShadowCard';
 import MarkdownRender from '@/components/MarkdownRender';
 
 const Index: React.FC = () => {
   const { domainUrl } = useParams<{ domainUrl: string }>();
-  const { data, refresh } = useRequest(async () => {
-    const res = await Horse.domain.getDomainApiV1DomainsDomainGet(domainUrl);
-    return res.data.data;
-  });
+  const { domain, refresh } = useModel('domain');
+  const { setHeader } = useModel('pageHeader');
 
-  const menuItems: SettingsMenuItem[] = [
-    {
-      menuKey: 'SETTINGS.DOMAIN.PROFILE',
-      path: '/profile',
-      component: <UpdateDomain refresh={refresh} />,
-    },
-    {
-      menuKey: 'SETTINGS.DOMAIN.INVITATION',
-      component: <UpdateDomain refresh={refresh} />,
-      path: '/invitation',
-    },
-    {
-      menuKey: 'SETTINGS.DOMAIN.MEMBERS',
-      component: <UpdateDomain refresh={refresh} />,
-      path: '/members',
-    },
-  ];
+  const routes = useMemo(
+    () => [
+      {
+        path: 'domain',
+        breadcrumbI18nKey: 'DOMAIN.DOMAINS',
+      },
+      {
+        path: domainUrl,
+        breadcrumbName: domain?.name ?? 'unknown',
+      },
+      {
+        path: 'settings',
+        breadcrumbI18nKey: 'SETTINGS.DOMAIN',
+      },
+    ],
+    [domainUrl, domain],
+  );
+
+  useEffect(() => {
+    setHeader({
+      routes,
+      titleI18nKey: 'SETTINGS.DOMAIN',
+    });
+  }, [routes, setHeader]);
 
   return (
     <>
-      <ShadowCard
-        style={{ marginBottom: 24 }}
-      >
+      <ShadowCard style={{ marginBottom: 24 }}>
         <PageHeader
-          title={data?.name || ''}
-          subTitle={data?.url || ''}
+          title={domain?.name ?? ''}
+          subTitle={domain?.url ?? ''}
           style={{ padding: 0 }}
-          avatar={{ src: gravatarImageUrl(data?.gravatar || '') }}
+          avatar={{ src: gravatarImageUrl(domain?.gravatar ?? '') }}
         />
-
-        {
-          data && typeof data.bulletin === 'string' && data.bulletin.length > 0 ?
-            <><Divider /><MarkdownRender children={data?.bulletin || ''} /></> : null
-        }
+        <Divider />
+        <div className={style.domainSettingsBulletin}>
+          <MarkdownRender>{domain?.bulletin ?? ''}</MarkdownRender>
+        </div>
       </ShadowCard>
       <SideMenuPage>
-        <PageContent menuKey="SETTINGS.DOMAIN.PROFILE">
+        <PageContent menuKey="profile" i18nKey="SETTINGS.DOMAIN.PROFILE">
           <UpdateDomain refresh={refresh} />
         </PageContent>
-        <PageContent menuKey="SETTINGS.DOMAIN.INVITATION">
-          <UpdateDomain refresh={refresh} />
+        <PageContent menuKey="invitation" i18nKey="SETTINGS.DOMAIN.INVITATION">
+          <h1>Invitation</h1>
         </PageContent>
-        <PageContent menuKey="SETTINGS.DOMAIN.MEMBERS">
-          <UpdateDomain refresh={refresh} />
+        <PageContent menuKey="members" i18nKey="SETTINGS.DOMAIN.MEMBERS">
+          <h1>Members</h1>
         </PageContent>
       </SideMenuPage>
     </>

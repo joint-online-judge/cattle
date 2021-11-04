@@ -11,9 +11,9 @@ import {
 import React, { useEffect } from 'react';
 import { useIntl, Link } from 'umi';
 import { useRequest } from 'ahooks';
+import style from './style.css';
 import { Horse } from '@/utils/service';
 import { gravatarImageUrl } from '@/utils';
-import style from './style.css';
 
 const { Text } = Typography;
 
@@ -49,23 +49,25 @@ const Index: React.FC = () => {
         />
         <List
           itemLayout="horizontal"
-          dataSource={data || []}
+          dataSource={data ?? []}
           bordered
           split
           renderItem={(item) => (
             <List.Item
               className={style.domainListItem}
               actions={[
-                <Button>
+                <Button key="b-1">
                   <Link to={`/domain/${item.url}/settings`}>
                     {intl.formatMessage({ id: 'DOMAIN.SETTINGS' })}
                   </Link>
                 </Button>,
-                <Button>{intl.formatMessage({ id: 'DOMAIN.LEAVE' })}</Button>,
+                <Button key="b-2">
+                  {intl.formatMessage({ id: 'DOMAIN.LEAVE' })}
+                </Button>,
               ]}
             >
               <Space>
-                <Avatar src={gravatarImageUrl(item.gravatar || '')} />
+                <Avatar src={gravatarImageUrl(item.gravatar ?? '')} />
                 <Link to={`/domain/${item.url}`}>
                   <strong>{item.name}</strong>
                 </Link>

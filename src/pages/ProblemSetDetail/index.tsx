@@ -2,19 +2,20 @@ import React, { useState } from 'react';
 import { message, Typography, Spin, Button } from 'antd';
 import { useParams, useIntl, history } from 'umi';
 import { useRequest } from 'ahooks';
-import { ErrorCode, Horse } from '@/utils/service';
+import { PlusOutlined } from '@ant-design/icons';
 import ProblemList from './ProblemList';
 import AfterDue from './AfterDue';
 import BeforeAvailable from './BeforeAvailable';
+import { ErrorCode, Horse } from '@/utils/service';
 import ShadowCard from '@/components/ShadowCard';
 import MarkdownRender from '@/components/MarkdownRender';
-import { PlusOutlined } from '@ant-design/icons';
 
 const { Title } = Typography;
 
 const Index: React.FC = () => {
   const intl = useIntl();
-  const { domainUrl, problemSetId } = useParams<{ domainUrl: string, problemSetId: string }>();
+  const { domainUrl, problemSetId } =
+    useParams<{ domainUrl: string; problemSetId: string }>();
   const [beforeAvailable, setBeforeAvailable] = useState<boolean>(false);
   const [afterDue, setAfterDue] = useState<boolean>(false);
 
@@ -27,9 +28,12 @@ const Index: React.FC = () => {
         );
       if (res.data.error_code === ErrorCode.ProblemSetAfterDueError) {
         setAfterDue(true);
-      } else if (res.data.error_code === ErrorCode.ProblemSetBeforeAvailableError) {
+      } else if (
+        res.data.error_code === ErrorCode.ProblemSetBeforeAvailableError
+      ) {
         setBeforeAvailable(true);
       }
+
       return res.data.data;
     },
     {
@@ -39,39 +43,45 @@ const Index: React.FC = () => {
     },
   );
 
-  return (
-    afterDue ? <AfterDue /> :
-      (beforeAvailable ? <BeforeAvailable /> : <div>
-        <ShadowCard title={intl.formatMessage({ id: 'PROBLEM_SET.INTRODUCTION' })}>
-          <Spin spinning={!problemSet}>
-            {
-              problemSet ? (
-                <Typography>
-                  <Title level={3}>{problemSet.title}</Title>
-                  <MarkdownRender children={problemSet.content || ''} />
-                </Typography>
-              ) : null
-            }
-          </Spin>
-        </ShadowCard>
-        <ShadowCard
-          title={intl.formatMessage({ id: 'PROBLEM' })}
-          style={{ marginTop: 24 }}
-          extra={
-            <Button
-              icon={<PlusOutlined />}
-              onClick={() =>
-                history.push(`/domain/${domainUrl}/problem-set/${problemSetId}/create-problem`)
-              }
-              type="primary"
-            >
-              {intl.formatMessage({ id: 'PROBLEM.CREATE.TITLE' })}
-            </Button>
-          }
-        >
-          <ProblemList />
-        </ShadowCard>
-      </div>)
+  return afterDue ? (
+    <AfterDue />
+  ) : beforeAvailable ? (
+    <BeforeAvailable />
+  ) : (
+    <div>
+      <ShadowCard
+        title={intl.formatMessage({ id: 'PROBLEM_SET.INTRODUCTION' })}
+      >
+        <Spin spinning={!problemSet}>
+          {problemSet ? (
+            <Typography>
+              <Title level={3}>{problemSet.title}</Title>
+              <MarkdownRender>{problemSet.content ?? ''}</MarkdownRender>
+            </Typography>
+          ) : null}
+        </Spin>
+      </ShadowCard>
+      <ShadowCard
+        title={intl.formatMessage({ id: 'PROBLEM' })}
+        style={{ marginTop: 24 }}
+        extra={
+          <Button
+            icon={<PlusOutlined />}
+            onClick={() => {
+              history.push(
+                `/domain/${domainUrl}/problem-set/${problemSetId}/create-problem`,
+              );
+            }}
+            type="primary"
+          >
+            {intl.formatMessage({ id: 'PROBLEM.CREATE.TITLE' })}
+          </Button>
+        }
+      >
+        <ProblemList />
+      </ShadowCard>
+    </div>
   );
 };
+
 export default Index;

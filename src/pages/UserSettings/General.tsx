@@ -1,6 +1,6 @@
 import React from 'react';
-import { Button, Form, PageHeader, Select } from 'antd';
-import { useIntl, useModel } from 'umi';
+import { Button, Form, PageHeader } from 'antd';
+import { useIntl } from 'umi';
 import style from './style.css';
 
 // const options = {
@@ -16,11 +16,11 @@ import style from './style.css';
 const Index: React.FC = () => {
   const [form] = Form.useForm();
   const intl = useIntl();
-  const { currentLang, switchLang, allLang } = useModel('lang');
   const onFinish = (values: any) => {
     console.log(values);
     // settings.updateDisplaySettings(values);
   };
+
   return (
     <>
       <PageHeader
@@ -34,32 +34,32 @@ const Index: React.FC = () => {
         layout="vertical"
         onFinish={onFinish}
       >
-        {/*{*/}
-        {/*  (Object.keys(settings.settings.displaySettings)).map((key) => (*/}
-        {/*    <Form.Item*/}
-        {/*      label={(*/}
-        {/*        <b>*/}
-        {/*          {intl.formatMessage({ id: `SETTINGS.${key.toUpperCase()}` })}*/}
-        {/*        </b>*/}
-        {/*      )}*/}
-        {/*      name={key}*/}
-        {/*      key={key}*/}
-        {/*    >*/}
-        {/*      <Select>*/}
-        {/*        {*/}
-        {/*          options[key].map((_optionValue) => (*/}
-        {/*            <Select.Option*/}
-        {/*              value={_optionValue}*/}
-        {/*              key={_optionValue}*/}
-        {/*            >*/}
-        {/*              {_optionValue}*/}
-        {/*            </Select.Option>*/}
-        {/*          ))*/}
-        {/*        }*/}
-        {/*      </Select>*/}
-        {/*    </Form.Item>*/}
-        {/*  ))*/}
-        {/*}*/}
+        {/* { */}
+        {/*  (Object.keys(settings.settings.displaySettings)).map((key) => ( */}
+        {/*    <Form.Item */}
+        {/*      label={( */}
+        {/*        <b> */}
+        {/*          {intl.formatMessage({ id: `SETTINGS.${key.toUpperCase()}` })} */}
+        {/*        </b> */}
+        {/*      )} */}
+        {/*      name={key} */}
+        {/*      key={key} */}
+        {/*    > */}
+        {/*      <Select> */}
+        {/*        { */}
+        {/*          options[key].map((_optionValue) => ( */}
+        {/*            <Select.Option */}
+        {/*              value={_optionValue} */}
+        {/*              key={_optionValue} */}
+        {/*            > */}
+        {/*              {_optionValue} */}
+        {/*            </Select.Option> */}
+        {/*          )) */}
+        {/*        } */}
+        {/*      </Select> */}
+        {/*    </Form.Item> */}
+        {/*  )) */}
+        {/* } */}
         <Form.Item>
           <Button type="primary" htmlType="submit">
             {intl.formatMessage({ id: 'SETTINGS.UPDATE_SETTINGS' })}

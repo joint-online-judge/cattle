@@ -1,0 +1,61 @@
+{
+  "space": true,
+  "prettier": true,
+  "ignores": [
+    "dist",
+    "openapi",
+    "locales",
+    "**/*.d.ts",
+    "tailwind.config.js",
+    "config/config*.ts"
+  ],
+  "settings": {
+    "react": {
+      "version": "detect"
+    }
+  },
+  "extends": ["plugin:react/recommended", "plugin:react-hooks/recommended"],
+  "rules": {
+    "no-warning-comments": "off",
+    "capitalized-comments": "off",
+    "unicorn/filename-case": "off",
+    "import/no-extraneous-dependencies": "off",
+    "import/extensions": "off",
+    "unicorn/prevent-abbreviations": "off",
+    "@typescript-eslint/no-floating-promises": "off",
+    "@typescript-eslint/no-unused-vars": [
+      "error",
+      {
+        "argsIgnorePattern": "^_"
+      }
+    ],
+    "@typescript-eslint/naming-convention": [
+      "error",
+      {
+        "selector": "default",
+        "format": ["camelCase"]
+      },
+      {
+        "selector": "variableLike",
+        "format": ["camelCase", "UPPER_CASE", "PascalCase"]
+      },
+      {
+        "selector": "class",
+        "format": ["PascalCase"]
+      },
+      {
+        "selector": "parameter",
+        "format": ["camelCase"],
+        "leadingUnderscore": "allow"
+      },
+      {
+        "selector": "typeLike",
+        "format": ["PascalCase"]
+      },
+      {
+        "selector": "objectLiteralProperty",
+        "format": ["snake_case", "camelCase"]
+      }
+    ]
+  }
+}

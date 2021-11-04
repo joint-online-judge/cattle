@@ -17,8 +17,8 @@ const Index: React.FC = () => {
           .then((res) => {
             window.location.href = res.data.redirect_url;
           })
-          .catch((err) => {
-            console.log(err);
+          .catch((error) => {
+            console.log(error);
             // TODO: message user
           });
       }

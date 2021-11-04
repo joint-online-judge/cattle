@@ -1,5 +1,11 @@
-declare module '*.css';
-declare module '*.less';
+declare module '*.css' {
+  const style: Record<string, string>;
+  export default style;
+}
+declare module '*.less' {
+  const style: Record<string, string>;
+  export default style;
+}
 declare module '*.png';
 declare module '*.svg' {
   export function ReactComponent(
