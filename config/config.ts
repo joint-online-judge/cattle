@@ -33,4 +33,5 @@ export default defineConfig({
     '@border-radius-base': '6px',
   },
   extraPostCSSPlugins: [require('tailwindcss'), require('autoprefixer')],
+  cssModulesTypescriptLoader: {},
 });

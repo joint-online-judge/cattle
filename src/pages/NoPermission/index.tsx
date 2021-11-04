@@ -1,6 +1,5 @@
 import React from 'react';
 import { Row, Col, Typography } from 'antd';
-import styles from './index.less';
 
 const Index: React.FC = () => {
   return (

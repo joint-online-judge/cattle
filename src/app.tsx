@@ -1,4 +1,4 @@
-import { ErrorCode, User, Horse } from '@/utils/service';
+import { User, Horse } from '@/utils/service';
 
 export interface InitialState {
   user: User | undefined;
@@ -32,12 +32,17 @@ export interface InitialState {
 
 export async function getInitialState(): Promise<InitialState> {
   try {
-    const res = await Horse.user.getUserApiV1UserGet();
-    if (res.data.error_code === ErrorCode.Success && res.data) {
-      return { user: res.data.data };
-    }
-  } catch (e) {
+    // const res = await Horse.user.getUserApiV1UserGet();
+    const res = await Horse.auth.getTokenApiV1AuthTokenGet({
+      response_type: 'json',
+    });
+    console.log(res);
+    // if (res.data.error_code === ErrorCode.Success && res.data) {
+    //   return { user: res.data.data };
+    // }
+  } catch {
     return { user: undefined };
   }
+
   return { user: undefined };
 }

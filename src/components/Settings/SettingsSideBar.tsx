@@ -1,8 +1,8 @@
 import React, { Fragment, ReactNode } from 'react';
 import { useIntl } from 'umi';
 import { Menu, MenuProps, MenuItemProps } from 'antd';
-import ShadowCard from '@/components/ShadowCard';
 import style from './style.less';
+import ShadowCard from '@/components/ShadowCard';
 
 export interface SettingsMenuItem {
   menuKey: string;

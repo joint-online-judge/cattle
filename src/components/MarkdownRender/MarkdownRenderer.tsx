@@ -10,19 +10,20 @@ const Index: React.FC<ReactMarkdownOptions> = (props) => {
       <ReactMarkdown
         components={{
           pre: ({ children }) => <pre style={{ padding: 0 }}>{children}</pre>,
-          code: ({ node, inline, className, children, ...props }) => {
-            const match = /language-(\w+)/.exec(className || '');
+          code: ({ inline, className, children, ...props }) => {
+            const match = /language-(\w+)/.exec(className ?? '');
             return !inline && match ? (
-              // @ts-ignore
+              // @ts-expect-error follow demo code
               <SyntaxHighlighter
-                children={String(children).replace(/\n$/, '')}
                 language={match[1]}
                 PreTag="div"
                 customStyle={{
                   margin: 0,
                 }}
                 {...props}
-              />
+              >
+                {String(children).replace(/\n$/, '')}
+              </SyntaxHighlighter>
             ) : (
               <kbd className={className} {...props}>
                 {children}

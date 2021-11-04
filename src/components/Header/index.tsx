@@ -1,19 +1,19 @@
 import React, { useState } from 'react';
 import { Menu } from 'antd';
-import { useIntl, Link, useLocation, useRouteMatch } from 'umi';
+import { useIntl, Link, useLocation } from 'umi';
 import UserMenuItem from './UserMenuItem';
 import style from './style.css';
 
 const extractPath = (path: string) => {
   try {
-    const p = path.split('/').filter((o) => !!o)[0];
-    return p || 'home';
-  } catch (e) {
+    const p = path.split('/').find((o) => Boolean(o));
+    return p ?? 'home';
+  } catch {
     return 'home';
   }
 };
 
-const Index = () => {
+const Index: React.FC = () => {
   const location = useLocation();
   const intl = useIntl();
   const [current, setCurrent] = useState(extractPath(location.pathname));
@@ -23,7 +23,9 @@ const Index = () => {
       mode="horizontal"
       className={style.menu}
       selectedKeys={[current]}
-      onClick={(e) => setCurrent(e.key)}
+      onClick={(e) => {
+        setCurrent(e.key);
+      }}
     >
       <Menu.Item key="home">
         <Link to="/">{intl.formatMessage({ id: 'HOME' })}</Link>

@@ -6,7 +6,7 @@ type BasicHeader = {
   titleI18nKey?: string;
   subTitle?: string;
   subTitleI18nKey?: string;
-  routes?: (Partial<Route> & { path: string; breadcrumbI18nKey?: string })[];
+  routes?: Array<Partial<Route> & { path: string; breadcrumbI18nKey?: string }>;
 };
 
 /**

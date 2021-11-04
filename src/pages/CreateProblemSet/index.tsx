@@ -1,10 +1,8 @@
 import React, { useEffect } from 'react';
-import { Typography, Row, Col } from 'antd';
-import { useIntl, useParams } from 'umi';
+import { useParams } from 'umi';
+import { useModel } from '@@/plugin-model/useModel';
 import SidePage from '@/components/SidePage';
 import { UpsertProblemSetForm } from '@/components/ProblemSet';
-import ShadowCard from '@/components/ShadowCard';
-import { useModel } from '@@/plugin-model/useModel';
 
 const Index: React.FC = () => {
   const { domainUrl } = useParams<{ domainUrl: string }>();
@@ -18,7 +16,7 @@ const Index: React.FC = () => {
     },
     {
       path: domainUrl,
-      breadcrumbName: domain?.name || 'unknown',
+      breadcrumbName: domain?.name ?? 'unknown',
     },
     {
       path: 'create-problem-set',
@@ -34,7 +32,7 @@ const Index: React.FC = () => {
   }, []);
 
   return (
-    <SidePage>
+    <SidePage extra={<h1>Side</h1>}>
       <UpsertProblemSetForm
         domainUrl={domainUrl}
         initialValues={{
@@ -45,4 +43,5 @@ const Index: React.FC = () => {
     </SidePage>
   );
 };
+
 export default Index;

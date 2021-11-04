@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from 'react';
-import { Row, Col, Tabs, Form, Input, Divider, Button } from 'antd';
-import { Redirect, useLocation, useModel, useRequest, history } from 'umi';
-import { Horse } from '@/utils/service';
-import { DOMAIN_HOST } from '@/constants';
+import React, { useState } from 'react';
+import { Row, Col, Tabs, Form, Input, Divider, Button, Spin } from 'antd';
+import { useLocation, useModel, history } from 'umi';
+import { useRequest } from 'ahooks';
 import style from './style.less';
+import { Horse, UserCreate } from '@/utils/service';
+import { DOMAIN_HOST } from '@/constants';
 import Logo from '@/assets/logo.svg';
 
 const useQuery = () => {
@@ -14,26 +15,29 @@ type OperationType = 'login' | 'register';
 
 const Index: React.FC = () => {
   const [opType, setOpType] = useState<OperationType>('login');
-  const [loading, setLoading] = useState<OperationType>('login');
   const { initialState } = useModel('@@initialState');
   const query = useQuery();
 
-  const { run: login } = useRequest(
-    () => {
-      if (!initialState?.user) {
-        const from = query.get('from') || '/';
-        return Horse.user
-          .jaccountLoginApiV1UserJaccountLoginGet({
-            redirect_url: `${DOMAIN_HOST}${from}`,
-            redirect: false,
-          })
-          .then((res) => {
-            window.location.href = res.data.redirect_url;
-          });
-      } else {
-        history.replace('/');
-        return Promise.resolve();
-      }
+  const { data: oauths, loading: discovering } = useRequest(
+    async () => {
+      const res = await Horse.auth.listOauth2ApiV1AuthOauth2Get();
+      return res.data?.data?.results ?? [];
+    },
+    {
+      onError: (res) => {
+        console.error(res);
+      },
+    },
+  );
+
+  const { loading: registering } = useRequest(
+    async (registerInfo: UserCreate) => {
+      return Horse.auth
+        .registerApiV1AuthRegisterPost({ response_type: 'json' }, registerInfo)
+        .then((res) => {
+          console.log(res);
+          // window.location.href = res.data.redirect_url;
+        });
     },
     {
       manual: true,
@@ -42,6 +46,65 @@ const Index: React.FC = () => {
       },
     },
   );
+
+  const { loading: simpleLogining } = useRequest(
+    async () => {
+      if (!initialState?.user) {
+        // const from = query.get('from') ?? '/';
+        return Horse.auth
+          .loginApiV1AuthLoginPost(
+            { response_type: 'json' },
+            {
+              username: '',
+              password: '',
+            },
+          )
+          .then((res) => {
+            console.log(res);
+            // window.location.href = res.data.redirect_url;
+          });
+      }
+
+      history.replace('/');
+      return Promise.resolve();
+    },
+    {
+      manual: true,
+      onError: (res) => {
+        console.error(res);
+      },
+    },
+  );
+
+  const { run: oauthLogin, loading: oauthLogining } = useRequest(
+    async (oauthName) => {
+      console.log(initialState?.user);
+      if (!initialState?.user) {
+        const from = query.get('from') ?? '/';
+        return Horse.auth
+          .oauthAuthorizeApiV1AuthOauth2OauthNameAuthorizeGet(oauthName, {
+            response_type: 'redirect',
+            redirect_url: `${DOMAIN_HOST}${from}`,
+          })
+          .then((res) => {
+            if (res.data.data?.redirect_url) {
+              window.location.href = res.data.data.redirect_url;
+            }
+          });
+      }
+
+      history.replace('/');
+      return Promise.resolve();
+    },
+    {
+      manual: true,
+      onError: (res) => {
+        console.error(res);
+      },
+    },
+  );
+
+  const loading = registering || simpleLogining || oauthLogining;
 
   // return  <Result icon={<Spin size="large" />} title={'Redirecting...'} />;
 
@@ -62,7 +125,9 @@ const Index: React.FC = () => {
           <Tabs
             centered
             activeKey={opType}
-            onChange={(activeKey) => setOpType(activeKey as OperationType)}
+            onChange={(activeKey) => {
+              setOpType(activeKey as OperationType);
+            }}
           >
             <Tabs.TabPane key={'login'} tab={'登录'} />
             <Tabs.TabPane key={'register'} tab={'注册'} />
@@ -98,8 +163,13 @@ const Index: React.FC = () => {
                 </Col>
               </Row>
               <Form.Item>
-                <Button type="primary" htmlType="submit" block>
-                  Log in
+                <Button
+                  type="primary"
+                  htmlType="submit"
+                  loading={loading}
+                  block
+                >
+                  Sign in
                 </Button>
               </Form.Item>
             </>
@@ -138,10 +208,11 @@ const Index: React.FC = () => {
                     message: 'Please confirm your password!',
                   },
                   ({ getFieldValue }) => ({
-                    validator(_, value) {
+                    async validator(_, value) {
                       if (!value || getFieldValue('password') === value) {
                         return Promise.resolve();
                       }
+
                       return Promise.reject(
                         new Error(
                           'The two passwords that you entered do not match!',
@@ -154,7 +225,12 @@ const Index: React.FC = () => {
                 <Input.Password />
               </Form.Item>
               <Form.Item>
-                <Button type="primary" htmlType="submit" block>
+                <Button
+                  type="primary"
+                  htmlType="submit"
+                  loading={loading}
+                  block
+                >
                   Register now
                 </Button>
               </Form.Item>
@@ -162,21 +238,33 @@ const Index: React.FC = () => {
           )}
         </Form>
         <Divider plain>Third Party Auth</Divider>
-        <Button
-          type="default"
-          htmlType="submit"
-          block
-          icon={
-            <img
-              src={require('@/assets/jaccount.png')}
-              alt="jaccount"
-              className={style.oauthImg}
-            />
-          }
-          onClick={login}
-        >
-          Log in with jAccount
-        </Button>
+        <Spin spinning={discovering}>
+          {oauths ? (
+            oauths.map((o) => {
+              return (
+                <Button
+                  key={o.oauth_name}
+                  className="mb-4"
+                  type="default"
+                  block
+                  // icon={
+                  //   <img
+                  //     src={require('@/assets/jaccount.png')}
+                  //     alt="jaccount"
+                  //     className={style.oauthImg}
+                  //   />
+                  // }
+                  loading={loading}
+                  onClick={async () => oauthLogin(o.oauth_name)}
+                >
+                  Sign in with {o.display_name}
+                </Button>
+              );
+            })
+          ) : (
+            <h1>No OAuth Support</h1>
+          )}
+        </Spin>
       </Col>
     </Row>
   );

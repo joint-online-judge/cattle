@@ -4,7 +4,7 @@ import ShadowCard from '@/components/ShadowCard';
 
 interface IProps {
   children: React.ReactElement[];
-  extra: (React.ReactElement | React.ReactNode)[]; // extra component on the side
+  extra: Array<React.ReactElement | React.ReactNode>; // extra component on the side
 }
 
 const Index: React.FC<IProps> = ({ children, extra }) => {

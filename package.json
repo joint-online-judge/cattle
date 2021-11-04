@@ -2,8 +2,9 @@
   "private": true,
   "scripts": {
     "gen:api": "swagger-typescript-api --axios --module-name-first-tag -p ./openapi/openapi.json -o ./src/client -n index.ts",
+    "gen:api-staging": "swagger-typescript-api --axios --module-name-first-tag -p http://nichujie.xyz/api/v1/openapi.json -o ./src/client -n index.ts",
     "prestart": "npm run gen:api",
-    "prestart:staging": "npm run gen:api",
+    "prestart:staging": "npm run gen:api-staging",
     "start": "cross-env MOCK=none UMI_ENV=dev HOST=127.0.0.1 umi dev",
     "start:staging": "cross-env MOCK=none UMI_ENV=staging umi dev",
     "prebuild": "npm run gen:api",
@@ -11,7 +12,9 @@
     "postinstall": "umi generate tmp",
     "prettier": "prettier --write '**/*.{js,jsx,tsx,ts,less,md,json}'",
     "test": "umi-test",
-    "test:coverage": "umi-test --coverage"
+    "test:coverage": "umi-test --coverage",
+    "lint": "xo",
+    "lint:fix": "xo --fix"
   },
   "gitHooks": {
     "pre-commit": "lint-staged"
@@ -51,11 +54,14 @@
     "@types/react-syntax-highlighter": "^13.5.2",
     "@umijs/test": "^3.4.14",
     "ahooks": "^2.10.2",
+    "eslint-plugin-react": "^7.26.1",
+    "eslint-plugin-react-hooks": "^4.2.1-alpha-255221c86-20211103",
     "lint-staged": "^10.0.7",
     "prettier": "^2.2.0",
     "react": "17.x",
     "react-dom": "17.x",
     "typescript": "^4.1.2",
+    "xo": "^0.46.4",
     "yorkie": "^2.0.0"
   }
 }

@@ -1,14 +1,14 @@
 import React, { useEffect } from 'react';
 import { Col, Row, Typography, Avatar, Spin, Button } from 'antd';
 import { useParams, useIntl, useModel, history } from 'umi';
-import { gravatarImageUrl } from '@/utils';
+import { PlusOutlined } from '@ant-design/icons';
 import ProblemSetList from './ProblemSetList';
+import style from './style.css';
+import { gravatarImageUrl } from '@/utils';
 import ShadowCard from '@/components/ShadowCard';
 import MarkdownRender from '@/components/MarkdownRender';
-import { PlusOutlined } from '@ant-design/icons';
-import style from './style.css';
 
-const { Title, Paragraph } = Typography;
+const { Title } = Typography;
 
 const Index: React.FC = () => {
   const intl = useIntl();
@@ -37,7 +37,7 @@ const Index: React.FC = () => {
                 </Col>
                 <Col span={20}>
                   <Title level={3}>{domain.name}</Title>
-                  <MarkdownRender children={domain?.bulletin || ''} />
+                  <MarkdownRender>{domain?.bulletin ?? ''}</MarkdownRender>
                   {/* <Paragraph ellipsis={{ rows: 2, expandable: true }}>
                     <MarkdownRender children={domain?.bulletin || ''} />
                   </Paragraph> */}
@@ -53,18 +53,19 @@ const Index: React.FC = () => {
         extra={
           <Button
             icon={<PlusOutlined />}
-            onClick={() =>
-              history.push(`/domain/${domainUrl}/create-problem-set`)
-            }
+            onClick={() => {
+              history.push(`/domain/${domainUrl}/create-problem-set`);
+            }}
             type="primary"
           >
             {intl.formatMessage({ id: 'PROBLEM_SET.CREATE.TITLE' })}
           </Button>
         }
       >
-        <ProblemSetList domainId={domain?.id || ''} />
+        <ProblemSetList domainId={domain?.id ?? ''} />
       </ShadowCard>
     </div>
   );
 };
+
 export default Index;

@@ -1,6 +1,6 @@
-import { Api } from '@/client';
 import { AxiosResponse, AxiosError } from 'axios';
 import { notification } from 'antd';
+import { Api } from '@/client';
 
 export const Horse = new Api();
 
@@ -8,12 +8,13 @@ Horse.instance.interceptors.response.use(
   (response: AxiosResponse) => {
     return response;
   },
-  (error: AxiosError) => {
+  async (error: AxiosError) => {
     if (error.response) {
       if (error.response?.status >= 500) {
         notification.error({
           message: 'Oops...',
-          description: 'There seems to be something wrong with the server. Please contact the maintainers.',
+          description:
+            'There seems to be something wrong with the server. Please contact the maintainers.',
         });
       }
     } else if (error.request) {

@@ -15,14 +15,12 @@ const Index: React.FC<ProblemHomeProps> = (props) => {
   return (
     <ShadowCard
       title={
-        <Title level={3}>{problem?.title || <Spin size="default" />}</Title>
+        <Title level={3}>{problem?.title ?? <Spin size="default" />}</Title>
       }
     >
       {problem ? (
         <Typography>
-          <MarkdownRender
-            children={problem.content || ''}
-          />
+          <MarkdownRender>{problem.content ?? ''}</MarkdownRender>
         </Typography>
       ) : (
         <Spin size="default" />

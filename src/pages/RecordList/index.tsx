@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Link, useIntl } from 'umi';
 import { useRequest } from 'ahooks';
 import {
@@ -11,7 +11,6 @@ import {
 } from 'antd';
 import { Horse, Domain } from '@/utils/service';
 import ShadowCard from '@/components/ShadowCard';
-import { gravatarImageUrl } from '@/utils';
 // import {
 //   CreateDomain,
 // } from 'app/components';
@@ -43,7 +42,7 @@ const Index: React.FC = () => {
       title: 'My Role',
       dataIndex: 'role',
       key: 'role',
-      render: (text) => text || '-',
+      render: (text: string) => text ?? '-',
     },
     // TODO: render role as tags
     // {
@@ -89,7 +88,7 @@ const Index: React.FC = () => {
         <Title level={3}>{intl.formatMessage({ id: 'DOMAIN.DOMAINS' })}</Title>
         <Table
           columns={columns}
-          dataSource={data || []}
+          dataSource={data ?? []}
           loading={loading}
           rowKey="id"
           pagination={false}

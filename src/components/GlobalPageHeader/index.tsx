@@ -5,7 +5,7 @@ import { useModel, useIntl, Link } from 'umi';
 
 function itemRender(
   route: Route,
-  params: any,
+  parameters: any,
   routes: Route[],
   paths: string[],
 ) {
@@ -37,7 +37,7 @@ const Index: React.FC<PageHeaderProps> = (props) => {
               ...r,
               breadcrumbName: r.breadcrumbI18nKey
                 ? intl.formatMessage({ id: r.breadcrumbI18nKey })
-                : (r.breadcrumbName as string),
+                : r.breadcrumbName!,
             }))
           : header.routes,
         itemRender,

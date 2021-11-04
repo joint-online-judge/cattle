@@ -1,28 +1,15 @@
 import React from 'react';
 import { Col, Row } from 'antd';
 import { useIntl } from 'umi';
+import style from './style.css';
 import UpsertDomainForm from '@/components/Domain/UpsertDomainForm';
 import ShadowCard from '@/components/ShadowCard';
-import style from './style.css';
-
-// todo: delete it or uncomment it
-const routes = [
-  {
-    path: 'admin',
-    breadcrumbName: 'ADMIN.ADMIN',
-  },
-  {
-    path: 'domain',
-    breadcrumbName: 'DOMAIN',
-  },
-  {
-    path: 'create',
-    breadcrumbName: 'CREATE',
-  },
-];
 
 const Index: React.FC = () => {
   const intl = useIntl();
+
+  console.log(style.createDomain);
+  console.log(style);
 
   /* todo: add helper */
   /* todo: add onChange on URL/ID field to ensure unique field */

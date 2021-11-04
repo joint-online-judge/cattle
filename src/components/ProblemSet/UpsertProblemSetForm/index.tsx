@@ -14,7 +14,7 @@ import { useRequest } from 'ahooks';
 import style from './style.css';
 import {
   Horse,
-  ProblemSet,
+  JojHorseModelsProblemSetProblemSet as ProblemSet,
   ProblemSetCreate,
   ProblemSetEdit,
 } from '@/utils/service';
@@ -24,13 +24,16 @@ export interface IProps {
   domainUrl: string;
 }
 
-export const UpsertProblemSetForm: React.FC<IProps> = (props) => {
+const UpsertProblemSetForm: React.FC<IProps> = (props) => {
   const { domainUrl, initialValues } = props;
   const intl = useIntl();
 
   const { run: createProblemSet, loading: creatingProblemSet } = useRequest(
-    (problemSet: ProblemSetCreate) =>
-      Horse.problemSet.createProblemSetApiV1DomainsDomainProblemSetsPost(domainUrl, problemSet),
+    async (problemSet: ProblemSetCreate) =>
+      Horse.problemSet.createProblemSetApiV1DomainsDomainProblemSetsPost(
+        domainUrl,
+        problemSet,
+      ),
     {
       manual: true,
       onSuccess: (res) => {
@@ -43,7 +46,7 @@ export const UpsertProblemSetForm: React.FC<IProps> = (props) => {
   );
 
   const { run: updateProblemSet, loading: updatingProblemSet } = useRequest(
-    (id: string, problemSet: ProblemSetEdit) =>
+    async (id: string, problemSet: ProblemSetEdit) =>
       Horse.problemSet.updateProblemSetApiV1DomainsDomainProblemSetsProblemSetPatch(
         domainUrl,
         id,
@@ -51,19 +54,17 @@ export const UpsertProblemSetForm: React.FC<IProps> = (props) => {
       ),
     {
       manual: true,
-      onSuccess: (res) => {
+      onSuccess: (_res) => {
         // todo: add errCode
         message.success('update success');
       },
     },
   );
 
-  const onFinish = (values: Partial<ProblemSet>) => {
-    if (initialValues?.id) {
-      return updateProblemSet(initialValues?.id, values);
-    } else {
-      return createProblemSet(values as ProblemSetCreate);
-    }
+  const onFinish = async (values: Partial<ProblemSet>) => {
+    return initialValues?.id
+      ? updateProblemSet(initialValues?.id, values)
+      : createProblemSet(values as ProblemSetCreate);
   };
 
   return (
@@ -161,3 +162,5 @@ export const UpsertProblemSetForm: React.FC<IProps> = (props) => {
     </Form>
   );
 };
+
+export { UpsertProblemSetForm };

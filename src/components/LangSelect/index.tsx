@@ -21,20 +21,20 @@ const Index: React.FC<IProps> = (props) => {
       label: `${intl.formatMessage({ id: lang })} (${lang})`,
       value: lang,
     }));
-  }, [allLang, currentLang]);
+  }, [allLang, intl]);
 
-  const onValueChange = (e: string, options: any) => {
+  const onValueChange = (value: string, options: any) => {
     if (onChange) {
-      onChange(e, options);
+      onChange(value, options);
     } else if (changeOnSelect !== false) {
-      switchLang(e);
+      switchLang(value);
     }
   };
 
   return (
     <Select
       onChange={onValueChange}
-      value={value || currentLang}
+      value={value ?? currentLang}
       options={options}
       {...otherProps}
     />

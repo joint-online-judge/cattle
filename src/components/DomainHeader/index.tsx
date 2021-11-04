@@ -1,7 +1,6 @@
-import React, { useEffect } from 'react';
-import { PageHeaderProps, Row, Col, message } from 'antd';
-import { Route } from 'antd/lib/breadcrumb/Breadcrumb';
-import { Link, useParams, useLocation } from 'umi';
+import React from 'react';
+import { Row, Col } from 'antd';
+import { Link } from 'umi';
 import { useModel } from '@@/plugin-model/useModel';
 import style from './style.less';
 import { CONTENT_GRID_LAYOUT } from '@/constants';

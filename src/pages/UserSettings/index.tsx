@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { Col, PageHeader, Row } from 'antd';
-import { useModel } from 'umi';
-import SettingsSideBar from '@/components/Settings/SettingsSideBar';
-import Domains from '@/components/Domain/Domains';
+import { Col, Row } from 'antd';
 import General from './General';
-import { SettingsMenuItem } from '@/components/Settings/SettingsSideBar';
+import SettingsSideBar, {
+  SettingsMenuItem,
+} from '@/components/Settings/SettingsSideBar';
+import Domains from '@/components/Domain/Domains';
 import ShadowCard from '@/components/ShadowCard';
 
 const menuItems: SettingsMenuItem[] = [
@@ -28,7 +28,6 @@ const menuItems: SettingsMenuItem[] = [
 
 const Index: React.FC = () => {
   const [key, setKey] = useState<string>(menuItems[0].key);
-  const { initialState } = useModel('@@initialState');
 
   return (
     <div>
@@ -48,7 +47,9 @@ const Index: React.FC = () => {
           <SettingsSideBar
             items={menuItems}
             selectedKeys={[key]}
-            onClick={({ key: menuKey }) => setKey(menuKey as string)}
+            onClick={({ key: menuKey }) => {
+              setKey(menuKey);
+            }}
           />
         </Col>
         <Col xs={24} sm={24} lg={18}>

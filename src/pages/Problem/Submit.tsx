@@ -2,9 +2,9 @@ import React, { useMemo } from 'react';
 import { Table, Select, Row, Col, Form, Button, Upload } from 'antd';
 import { useIntl } from 'umi';
 import { InboxOutlined } from '@ant-design/icons';
+import { isArray } from 'lodash';
 import { Problem, Horse } from '@/utils/service';
 import ShadowCard from '@/components/ShadowCard';
-import { isArray } from 'lodash';
 
 interface IProps {
   problem: Problem | undefined;
@@ -49,7 +49,7 @@ const Index: React.FC<IProps> = (props) => {
 
   const onFinish = (values: any) => {
     Horse.problem.submitSolutionToProblemApiV1ProblemsProblemPost(
-      problem?.id || '',
+      problem?.id ?? '',
       values,
     );
     // submitProblem(problem?.id || '', values);

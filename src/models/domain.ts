@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import { Horse } from '@/utils/service';
 import { useRequest } from 'ahooks';
 import { message } from 'antd';
+import { Horse } from '@/utils/service';
 
 /**
  * Global domain data model.

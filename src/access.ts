@@ -1,10 +1,10 @@
 import { InitialState } from './app';
 
-export default function (initialState: InitialState) {
-  const { user } = initialState || {};
+function permissions(initialState: InitialState) {
+  const { user } = initialState ?? {};
 
   return {
-    authenticated: !!user,
+    authenticated: Boolean(user),
     isRoot: user?.role === 'root',
     // canUpdateFoo: role === 'admin',
     // canDeleteFoo: foo => {
@@ -12,3 +12,5 @@ export default function (initialState: InitialState) {
     // },
   };
 }
+
+export default permissions;

@@ -1,14 +1,14 @@
 import React, { useMemo, useState } from 'react';
 import { useLocation, history, Location } from 'umi';
 import { Row, Col } from 'antd';
+import PageContent, { PageContentProps } from './PageContent';
 import SettingsSideBar, {
   SettingsMenuItem,
 } from '@/components/Settings/SettingsSideBar';
-import PageContent, { PageContentProps } from './PageContent';
 import globalStyle from '@/global.less';
 
 interface IProps {
-  children: React.ReactElement<PageContentProps>[];
+  children: Array<React.ReactElement<PageContentProps>>;
   extra?: React.ReactElement | React.ReactNode; // extra component below SideBar
   urlQuery?: boolean; // whether to modify url query on switching
 }
@@ -25,9 +25,7 @@ const Index: React.FC<IProps> = ({ children, extra, urlQuery = true }) => {
       )
         return location.query?.tab;
       const firstValidChild = children.find((o) => o.props.menuKey);
-      return firstValidChild && firstValidChild.props.menuKey
-        ? firstValidChild.props.menuKey
-        : '';
+      return firstValidChild?.props?.menuKey ?? '';
     })(),
   );
 
@@ -46,9 +44,10 @@ const Index: React.FC<IProps> = ({ children, extra, urlQuery = true }) => {
             component: child,
           };
         }
+
         return undefined;
       },
-    ).filter((o) => !!o);
+    ).filter((o) => Boolean(o));
   }, [children]);
 
   return (
@@ -62,12 +61,12 @@ const Index: React.FC<IProps> = ({ children, extra, urlQuery = true }) => {
           <SettingsSideBar
             items={menuItems}
             selectedKeys={[key]}
-            onClick={(e) => {
-              setKey(e.key);
+            onClick={(event) => {
+              setKey(event.key);
               if (urlQuery) {
                 history.replace({
                   pathname: location.pathname,
-                  query: { tab: e.key.toString() },
+                  query: { tab: event.key.toString() },
                 });
               }
             }}
@@ -80,7 +79,7 @@ const Index: React.FC<IProps> = ({ children, extra, urlQuery = true }) => {
           sm={{ span: 18, order: 1 }}
           xl={{ span: 18, order: 1 }}
         >
-          {children.find((o) => o.props.menuKey === key) || null}
+          {children.find((o) => o.props.menuKey === key) ?? null}
         </Col>
       </Row>
     </>

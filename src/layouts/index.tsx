@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react';
 import { Col, Layout, Row, Alert, BackTop } from 'antd';
 import { useModel, Link, useParams } from 'umi';
+import style from './style.less';
 import Footer from '@/components/Footer';
 import Header from '@/components/Header';
 import { CONTENT_GRID_LAYOUT } from '@/constants';
 import GlobalPageHeader from '@/components/GlobalPageHeader';
-import style from './style.less';
 import Logo from '@/assets/logo.svg';
 import DomainHeader from '@/components/DomainHeader';
 
@@ -14,12 +14,6 @@ const Index: React.FC = ({ children }) => {
   const { initialState } = useModel('@@initialState');
   const { fetchDomain } = useModel('domain');
   const { headerVisible } = useModel('pageHeader');
-
-  useEffect(() => {
-    if (domainUrl) {
-      fetchDomain(domainUrl);
-    }
-  }, [domainUrl]);
 
   useEffect(() => {
     if (domainUrl) {

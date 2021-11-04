@@ -44,7 +44,7 @@ const Index: React.FC = () => {
     <Menu
       mode="horizontal"
       className={style.homeNav}
-      defaultSelectedKeys={[defaultKey || menuItems[0].key]}
+      defaultSelectedKeys={[defaultKey ?? menuItems[0].key]}
     >
       {menuItems.map((item) => {
         return (

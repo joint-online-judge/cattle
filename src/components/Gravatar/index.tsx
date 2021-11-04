@@ -11,8 +11,8 @@ const Index: React.FC<GravatarProps> = (props) => {
   const { user, ...otherProps } = props;
   const imageUrl = user?.gravatar ? gravatarImageUrl(user.gravatar) : undefined;
   return (
-    <Avatar src={imageUrl} alt={user?.uname || 'user'} {...otherProps}>
-      {user?.uname ? user.uname.slice(0, 1).toUpperCase() : ''}
+    <Avatar src={imageUrl} alt={user?.username ?? 'user'} {...otherProps}>
+      {user?.username ? user.username.slice(0, 1).toUpperCase() : ''}
     </Avatar>
   );
 };

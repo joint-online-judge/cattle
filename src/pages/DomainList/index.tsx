@@ -1,25 +1,10 @@
 import React, { useEffect } from 'react';
 import { Link, useIntl } from 'umi';
 import { useRequest } from 'ahooks';
-import {
-  message,
-  Table,
-  Space,
-  Typography,
-  Divider,
-  TableColumnProps,
-} from 'antd';
-import { Horse, Domain, DomainUser } from '@/utils/service';
-import { isArray, omit, set } from 'lodash';
-import { gravatarImageUrl } from '@/utils';
-import ShadowCard from '@/components/ShadowCard';
+import { message, Table, Space, Divider, TableColumnProps } from 'antd';
 import { useModel } from '@@/plugin-model/useModel';
-// import {
-//   CreateDomain,
-// } from 'app/components';
-// import { DomainHomeContainer } from './DomainHomeContainer';
-
-const { Title } = Typography;
+import { Horse, Domain } from '@/utils/service';
+import ShadowCard from '@/components/ShadowCard';
 
 const Index: React.FC = () => {
   const intl = useIntl();
@@ -29,12 +14,12 @@ const Index: React.FC = () => {
     setHeader({
       titleI18nKey: 'DOMAIN.DOMAINS',
     });
-  }, []);
+  }, [setHeader]);
 
   const { data, loading } = useRequest(
     async () => {
       const res = await Horse.domain.listDomainsApiV1DomainsGet();
-      return res?.data?.data?.results || [];
+      return res?.data?.data?.results ?? [];
     },
     {
       onError: () => {
@@ -58,7 +43,7 @@ const Index: React.FC = () => {
       title: 'My Role',
       dataIndex: 'role',
       key: 'role',
-      render: (text) => text || '-',
+      render: (text: string) => text || '-',
     },
     // TODO: render role as tags
     // {
