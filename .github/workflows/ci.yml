@@ -19,11 +19,19 @@ jobs:
           git submodule update --init --recursive
           git submodule update --recursive --remote
       - run: yarn build
+      - uses: actions/upload-artifact@master
+        with:
+          name: dist
+          path: dist
   remote-ssh-command:
     if: github.event_name == 'push' && (github.ref == 'refs/heads/master')
     needs: build
     runs-on: ubuntu-20.04
     steps:
+      - uses: actions/download-artifact@master
+        with:
+          name: dist
+          path: dist
       - name: Copy file via ssh key
         uses: appleboy/scp-action@master
         with:
