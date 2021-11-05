@@ -1,35 +1,46 @@
 import React, { useEffect } from 'react';
-import { Spin, Result } from 'antd';
-import { useRequest, Redirect, useModel } from 'umi';
+import { Spin, Result, message } from 'antd';
+import { useRequest, Redirect, useModel, history } from 'umi';
 import { Horse } from '@/utils/service';
 import { DOMAIN_HOST } from '@/constants';
 
 const Index: React.FC = () => {
   const { initialState } = useModel('@@initialState');
+  const { removeHeader } = useModel('pageHeader');
+
   const { run } = useRequest(
     async () => {
-      if (initialState?.user) {
-        Horse.user
-          .logoutApiV1UserLogoutGet({
-            redirect_url: DOMAIN_HOST,
-            redirect: false,
+      if (initialState?.accessToken) {
+        return Horse.auth
+          .logoutApiV1AuthLogoutPost({
+            responseType: 'json',
           })
           .then((res) => {
-            window.location.href = res.data.redirect_url;
+            console.log(res);
           })
           .catch((error) => {
             console.log(error);
             // TODO: message user
           });
+      } else {
+        return Promise.resolve({});
       }
     },
-    { manual: true },
+    {
+      manual: true,
+      onSuccess: () => {
+        message.success('Logged out');
+        history.replace('/login');
+      },
+      onError: () => {
+        message.error('Log out failed');
+      },
+    },
   );
 
   useEffect(() => {
-    (async () => {
-      await run();
-    })();
+    removeHeader();
+    run();
   }, []);
 
   return initialState?.user ? (

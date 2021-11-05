@@ -1,12 +1,13 @@
 ﻿const routes = [
   { path: '/login', component: '@/pages/Login' },
+  { path: '/oauth-register', component: '@/pages/OAuthRegister' },
 
   // @chujie: this route tree should be separated.
   // Otherwise, 'domainUrl' cannot be matched in the layout component.
   {
     path: '/domain/:domainUrl',
     component: '@/layouts/index',
-    // wrappers: ['@/wrappers/Auth'],
+    wrappers: ['@/wrappers/auth'],
     routes: [
       {
         exact: true,
@@ -34,7 +35,7 @@
   {
     path: '/',
     component: '@/layouts/index',
-    // wrappers: ['@/wrappers/Auth'],
+    wrappers: ['@/wrappers/auth'],
     routes: [
       { exact: true, path: '/', component: '@/pages/DomainList' },
       { exact: true, path: '/logout', component: '@/pages/Logout' },
