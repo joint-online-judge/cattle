@@ -77,7 +77,6 @@ const Index: React.FC = () => {
           });
       }
 
-      history.replace('/');
       return Promise.resolve();
     },
     {

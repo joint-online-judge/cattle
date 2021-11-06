@@ -5,7 +5,7 @@ import { Horse } from '@/utils/service';
 import { DOMAIN_HOST } from '@/constants';
 
 const Index: React.FC = () => {
-  const { initialState } = useModel('@@initialState');
+  const { initialState, refresh } = useModel('@@initialState');
   const { removeHeader } = useModel('pageHeader');
 
   const { run } = useRequest(
@@ -30,7 +30,9 @@ const Index: React.FC = () => {
       manual: true,
       onSuccess: () => {
         message.success('Logged out');
-        history.replace('/login');
+        refresh().then(() => {
+          history.replace('/login');
+        });
       },
       onError: () => {
         message.error('Log out failed');
@@ -46,7 +48,7 @@ const Index: React.FC = () => {
   return initialState?.user ? (
     <Result icon={<Spin size="large" />} title="Logging out..." />
   ) : (
-    <Redirect to="/" />
+    <Redirect to="/login" />
   );
 };
 
