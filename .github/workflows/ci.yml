@@ -12,6 +12,7 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: 14.x
+          cache: yarn
       - run: echo ${{github.ref}}
       - run: yarn install
       - name: pull & update submodules recursively
@@ -19,11 +20,19 @@ jobs:
           git submodule update --init --recursive
           git submodule update --recursive --remote
       - run: yarn build
+      - uses: actions/upload-artifact@master
+        with:
+          name: dist
+          path: dist
   remote-ssh-command:
     if: github.event_name == 'push' && (github.ref == 'refs/heads/master')
     needs: build
     runs-on: ubuntu-20.04
     steps:
+      - uses: actions/download-artifact@master
+        with:
+          name: dist
+          path: dist
       - name: Copy file via ssh key
         uses: appleboy/scp-action@master
         with:
