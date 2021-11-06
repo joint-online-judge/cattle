@@ -8,9 +8,6 @@ import ShadowCard from '@/components/ShadowCard';
 const Index: React.FC = () => {
   const intl = useIntl();
 
-  console.log(style.createDomain);
-  console.log(style);
-
   /* todo: add helper */
   /* todo: add onChange on URL/ID field to ensure unique field */
   return (

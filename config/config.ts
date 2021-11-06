@@ -16,8 +16,8 @@ export default defineConfig({
   locale: {
     default: 'en-US',
     title: true,
-    // antd: true,
-    baseNavigator: true,
+    antd: true,
+    baseNavigator: false,
   },
   ignoreMomentLocale: true,
   dynamicImport: {

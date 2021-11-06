@@ -1,12 +1,22 @@
 ﻿const routes = [
-  { path: '/login', component: '@/pages/Login' },
+  {
+    path: '/login',
+    component: '@/pages/Login',
+    wrappers: ['@/wrappers/revAuth'],
+  },
+  {
+    path: '/oauth-register',
+    component: '@/pages/OAuthRegister',
+    wrappers: ['@/wrappers/revAuth'],
+  },
+  { path: '/logout', component: '@/pages/Logout' },
 
   // @chujie: this route tree should be separated.
   // Otherwise, 'domainUrl' cannot be matched in the layout component.
   {
     path: '/domain/:domainUrl',
     component: '@/layouts/index',
-    // wrappers: ['@/wrappers/Auth'],
+    wrappers: ['@/wrappers/auth'],
     routes: [
       {
         exact: true,
@@ -34,10 +44,9 @@
   {
     path: '/',
     component: '@/layouts/index',
-    // wrappers: ['@/wrappers/Auth'],
+    wrappers: ['@/wrappers/auth'],
     routes: [
       { exact: true, path: '/', component: '@/pages/DomainList' },
-      { exact: true, path: '/logout', component: '@/pages/Logout' },
       { exact: true, path: '/settings', component: '@/pages/UserSettings' },
       { exact: true, path: '/domain', component: '@/pages/DomainList' },
 
@@ -83,10 +92,11 @@
         path: '/admin/domain/create',
         component: '@/pages/CreateDomain',
       },
-
       { component: '@/pages/NotFound' },
     ],
   },
+
+  { component: '@/pages/NotFound' },
 ];
 
 export default routes;

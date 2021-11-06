@@ -14,7 +14,7 @@ const Index: React.FC = () => {
     setHeader({
       titleI18nKey: 'DOMAIN.DOMAINS',
     });
-  }, [setHeader]);
+  }, []);
 
   const { data, loading } = useRequest(
     async () => {

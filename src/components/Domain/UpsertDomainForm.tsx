@@ -29,20 +29,21 @@ const Index: React.FC<IProps> = (props) => {
     {
       manual: true,
       onSuccess: (res) => {
-        if (res.data.error_code === ErrorCode.Success) {
+        console.log(res);
+        if (res.data.errorCode === ErrorCode.Success) {
           if (res?.data?.data?.url) {
             history.push(`/domain/${res?.data?.data?.url}`);
           }
 
           message.success('create success');
           onCreateSuccess?.(res.data.data);
-        } else if (res.data.error_code === ErrorCode.UrlNotUniqueError) {
+        } else if (res.data.errorCode === ErrorCode.InvalidUrlError) {
           message.error('domain url already exists');
+        } else {
+          message.error('create failed');
         }
       },
-      onError: () => {
-        message.error('create failed');
-      },
+      onError: () => {},
     },
   );
 

@@ -1,7 +1,9 @@
-import { User, Horse } from '@/utils/service';
+import jwt_decode from 'jwt-decode';
+import { Horse, JWTAccessToken, ErrorCode } from '@/utils/service';
 
 export interface InitialState {
-  user: User | undefined;
+  accessToken: string | undefined;
+  user: JWTAccessToken | undefined; // actually a JWT not a User
 }
 
 // will be run before render each route
@@ -32,17 +34,18 @@ export interface InitialState {
 
 export async function getInitialState(): Promise<InitialState> {
   try {
-    // const res = await Horse.user.getUserApiV1UserGet();
     const res = await Horse.auth.getTokenApiV1AuthTokenGet({
-      response_type: 'json',
+      responseType: 'json',
     });
-    console.log(res);
-    // if (res.data.error_code === ErrorCode.Success && res.data) {
-    //   return { user: res.data.data };
-    // }
+    if (
+      res.data.errorCode === ErrorCode.Success &&
+      res.data?.data?.accessToken
+    ) {
+      const decoded: JWTAccessToken = jwt_decode(res.data?.data?.accessToken);
+      return { user: decoded, accessToken: res.data?.data?.accessToken };
+    }
+    return { user: undefined, accessToken: undefined };
   } catch {
-    return { user: undefined };
+    return { user: undefined, accessToken: undefined };
   }
-
-  return { user: undefined };
 }

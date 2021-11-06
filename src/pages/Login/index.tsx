@@ -1,11 +1,23 @@
 import React, { useState } from 'react';
-import { Row, Col, Tabs, Form, Input, Divider, Button, Spin } from 'antd';
+import {
+  Row,
+  Col,
+  Tabs,
+  Form,
+  Input,
+  Divider,
+  Button,
+  Spin,
+  message,
+} from 'antd';
 import { useLocation, useModel, history } from 'umi';
 import { useRequest } from 'ahooks';
+import { isNil, isArray } from 'lodash';
 import style from './style.less';
 import { Horse, UserCreate } from '@/utils/service';
 import { DOMAIN_HOST } from '@/constants';
 import Logo from '@/assets/logo.svg';
+import { useCallback } from 'react';
 
 const useQuery = () => {
   return new URLSearchParams(useLocation().search);
@@ -33,7 +45,7 @@ const Index: React.FC = () => {
   const { loading: registering } = useRequest(
     async (registerInfo: UserCreate) => {
       return Horse.auth
-        .registerApiV1AuthRegisterPost({ response_type: 'json' }, registerInfo)
+        .registerApiV1AuthRegisterPost({ responseType: 'json' }, registerInfo)
         .then((res) => {
           console.log(res);
           // window.location.href = res.data.redirect_url;
@@ -53,7 +65,7 @@ const Index: React.FC = () => {
         // const from = query.get('from') ?? '/';
         return Horse.auth
           .loginApiV1AuthLoginPost(
-            { response_type: 'json' },
+            { responseType: 'json' },
             {
               username: '',
               password: '',
@@ -65,7 +77,6 @@ const Index: React.FC = () => {
           });
       }
 
-      history.replace('/');
       return Promise.resolve();
     },
     {
@@ -78,41 +89,65 @@ const Index: React.FC = () => {
 
   const { run: oauthLogin, loading: oauthLogining } = useRequest(
     async (oauthName) => {
-      console.log(initialState?.user);
-      if (!initialState?.user) {
-        const from = query.get('from') ?? '/';
-        return Horse.auth
-          .oauthAuthorizeApiV1AuthOauth2OauthNameAuthorizeGet(oauthName, {
-            response_type: 'redirect',
-            redirect_url: `${DOMAIN_HOST}${from}`,
-          })
-          .then((res) => {
-            if (res.data.data?.redirect_url) {
-              window.location.href = res.data.data.redirect_url;
-            }
-          });
-      }
-
-      history.replace('/');
-      return Promise.resolve();
+      const from = query.get('from') ?? '/';
+      return Horse.auth.oauthAuthorizeApiV1AuthOauth2Oauth2AuthorizeGet(
+        oauthName,
+        {
+          responseType: 'redirect',
+          redirectUrl: `${DOMAIN_HOST}${from}`,
+        },
+      );
     },
     {
       manual: true,
-      onError: (res) => {
-        console.error(res);
+      onSuccess: (res) => {
+        if (res.data.data?.redirectUrl) {
+          message.loading('Redirecting...', 10);
+          window.location.href = res.data.data?.redirectUrl;
+        } else {
+          message.error('Failed to intialize oauth');
+        }
+      },
+      onError: (err) => {
+        console.error(err);
       },
     },
   );
 
   const loading = registering || simpleLogining || oauthLogining;
 
-  // return  <Result icon={<Spin size="large" />} title={'Redirecting...'} />;
+  const renderOAuthButtons = useCallback(() => {
+    if (discovering) {
+      return null;
+    }
 
-  // return initialState?.user ? (
-  //   <Redirect to={query.get('from') || '/'} />
-  // ) : (
-  //   <Result icon={<Spin size="large" />} title={'Redirecting...'} />
-  // );
+    if (isArray(oauths) && oauths.length > 0) {
+      return oauths.map((o) => {
+        return (
+          <Button
+            key={o.oauthName}
+            className="mb-4"
+            type="default"
+            block
+            // icon={
+            //   <img
+            //     src={require('@/assets/jaccount.png')}
+            //     alt="jaccount"
+            //     className={style.oauthImg}
+            //   />
+            // }
+            loading={loading}
+            onClick={async () => oauthLogin(o.oauthName)}
+          >
+            Sign in with {o.displayName}
+          </Button>
+        );
+      });
+    }
+
+    return <h1>No OAuth Support</h1>;
+  }, [discovering, oauths, loading]);
+
   return (
     <Row justify="center" style={{ height: '100vh' }}>
       <Col xxl={5} xl={6} lg={8} md={12} sm={18} xs={20}>
@@ -238,33 +273,7 @@ const Index: React.FC = () => {
           )}
         </Form>
         <Divider plain>Third Party Auth</Divider>
-        <Spin spinning={discovering}>
-          {oauths ? (
-            oauths.map((o) => {
-              return (
-                <Button
-                  key={o.oauth_name}
-                  className="mb-4"
-                  type="default"
-                  block
-                  // icon={
-                  //   <img
-                  //     src={require('@/assets/jaccount.png')}
-                  //     alt="jaccount"
-                  //     className={style.oauthImg}
-                  //   />
-                  // }
-                  loading={loading}
-                  onClick={async () => oauthLogin(o.oauth_name)}
-                >
-                  Sign in with {o.display_name}
-                </Button>
-              );
-            })
-          ) : (
-            <h1>No OAuth Support</h1>
-          )}
-        </Spin>
+        <Spin spinning={discovering}>{renderOAuthButtons()}</Spin>
       </Col>
     </Row>
   );
