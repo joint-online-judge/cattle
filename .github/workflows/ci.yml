@@ -8,19 +8,19 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
-      - name: Use Node.js 14.x
-        uses: actions/setup-node@v1
+      - name: Use Node.js 14
+        uses: actions/setup-node@v2
         with:
-          node-version: 14.x
+          node-version: '14'
           cache: yarn
-      - run: echo ${{github.ref}}
       - run: yarn install
-      - name: pull & update submodules recursively
+      - name: Pull & update submodules recursively
         run: |
           git submodule update --init --recursive
           git submodule update --recursive --remote
       - run: yarn build
-      - uses: actions/upload-artifact@master
+      - name: Prepare build file for later job
+        uses: actions/upload-artifact@master
         with:
           name: dist
           path: dist
@@ -29,7 +29,8 @@ jobs:
     needs: build
     runs-on: ubuntu-20.04
     steps:
-      - uses: actions/download-artifact@master
+      - name: Gather build file from previous job
+        uses: actions/download-artifact@master
         with:
           name: dist
           path: dist
