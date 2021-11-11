@@ -23,13 +23,13 @@ const Index: React.FC = () => {
     async () => {
       const res =
         await Horse.problemSet.getProblemSetApiV1DomainsDomainProblemSetsProblemSetGet(
-          domainUrl,
           problemSetId,
+          domainUrl,
         );
-      if (res.data.error_code === ErrorCode.ProblemSetAfterDueError) {
+      if (res.data.errorCode === ErrorCode.ProblemSetAfterDueError) {
         setAfterDue(true);
       } else if (
-        res.data.error_code === ErrorCode.ProblemSetBeforeAvailableError
+        res.data.errorCode === ErrorCode.ProblemSetBeforeAvailableError
       ) {
         setBeforeAvailable(true);
       }

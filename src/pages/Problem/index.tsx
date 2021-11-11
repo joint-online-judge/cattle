@@ -49,7 +49,7 @@ const Index: React.FC = () => {
 
   useEffect(() => {
     getProblem(problemId);
-  }, [problemId, getProblem]);
+  }, [problemId]);
 
   return (
     <>

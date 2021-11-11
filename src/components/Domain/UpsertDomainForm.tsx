@@ -53,7 +53,7 @@ const Index: React.FC<IProps> = (props) => {
     {
       manual: true,
       onSuccess: (res) => {
-        if (res.data.error_code === ErrorCode.Success) {
+        if (res.data.errorCode === ErrorCode.Success) {
           message.success('update domain success');
           onUpdateSuccess?.(res.data.data);
         } else {

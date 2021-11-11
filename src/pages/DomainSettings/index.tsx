@@ -36,7 +36,7 @@ const Index: React.FC = () => {
       routes,
       titleI18nKey: 'SETTINGS.DOMAIN',
     });
-  }, [routes, setHeader]);
+  }, [routes]);
 
   return (
     <>
