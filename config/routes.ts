@@ -11,6 +11,39 @@
   },
   { path: '/logout', component: '@/pages/Logout' },
 
+  {
+    path: '/domain/:domainUrl/problem-set/:problemSetId',
+    component: '@/layouts/index',
+    wrappers: ['@/wrappers/auth'],
+    routes: [
+      {
+        exact: true,
+        path: '/domain/:domainUrl/problem-set/:problemSetId/create-problem',
+        component: '@/pages/CreateProblem',
+      },
+      {
+        exact: true,
+        path: '/domain/:domainUrl/problem-set/:problemSetId/system-test',
+        component: '@/pages/CreateProblem',
+      },
+      {
+        exact: true,
+        path: '/domain/:domainUrl/problem-set/:problemSetId/scoreboard',
+        component: '@/pages/CreateProblem',
+      },
+      {
+        exact: true,
+        path: '/domain/:domainUrl/problem-set/:problemSetId/settings',
+        component: '@/pages/CreateProblem',
+      },
+      {
+        exact: true,
+        path: '/domain/:domainUrl/problem-set/:problemSetId',
+        component: '@/pages/ProblemSetDetail',
+      },
+    ],
+  },
+
   // @chujie: this route tree should be separated.
   // Otherwise, 'domainUrl' cannot be matched in the layout component.
   {
@@ -50,31 +83,6 @@
       { exact: true, path: '/settings', component: '@/pages/UserSettings' },
       { exact: true, path: '/domain', component: '@/pages/DomainList' },
 
-      {
-        exact: true,
-        path: '/domain/:domainUrl/problem-set/:problemSetId/create-problem',
-        component: '@/pages/CreateProblem',
-      },
-      {
-        exact: true,
-        path: '/domain/:domainUrl/problem-set/:problemSetId/system-test',
-        component: '@/pages/CreateProblem',
-      },
-      {
-        exact: true,
-        path: '/domain/:domainUrl/problem-set/:problemSetId/scoreboard',
-        component: '@/pages/CreateProblem',
-      },
-      {
-        exact: true,
-        path: '/domain/:domainUrl/problem-set/:problemSetId/settings',
-        component: '@/pages/CreateProblem',
-      },
-      {
-        exact: true,
-        path: '/domain/:domainUrl/problem-set/:problemSetId',
-        component: '@/pages/ProblemSetDetail',
-      },
       {
         exact: true,
         path: '/domain/:domainUrl/problem-set/:problemSetId/:problemId',
