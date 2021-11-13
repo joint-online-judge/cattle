@@ -10,7 +10,7 @@ import {
   DomainEdit,
   ErrorCode,
 } from '@/utils/service';
-// import { MarkdownRender } from 'app/components/Editors';
+import MarkdownEditor from '@/components/MarkdownEditor';
 
 export interface IProps {
   initialValues?: Partial<Domain>;
@@ -109,12 +109,12 @@ const Index: React.FC<IProps> = (props) => {
         >
           <Input />
         </Form.Item>
+
         <Form.Item
           name="bulletin"
           label={intl.formatMessage({ id: 'DOMAIN.CREATE.BULLETIN' })}
         >
-          {/* {MarkdownRender} */}
-          <Input.TextArea rows={5} />
+          <MarkdownEditor />
         </Form.Item>
         <Form.Item>
           <Row>
@@ -122,7 +122,9 @@ const Index: React.FC<IProps> = (props) => {
               <Button
                 htmlType="submit"
                 type="primary"
-                className={initialValues?.url ? null : style.submitButtonCreate}
+                className={
+                  initialValues?.url ? undefined : style.submitButtonCreate
+                }
                 loading={updatingDomain || creatingDomain}
                 block
               >
