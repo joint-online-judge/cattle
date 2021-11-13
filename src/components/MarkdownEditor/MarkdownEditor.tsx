@@ -4,12 +4,12 @@ import SimpleMDE, { SimpleMDEReactProps } from 'react-simplemde-editor';
 import { Options } from 'easymde';
 import { merge } from 'lodash';
 import MarkdownRender from '@/components/MarkdownRender';
-import 'easymde/dist/easymde.min.css';
+import './style.less';
 
 const Index: React.FC<SimpleMDEReactProps> = ({ options, ...otherProps }) => {
   const presetOptions = useMemo(() => {
     return {
-      autofocus: true,
+      autofocus: false,
       spellChecker: false,
       minHeight: '300px',
       maxHeight: '400px',

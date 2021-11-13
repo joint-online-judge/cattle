@@ -10,6 +10,21 @@ const Index: React.FC<ReactMarkdownOptions> = (props) => {
       <ReactMarkdown
         components={{
           pre: ({ children }) => <pre style={{ padding: 0 }}>{children}</pre>,
+          table: ({ children }) => (
+            <table className="border-collapse border border-solid border-gray-300">
+              {children}
+            </table>
+          ),
+          td: ({ children }) => (
+            <td className="border border-solid border-gray-300 p-1.5">
+              {children}
+            </td>
+          ),
+          th: ({ children }) => (
+            <th className="border border-solid border-gray-300 p-1.5">
+              {children}
+            </th>
+          ),
           code: ({ inline, className, children, ...props }) => {
             const match = /language-(\w+)/.exec(className ?? '');
             return !inline && match ? (
