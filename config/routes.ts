@@ -14,7 +14,7 @@
   {
     path: '/domain/:domainUrl/problem-set/:problemSetId',
     component: '@/layouts/index',
-    wrappers: ['@/wrappers/auth'],
+    wrappers: ['@/wrappers/Auth'],
     routes: [
       {
         exact: true,
@@ -49,7 +49,7 @@
   {
     path: '/domain/:domainUrl',
     component: '@/layouts/index',
-    wrappers: ['@/wrappers/auth'],
+    wrappers: ['@/wrappers/Auth'],
     routes: [
       {
         exact: true,
@@ -77,7 +77,7 @@
   {
     path: '/',
     component: '@/layouts/index',
-    wrappers: ['@/wrappers/auth'],
+    wrappers: ['@/wrappers/Auth'],
     routes: [
       { exact: true, path: '/', component: '@/pages/DomainList' },
       { exact: true, path: '/settings', component: '@/pages/UserSettings' },
