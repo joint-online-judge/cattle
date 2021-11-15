@@ -98,7 +98,12 @@ const Index: React.FC<IProps> = ({
 
   return (
     <>
-      <Row gutter={[{ lg: 24, xl: 24 }, 24]}>
+      <Row
+        gutter={[
+          { xs: 16, sm: 16, lg: 24, xl: 24, xxl: 24 },
+          { xs: 16, sm: 16, lg: 24, xl: 24, xxl: 24 },
+        ]}
+      >
         <Col xs={24} sm={6} xl={6}>
           <SettingsSideBar
             items={menuItems}

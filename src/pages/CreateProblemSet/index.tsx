@@ -12,7 +12,7 @@ const Index: React.FC = () => {
   const routes = [
     {
       path: 'domain',
-      breadcrumbI18nKey: 'DOMAIN.DOMAINS',
+      breadcrumbI18nKey: 'DOMAIN',
     },
     {
       path: domainUrl,

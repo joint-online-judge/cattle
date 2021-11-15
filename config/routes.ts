@@ -104,6 +104,7 @@
       { exact: true, path: '/', component: '@/pages/DomainList' },
       { exact: true, path: '/settings', component: '@/pages/UserSettings' },
       { exact: true, path: '/domain', component: '@/pages/DomainList' },
+      { exact: true, path: '/admin', redirect: '/admin/domain' },
 
       {
         exact: true,
@@ -118,10 +119,19 @@
       },
 
       {
-        exact: true,
-        path: '/admin/domain/create',
-        component: '@/pages/CreateDomain',
+        path: '/admin/:tabs',
+        component: '@/pages/SiteAdmin',
+        access: 'isRoot',
+        routes: [
+          {
+            path: '/admin/domain',
+            component: '@/pages/SiteAdmin/CreateDomain',
+            menuKey: 'domain',
+            i18nKey: 'admin.menu.domain',
+          },
+        ],
       },
+
       { component: '@/pages/NotFound' },
     ],
   },

@@ -122,9 +122,6 @@ const Index: React.FC<IProps> = (props) => {
               <Button
                 htmlType="submit"
                 type="primary"
-                className={
-                  initialValues?.url ? undefined : style.submitButtonCreate
-                }
                 loading={updatingDomain || creatingDomain}
                 block
               >

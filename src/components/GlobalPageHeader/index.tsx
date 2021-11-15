@@ -43,10 +43,14 @@ const Index: React.FC<PageHeaderProps> = (props) => {
         itemRender,
       },
     });
-  }, [header]);
+  }, [header, intl]);
 
   return headerVisible ? (
-    <PageHeader {...pageHeaderProps} {...otherProps} />
+    <PageHeader
+      style={{ paddingLeft: 0, paddingRight: 0 }}
+      {...pageHeaderProps}
+      {...otherProps}
+    />
   ) : null;
 };
 

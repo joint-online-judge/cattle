@@ -82,7 +82,7 @@ export default {
   'SETTINGS.DOMAIN.MEMBERS': 'Members',
   'SETTINGS.DOMAIN.UPDATE': 'Update',
   // Admin
-  'ADMIN.ADMIN': 'Admin',
+  'admin.menu.domain': 'Domain Manage',
   // Footer
   'FOOTER.ABOUT': 'About',
   'FOOTER.API': 'API',
@@ -102,4 +102,5 @@ export default {
   'msg.error.delete': 'failed to delete {data}',
   // Menu
   'menu.domains': 'Domains',
+  'menu.admin': 'Site Manage',
 };
