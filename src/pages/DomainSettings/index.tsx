@@ -1,19 +1,18 @@
 import React, { useEffect, useMemo } from 'react';
-import { useParams, useModel } from 'umi';
+import { useParams, useModel, IRouteComponentProps } from 'umi';
 import { Divider, PageHeader } from 'antd';
-import UpdateDomain from './UpdateDomain';
 import style from './style.css';
 import { gravatarImageUrl } from '@/utils';
-import SideMenuPage, { PageContent } from '@/components/SideMenuPage';
+import SideMenuPage from '@/components/SideMenuPage';
 import ShadowCard from '@/components/ShadowCard';
 import MarkdownRender from '@/components/MarkdownRender';
 
-const Index: React.FC = () => {
+const Index: React.FC<IRouteComponentProps> = ({ children, route }) => {
   const { domainUrl } = useParams<{ domainUrl: string }>();
   const { domain, refresh } = useModel('domain');
   const { setHeader } = useModel('pageHeader');
 
-  const routes = useMemo(
+  const breads = useMemo(
     () => [
       {
         path: 'domain',
@@ -33,10 +32,10 @@ const Index: React.FC = () => {
 
   useEffect(() => {
     setHeader({
-      routes,
+      routes: breads,
       titleI18nKey: 'SETTINGS.DOMAIN',
     });
-  }, [routes]);
+  }, [breads]);
 
   return (
     <>
@@ -52,17 +51,7 @@ const Index: React.FC = () => {
           <MarkdownRender>{domain?.bulletin ?? ''}</MarkdownRender>
         </div>
       </ShadowCard>
-      <SideMenuPage>
-        <PageContent menuKey="profile" i18nKey="SETTINGS.DOMAIN.PROFILE">
-          <UpdateDomain refresh={refresh} />
-        </PageContent>
-        <PageContent menuKey="invitation" i18nKey="SETTINGS.DOMAIN.INVITATION">
-          <h1>Invitation</h1>
-        </PageContent>
-        <PageContent menuKey="members" i18nKey="SETTINGS.DOMAIN.MEMBERS">
-          <h1>Members</h1>
-        </PageContent>
-      </SideMenuPage>
+      <SideMenuPage route={route}>{children}</SideMenuPage>
     </>
   );
 };

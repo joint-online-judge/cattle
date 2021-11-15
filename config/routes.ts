@@ -52,14 +52,36 @@
     wrappers: ['@/wrappers/Auth'],
     routes: [
       {
-        exact: true,
         path: '/domain/:domainUrl/create-problem-set',
         component: '@/pages/CreateProblemSet',
       },
       {
-        exact: true,
-        path: '/domain/:domainUrl/settings',
+        path: '/domain/:domainUrl/settings/:tabs',
         component: '@/pages/DomainSettings',
+        routes: [
+          {
+            path: '/domain/:domainUrl/settings/profile',
+            component: '@/pages/DomainSettings/Profile',
+            menuKey: 'profile',
+            i18nKey: 'SETTINGS.DOMAIN.PROFILE',
+          },
+          {
+            path: '/domain/:domainUrl/settings/invitation',
+            component: '@/pages/DomainSettings/Invitation',
+            menuKey: 'invitation',
+            i18nKey: 'SETTINGS.DOMAIN.INVITATION',
+          },
+          {
+            path: '/domain/:domainUrl/settings/member',
+            component: '@/pages/DomainSettings/Member',
+            menuKey: 'member',
+            i18nKey: 'SETTINGS.DOMAIN.MEMBERS',
+          },
+          {
+            path: '/domain/:domainUrl/settings',
+            component: '@/pages/DomainSettings/Profile',
+          },
+        ],
       },
       {
         exact: true,

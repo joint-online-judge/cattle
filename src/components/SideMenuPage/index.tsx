@@ -1,85 +1,119 @@
-import React, { useMemo, useState } from 'react';
-import { useLocation, history, Location } from 'umi';
+import React, { useMemo, useState, useCallback } from 'react';
+import { generatePath } from 'react-router';
+import { useLocation, history, Location, useParams, IRoute } from 'umi';
 import { Row, Col } from 'antd';
 import PageContent, { PageContentProps } from './PageContent';
 import SettingsSideBar, {
   SettingsMenuItem,
 } from '@/components/Settings/SettingsSideBar';
-import globalStyle from '@/global.less';
+import ShadowCard from '@/components/ShadowCard';
+import { isArray } from 'lodash';
 
 interface IProps {
-  children: Array<React.ReactElement<PageContentProps>>;
+  children: React.ReactElement | Array<React.ReactElement<PageContentProps>>;
   extra?: React.ReactElement | React.ReactNode; // extra component below SideBar
-  urlQuery?: boolean; // whether to modify url query on switching
+  urlQuery?: boolean; // whether to use the url query mode
+  route?: IRoute;
 }
 
-const Index: React.FC<IProps> = ({ children, extra, urlQuery = true }) => {
+const Index: React.FC<IProps> = ({
+  children,
+  extra,
+  route,
+  urlQuery = false,
+}) => {
   const location: Location = useLocation();
+  const params = useParams<{ tabs?: string }>();
 
   const [key, setKey] = useState<string>(
     (() => {
-      if (
-        urlQuery &&
-        location.query?.tab &&
-        typeof location.query?.tab === 'string'
-      )
-        return location.query?.tab;
-      const firstValidChild = children.find((o) => o.props.menuKey);
-      return firstValidChild?.props?.menuKey ?? '';
+      if (urlQuery && isArray(children)) {
+        if (location.query?.tab && typeof location.query?.tab === 'string')
+          return location.query?.tab;
+        const firstValidChild = children.find((o) => o.props.menuKey);
+        return firstValidChild?.props?.menuKey ?? '';
+      }
+      return params.tabs || '';
     })(),
   );
 
   const menuItems = useMemo<SettingsMenuItem[]>(() => {
-    return React.Children.map(
-      children,
-      (child: React.ReactElement<PageContentProps>) => {
-        if (typeof child === 'object' && child?.props?.menuKey) {
-          return {
-            menuKey: child.props.menuKey,
-            i18nKey: child.props.i18nKey,
-            text: child.props.text,
-            path: child.props.path,
-            node: child.props.node,
-            menuItemProps: child.props.menuItemProps,
-            component: child,
-          };
-        }
+    if (urlQuery) {
+      return React.Children.map(
+        children,
+        (child: React.ReactElement<PageContentProps>) => {
+          if (typeof child === 'object' && child?.props?.menuKey) {
+            return {
+              menuKey: child.props.menuKey,
+              i18nKey: child.props.i18nKey,
+              text: child.props.text,
+              path: child.props.path,
+              node: child.props.node,
+              menuItemProps: child.props.menuItemProps,
+              component: child,
+            };
+          }
+          return undefined;
+        },
+      ).filter((o) => !!o);
+    }
 
-        return undefined;
-      },
-    ).filter((o) => Boolean(o));
+    const items =
+      route?.routes
+        ?.map((r) => {
+          if (r.unaccessible !== true && r.menuKey) {
+            return {
+              menuKey: r.menuKey,
+              i18nKey: r.i18nKey,
+              text: r.text,
+              path: r.path,
+            };
+          }
+        })
+        .filter((o) => !!o) || [];
+
+    return items as SettingsMenuItem[];
   }, [children]);
+
+  const menuOnClick = useCallback(
+    (event) => {
+      setKey(event.key);
+
+      if (urlQuery) {
+        history.replace({
+          pathname: location.pathname,
+          query: { tab: event.key.toString() },
+        });
+      } else if (route && route.path) {
+        history.push(
+          generatePath(route.path, {
+            ...params,
+            tabs: event.key,
+          }),
+        );
+      }
+    },
+    [urlQuery, history, location, route],
+  );
 
   return (
     <>
       <Row gutter={[{ lg: 24, xl: 24 }, 24]}>
-        <Col
-          xs={{ span: 24, order: 0 }}
-          sm={{ span: 6, order: 0 }}
-          xl={{ span: 6, order: 0 }}
-        >
+        <Col xs={24} sm={6} xl={6}>
           <SettingsSideBar
             items={menuItems}
             selectedKeys={[key]}
-            onClick={(event) => {
-              setKey(event.key);
-              if (urlQuery) {
-                history.replace({
-                  pathname: location.pathname,
-                  query: { tab: event.key.toString() },
-                });
-              }
-            }}
-            className={globalStyle.mainBoxShadow}
+            onClick={menuOnClick}
+            className="shadow-md"
           />
           {extra}
         </Col>
-        <Col
-          xs={{ span: 24, order: 1 }}
-          sm={{ span: 18, order: 1 }}
-          xl={{ span: 18, order: 1 }}
-        >
-          {children.find((o) => o.props.menuKey === key) ?? null}
+        <Col xs={24} sm={18} xl={18}>
+          {isArray(children) ? (
+            children.find((o) => o.props.menuKey === key) ?? null
+          ) : (
+            <ShadowCard>{children}</ShadowCard>
+          )}
         </Col>
       </Row>
     </>

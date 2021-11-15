@@ -76,6 +76,7 @@ export default {
   'SETTINGS.SWITCH_LANG': 'Switch Language',
   'SETTINGS.UPDATE_SETTINGS': 'Update Settings',
   'SETTINGS.DISPLAY_SETTINGS': 'Display Settings',
+  'SETTINGS.DOMAIN': 'Settings',
   'SETTINGS.DOMAIN.PROFILE': 'Profile',
   'SETTINGS.DOMAIN.INVITATION': 'Invitation',
   'SETTINGS.DOMAIN.MEMBERS': 'Members',
