@@ -6,7 +6,7 @@ import style from './style.css';
 
 const extractPath = (path: string) => {
   try {
-    const p = path.split('/').find((o) => Boolean(o));
+    const p = path.split('/').find((o) => !!o);
     return p ?? 'home';
   } catch {
     return 'home';
