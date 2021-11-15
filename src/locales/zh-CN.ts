@@ -82,7 +82,7 @@ export default {
   'SETTINGS.DOMAIN.MEMBERS': '成员管理',
   'SETTINGS.DOMAIN.UPDATE': '更新',
   // Admin
-  'ADMIN.ADMIN': '管理',
+  'admin.menu.domain': '域管理',
   // Footer
   'FOOTER.ABOUT': '关于',
   'FOOTER.API': 'API',
@@ -101,5 +101,7 @@ export default {
   'msg.error.update': '更新{data}失败',
   'msg.error.delete': '删除{data}失败',
   // Menu
-  'menu.domains': '我的域',
+  'menu.domain': '我的域',
+  'menu.admin': '全站管理',
+  'menu.domain_manage': '域管理',
 };

@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import { Row, Col } from 'antd';
 import ShadowCard from '@/components/ShadowCard';
 
 interface IProps {
-  children: React.ReactElement[];
-  extra: Array<React.ReactElement | React.ReactNode>; // extra component on the side
+  children: React.ReactNode | React.ReactNode[];
+  extra: React.ReactNode | React.ReactNode[]; // extra component on the side
 }
 
 const Index: React.FC<IProps> = ({ children, extra }) => {

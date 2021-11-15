@@ -1,9 +1,9 @@
 import React from 'react';
-import { Row, Col } from 'antd';
-import { Link } from 'umi';
-import { useModel } from '@@/plugin-model/useModel';
-import style from './style.less';
+import { Row, Col, Avatar } from 'antd';
+import { Link, useModel } from 'umi';
 import { CONTENT_GRID_LAYOUT } from '@/constants';
+import { gravatarImageUrl } from '@/utils';
+import style from './style.less';
 
 const Index: React.FC = () => {
   const { domain } = useModel('domain');
@@ -15,10 +15,22 @@ const Index: React.FC = () => {
       className={style.domainHeaderContainer}
     >
       <Col {...CONTENT_GRID_LAYOUT}>
-        <Link to={`/domain/${domain.url}`}>
-          <h1 className={style.domainTitle}>{domain.name}</h1>
-        </Link>
-        <h2 className={style.domainSubtitle}>Powered by JOJ Team</h2>
+        <Row justify="space-between">
+          <Col>
+            <Link to={`/domain/${domain.url}`}>
+              <h1 className={style.domainTitle}>{domain.name}</h1>
+            </Link>
+            <h2 className={style.domainSubtitle}>Powered by JOJ Team</h2>
+          </Col>
+          <Col>
+            <Avatar
+              shape="square"
+              size={100}
+              src={gravatarImageUrl(domain.gravatar)}
+              alt={`@${domain.name}`}
+            />
+          </Col>
+        </Row>
       </Col>
     </Row>
   ) : null;

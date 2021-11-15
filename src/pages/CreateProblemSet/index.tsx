@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { useParams } from 'umi';
 import { useModel } from '@@/plugin-model/useModel';
 import SidePage from '@/components/SidePage';
@@ -9,27 +9,30 @@ const Index: React.FC = () => {
   const { domain } = useModel('domain');
   const { setHeader } = useModel('pageHeader');
 
-  const routes = [
-    {
-      path: 'domain',
-      breadcrumbI18nKey: 'DOMAIN.DOMAINS',
-    },
-    {
-      path: domainUrl,
-      breadcrumbName: domain?.name ?? 'unknown',
-    },
-    {
-      path: 'create-problem-set',
-      breadcrumbI18nKey: 'PROBLEM_SET.CREATE.TITLE',
-    },
-  ];
+  const breads = useMemo(
+    () => [
+      {
+        path: 'domain',
+        breadcrumbI18nKey: 'DOMAIN',
+      },
+      {
+        path: domainUrl,
+        breadcrumbName: domain?.name ?? 'unknown',
+      },
+      {
+        path: 'create-problem-set',
+        breadcrumbI18nKey: 'PROBLEM_SET.CREATE.TITLE',
+      },
+    ],
+    [domain],
+  );
 
   useEffect(() => {
     setHeader({
-      routes,
+      routes: breads,
       titleI18nKey: 'PROBLEM_SET.CREATE.TITLE',
     });
-  }, []);
+  }, [breads]);
 
   return (
     <SidePage extra={<h1>Side</h1>}>

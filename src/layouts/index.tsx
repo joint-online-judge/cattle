@@ -16,9 +16,7 @@ const Index: React.FC = ({ children }) => {
   const { headerVisible } = useModel('pageHeader');
 
   useEffect(() => {
-    if (domainUrl) {
-      fetchDomain(domainUrl);
-    }
+    fetchDomain(domainUrl);
   }, [domainUrl]);
 
   return (

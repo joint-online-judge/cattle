@@ -16,7 +16,7 @@ const Index: React.FC<IRouteComponentProps> = ({ children, route }) => {
     () => [
       {
         path: 'domain',
-        breadcrumbI18nKey: 'DOMAIN.DOMAINS',
+        breadcrumbI18nKey: 'DOMAIN',
       },
       {
         path: domainUrl,

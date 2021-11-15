@@ -1,7 +1,15 @@
 import React, { useEffect } from 'react';
 import { Link, useIntl } from 'umi';
 import { useRequest } from 'ahooks';
-import { message, Table, Space, Divider, TableColumnProps } from 'antd';
+import {
+  message,
+  Table,
+  Space,
+  Divider,
+  TableColumnProps,
+  List,
+  Skeleton,
+} from 'antd';
 import { useModel } from '@@/plugin-model/useModel';
 import { Horse, Domain } from '@/utils/service';
 import ShadowCard from '@/components/ShadowCard';
@@ -40,42 +48,15 @@ const Index: React.FC = () => {
       key: 'domain.url',
     },
     {
-      title: 'My Role',
-      dataIndex: 'role',
-      key: 'role',
-      render: (text: string) => text || '-',
-    },
-    // TODO: render role as tags
-    // {
-    //   title: 'Tags',
-    //   key: 'tags',
-    //   dataIndex: 'tags',
-    //   render: tags => (
-    //     <>
-    //       {tags.map(tag => {
-    //         let color = tag.length > 5 ? 'geekblue' : 'green';
-    //         if (tag === 'loser') {
-    //           color = 'volcano';
-    //         }
-    //         return (
-    //           <Tag color={color} key={tag}>
-    //             {tag.toUpperCase()}
-    //           </Tag>
-    //         );
-    //       })}
-    //     </>
-    //   ),
-    // },
-    {
       title: 'Action',
       key: 'action',
       fixed: 'right',
-      render: (text, record) => (
+      render: (_text, record) => (
         <Space split={<Divider type="vertical" />}>
           <Link to={`/domain/${record.url}`}>
             {intl.formatMessage({ id: 'VISIT' })}
           </Link>
-          <Link to={`/domain/${record.url}/settings`}>
+          <Link to={`/domain/${record.url}/settings/profile`}>
             {intl.formatMessage({ id: 'MANAGE' })}
           </Link>
         </Space>
@@ -85,13 +66,34 @@ const Index: React.FC = () => {
 
   return (
     <>
-      <ShadowCard>
-        <Table
-          columns={columns}
-          dataSource={data}
+      <ShadowCard bodyStyle={{ padding: 0 }}>
+        <List
           loading={loading}
-          rowKey="id"
-          pagination={false}
+          itemLayout="horizontal"
+          dataSource={data}
+          size="large"
+          renderItem={(item) => (
+            <List.Item
+              actions={[
+                <Link to={`/domain/${item.url}`}>
+                  {intl.formatMessage({ id: 'VISIT' })}
+                </Link>,
+                <Link to={`/domain/${item.url}/settings/profile`}>
+                  {intl.formatMessage({ id: 'MANAGE' })}
+                </Link>,
+              ]}
+            >
+              <Skeleton title={false} loading={loading} active>
+                <List.Item.Meta
+                  title={
+                    <Link to={`/domain/${item.url}`} className="text-lg">
+                      {item.name}
+                    </Link>
+                  }
+                />
+              </Skeleton>
+            </List.Item>
+          )}
         />
       </ShadowCard>
     </>

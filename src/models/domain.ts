@@ -20,12 +20,15 @@ export default function DomainModel() {
     refresh,
   } = useRequest(
     async (domainUrl: string | undefined | null) => {
-      if (typeof domainUrl === 'string') {
+      if (typeof domainUrl === 'string' && domainUrl.length > 0) {
         setDomainUrl(domainUrl);
         const res = await Horse.domain.getDomainApiV1DomainsDomainGet(
           domainUrl,
         );
         return res.data.data;
+      } else {
+        setDomainUrl(undefined);
+        return undefined;
       }
     },
     {

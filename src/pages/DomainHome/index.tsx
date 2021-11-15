@@ -22,31 +22,14 @@ const Index: React.FC = () => {
 
   return (
     <div>
-      <ShadowCard className={style.contentCard}>
-        <Spin spinning={!domain}>
-          {domain ? (
-            <Typography>
-              <Row gutter={{ xs: 16, md: 24 }} justify="center">
-                <Col span={4}>
-                  <Avatar
-                    shape="square"
-                    size={100}
-                    src={gravatarImageUrl(domain.gravatar)}
-                    alt={`@${domain.name}`}
-                  />
-                </Col>
-                <Col span={20}>
-                  <Title level={3}>{domain.name}</Title>
-                  <MarkdownRender>{domain?.bulletin ?? ''}</MarkdownRender>
-                  {/* <Paragraph ellipsis={{ rows: 2, expandable: true }}>
-                    <MarkdownRender children={domain?.bulletin || ''} />
-                  </Paragraph> */}
-                </Col>
-              </Row>
-            </Typography>
-          ) : null}
-        </Spin>
-      </ShadowCard>
+      {domain?.bulletin ? (
+        <ShadowCard
+          title={intl.formatMessage({ id: 'DOMAIN.CREATE.BULLETIN' })}
+          className={style.contentCard}
+        >
+          <MarkdownRender>{domain?.bulletin ?? ''}</MarkdownRender>
+        </ShadowCard>
+      ) : null}
       <ShadowCard
         title={intl.formatMessage({ id: 'PROBLEM_SET.PROBLEM_SET' })}
         className={style.contentCard}
@@ -62,7 +45,7 @@ const Index: React.FC = () => {
           </Button>
         }
       >
-        <ProblemSetList domainId={domain?.id ?? ''} />
+        <ProblemSetList domainId={domainUrl} />
       </ShadowCard>
     </div>
   );

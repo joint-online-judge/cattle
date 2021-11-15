@@ -11,13 +11,13 @@ import {
 } from 'antd';
 import { useIntl, history } from 'umi';
 import { useRequest } from 'ahooks';
-import style from './style.css';
 import {
   Horse,
-  JojHorseModelsProblemSetProblemSet as ProblemSet,
+  ProblemSet,
   ProblemSetCreate,
   ProblemSetEdit,
 } from '@/utils/service';
+import MarkdownEditor from '@/components/MarkdownEditor';
 
 export interface IProps {
   initialValues?: Partial<ProblemSet>;
@@ -137,27 +137,21 @@ const UpsertProblemSetForm: React.FC<IProps> = (props) => {
       <Form.Item
         name="content"
         label={intl.formatMessage({ id: 'PROBLEM.CREATE.FORM.CONTENT' })}
-        extra={'TODO: there should be a markdown editor here.'}
       >
-        <Input.TextArea rows={6} />
+        <MarkdownEditor />
       </Form.Item>
       <Form.Item>
-        <Row justify="center">
-          <Col xs={9} sm={8} md={6}>
-            <Button
-              htmlType="submit"
-              type="primary"
-              size="large"
-              loading={creatingProblemSet || updatingProblemSet}
-              block
-              className={style.submitButton}
-            >
-              {intl.formatMessage({
-                id: 'PROBLEM.SUBMIT',
-              })}
-            </Button>
-          </Col>
-        </Row>
+        <Button
+          htmlType="submit"
+          type="primary"
+          size="large"
+          loading={creatingProblemSet || updatingProblemSet}
+          block
+        >
+          {intl.formatMessage({
+            id: 'PROBLEM.SUBMIT',
+          })}
+        </Button>
       </Form.Item>
     </Form>
   );

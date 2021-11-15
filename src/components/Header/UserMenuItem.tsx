@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useModel, useIntl, useLocation, Link } from 'umi';
 import { Dropdown, Menu, Modal, Space } from 'antd';
+import { DownOutlined } from '@ant-design/icons';
 import Gravatar from '@/components/Gravatar';
 import LangSelect from '@/components/LangSelect';
 
@@ -49,7 +50,15 @@ export const Index: React.FC = () => {
       <Dropdown overlay={subMenu} placement="bottomRight" arrow>
         <Space>
           <Gravatar user={initialState?.user} />
-          <span>{initialState?.user?.real_name}</span>
+          <span>
+            {initialState?.user.realName || initialState?.user.username}
+          </span>
+          <DownOutlined
+            style={{
+              minWidth: '10px',
+              fontSize: '10px',
+            }}
+          />
         </Space>
       </Dropdown>
       <Modal

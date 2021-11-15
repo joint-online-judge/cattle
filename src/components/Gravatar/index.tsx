@@ -1,10 +1,10 @@
 import React from 'react';
 import { Avatar, AvatarProps } from 'antd';
 import { gravatarImageUrl } from '@/utils';
-import { User, UserBase } from '@/client';
+import { JWTAccessToken } from '@/client';
 
 export interface GravatarProps extends AvatarProps {
-  user: UserBase | User | undefined;
+  user: JWTAccessToken | undefined;
 }
 
 const Index: React.FC<GravatarProps> = (props) => {
