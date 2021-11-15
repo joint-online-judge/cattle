@@ -101,6 +101,7 @@ export default {
   'msg.error.update': '更新{data}失败',
   'msg.error.delete': '删除{data}失败',
   // Menu
-  'menu.domains': '我的域',
+  'menu.domain': '我的域',
   'menu.admin': '全站管理',
+  'menu.domain_manage': '域管理',
 };
