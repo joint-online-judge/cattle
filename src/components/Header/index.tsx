@@ -1,17 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { matchPath } from 'react-router';
 import { Menu } from 'antd';
-import { useIntl, Link, useLocation, useAccess, useModel } from 'umi';
+import {
+  useIntl,
+  Link,
+  useLocation,
+  useAccess,
+  useModel,
+  useRouteMatch,
+} from 'umi';
 import UserMenuItem from './UserMenuItem';
 import style from './style.css';
-
-const extractPath = (path: string) => {
-  try {
-    const p = path.split('/').find((o) => !!o);
-    return p ?? 'home';
-  } catch {
-    return 'home';
-  }
-};
 
 const Index: React.FC = () => {
   const intl = useIntl();
@@ -19,7 +18,17 @@ const Index: React.FC = () => {
   const location = useLocation();
   const { domainUrl } = useModel('domain');
 
-  const [current, setCurrent] = useState(extractPath(location.pathname));
+  const matchMenuKey = () => {
+    if (matchPath(location.pathname, { path: '/admin' })) return 'admin';
+    else if (
+      matchPath(location.pathname, { path: '/domain/:domainUrl/settings' })
+    )
+      return 'domain_manage';
+    else if (matchPath(location.pathname, { path: '/domain' })) return 'domain';
+    return 'home';
+  };
+
+  const [current, setCurrent] = useState(matchMenuKey());
 
   return (
     <Menu

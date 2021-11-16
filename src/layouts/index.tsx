@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Col, Layout, Row, Alert, BackTop } from 'antd';
+import { Col, Layout, Row, Alert, BackTop, message } from 'antd';
 import { useModel, Link, useParams } from 'umi';
 import style from './style.less';
 import Footer from '@/components/Footer';
@@ -18,6 +18,13 @@ const Index: React.FC = ({ children }) => {
   useEffect(() => {
     fetchDomain(domainUrl);
   }, [domainUrl]);
+
+  useEffect(() => {
+    // @Chujie: default message will display and overlap with the Header
+    message.config({
+      top: 72, // header height 64 + default top 8
+    });
+  }, []);
 
   return (
     <Layout className={style.pageLayout}>

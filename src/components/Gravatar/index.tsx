@@ -1,20 +1,22 @@
 import React from 'react';
 import { Avatar, AvatarProps } from 'antd';
+import { UserOutlined } from '@ant-design/icons';
 import { gravatarImageUrl } from '@/utils';
-import { JWTAccessToken } from '@/client';
 
 export interface GravatarProps extends AvatarProps {
-  user: JWTAccessToken | undefined;
+  gravatar?: string;
 }
 
 const Index: React.FC<GravatarProps> = (props) => {
-  const { user, ...otherProps } = props;
-  const imageUrl = user?.gravatar ? gravatarImageUrl(user.gravatar) : undefined;
-  return (
-    <Avatar src={imageUrl} alt={user?.username ?? 'user'} {...otherProps}>
-      {user?.username ? user.username.slice(0, 1).toUpperCase() : ''}
-    </Avatar>
-  );
+  const { gravatar, ...otherProps } = props;
+  const imageUrl = gravatar ? gravatarImageUrl(gravatar) : undefined;
+
+  const avatarSrc = {
+    src: imageUrl,
+    icon: <UserOutlined />,
+  };
+
+  return <Avatar {...avatarSrc} alt={'avatar'} {...otherProps} />;
 };
 
 export default Index;
