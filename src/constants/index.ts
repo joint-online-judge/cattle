@@ -5,7 +5,7 @@ export const CONTENT_GRID_LAYOUT = {
   sm: 20,
   lg: 18,
   xl: 16,
-  xxl: 15,
+  xxl: 14,
 };
 export const SUPPORT_PROGRAMMING_LANGUAGE = [
   'python',

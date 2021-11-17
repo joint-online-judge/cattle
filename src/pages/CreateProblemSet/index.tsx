@@ -40,7 +40,7 @@ const Index: React.FC = () => {
         domainUrl={domainUrl}
         initialValues={{
           hidden: true,
-          scoreboard_hidden: true,
+          scoreboardHidden: true,
         }}
       />
     </SidePage>

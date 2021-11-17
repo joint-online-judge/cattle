@@ -81,18 +81,18 @@ const Index: React.FC<IProps> = ({ domainId }) => {
               <List.Item.Meta
                 title={
                   <Link to={`/domain/${domainId}/problem-set/${item.id}`}>
-                    <Title level={4}>{item.title}</Title>
+                    <h2 className="text-2xl font-light">{item.title}</h2>
                   </Link>
                 }
                 description={
                   <>
-                    {mm(item.available_time).format('YYYY-MM-DD HH:mm')}
+                    {mm(item.availableTime).format('YYYY-MM-DD HH:mm')}
                     <Divider type="vertical" />
-                    {mm(item.due_time).format('YYYY-MM-DD HH:mm')}
+                    {mm(item.dueTime).format('YYYY-MM-DD HH:mm')}
                   </>
                 }
               />
-              <div>{getStatusBadge(item.available_time, item.due_time)}</div>
+              <div>{getStatusBadge(item.availableTime, item.dueTime)}</div>
             </Skeleton>
           </List.Item>
         )}

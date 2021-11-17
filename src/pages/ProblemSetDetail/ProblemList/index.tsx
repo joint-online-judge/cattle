@@ -14,7 +14,7 @@ const Index: React.FC = () => {
       const res = await Horse.problem.listProblemsApiV1DomainsDomainProblemsGet(
         domainUrl,
         {
-          problem_set: problemSetId,
+          problemSet: problemSetId,
         },
       );
       return res?.data?.data?.results ?? [];
