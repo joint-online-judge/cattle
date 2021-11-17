@@ -46,7 +46,7 @@
     "remark-gfm": "^1.0.0",
     "swagger-typescript-api": "^9.3.1",
     "tailwindcss": "npm:@tailwindcss/postcss7-compat",
-    "umi": "^3.4.14"
+    "umi": "^3.5.20"
   },
   "devDependencies": {
     "@types/crypto-js": "^4.0.1",

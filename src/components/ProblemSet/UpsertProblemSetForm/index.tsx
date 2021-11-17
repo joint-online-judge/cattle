@@ -87,7 +87,7 @@ const UpsertProblemSetForm: React.FC<IProps> = (props) => {
       <Row>
         <Col span={12}>
           <Form.Item
-            name="available_time"
+            name="availableTime"
             label={intl.formatMessage({
               id: 'PROBLEM_SET.CREATE.FORM.AVAILABLE_TIME',
             })}
@@ -98,7 +98,7 @@ const UpsertProblemSetForm: React.FC<IProps> = (props) => {
         </Col>
         <Col span={12}>
           <Form.Item
-            name="due_time"
+            name="dueTime"
             label={intl.formatMessage({
               id: 'PROBLEM_SET.CREATE.FORM.DUE_TIME',
             })}
@@ -122,7 +122,7 @@ const UpsertProblemSetForm: React.FC<IProps> = (props) => {
         </Col>
         <Col span={12}>
           <Form.Item
-            name="scoreboard_hidden"
+            name="scoreboardHidden"
             valuePropName="checked"
             label={intl.formatMessage({
               id: 'PROBLEM_SET.CREATE.FORM.SCOREBOARD_HIDDEN',

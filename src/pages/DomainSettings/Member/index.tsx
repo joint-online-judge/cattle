@@ -1,12 +1,13 @@
 import React, { useRef } from 'react';
 import { useParams, Link } from 'umi';
-import { Button, Space, message, Popconfirm } from 'antd';
+import { Space, message, Popconfirm } from 'antd';
 import ProTable, { ProColumns, ActionType } from '@ant-design/pro-table';
 import { useRequest } from 'ahooks';
 import { Horse, UserWithDomainRole } from '@/utils/service';
-import Gravatar from '@/components/Gravatar';
 import { transPagination } from '@/utils';
 import AddUserModal from './AddUserModal';
+import Gravatar from '@/components/Gravatar';
+import DomainRoleSelect from '@/components/DomainRoleSelect';
 
 const Index: React.FC = () => {
   const { domainUrl } = useParams<{ domainUrl: string }>();
@@ -29,7 +30,7 @@ const Index: React.FC = () => {
     },
   );
 
-  const { run: removeUser } = useRequest(
+  const { run: removeUser, loading: deleting } = useRequest(
     async (userId: string) => {
       const response =
         await Horse.domain.removeDomainUserApiV1DomainsDomainUsersUserDelete(
@@ -74,7 +75,9 @@ const Index: React.FC = () => {
     {
       title: '角色',
       width: 80,
-      dataIndex: 'role',
+      render: (_, record) => (
+        <DomainRoleSelect domainUrl={domainUrl} value={record.role} />
+      ),
     },
     {
       title: '操作',
@@ -98,6 +101,7 @@ const Index: React.FC = () => {
 
   return (
     <ProTable<UserWithDomainRole>
+      loading={deleting}
       actionRef={ref}
       cardProps={false}
       columns={columns}
