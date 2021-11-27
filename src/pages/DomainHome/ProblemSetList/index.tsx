@@ -86,13 +86,13 @@ const Index: React.FC<IProps> = ({ domainId }) => {
                 }
                 description={
                   <>
-                    {mm(item.availableTime).format('YYYY-MM-DD HH:mm')}
+                    {mm(item.unlockAt).format('YYYY-MM-DD HH:mm')}
                     <Divider type="vertical" />
-                    {mm(item.dueTime).format('YYYY-MM-DD HH:mm')}
+                    {mm(item.lockAt).format('YYYY-MM-DD HH:mm')}
                   </>
                 }
               />
-              <div>{getStatusBadge(item.availableTime, item.dueTime)}</div>
+              <div>{getStatusBadge(item.unlockAt, item.dueAt)}</div>
             </Skeleton>
           </List.Item>
         )}

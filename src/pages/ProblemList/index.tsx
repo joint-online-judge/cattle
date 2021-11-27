@@ -54,7 +54,6 @@ const Index: React.FC = () => {
   return (
     <>
       <SideMenuPage
-        urlQuery={true}
         extra={
           <ShadowCard style={{ marginTop: 16 }}>
             <Descriptions column={1}>

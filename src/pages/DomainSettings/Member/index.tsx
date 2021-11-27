@@ -13,7 +13,7 @@ const Index: React.FC = () => {
   const { domainUrl } = useParams<{ domainUrl: string }>();
   const ref = useRef<ActionType>();
 
-  const { run: fetchDomainUsers } = useRequest(
+  const { run: fetchDomainUsers, loading: fetching } = useRequest(
     async (params: ProTablePagination) => {
       const response =
         await Horse.domain.listDomainUsersApiV1DomainsDomainUsersGet(
@@ -76,7 +76,7 @@ const Index: React.FC = () => {
       title: '角色',
       width: 80,
       render: (_, record) => (
-        <DomainRoleSelect domainUrl={domainUrl} value={record.role} />
+        <DomainRoleSelect domainUrl={domainUrl} value={record.domainRole} />
       ),
     },
     {
@@ -101,7 +101,7 @@ const Index: React.FC = () => {
 
   return (
     <ProTable<UserWithDomainRole>
-      loading={deleting}
+      loading={fetching || deleting}
       actionRef={ref}
       cardProps={false}
       columns={columns}

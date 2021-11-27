@@ -45,6 +45,13 @@ const Index: React.FC = () => {
       <Menu.Item key="domain">
         <Link to="/domain">{intl.formatMessage({ id: 'menu.domain' })}</Link>
       </Menu.Item>
+      {domainUrl ? (
+        <Menu.Item key="problem-list">
+          <Link to={`/domain/${domainUrl}/problem`}>
+            {intl.formatMessage({ id: 'menu.problem_list' })}
+          </Link>
+        </Menu.Item>
+      ) : null}
       {
         // Note: do not use <Access> of umi -- antd menu cannot regonize wrapped component.
         domainUrl && access.isRoot ? (

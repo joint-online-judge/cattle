@@ -1,15 +1,12 @@
 import React from 'react';
-import { useParams } from 'umi';
+import { useParams, useModel } from 'umi';
 import { message } from 'antd';
 import { useRequest } from 'ahooks';
 import UpsertDomainForm from '@/components/Domain/UpsertDomainForm';
 import { Horse } from '@/utils/service';
 
-interface IProps {
-  refresh: () => void;
-}
-
-const Index: React.FC<IProps> = ({ refresh }) => {
+const Index: React.FC = () => {
+  const { refresh } = useModel('domain');
   const { domainUrl } = useParams<{ domainUrl: string }>();
 
   const { data } = useRequest(

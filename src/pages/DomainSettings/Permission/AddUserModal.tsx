@@ -61,7 +61,7 @@ const Index: React.FC<IProps> = ({ domainUrl, onSuccess }) => {
     >
       <Form.Item
         name="user"
-        label={intl.formatMessage({ id: 'User' })}
+        label={'User'}
         rules={[
           {
             required: true,

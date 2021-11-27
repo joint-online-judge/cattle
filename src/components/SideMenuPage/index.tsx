@@ -104,7 +104,7 @@ const Index: React.FC<IProps> = ({
           { xs: 16, sm: 16, lg: 24, xl: 24, xxl: 24 },
         ]}
       >
-        <Col xs={24} sm={6} xl={6}>
+        <Col xs={24} sm={24} md={6} lg={6} xl={6}>
           <SettingsSideBar
             items={menuItems}
             selectedKeys={[key]}
@@ -113,7 +113,7 @@ const Index: React.FC<IProps> = ({
           />
           {extra}
         </Col>
-        <Col xs={24} sm={18} xl={18}>
+        <Col xs={24} sm={24} md={18} lg={18} xl={18}>
           {isArray(children) ? (
             children.find((o) => o.props.menuKey === key) ?? null
           ) : (

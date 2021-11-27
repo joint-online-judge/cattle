@@ -40,8 +40,9 @@ export default {
   'DOMAIN.HOME.SETTINGS': 'Settings',
   // Problems
   'PROBLEM.CREATE.TITLE': 'Create Problem',
-  'PROBLEM.CREATE.FORM.CONTENT': 'Content',
+  'PROBLEM.CREATE.FORM.CONTENT': 'Description',
   'PROBLEM.CREATE.FORM.HIDDEN': 'Hidden',
+  'PROBLEM.CREATE.FORM.URL': 'Problem URL',
   'PROBLEM.LANGUAGES': 'Languages',
   'PROBLEM.SUBMIT': 'Submit',
   'PROBLEM.STATUS': 'Status',
@@ -63,8 +64,9 @@ export default {
   'PROBLEM_SET.INTRODUCTION': 'Problem Set Introduction',
   'PROBLEM_SET.CREATE.TITLE': 'Create Problem Set',
   'PROBLEM_SET.CREATE.FORM.SCOREBOARD_HIDDEN': 'Hide Scoreboard',
-  'PROBLEM_SET.CREATE.FORM.AVAILABLE_TIME': 'Available Time',
-  'PROBLEM_SET.CREATE.FORM.DUE_TIME': 'Due Time',
+  'PROBLEM_SET.CREATE.FORM.UNLOCK_AT': 'Unlock Time',
+  'PROBLEM_SET.CREATE.FORM.DUE_AT': 'Due Time',
+  'PROBLEM_SET.CREATE.FORM.LOCK_AT': 'Lock Time',
   'PROBLEM_SET.CREATE.FORM.URL': 'Problem Set URL',
   // Settings
   'SETTINGS.SETTINGS': 'Settings',
@@ -80,7 +82,7 @@ export default {
   'SETTINGS.DOMAIN.PROFILE': 'Profile',
   'SETTINGS.DOMAIN.INVITATION': 'Invitation',
   'SETTINGS.DOMAIN.MEMBERS': 'Members',
-  'SETTINGS.DOMAIN.UPDATE': 'Update',
+  'SETTINGS.DOMAIN.PERMISSION': 'Permission',
   // Admin
   'admin.menu.domain': 'Domain Manage',
   // Footer
@@ -104,4 +106,5 @@ export default {
   'menu.domain': 'Domains',
   'menu.admin': 'Site Manage',
   'menu.domain_manage': 'Domain Manage',
+  'menu.problem_list': 'Problems',
 };

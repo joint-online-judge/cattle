@@ -17,29 +17,28 @@
     wrappers: ['@/wrappers/Auth'],
     routes: [
       {
-        exact: true,
-        path: '/domain/:domainUrl/problem-set/:problemSetId/create-problem',
-        component: '@/pages/CreateProblem',
-      },
-      {
-        exact: true,
         path: '/domain/:domainUrl/problem-set/:problemSetId/system-test',
         component: '@/pages/CreateProblem',
       },
       {
-        exact: true,
         path: '/domain/:domainUrl/problem-set/:problemSetId/scoreboard',
         component: '@/pages/CreateProblem',
       },
       {
-        exact: true,
         path: '/domain/:domainUrl/problem-set/:problemSetId/settings',
         component: '@/pages/CreateProblem',
       },
       {
-        exact: true,
+        path: '/domain/:domainUrl/problem-set/:problemSetId/:problemId',
+        component: '@/pages/Problem',
+      },
+      {
         path: '/domain/:domainUrl/problem-set/:problemSetId',
         component: '@/pages/ProblemSetDetail',
+      },
+      {
+        path: '/domain/:domainUrl/problem-set',
+        component: '@/pages/ProblemSetList',
       },
     ],
   },
@@ -54,6 +53,10 @@
       {
         path: '/domain/:domainUrl/create-problem-set',
         component: '@/pages/CreateProblemSet',
+      },
+      {
+        path: '/domain/:domainUrl/create-problem',
+        component: '@/pages/CreateProblem',
       },
       {
         path: '/domain/:domainUrl/settings/:tabs',
@@ -78,18 +81,26 @@
             i18nKey: 'SETTINGS.DOMAIN.MEMBERS',
           },
           {
+            path: '/domain/:domainUrl/settings/permission',
+            component: '@/pages/DomainSettings/Permission',
+            menuKey: 'permission',
+            i18nKey: 'SETTINGS.DOMAIN.PERMISSION',
+          },
+          {
             path: '/domain/:domainUrl/settings',
             component: '@/pages/DomainSettings/Profile',
           },
         ],
       },
       {
-        exact: true,
-        path: '/domain/:domainUrl/records',
-        component: '@/pages/RecordList',
+        path: '/domain/:domainUrl/problem/:problemId',
+        component: '@/pages/Problem',
       },
       {
-        exact: true,
+        path: '/domain/:domainUrl/problem',
+        component: '@/pages/ProblemList',
+      },
+      {
         path: '/domain/:domainUrl',
         component: '@/pages/DomainHome',
       },
@@ -107,18 +118,6 @@
       { exact: true, path: '/admin', redirect: '/admin/domain' },
 
       {
-        exact: true,
-        path: '/domain/:domainUrl/problem-set/:problemSetId/:problemId',
-        component: '@/pages/Problem',
-      },
-
-      {
-        exact: true,
-        path: '/domain/:domainUrl/problem/:problemId',
-        component: '@/pages/Problem',
-      },
-
-      {
         path: '/admin/:tabs',
         component: '@/pages/SiteAdmin',
         access: 'isRoot',
@@ -130,6 +129,11 @@
             i18nKey: 'admin.menu.domain',
           },
         ],
+      },
+
+      {
+        path: '/records',
+        component: '@/pages/RecordList',
       },
 
       { component: '@/pages/NotFound' },

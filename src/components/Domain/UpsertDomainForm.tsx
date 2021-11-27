@@ -126,9 +126,7 @@ const Index: React.FC<IProps> = (props) => {
                 block
               >
                 {intl.formatMessage({
-                  id: initialValues?.url
-                    ? 'SETTINGS.DOMAIN.UPDATE'
-                    : 'DOMAIN.CREATE.CREATE',
+                  id: initialValues?.url ? 'UPDATE' : 'DOMAIN.CREATE.CREATE',
                 })}
               </Button>
             </Col>

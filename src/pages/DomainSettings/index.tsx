@@ -9,7 +9,7 @@ import MarkdownRender from '@/components/MarkdownRender';
 
 const Index: React.FC<IRouteComponentProps> = ({ children, route }) => {
   const { domainUrl } = useParams<{ domainUrl: string }>();
-  const { domain, refresh } = useModel('domain');
+  const { domain } = useModel('domain');
   const { setHeader } = useModel('pageHeader');
 
   const breads = useMemo(

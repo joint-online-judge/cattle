@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useModel } from 'umi';
 import { useRequest } from 'ahooks';
 import { message } from 'antd';
 import { Horse } from '@/utils/service';
@@ -12,9 +13,10 @@ import { Horse } from '@/utils/service';
  */
 export default function DomainModel() {
   const [domainUrl, setDomainUrl] = useState<string>();
+  const { initialState, setInitialState } = useModel('@@initialState');
 
   const {
-    data: domain,
+    data,
     run: fetchDomain,
     loading,
     refresh,
@@ -25,7 +27,16 @@ export default function DomainModel() {
         const res = await Horse.domain.getDomainApiV1DomainsDomainGet(
           domainUrl,
         );
-        return res.data.data;
+        const perm =
+          await Horse.domain.getDomainUserPermissionApiV1DomainsDomainUsersUserPermissionGet(
+            domainUrl,
+            'me',
+          );
+        return {
+          domain: res.data.data,
+          role: perm.data.data?.role,
+          permission: perm.data.data?.permission,
+        };
       } else {
         setDomainUrl(undefined);
         return undefined;
@@ -33,6 +44,16 @@ export default function DomainModel() {
     },
     {
       manual: true,
+      onSuccess: (res) => {
+        // @ts-ignore
+        setInitialState({
+          ...initialState,
+          domainPermission: {
+            role: res?.role,
+            permission: res?.permission,
+          },
+        });
+      },
       onError: () => {
         // TODO: i18n message
         message.error('failed to fetch domain info');
@@ -42,7 +63,9 @@ export default function DomainModel() {
 
   return {
     domainUrl,
-    domain,
+    domain: data?.domain,
+    role: data?.role,
+    permission: data?.permission,
     fetchDomain,
     refresh,
     loading,

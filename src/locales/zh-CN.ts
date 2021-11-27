@@ -40,8 +40,9 @@ export default {
   'DOMAIN.HOME.SETTINGS': '设置',
   // Problems
   'PROBLEM.CREATE.TITLE': '创建问题',
-  'PROBLEM.CREATE.FORM.CONTENT': '内容',
+  'PROBLEM.CREATE.FORM.CONTENT': '描述',
   'PROBLEM.CREATE.FORM.HIDDEN': '隐藏',
+  'PROBLEM.CREATE.FORM.URL': '问题URL',
   'PROBLEM.LANGUAGES': '编程语言',
   'PROBLEM.SUBMIT': '提交',
   'PROBLEM.STATUS': '提交状态',
@@ -63,8 +64,9 @@ export default {
   'PROBLEM_SET.INTRODUCTION': '问题集介绍',
   'PROBLEM_SET.CREATE.TITLE': '创建问题集',
   'PROBLEM_SET.CREATE.FORM.SCOREBOARD_HIDDEN': '隐藏排行榜',
-  'PROBLEM_SET.CREATE.FORM.AVAILABLE_TIME': '可提交时间',
-  'PROBLEM_SET.CREATE.FORM.DUE_TIME': '截止时间',
+  'PROBLEM_SET.CREATE.FORM.UNLOCK_AT': '开始提交时间',
+  'PROBLEM_SET.CREATE.FORM.DUE_AT': '结束时间',
+  'PROBLEM_SET.CREATE.FORM.LOCK_AT': '截止提交时间',
   'PROBLEM_SET.CREATE.FORM.URL': '问题集URL',
   // Settings
   'SETTINGS.SETTINGS': '偏好设置',
@@ -80,7 +82,7 @@ export default {
   'SETTINGS.DOMAIN.PROFILE': '基本资料',
   'SETTINGS.DOMAIN.INVITATION': '成员邀请',
   'SETTINGS.DOMAIN.MEMBERS': '成员管理',
-  'SETTINGS.DOMAIN.UPDATE': '更新',
+  'SETTINGS.DOMAIN.PERMISSION': '权限管理',
   // Admin
   'admin.menu.domain': '域管理',
   // Footer
@@ -104,4 +106,5 @@ export default {
   'menu.domain': '我的域',
   'menu.admin': '全站管理',
   'menu.domain_manage': '域管理',
+  'menu.problem_list': '题库',
 };

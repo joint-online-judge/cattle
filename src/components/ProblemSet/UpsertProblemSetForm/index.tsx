@@ -1,14 +1,10 @@
 import React from 'react';
-import {
-  Form,
-  Input,
-  DatePicker,
-  Switch,
-  Row,
-  Col,
-  Button,
-  message,
-} from 'antd';
+import { Form, Row, Col, message } from 'antd';
+import ProForm, {
+  ProFormText,
+  ProFormDateTimePicker,
+  ProFormSwitch,
+} from '@ant-design/pro-form';
 import { useIntl, history } from 'umi';
 import { useRequest } from 'ahooks';
 import {
@@ -61,76 +57,77 @@ const UpsertProblemSetForm: React.FC<IProps> = (props) => {
     },
   );
 
-  const onFinish = async (values: Partial<ProblemSet>) => {
-    return initialValues?.id
-      ? updateProblemSet(initialValues?.id, values)
-      : createProblemSet(values as ProblemSetCreate);
+  const onFinish = async (values: ProblemSetCreate | ProblemSetEdit) => {
+    initialValues?.id
+      ? await updateProblemSet(initialValues?.id, values)
+      : await createProblemSet(values as ProblemSetCreate);
   };
 
   return (
-    <Form layout="vertical" onFinish={onFinish} initialValues={initialValues}>
-      <Form.Item
+    <ProForm<ProblemSetCreate | ProblemSetEdit>
+      layout="vertical"
+      onFinish={onFinish}
+      initialValues={initialValues}
+      omitNil
+    >
+      <ProFormText
+        width="lg"
         name="title"
         label={intl.formatMessage({ id: 'TITLE' })}
         rules={[{ required: true }]}
-      >
-        <Input />
-      </Form.Item>
-      <Form.Item
+      />
+      <ProFormText
+        width="lg"
         name="url"
         label={intl.formatMessage({ id: 'PROBLEM_SET.CREATE.FORM.URL' })}
         tooltip={'The url of a problem set must be unique within a domain.'}
-      >
-        <Input />
-      </Form.Item>
+      />
+
+      <ProForm.Group>
+        <ProFormDateTimePicker
+          width="sm"
+          name="unlockAt"
+          label={intl.formatMessage({
+            id: 'PROBLEM_SET.CREATE.FORM.UNLOCK_AT',
+          })}
+          rules={[{ required: true }]}
+        />
+        <ProFormDateTimePicker
+          width="sm"
+          name="dueAt"
+          label={intl.formatMessage({
+            id: 'PROBLEM_SET.CREATE.FORM.DUE_AT',
+          })}
+          rules={[{ required: true }]}
+        />
+        <ProFormDateTimePicker
+          width="sm"
+          name="lockAt"
+          label={intl.formatMessage({
+            id: 'PROBLEM_SET.CREATE.FORM.LOCK_AT',
+          })}
+          rules={[{ required: true }]}
+        />
+      </ProForm.Group>
 
       <Row>
         <Col span={12}>
-          <Form.Item
-            name="availableTime"
-            label={intl.formatMessage({
-              id: 'PROBLEM_SET.CREATE.FORM.AVAILABLE_TIME',
-            })}
-            rules={[{ required: true }]}
-          >
-            <DatePicker showTime format="YYYY-MM-DD HH:mm:ss" />
-          </Form.Item>
-        </Col>
-        <Col span={12}>
-          <Form.Item
-            name="dueTime"
-            label={intl.formatMessage({
-              id: 'PROBLEM_SET.CREATE.FORM.DUE_TIME',
-            })}
-            rules={[{ required: true }]}
-          >
-            <DatePicker showTime format="YYYY-MM-DD HH:mm:ss" />
-          </Form.Item>
-        </Col>
-      </Row>
-
-      <Row>
-        <Col span={12}>
-          <Form.Item
+          <ProFormSwitch
             name="hidden"
             valuePropName="checked"
             label={intl.formatMessage({ id: 'PROBLEM.CREATE.FORM.HIDDEN' })}
             rules={[{ required: true }]}
-          >
-            <Switch />
-          </Form.Item>
+          />
         </Col>
         <Col span={12}>
-          <Form.Item
+          <ProFormSwitch
             name="scoreboardHidden"
             valuePropName="checked"
             label={intl.formatMessage({
               id: 'PROBLEM_SET.CREATE.FORM.SCOREBOARD_HIDDEN',
             })}
             rules={[{ required: true }]}
-          >
-            <Switch />
-          </Form.Item>
+          />
         </Col>
       </Row>
 
@@ -140,20 +137,7 @@ const UpsertProblemSetForm: React.FC<IProps> = (props) => {
       >
         <MarkdownEditor />
       </Form.Item>
-      <Form.Item>
-        <Button
-          htmlType="submit"
-          type="primary"
-          size="large"
-          loading={creatingProblemSet || updatingProblemSet}
-          block
-        >
-          {intl.formatMessage({
-            id: 'PROBLEM.SUBMIT',
-          })}
-        </Button>
-      </Form.Item>
-    </Form>
+    </ProForm>
   );
 };
 
