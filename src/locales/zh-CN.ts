@@ -102,6 +102,9 @@ export default {
   // Form
   'FORM.INPUT_PLACEHOLDER': '请输入{field}',
   'FORM.SELECT_PLACEHOLDER': '请选择{field}',
+  'form.domain_candidate_search.placeholder': '按用户名/邮箱/学号/真名搜索',
+  'form.domain_role_select.placeholder': '请选择一个角色',
+  'form.domain_role_select.error_placeholder': '加载选项失败',
   // Messages
   'msg.success.fetch': '获取成功',
   'msg.success.create': '创建成功',

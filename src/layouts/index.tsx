@@ -19,12 +19,12 @@ const Index: React.FC = ({ children }) => {
     fetchDomain(domainUrl);
   }, [domainUrl]);
 
-  // useEffect(() => {
-  //   // @Chujie: default message will display and overlap with the Header
-  //   message.config({
-  //     top: 72, // header height 64 + default top 8
-  //   });
-  // }, []);
+  useEffect(() => {
+    // @Chujie: default message will display and overlap with the Header
+    message.config({
+      top: 72, // header height 64 + default top 8
+    });
+  }, []);
 
   return (
     <Layout className={style.pageLayout}>

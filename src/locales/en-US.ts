@@ -102,6 +102,10 @@ export default {
   // Form
   'FORM.INPUT_PLACEHOLDER': 'please input {field}',
   'FORM.SELECT_PLACEHOLDER': 'please select {field}',
+  'form.domain_candidate_search.placeholder':
+    'search by username/email/student ID/real name',
+  'form.domain_role_select.placeholder': 'please select a role',
+  'form.domain_role_select.error_placeholder': 'load options failed',
   // Messages
   'msg.success.fetch': 'fetch successfully',
   'msg.success.create': 'create successfully',

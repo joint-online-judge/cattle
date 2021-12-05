@@ -6,7 +6,7 @@ import { ModalForm, ModalFormProps } from '@ant-design/pro-form';
 import { Horse, DomainUserAdd, ErrorCode } from '@/utils/service';
 import { useRequest } from 'ahooks';
 import DomainRoleSelect from '@/components/DomainRoleSelect';
-import UserSearchInput from '@/components/UserSearchInput';
+import UserSearchInput from '@/components/DomainCandidateSearchInput';
 
 interface IProps extends ModalFormProps {
   domainUrl: string;

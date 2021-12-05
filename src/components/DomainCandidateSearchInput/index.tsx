@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { useIntl, useModel } from 'umi';
+import { useIntl } from 'umi';
 import { useRequest } from 'ahooks';
-import { Select, SelectProps, Spin, Empty, Space } from 'antd';
+import { Select, SelectProps, Spin, Empty, Row, Col } from 'antd';
+import Highlighter from 'react-highlight-words';
 import Gravatar from '@/components/Gravatar';
 import { Horse, UserWithDomainRole } from '@/utils/service';
 
@@ -9,15 +10,11 @@ interface IProps extends SelectProps<string> {
   domainUrl: string;
 }
 
-type SelectOption = {
-  label: string;
-  value: string;
-  disabled?: boolean;
-};
-
 const { Option } = Select;
 const Index: React.FC<IProps> = (props) => {
   const { domainUrl, ...otherProps } = props;
+  const intl = useIntl();
+  const [searchWord, setSearchWord] = useState<string>('');
 
   const { data, run, loading } = useRequest(
     async (query: string) => {
@@ -47,11 +44,36 @@ const Index: React.FC<IProps> = (props) => {
         value={u.id}
         disabled={!!u.domainRole}
       >
-        <Space>
-          <Gravatar gravatar={u.gravatar} size="small" />
-          <span>{`${u.username} (${u.realName})`}</span>
-          {u.studentId ? <span> - {u.studentId}</span> : null}
-        </Space>
+        <Row wrap={false} gutter={12} align="middle">
+          <Col flex="none">
+            <Gravatar gravatar={u.gravatar} />
+          </Col>
+          <Col flex="auto">
+            <Row>
+              <Col span={24}>
+                <Highlighter
+                  highlightStyle={{ paddingLeft: 0, paddingRight: 0 }}
+                  searchWords={[searchWord]}
+                  autoEscape={false}
+                  textToHighlight={
+                    u.realName ? `${u.username} (${u.realName})` : u.username
+                  }
+                />
+              </Col>
+              <Col span={24}>
+                <Highlighter
+                  className="text-xs"
+                  highlightStyle={{ paddingLeft: 0, paddingRight: 0 }}
+                  searchWords={[searchWord]}
+                  autoEscape={false}
+                  textToHighlight={
+                    (u.studentId ?? '') + (u.email ? ` - ${u.email}` : '')
+                  }
+                />
+              </Col>
+            </Row>
+          </Col>
+        </Row>
       </Option>
     ));
   };
@@ -63,7 +85,13 @@ const Index: React.FC<IProps> = (props) => {
       filterOption={false}
       showSearch={true}
       optionLabelProp="label"
-      onSearch={run}
+      onSearch={(query) => {
+        setSearchWord(query);
+        run(query);
+      }}
+      placeholder={intl.formatMessage({
+        id: 'form.domain_candidate_search.placeholder',
+      })}
       notFoundContent={
         loading ? (
           <Spin size="small" />
