@@ -69,3 +69,4 @@ Horse.instance.interceptors.response.use(
 );
 
 export * from '@/client';
+export default Horse;

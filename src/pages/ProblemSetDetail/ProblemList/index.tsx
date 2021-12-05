@@ -27,7 +27,7 @@ const Index: React.FC<IProps> = ({ problems }) => {
       )}
     />
   ) : (
-    <Empty description={<span>There are not problems</span>}>
+    <Empty description={<span>There are no problems</span>}>
       <Space>
         <Button type="primary">Add Existed</Button>
         <span>or</span>

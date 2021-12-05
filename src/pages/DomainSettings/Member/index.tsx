@@ -59,7 +59,7 @@ const Index: React.FC = () => {
     },
     {
       title: '用户名',
-      width: 160,
+      width: 140,
       render: (_, record) => (
         <Space>
           <Gravatar gravatar={record.gravatar} size="small" />
@@ -69,19 +69,23 @@ const Index: React.FC = () => {
     },
     {
       title: '真名',
-      width: 150,
+      width: 120,
+      ellipsis: true,
       dataIndex: 'realName',
     },
     {
       title: '角色',
-      width: 80,
+      width: 120,
       render: (_, record) => (
-        <DomainRoleSelect domainUrl={domainUrl} value={record.domainRole} />
+        <DomainRoleSelect
+          domainUrl={domainUrl}
+          value={record.domainRole}
+          style={{ width: '100%' }}
+        />
       ),
     },
     {
       title: '操作',
-      width: 96,
       key: 'option',
       valueType: 'option',
       render: (_text, record) => [
@@ -101,6 +105,7 @@ const Index: React.FC = () => {
 
   return (
     <ProTable<UserWithDomainRole>
+      scroll={{ x: 'max-content' }}
       loading={fetching || deleting}
       actionRef={ref}
       cardProps={false}
@@ -119,7 +124,6 @@ const Index: React.FC = () => {
       }}
       search={false}
       dateFormatter="string"
-      headerTitle="Domain Users"
       toolBarRender={() => [
         <AddUserModal
           key="add-user"

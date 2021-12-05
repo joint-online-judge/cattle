@@ -4,7 +4,7 @@ import ProForm, {
   ProFormSelect,
   ProFormSwitch,
 } from '@ant-design/pro-form';
-import { Form, Input, Select, Checkbox, Row, Col, Button, message } from 'antd';
+import { Form, message } from 'antd';
 import { useIntl, history } from 'umi';
 import { useRequest } from 'ahooks';
 import { SUPPORT_PROGRAMMING_LANGUAGE } from '@/constants';
@@ -16,15 +16,16 @@ import {
   ErrorCode,
 } from '@/utils/service';
 import MarkdownEditor from '@/components/MarkdownEditor';
-import style from '../style.css';
 
 export interface IProps {
-  initialValues?: Partial<Problem>;
   domainUrl: string;
+  initialValues?: Partial<Problem>;
+  onCreateSuccess?: (problem: Problem) => void;
+  onUpdateSuccess?: (problem: Problem) => void;
 }
 
 export const UpsertProblemForm: React.FC<IProps> = (props) => {
-  const { domainUrl, initialValues } = props;
+  const { domainUrl, initialValues, onCreateSuccess, onUpdateSuccess } = props;
   const intl = useIntl();
   const languageOptions = SUPPORT_PROGRAMMING_LANGUAGE.map((lang) => {
     return {
@@ -43,10 +44,15 @@ export const UpsertProblemForm: React.FC<IProps> = (props) => {
       manual: true,
       onSuccess: (res) => {
         if (res.data.errorCode === ErrorCode.IntegrityError) {
-          message.error('IntegrityError');
+          message.error('problem url not unique');
         } else if (res?.data?.data?.id) {
-          message.success('create success');
-          history.push(`/domain/${domainUrl}/problem/${res.data.data.id}`);
+          message.success(intl.formatMessage({ id: 'msg.success.create' }));
+          onCreateSuccess && onCreateSuccess(res.data.data);
+          history.push(
+            `/domain/${domainUrl}/problem/${
+              res.data.data.url ?? res.data.data.id
+            }`,
+          );
         }
       },
     },
@@ -62,8 +68,17 @@ export const UpsertProblemForm: React.FC<IProps> = (props) => {
     {
       manual: true,
       onSuccess: (res) => {
-        // todo: add errCode
-        console.log(res);
+        if (res.data.errorCode === ErrorCode.IntegrityError) {
+          message.error('problem url not unique');
+        } else if (res.data.data) {
+          message.success(intl.formatMessage({ id: 'msg.success.update' }));
+          onUpdateSuccess && onUpdateSuccess(res.data.data);
+          history.push(
+            `/domain/${domainUrl}/problem/${
+              res.data.data?.url ?? res.data.data?.id
+            }`,
+          );
+        }
       },
     },
   );

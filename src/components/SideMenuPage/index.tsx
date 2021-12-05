@@ -1,7 +1,7 @@
 import React, { useMemo, useState, useCallback } from 'react';
 import { generatePath } from 'react-router';
 import { useLocation, history, Location, useParams, IRoute } from 'umi';
-import { Row, Col } from 'antd';
+import { Row, Col, MenuProps } from 'antd';
 import PageContent, { PageContentProps } from './PageContent';
 import SettingsSideBar, {
   SettingsMenuItem,
@@ -10,35 +10,50 @@ import ShadowCard from '@/components/ShadowCard';
 import { isArray } from 'lodash';
 
 interface IProps {
-  children: React.ReactElement | Array<React.ReactElement<PageContentProps>>;
+  menuItems?: SettingsMenuItem[];
+  menu?: React.ReactElement<MenuProps>;
   extra?: React.ReactElement | React.ReactNode; // extra component below SideBar
-  urlQuery?: boolean; // whether to use the url query mode
+  defaultTab?: string;
   route?: IRoute;
+  routerMode?: 'param' | 'query'; // use query string or parameters
+  matchMode?: 'route' | 'children'; // use nested router or matching children directly
+  shadowCard?: boolean;
+  children: React.ReactElement | Array<React.ReactElement<PageContentProps>>;
 }
 
 const Index: React.FC<IProps> = ({
   children,
   extra,
   route,
-  urlQuery = false,
+  defaultTab,
+  menuItems,
+  menu,
+  routerMode = 'param',
+  matchMode = 'route',
+  shadowCard = true,
 }) => {
   const location: Location = useLocation();
-  const params = useParams<{ tabs?: string }>();
+  const params = useParams<{ tab?: string }>();
 
   const [key, setKey] = useState<string>(
     (() => {
-      if (urlQuery && isArray(children)) {
+      if (defaultTab) return defaultTab;
+
+      if (routerMode === 'query' && isArray(children)) {
         if (location.query?.tab && typeof location.query?.tab === 'string')
           return location.query?.tab;
+
         const firstValidChild = children.find((o) => o.props.menuKey);
         return firstValidChild?.props?.menuKey ?? '';
       }
-      return params.tabs || '';
+      return params.tab || '';
     })(),
   );
 
-  const menuItems = useMemo<SettingsMenuItem[]>(() => {
-    if (urlQuery) {
+  const finalMenuItems = useMemo<SettingsMenuItem[]>(() => {
+    if (menuItems) return menuItems;
+
+    if (matchMode === 'children') {
       return React.Children.map(
         children,
         (child: React.ReactElement<PageContentProps>) => {
@@ -50,7 +65,6 @@ const Index: React.FC<IProps> = ({
               path: child.props.path,
               node: child.props.node,
               menuItemProps: child.props.menuItemProps,
-              component: child,
             };
           }
           return undefined;
@@ -58,6 +72,7 @@ const Index: React.FC<IProps> = ({
       ).filter((o) => !!o);
     }
 
+    // else if matchMode === 'route'
     const items =
       route?.routes
         ?.map((r) => {
@@ -73,13 +88,13 @@ const Index: React.FC<IProps> = ({
         .filter((o) => !!o) || [];
 
     return items as SettingsMenuItem[];
-  }, [children]);
+  }, [children, menuItems, matchMode]);
 
   const menuOnClick = useCallback(
     (event) => {
       setKey(event.key);
 
-      if (urlQuery) {
+      if (routerMode === 'query') {
         history.replace({
           pathname: location.pathname,
           query: { tab: event.key.toString() },
@@ -88,13 +103,37 @@ const Index: React.FC<IProps> = ({
         history.push(
           generatePath(route.path, {
             ...params,
-            tabs: event.key,
+            tab: event.key,
           }),
         );
       }
     },
-    [urlQuery, history, location, route],
+    [routerMode, history, location, route],
   );
+
+  const mainContent = useMemo(() => {
+    if (matchMode === 'children') {
+      if (isArray(children))
+        return children.find((o) => o.props.menuKey === key) ?? null;
+      return children;
+    } else {
+      if (shadowCard) {
+        if (isArray(children)) {
+          return (
+            <Row gutter={[0, { xs: 16, sm: 16, lg: 24, xl: 24, xxl: 24 }]}>
+              {children.map((c, index) => (
+                <Col span={24} key={index}>
+                  <ShadowCard>{c}</ShadowCard>
+                </Col>
+              ))}
+            </Row>
+          );
+        }
+        return <ShadowCard>{children}</ShadowCard>;
+      }
+      return children;
+    }
+  }, [children]);
 
   return (
     <>
@@ -105,20 +144,20 @@ const Index: React.FC<IProps> = ({
         ]}
       >
         <Col xs={24} sm={24} md={6} lg={6} xl={6}>
-          <SettingsSideBar
-            items={menuItems}
-            selectedKeys={[key]}
-            onClick={menuOnClick}
-            className="shadow-md"
-          />
-          {extra}
+          <Row gutter={[0, { xs: 16, sm: 16, lg: 24, xl: 24, xxl: 24 }]}>
+            <Col span={24}>
+              <SettingsSideBar
+                menu={menu}
+                items={finalMenuItems}
+                selectedKeys={[key]}
+                onClick={menuOnClick}
+              />
+            </Col>
+            <Col span={24}>{extra}</Col>
+          </Row>
         </Col>
         <Col xs={24} sm={24} md={18} lg={18} xl={18}>
-          {isArray(children) ? (
-            children.find((o) => o.props.menuKey === key) ?? null
-          ) : (
-            <ShadowCard>{children}</ShadowCard>
-          )}
+          {mainContent}
         </Col>
       </Row>
     </>

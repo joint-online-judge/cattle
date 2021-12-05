@@ -58,18 +58,18 @@ const Index: React.FC = () => {
           <ShadowCard style={{ marginTop: 16 }}>
             <Descriptions column={1}>
               <Descriptions.Item
-                label={intl.formatHTMLMessage({ id: 'PROBLEM.STATUS' })}
+                label={intl.formatMessage({ id: 'PROBLEM.STATUS' })}
               >
                 {/* todo: make status component */}
                 <CheckOutlined /> Accepted
               </Descriptions.Item>
               <Descriptions.Item
-                label={intl.formatHTMLMessage({ id: 'PROBLEM.PROBLEM_GROUP' })}
+                label={intl.formatMessage({ id: 'PROBLEM.PROBLEM_GROUP' })}
               >
                 不知道
               </Descriptions.Item>
               <Descriptions.Item
-                label={intl.formatHTMLMessage({ id: 'PROBLEM.OWNER' })}
+                label={intl.formatMessage({ id: 'PROBLEM.OWNER' })}
               >
                 <Gravatar size={20} user={ownerUserResp?.data?.data} />
                 {ownerUserResp?.data?.data?.real_name ?? ''}

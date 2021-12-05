@@ -13,11 +13,7 @@ interface ProblemHomeProps {
 const Index: React.FC<ProblemHomeProps> = (props) => {
   const { problem } = props;
   return (
-    <ShadowCard
-      title={
-        <Title level={3}>{problem?.title ?? <Spin size="default" />}</Title>
-      }
-    >
+    <>
       {problem ? (
         <Typography>
           <MarkdownRender>{problem.content ?? ''}</MarkdownRender>
@@ -25,7 +21,7 @@ const Index: React.FC<ProblemHomeProps> = (props) => {
       ) : (
         <Spin size="default" />
       )}
-    </ShadowCard>
+    </>
   );
 };
 

@@ -11,10 +11,28 @@ import ShadowCard from '@/components/ShadowCard';
 const Index: React.FC = () => {
   const intl = useIntl();
   const access = useAccess();
-  const { domainUrl } = useParams<{ domainUrl: string }>();
   const { domain } = useModel('domain');
   const { setHeader } = useModel('pageHeader');
+  const { domainUrl, problemId } =
+    useParams<{ domainUrl: string; problemId: string }>();
   const ref = useRef<ActionType>();
+
+  const { data: problem, refresh: refreshProblem } = useRequest(
+    async () => {
+      const res =
+        await Horse.problem.getProblemApiV1DomainsDomainProblemsProblemGet(
+          domainUrl,
+          problemId,
+        );
+      return res.data.data;
+    },
+    {
+      refreshDeps: [domainUrl, problemId],
+      onError: (res) => {
+        console.log('get problem fail', res);
+      },
+    },
+  );
 
   const { run: fetchProblems, loading: fetching } = useRequest(
     async (params: ProTablePagination) => {
@@ -72,15 +90,20 @@ const Index: React.FC = () => {
       },
       {
         path: 'problem',
+        breadcrumbI18nKey: 'problem.problems',
+      },
+      {
+        path: problem?.title ?? 'null',
+        breadcrumbName: problem?.title ?? 'unknown',
       },
     ],
-    [domainUrl, domain],
+    [domainUrl, domain, problem],
   );
 
   useEffect(() => {
     setHeader({
       routes: breads,
-      titleI18nKey: 'problem.problems',
+      titleI18nKey: 'PROBLEM.SETTINGS',
     });
   }, [breads]);
 
@@ -100,27 +123,7 @@ const Index: React.FC = () => {
         ) : null
       }
     >
-      <ProTable<Problem>
-        scroll={{ x: 'max-content' }}
-        loading={fetching}
-        actionRef={ref}
-        cardProps={false}
-        columns={columns}
-        request={async (params, _sorter, _filter) => {
-          const data = await fetchProblems(params);
-          return Promise.resolve({
-            data: data.results,
-            total: data.count,
-            success: true,
-          });
-        }}
-        rowKey="id"
-        pagination={{
-          showQuickJumper: true,
-        }}
-        search={false}
-        options={false}
-      />
+      111
     </ShadowCard>
   );
 };

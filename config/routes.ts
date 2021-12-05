@@ -11,38 +11,6 @@
   },
   { path: '/logout', component: '@/pages/Logout' },
 
-  {
-    path: '/domain/:domainUrl/problem-set/:problemSetId',
-    component: '@/layouts/index',
-    wrappers: ['@/wrappers/Auth'],
-    routes: [
-      {
-        path: '/domain/:domainUrl/problem-set/:problemSetId/system-test',
-        component: '@/pages/CreateProblem',
-      },
-      {
-        path: '/domain/:domainUrl/problem-set/:problemSetId/scoreboard',
-        component: '@/pages/CreateProblem',
-      },
-      {
-        path: '/domain/:domainUrl/problem-set/:problemSetId/settings',
-        component: '@/pages/CreateProblem',
-      },
-      {
-        path: '/domain/:domainUrl/problem-set/:problemSetId/:problemId',
-        component: '@/pages/Problem',
-      },
-      {
-        path: '/domain/:domainUrl/problem-set/:problemSetId',
-        component: '@/pages/ProblemSetDetail',
-      },
-      {
-        path: '/domain/:domainUrl/problem-set',
-        component: '@/pages/ProblemSetList',
-      },
-    ],
-  },
-
   // @chujie: this route tree should be separated.
   // Otherwise, 'domainUrl' cannot be matched in the layout component.
   {
@@ -58,8 +26,9 @@
         path: '/domain/:domainUrl/create-problem',
         component: '@/pages/CreateProblem',
       },
+
       {
-        path: '/domain/:domainUrl/settings/:tabs',
+        path: '/domain/:domainUrl/settings/:tab',
         component: '@/pages/DomainSettings',
         routes: [
           {
@@ -86,24 +55,84 @@
             menuKey: 'permission',
             i18nKey: 'SETTINGS.DOMAIN.PERMISSION',
           },
-          {
-            path: '/domain/:domainUrl/settings',
-            component: '@/pages/DomainSettings/Profile',
-          },
+          { component: '@/pages/NotFound' },
         ],
       },
       {
-        path: '/domain/:domainUrl/problem/:problemId',
+        path: '/domain/:domainUrl/settings',
+        redirect: '/domain/:domainUrl/settings/profile',
+      },
+
+      {
+        path: '/domain/:domainUrl/problem-set/:problemSetId/scoreboard',
+        component: '@/pages/ProblemSetDetail/Scoreboard',
+      },
+      {
+        path: '/domain/:domainUrl/problem-set/:problemSetId/system-test',
+        component: '@/pages/ProblemSetDetail/SystemTest',
+      },
+      {
+        path: '/domain/:domainUrl/problem-set/:problemSetId/settings',
+        component: '@/pages/ProblemSetDetail/Settings',
+      },
+      {
+        path: '/domain/:domainUrl/problem-set/:problemSetId/:tab?',
+        component: '@/pages/ProblemSetDetail',
+        wrappers: ['@/wrappers/Auth'],
+        routes: [
+          {
+            path: '/domain/:domainUrl/problem-set/:problemSetId/scoreboard',
+            menuKey: 'scoreboard',
+            i18nKey: 'problem_set.side_menu.scoreboard',
+          },
+          {
+            path: '/domain/:domainUrl/problem-set/:problemSetId/system-test',
+            menuKey: 'system-test',
+            i18nKey: 'problem_set.side_menu.system_test',
+          },
+          {
+            path: '/domain/:domainUrl/problem-set/:problemSetId/settings',
+            menuKey: 'settings',
+            i18nKey: 'problem_set.side_menu.settings',
+          },
+          {
+            path: '/domain/:domainUrl/problem-set/:problemSetId/:problemId',
+            component: '@/pages/Problem',
+          },
+          {
+            path: '/domain/:domainUrl/problem-set/:problemSetId',
+            component: '@/pages/ProblemSetDetail',
+          },
+          { component: '@/pages/NotFound' },
+        ],
+      },
+      {
+        path: '/domain/:domainUrl/problem-set',
+        component: '@/pages/ProblemSetList',
+        wrappers: ['@/wrappers/Auth'],
+      },
+
+      {
+        path: '/domain/:domainUrl/problem/:problemId/settings',
+        component: '@/pages/ProblemConfig',
+        wrappers: ['@/wrappers/Auth'],
+      },
+      {
+        path: '/domain/:domainUrl/problem/:problemId/:tab?',
         component: '@/pages/Problem',
+        wrappers: ['@/wrappers/Auth'],
       },
       {
         path: '/domain/:domainUrl/problem',
         component: '@/pages/ProblemList',
+        wrappers: ['@/wrappers/Auth'],
       },
       {
         path: '/domain/:domainUrl',
         component: '@/pages/DomainHome',
+        wrappers: ['@/wrappers/Auth'],
       },
+      { component: '@/pages/NotFound' },
     ],
   },
 
@@ -118,7 +147,7 @@
       { exact: true, path: '/admin', redirect: '/admin/domain' },
 
       {
-        path: '/admin/:tabs',
+        path: '/admin/:tab',
         component: '@/pages/SiteAdmin',
         access: 'isRoot',
         routes: [

@@ -1,7 +1,7 @@
 import React from 'react';
 import { useIntl } from 'umi';
 import { Button, message, Form } from 'antd';
-import { PlusOutlined } from '@ant-design/icons';
+import { PlusOutlined, UserAddOutlined } from '@ant-design/icons';
 import { ModalForm, ModalFormProps } from '@ant-design/pro-form';
 import { Horse, DomainUserAdd, ErrorCode } from '@/utils/service';
 import { useRequest } from 'ahooks';
@@ -46,7 +46,7 @@ const Index: React.FC<IProps> = ({ domainUrl, onSuccess }) => {
       title="添加用户到域"
       width={520}
       trigger={
-        <Button type="primary" icon={<PlusOutlined />}>
+        <Button type="primary" icon={<UserAddOutlined />}>
           添加用户
         </Button>
       }

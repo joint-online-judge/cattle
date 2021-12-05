@@ -6,6 +6,7 @@ import {
   ProColumns,
   ActionType,
 } from '@ant-design/pro-table';
+import { TeamOutlined } from '@ant-design/icons';
 import { useRequest } from 'ahooks';
 import { Horse, DomainPermission } from '@/utils/service';
 import { isArray, toPairs, fromPairs, flatten, uniq, groupBy } from 'lodash';
@@ -65,7 +66,7 @@ const Index: React.FC = () => {
     if (isArray(roles)) {
       const roleCols: ProColumns<DataSourceType>[] = roles.map((role) => ({
         title: role.role,
-        width: 100,
+        width: 80,
         dataIndex: role.role,
         align: 'center',
         formItemProps: {
@@ -95,9 +96,6 @@ const Index: React.FC = () => {
   const dataSource: DataSourceType[] = useMemo(() => {
     if (!isArray(roles) || roles.length == 0) return [];
 
-    console.log('origin: ', roles);
-    console.log('activeKey', activekey);
-
     const permissionGroup = groupBy(
       flatten(
         roles
@@ -115,15 +113,11 @@ const Index: React.FC = () => {
       (o) => o.permName,
     );
 
-    console.log(permissionGroup);
-
     const dataSource = toPairs(permissionGroup).map((pair) => ({
       id: `${activekey}-${pair[0]}`,
       permission: pair[0],
       ...fromPairs(pair[1].map((o) => o.roleValue)),
     }));
-
-    console.log(dataSource);
 
     return dataSource as DataSourceType[];
   }, [roles, activekey]);
@@ -163,6 +157,7 @@ const Index: React.FC = () => {
           <Button
             type="primary"
             key="create"
+            icon={<TeamOutlined />}
             onClick={() => {
               // dataSource 就是当前数据，可以调用 api 将其保存
               console.log(dataSource);

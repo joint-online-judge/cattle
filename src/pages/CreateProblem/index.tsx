@@ -12,16 +12,11 @@ const Index: React.FC = () => {
   const breads = useMemo(
     () => [
       {
-        path: 'domain',
-        breadcrumbI18nKey: 'DOMAIN',
-      },
-      {
         path: domainUrl,
         breadcrumbName: domain?.name ?? 'unknown',
       },
       {
         path: 'create-problem',
-        breadcrumbI18nKey: 'PROBLEM.CREATE.TITLE',
       },
     ],
     [domain],
