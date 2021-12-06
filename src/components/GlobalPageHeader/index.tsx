@@ -25,9 +25,13 @@ const Index: React.FC<PageHeaderProps> = (props) => {
 
   useEffect(() => {
     setPageHeaderProps({
-      title: header.titleI18nKey
-        ? intl.formatMessage({ id: header.titleI18nKey })
-        : header.title,
+      title: header.titleI18nKey ? (
+        <h1 className="m-0 text-3xl font-light">
+          {intl.formatMessage({ id: header.titleI18nKey })}
+        </h1>
+      ) : (
+        <h1 className="m-0 text-3xl font-light">{header.title}</h1>
+      ),
       subTitle: header.subTitleI18nKey
         ? intl.formatMessage({ id: header.subTitleI18nKey })
         : header.subTitle,

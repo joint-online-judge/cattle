@@ -4,7 +4,7 @@ import { UserOutlined } from '@ant-design/icons';
 import { gravatarImageUrl } from '@/utils';
 
 export interface GravatarProps extends AvatarProps {
-  gravatar?: string;
+  gravatar: string | undefined;
 }
 
 const Index: React.FC<GravatarProps> = (props) => {

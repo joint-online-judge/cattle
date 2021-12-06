@@ -1,21 +1,35 @@
 import React from 'react';
-import { Form, Input, Select, Checkbox, Row, Col, Button, message } from 'antd';
+import ProForm, {
+  ProFormText,
+  ProFormSelect,
+  ProFormSwitch,
+} from '@ant-design/pro-form';
+import { Form, message } from 'antd';
 import { useIntl, history } from 'umi';
 import { useRequest } from 'ahooks';
-import style from '../style.css';
 import { SUPPORT_PROGRAMMING_LANGUAGE } from '@/constants';
-import { Horse, ProblemCreate, Problem, ProblemEdit } from '@/utils/service';
+import {
+  Horse,
+  ProblemCreate,
+  Problem,
+  ProblemEdit,
+  ErrorCode,
+} from '@/utils/service';
+import MarkdownEditor from '@/components/MarkdownEditor';
 
 export interface IProps {
-  initialValues?: Partial<Problem>;
   domainUrl: string;
+  initialValues?: Partial<Problem>;
+  onCreateSuccess?: (problem: Problem) => void;
+  onUpdateSuccess?: (problem: Problem) => void;
 }
 
 export const UpsertProblemForm: React.FC<IProps> = (props) => {
-  const { domainUrl, initialValues } = props;
+  const { domainUrl, initialValues, onCreateSuccess, onUpdateSuccess } = props;
   const intl = useIntl();
   const languageOptions = SUPPORT_PROGRAMMING_LANGUAGE.map((lang) => {
     return {
+      label: lang,
       value: lang,
     };
   });
@@ -29,9 +43,16 @@ export const UpsertProblemForm: React.FC<IProps> = (props) => {
     {
       manual: true,
       onSuccess: (res) => {
-        if (res?.data?.data?.id) {
-          message.success('create success');
-          history.push(`/domain/${domainUrl}/problem/${res.data.data.id}`);
+        if (res.data.errorCode === ErrorCode.IntegrityError) {
+          message.error('problem url not unique');
+        } else if (res?.data?.data?.id) {
+          message.success(intl.formatMessage({ id: 'msg.success.create' }));
+          onCreateSuccess && onCreateSuccess(res.data.data);
+          history.push(
+            `/domain/${domainUrl}/problem/${
+              res.data.data.url ?? res.data.data.id
+            }`,
+          );
         }
       },
     },
@@ -47,71 +68,73 @@ export const UpsertProblemForm: React.FC<IProps> = (props) => {
     {
       manual: true,
       onSuccess: (res) => {
-        // todo: add errCode
-        console.log(res);
+        if (res.data.errorCode === ErrorCode.IntegrityError) {
+          message.error('problem url not unique');
+        } else if (res.data.data) {
+          message.success(intl.formatMessage({ id: 'msg.success.update' }));
+          onUpdateSuccess && onUpdateSuccess(res.data.data);
+          history.push(
+            `/domain/${domainUrl}/problem/${
+              res.data.data?.url ?? res.data.data?.id
+            }`,
+          );
+        }
       },
     },
   );
 
   const onFinish = async (values: Partial<Problem>) => {
-    return initialValues?.id
-      ? updateProblem(initialValues?.id, values)
-      : createProblem(values as ProblemCreate);
+    initialValues?.id
+      ? await updateProblem(initialValues?.id, values)
+      : await createProblem(values as ProblemCreate);
   };
 
   return (
-    <Form layout="vertical" onFinish={onFinish}>
-      <Row>
-        <Col span={16}>
-          <Form.Item name="title" label={intl.formatMessage({ id: 'TITLE' })}>
-            <Input />
-          </Form.Item>
-        </Col>
-        <Col push={2}>
-          <Form.Item
-            name="hidden"
-            label={intl.formatMessage({ id: 'PROBLEM.CREATE.FORM.HIDDEN' })}
-            valuePropName="checked"
-          >
-            <Checkbox />
-          </Form.Item>
-        </Col>
-      </Row>
-      <Form.Item
+    <ProForm<ProblemCreate | ProblemEdit>
+      layout="vertical"
+      onFinish={onFinish}
+      initialValues={initialValues}
+      omitNil
+    >
+      <ProForm.Group>
+        <ProFormText
+          width="lg"
+          name="title"
+          label={intl.formatMessage({ id: 'TITLE' })}
+          rules={[{ required: true }]}
+        />
+        <ProFormSwitch
+          name="hidden"
+          label={intl.formatMessage({ id: 'PROBLEM.CREATE.FORM.HIDDEN' })}
+          rules={[{ required: true }]}
+        />
+      </ProForm.Group>
+
+      <ProFormText
+        width="lg"
+        name="url"
+        label={intl.formatMessage({ id: 'PROBLEM.CREATE.FORM.URL' })}
+        tooltip={'The url of a problem must be unique within a domain.'}
+      />
+
+      <ProFormSelect
+        width="lg"
         name="languages"
         label={intl.formatMessage({ id: 'PROBLEM.LANGUAGES' })}
-      >
-        <Select
-          allowClear
-          mode="multiple"
-          showArrow
-          options={languageOptions}
-        />
-      </Form.Item>
+        fieldProps={{
+          showArrow: true,
+          allowClear: true,
+          mode: 'multiple',
+          options: languageOptions,
+        }}
+      />
+
       <Form.Item
         name="content"
         label={intl.formatMessage({ id: 'PROBLEM.CREATE.FORM.CONTENT' })}
-        extra={'TODO: there should be a markdown editor here.'}
       >
-        <Input.TextArea />
+        <MarkdownEditor />
       </Form.Item>
-      <Form.Item>
-        <Row justify="center">
-          <Col xs={9} sm={8} md={6}>
-            <Button
-              htmlType="submit"
-              type="primary"
-              size="large"
-              block
-              className={style.submitButton}
-            >
-              {intl.formatMessage({
-                id: 'PROBLEM.SUBMIT',
-              })}
-            </Button>
-          </Col>
-        </Row>
-      </Form.Item>
-    </Form>
+    </ProForm>
   );
 };

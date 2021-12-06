@@ -1,51 +1,39 @@
-import { List, message } from 'antd';
-import React, { useEffect } from 'react';
-import { Link, useParams } from 'umi';
-import { useRequest } from 'ahooks';
-import { Horse } from '@/utils/service';
+import { List, Button, Empty, Space } from 'antd';
+import React from 'react';
+import { Link, useParams, useAccess } from 'umi';
+import { ProblemPreview } from '@/utils/service';
+import { isArray } from 'lodash';
 
-const Index: React.FC = () => {
-  const { domainUrl, problemSetId } =
+interface IProps {
+  problems: ProblemPreview[] | undefined;
+}
+
+const Index: React.FC<IProps> = ({ problems }) => {
+  const access = useAccess();
+  const { domainUrl } =
     useParams<{ problemSetId: string; domainUrl: string }>();
 
-  const { data: problems, run } = useRequest(
-    async () => {
-      if (!problemSetId) return [];
-      const res = await Horse.problem.listProblemsApiV1DomainsDomainProblemsGet(
-        domainUrl,
-        {
-          problemSet: problemSetId,
-        },
-      );
-      return res?.data?.data?.results ?? [];
-    },
-    {
-      manual: true,
-      onError: () => {
-        message.error('failed to fetch problem sets');
-      },
-    },
-  );
-
-  useEffect(() => {
-    run();
-  }, [problemSetId]);
-
-  return (
-    <>
-      <List
-        itemLayout="horizontal"
-        size="large"
-        dataSource={problems ?? []}
-        renderItem={(item) => (
-          <List.Item>
-            <Link to={`/problem/${item.id ?? ''}`}>
-              <strong>{item.title}</strong>
-            </Link>
-          </List.Item>
-        )}
-      />
-    </>
+  return isArray(problems) && problems.length > 0 ? (
+    <List
+      itemLayout="horizontal"
+      size="large"
+      dataSource={problems ?? []}
+      renderItem={(item) => (
+        <List.Item>
+          <Link to={`/domain/${domainUrl}/problem/${item.id ?? ''}`}>
+            <strong>{item.title}</strong>
+          </Link>
+        </List.Item>
+      )}
+    />
+  ) : (
+    <Empty description={<span>There are no problems</span>}>
+      <Space>
+        <Button type="primary">Add Existed</Button>
+        <span>or</span>
+        <Button type="primary">Clone</Button>
+      </Space>
+    </Empty>
   );
 };
 

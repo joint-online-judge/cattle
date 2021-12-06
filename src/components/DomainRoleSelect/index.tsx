@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useIntl } from 'umi';
 import { Select, SelectProps } from 'antd';
 import { useRequest } from 'ahooks';
 import { Horse } from '@/utils/service';
@@ -9,6 +10,7 @@ interface IProps extends SelectProps<string> {
 
 const Index: React.FC<IProps> = (props) => {
   const { domainUrl, ...otherProps } = props;
+  const intl = useIntl();
   const [disabled, setDisabled] = useState<boolean>(false);
 
   const { data, loading } = useRequest(
@@ -37,7 +39,13 @@ const Index: React.FC<IProps> = (props) => {
       loading={loading}
       options={options}
       disabled={disabled}
-      placeholder={disabled ? '加载选项失败' : '请选择一个角色'}
+      placeholder={
+        disabled
+          ? intl.formatMessage({
+              id: 'form.domain_role_select.error_placeholder',
+            })
+          : intl.formatMessage({ id: 'form.domain_role_select.placeholder' })
+      }
       {...otherProps}
     />
   );

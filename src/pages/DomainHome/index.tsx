@@ -3,7 +3,6 @@ import { Col, Row, Typography, Avatar, Spin, Button } from 'antd';
 import { useParams, useIntl, useModel, history } from 'umi';
 import { PlusOutlined } from '@ant-design/icons';
 import ProblemSetList from './ProblemSetList';
-import style from './style.css';
 import { gravatarImageUrl } from '@/utils';
 import ShadowCard from '@/components/ShadowCard';
 import MarkdownRender from '@/components/MarkdownRender';
@@ -21,33 +20,35 @@ const Index: React.FC = () => {
   }, []);
 
   return (
-    <div>
+    <Row gutter={[0, 24]}>
       {domain?.bulletin ? (
-        <ShadowCard
-          title={intl.formatMessage({ id: 'DOMAIN.CREATE.BULLETIN' })}
-          className={style.contentCard}
-        >
-          <MarkdownRender>{domain?.bulletin ?? ''}</MarkdownRender>
-        </ShadowCard>
-      ) : null}
-      <ShadowCard
-        title={intl.formatMessage({ id: 'PROBLEM_SET.PROBLEM_SET' })}
-        className={style.contentCard}
-        extra={
-          <Button
-            icon={<PlusOutlined />}
-            onClick={() => {
-              history.push(`/domain/${domainUrl}/create-problem-set`);
-            }}
-            type="primary"
+        <Col span={24}>
+          <ShadowCard
+            title={intl.formatMessage({ id: 'DOMAIN.CREATE.BULLETIN' })}
           >
-            {intl.formatMessage({ id: 'PROBLEM_SET.CREATE.TITLE' })}
-          </Button>
-        }
-      >
-        <ProblemSetList domainId={domainUrl} />
-      </ShadowCard>
-    </div>
+            <MarkdownRender>{domain?.bulletin ?? ''}</MarkdownRender>
+          </ShadowCard>
+        </Col>
+      ) : null}
+      <Col span={24}>
+        <ShadowCard
+          title={intl.formatMessage({ id: 'PROBLEM_SET.PROBLEM_SET' })}
+          extra={
+            <Button
+              icon={<PlusOutlined />}
+              onClick={() => {
+                history.push(`/domain/${domainUrl}/create-problem-set`);
+              }}
+              type="primary"
+            >
+              {intl.formatMessage({ id: 'PROBLEM_SET.CREATE.TITLE' })}
+            </Button>
+          }
+        >
+          <ProblemSetList domainId={domainUrl} />
+        </ShadowCard>
+      </Col>
+    </Row>
   );
 };
 

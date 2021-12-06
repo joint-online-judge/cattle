@@ -1,9 +1,18 @@
 import jwt_decode from 'jwt-decode';
-import { Horse, JWTAccessToken, ErrorCode } from '@/utils/service';
+import {
+  Horse,
+  JWTAccessToken,
+  ErrorCode,
+  DomainPermission,
+} from '@/utils/service';
 
 export interface InitialState {
   accessToken: string | undefined;
   user: JWTAccessToken | undefined; // actually a JWT not a User
+  domainPermission?: {
+    role: string | undefined;
+    permission: DomainPermission | undefined;
+  };
 }
 
 // will be run before render each route

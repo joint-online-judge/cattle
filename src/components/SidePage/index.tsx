@@ -10,13 +10,13 @@ interface IProps {
 const Index: React.FC<IProps> = ({ children, extra }) => {
   return (
     <>
-      <Row gutter={[{ lg: 24, xl: 24 }, 24]}>
-        <Col xs={{ span: 24 }} sm={{ span: 18 }} xl={{ span: 18 }}>
+      <Row gutter={[{ lg: 24, xl: 24, md: 24, sm: 24 }, 16]}>
+        <Col xs={24} sm={24} md={16} xl={16}>
           {React.Children.map(children, (c) => (
             <ShadowCard>{c}</ShadowCard>
           ))}
         </Col>
-        <Col xs={{ span: 24 }} sm={{ span: 6 }} xl={{ span: 6 }}>
+        <Col xs={24} sm={24} md={8} xl={8}>
           {React.Children.map(extra, (c) => (
             <ShadowCard>{c}</ShadowCard>
           ))}

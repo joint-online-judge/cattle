@@ -18,9 +18,13 @@ const Index: React.FC = () => {
         <Row justify="space-between">
           <Col>
             <Link to={`/domain/${domain.url}`}>
-              <h1 className={style.domainTitle}>{domain.name}</h1>
+              <h1 className="text-5xl text-white font-light mb-3">
+                {domain.name}
+              </h1>
             </Link>
-            <h2 className={style.domainSubtitle}>Powered by JOJ Team</h2>
+            <h2 className="text-sm font-light text-white text-opacity-60">
+              Powered by JOJ Team
+            </h2>
           </Col>
           <Col>
             <Avatar

@@ -1,14 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { matchPath } from 'react-router';
 import { Menu } from 'antd';
-import {
-  useIntl,
-  Link,
-  useLocation,
-  useAccess,
-  useModel,
-  useRouteMatch,
-} from 'umi';
+import { useIntl, Link, useLocation, useAccess, useModel } from 'umi';
 import UserMenuItem from './UserMenuItem';
 import style from './style.css';
 
@@ -19,12 +12,15 @@ const Index: React.FC = () => {
   const { domainUrl } = useModel('domain');
 
   const matchMenuKey = () => {
-    if (matchPath(location.pathname, { path: '/admin' })) return 'admin';
-    else if (
-      matchPath(location.pathname, { path: '/domain/:domainUrl/settings' })
-    )
+    if (matchPath(location.pathname, { path: '/domain/:domainUrl/settings' }))
       return 'domain_manage';
-    else if (matchPath(location.pathname, { path: '/domain' })) return 'domain';
+
+    if (matchPath(location.pathname, { path: '/domain/:domainUrl/problem' }))
+      return 'problem_list';
+
+    if (matchPath(location.pathname, { path: '/domain' })) return 'domain';
+    if (matchPath(location.pathname, { path: '/admin' })) return 'admin';
+
     return 'home';
   };
 
@@ -45,6 +41,13 @@ const Index: React.FC = () => {
       <Menu.Item key="domain">
         <Link to="/domain">{intl.formatMessage({ id: 'menu.domain' })}</Link>
       </Menu.Item>
+      {domainUrl ? (
+        <Menu.Item key="problem_list">
+          <Link to={`/domain/${domainUrl}/problem`}>
+            {intl.formatMessage({ id: 'menu.problem_list' })}
+          </Link>
+        </Menu.Item>
+      ) : null}
       {
         // Note: do not use <Access> of umi -- antd menu cannot regonize wrapped component.
         domainUrl && access.isRoot ? (

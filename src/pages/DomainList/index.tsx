@@ -33,36 +33,13 @@ const Index: React.FC = () => {
       onError: () => {
         message.error(
           intl.formatMessage(
-            { id: 'msg.error.fetch' },
+            { id: 'msg.error.fetch_item' },
             { data: intl.formatMessage({ id: 'domain' }) },
           ),
         );
       },
     },
   );
-
-  const columns: Array<TableColumnProps<Domain>> = [
-    {
-      title: 'Name',
-      dataIndex: 'name',
-      key: 'domain.url',
-    },
-    {
-      title: 'Action',
-      key: 'action',
-      fixed: 'right',
-      render: (_text, record) => (
-        <Space split={<Divider type="vertical" />}>
-          <Link to={`/domain/${record.url}`}>
-            {intl.formatMessage({ id: 'VISIT' })}
-          </Link>
-          <Link to={`/domain/${record.url}/settings/profile`}>
-            {intl.formatMessage({ id: 'MANAGE' })}
-          </Link>
-        </Space>
-      ),
-    },
-  ];
 
   return (
     <>

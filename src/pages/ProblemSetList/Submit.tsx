@@ -68,9 +68,7 @@ const Index: React.FC<IProps> = (props) => {
 
   return (
     <>
-      <ShadowCard
-        title={intl.formatHTMLMessage({ id: 'PROBLEM.RECENT_RECORD' })}
-      >
+      <ShadowCard title={intl.formatMessage({ id: 'PROBLEM.RECENT_RECORD' })}>
         <Table
           rowKey="id"
           columns={columns}
@@ -80,12 +78,12 @@ const Index: React.FC<IProps> = (props) => {
       </ShadowCard>
       <br />
       <br />
-      <ShadowCard title={intl.formatHTMLMessage({ id: 'PROBLEM.SUBMIT' })}>
+      <ShadowCard title={intl.formatMessage({ id: 'PROBLEM.SUBMIT' })}>
         <Row>
           <Col span={10}>
             <Form layout="vertical" onFinish={onFinish}>
               <Form.Item
-                label={intl.formatHTMLMessage({ id: 'PROBLEM.LANGUAGES' })}
+                label={intl.formatMessage({ id: 'PROBLEM.LANGUAGES' })}
                 name="language"
                 required={true}
                 rules={[
@@ -104,7 +102,7 @@ const Index: React.FC<IProps> = (props) => {
                 </Select>
               </Form.Item>
               <Form.Item
-                label={intl.formatHTMLMessage({ id: 'PROBLEM.UPLOAD_FILE' })}
+                label={intl.formatMessage({ id: 'PROBLEM.UPLOAD_FILE' })}
                 getValueFromEvent={({ file }) => {
                   return file;
                 }}
