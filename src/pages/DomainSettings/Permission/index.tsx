@@ -1,5 +1,6 @@
 import React, { useMemo, useRef, useState, useEffect } from 'react';
 import { useParams, Link, useIntl } from 'umi';
+import { useRequest } from 'ahooks';
 import { Space, message, Popconfirm, Button, Checkbox } from 'antd';
 import {
   EditableProTable,
@@ -7,9 +8,10 @@ import {
   ActionType,
 } from '@ant-design/pro-table';
 import { TeamOutlined } from '@ant-design/icons';
-import { useRequest } from 'ahooks';
-import { Horse, DomainPermission } from '@/utils/service';
+import { Horse, DomainPermission, DomainRoleCreate } from '@/utils/service';
 import { isArray, toPairs, fromPairs, flatten, uniq, groupBy } from 'lodash';
+import LoadFailResult from '@/components/LoadFailResult';
+import AddRoleModal from './AddRoleModal';
 
 type DataSourceType = {
   id: string;
@@ -22,6 +24,7 @@ const Index: React.FC = () => {
   const { domainUrl } = useParams<{ domainUrl: string }>();
   const [editableKeys, setEditableRowKeys] = useState<React.Key[]>([]);
   const [activekey, setActiveKey] = useState<keyof DomainPermission>('general');
+  const [loadFailed, setLoadFailed] = useState<boolean>(false);
 
   const {
     run: fetchDomainRoles,
@@ -36,17 +39,18 @@ const Index: React.FC = () => {
     },
     {
       onError: () => {
+        setLoadFailed(true);
         message.error('fetch domain user failed');
       },
     },
   );
 
-  const { run: removeUser, loading: deleting } = useRequest(
-    async (userId: string) => {
+  const { run: createRole, loading: creating } = useRequest(
+    async (values: DomainRoleCreate) => {
       const response =
-        await Horse.domain.removeDomainUserApiV1DomainsDomainUsersUserDelete(
+        await Horse.domain.createDomainRoleApiV1DomainsDomainRolesPost(
           domainUrl,
-          userId,
+          values,
         );
       return response.data;
     },
@@ -128,10 +132,13 @@ const Index: React.FC = () => {
 
   const onChange = (e: any) => console.log(e);
 
-  return (
+  return loadFailed ? (
+    <LoadFailResult />
+  ) : (
     <EditableProTable<DataSourceType>
       bordered
-      loading={fetching}
+      scroll={{ x: 'max-content' }}
+      loading={fetching || creating}
       cardProps={false}
       search={false}
       options={false}
@@ -154,17 +161,11 @@ const Index: React.FC = () => {
           },
         },
         actions: [
-          <Button
-            type="primary"
-            key="create"
-            icon={<TeamOutlined />}
-            onClick={() => {
-              // dataSource 就是当前数据，可以调用 api 将其保存
-              console.log(dataSource);
-            }}
-          >
-            创建角色
-          </Button>,
+          <AddRoleModal
+            domainUrl={domainUrl}
+            roles={roles}
+            onSuccess={refetch}
+          />,
         ],
       }}
       editable={{
@@ -174,7 +175,7 @@ const Index: React.FC = () => {
           return [defaultDoms.delete];
         },
         onValuesChange: (record, recordList) => {
-          console.log(record);
+          console.log(record, recordList);
         },
         onChange: setEditableRowKeys,
       }}
