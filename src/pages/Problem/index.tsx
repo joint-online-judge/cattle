@@ -53,7 +53,7 @@ const Index: React.FC<IRouteComponentProps> = ({ route }) => {
   const breads = useMemo(
     () => [
       {
-        path: domainUrl,
+        path: `domain/${domainUrl}`,
         breadcrumbName: domain?.name ?? 'unknown',
       },
       {

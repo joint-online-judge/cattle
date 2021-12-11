@@ -30,7 +30,7 @@ const Index: React.FC = () => {
   const breads = useMemo(
     () => [
       {
-        path: domainUrl,
+        path: `domain/${domainUrl}`,
         breadcrumbName: domain?.name ?? 'unknown',
       },
       {
