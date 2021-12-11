@@ -24,14 +24,11 @@ export default function DomainModel() {
     async (domainUrl: string | undefined | null) => {
       if (typeof domainUrl === 'string' && domainUrl.length > 0) {
         setDomainUrl(domainUrl);
-        const res = await Horse.domain.getDomainApiV1DomainsDomainGet(
+        const res = await Horse.domain.v1GetDomain(domainUrl);
+        const perm = await Horse.domain.v1GetDomainUserPermission(
           domainUrl,
+          'me',
         );
-        const perm =
-          await Horse.domain.getDomainUserPermissionApiV1DomainsDomainUsersUserPermissionGet(
-            domainUrl,
-            'me',
-          );
         return {
           domain: res.data.data,
           role: perm.data.data?.role,

@@ -33,7 +33,7 @@ export default {
   'DOMAIN.CREATE.URL': 'Url (ID)',
   'DOMAIN.CREATE.GRAVATAR': 'Gravatar Email',
   'DOMAIN.CREATE.BULLETIN': 'Bulletin',
-  'DOMAIN.CREATE.CREATE': 'Create',
+  'domain.create.tag': 'Tag',
   'DOMAIN.HOME.ASSIGNMENTS': 'Assignments',
   'DOMAIN.HOME.PROBLEMS': 'Problems',
   'DOMAIN.HOME.MEMBERS': 'Members',
