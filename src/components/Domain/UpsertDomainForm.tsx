@@ -24,8 +24,7 @@ const Index: React.FC<IProps> = (props) => {
   const [form] = Form.useForm();
 
   const { run: createDomain, loading: creatingDomain } = useRequest(
-    async (domain: DomainCreate) =>
-      Horse.domain.createDomainApiV1DomainsPost(domain),
+    async (domain: DomainCreate) => Horse.domain.v1CreateDomain(domain),
     {
       manual: true,
       onSuccess: (res) => {
@@ -49,7 +48,7 @@ const Index: React.FC<IProps> = (props) => {
 
   const { run: updateDomain, loading: updatingDomain } = useRequest(
     async (url: string, domain: DomainEdit) =>
-      Horse.domain.updateDomainApiV1DomainsDomainPatch(url, domain),
+      Horse.domain.v1UpdateDomain(url, domain),
     {
       manual: true,
       onSuccess: (res) => {

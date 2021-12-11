@@ -24,10 +24,7 @@ const Index: React.FC = () => {
 
   const { run: register, loading: registering } = useRequest(
     async (registerInfo: UserCreate) =>
-      Horse.auth.registerApiV1AuthRegisterPost(
-        { responseType: 'json' },
-        registerInfo,
-      ),
+      Horse.auth.v1Register({ responseType: 'json' }, registerInfo),
     {
       manual: true,
       onSuccess: (res) => {

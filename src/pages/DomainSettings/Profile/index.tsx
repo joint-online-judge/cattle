@@ -11,9 +11,7 @@ const Index: React.FC = () => {
 
   const { data } = useRequest(
     async () => {
-      const response = await Horse.domain.getDomainApiV1DomainsDomainGet(
-        domainUrl,
-      );
+      const response = await Horse.domain.v1GetDomain(domainUrl);
       return response.data.data;
     },
     {

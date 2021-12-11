@@ -16,7 +16,7 @@ const Index: React.FC = () => {
   const { problemId } = useParams<{ problemId: string }>();
 
   const { data: ownerUserResp, run: getOwner } = useRequest(
-    async (uid: string) => Horse.user.getUserApiV1UsersUidGet(uid),
+    async (uid: string) => Horse.user.v1GetUser(uid),
     {
       manual: true,
       onSuccess: (res) => {
@@ -28,18 +28,14 @@ const Index: React.FC = () => {
 
   const { data: problemResp, run: getProblem } = useRequest(
     async (problem: string) => {
-      if (domainUrl)
-        return Horse.problem.getProblemApiV1DomainsDomainProblemsProblemGet(
-          domainUrl,
-          problem,
-        );
+      if (domainUrl) return Horse.problem.v1GetProblem(domainUrl, problem);
     },
     {
       manual: true,
       onSuccess: (res) => {
         // todo: errCode
         console.info('get problem success');
-        getOwner(res?.data?.data?.owner_id ?? '');
+        getOwner(res?.data?.data?.ownerId ?? '');
       },
       onError: (res) => {
         console.log('get problem fail', res);

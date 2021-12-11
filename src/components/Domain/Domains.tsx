@@ -21,7 +21,7 @@ const Index: React.FC = () => {
   const intl = useIntl();
   const { data, run } = useRequest(
     async () => {
-      const res = await Horse.domain.listDomainsApiV1DomainsGet();
+      const res = await Horse.domain.v1ListDomains();
       return res?.data?.data?.results;
     },
     { manual: true },

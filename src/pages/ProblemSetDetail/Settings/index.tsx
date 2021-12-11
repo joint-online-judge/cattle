@@ -14,11 +14,10 @@ const Index: React.FC = () => {
 
   const { data: problemSet } = useRequest(
     async () => {
-      const res =
-        await Horse.problemSet.getProblemSetApiV1DomainsDomainProblemSetsProblemSetGet(
-          domainUrl,
-          problemSetId,
-        );
+      const res = await Horse.problemSet.v1GetProblemSet(
+        domainUrl,
+        problemSetId,
+      );
       return res.data.data;
     },
     {

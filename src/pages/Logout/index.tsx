@@ -12,7 +12,7 @@ const Index: React.FC = () => {
     async () => {
       if (initialState?.accessToken) {
         return Horse.auth
-          .logoutApiV1AuthLogoutPost({
+          .v1Logout({
             responseType: 'json',
           })
           .then((res) => {

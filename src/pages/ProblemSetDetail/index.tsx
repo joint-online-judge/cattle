@@ -30,11 +30,10 @@ const Index: React.FC<IRouteComponentProps> = ({ route }) => {
 
   const { data: problemSet } = useRequest(
     async () => {
-      const res =
-        await Horse.problemSet.getProblemSetApiV1DomainsDomainProblemSetsProblemSetGet(
-          domainUrl,
-          problemSetId,
-        );
+      const res = await Horse.problemSet.v1GetProblemSet(
+        domainUrl,
+        problemSetId,
+      );
       // if (res.data.errorCode === ErrorCode.ProblemSetAfterDueError) {
       //   setAfterDue(true);
       // } else if (
@@ -47,7 +46,7 @@ const Index: React.FC<IRouteComponentProps> = ({ route }) => {
     },
     {
       onError: () => {
-        message.error('failed to fetch domain info');
+        message.error('failed to problem set info');
       },
     },
   );

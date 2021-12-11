@@ -21,11 +21,10 @@ const Index: React.FC = () => {
 
   const { run: fetchDomainUsers, loading: fetching } = useRequest(
     async (params: ProTablePagination) => {
-      const response =
-        await Horse.domain.listDomainUsersApiV1DomainsDomainUsersGet(
-          domainUrl,
-          transPagination(params),
-        );
+      const response = await Horse.domain.v1ListDomainUsers(
+        domainUrl,
+        transPagination(params),
+      );
       return response.data.data ?? { count: 0, results: [] };
     },
     {
@@ -38,11 +37,7 @@ const Index: React.FC = () => {
 
   const { run: removeUser, loading: deleting } = useRequest(
     async (userId: string) => {
-      const response =
-        await Horse.domain.removeDomainUserApiV1DomainsDomainUsersUserDelete(
-          domainUrl,
-          userId,
-        );
+      const response = await Horse.domain.v1RemoveDomainUser(domainUrl, userId);
       return response.data;
     },
     {

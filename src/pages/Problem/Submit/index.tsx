@@ -55,11 +55,7 @@ const Index: React.FC<IProps> = (props) => {
 
   const onFinish = (values: ProblemSolutionSubmit) => {
     console.log(values);
-    Horse.problem.submitSolutionToProblemApiV1DomainsDomainProblemsProblemPost(
-      domainUrl,
-      problemId,
-      values,
-    );
+    Horse.problem.v1SubmitSolutionToProblem(domainUrl, problemId, values);
   };
 
   // const languageOptions = useMemo(() => {

@@ -26,11 +26,7 @@ const Index: React.FC<IRouteComponentProps> = ({ route }) => {
     useParams<{ domainUrl: string; problemId: string }>();
 
   const { data: problemResp, refresh: refreshProblem } = useRequest(
-    async () =>
-      Horse.problem.getProblemApiV1DomainsDomainProblemsProblemGet(
-        domainUrl,
-        problemId,
-      ),
+    async () => Horse.problem.v1GetProblem(domainUrl, problemId),
     {
       refreshDeps: [domainUrl, problemId],
       onError: (res) => {
@@ -41,7 +37,7 @@ const Index: React.FC<IRouteComponentProps> = ({ route }) => {
 
   const { data: owner } = useRequest(
     async () => {
-      const res = await Horse.user.getUserApiV1UsersUidGet(
+      const res = await Horse.user.v1GetUser(
         problemResp?.data.data?.ownerId ?? '',
       );
       return res.data.data;

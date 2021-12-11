@@ -33,8 +33,7 @@ const Index: React.FC = () => {
     data: roles,
   } = useRequest(
     async () => {
-      const response =
-        await Horse.domain.listDomainRolesApiV1DomainsDomainRolesGet(domainUrl);
+      const response = await Horse.domain.v1ListDomainRoles(domainUrl);
       return response.data.data?.results ?? [];
     },
     {
@@ -47,11 +46,7 @@ const Index: React.FC = () => {
 
   const { run: createRole, loading: creating } = useRequest(
     async (values: DomainRoleCreate) => {
-      const response =
-        await Horse.domain.createDomainRoleApiV1DomainsDomainRolesPost(
-          domainUrl,
-          values,
-        );
+      const response = await Horse.domain.v1CreateDomainRole(domainUrl, values);
       return response.data;
     },
     {
@@ -76,7 +71,10 @@ const Index: React.FC = () => {
         formItemProps: {
           valuePropName: 'checked',
         },
-        renderFormItem: () => <Checkbox />,
+        renderFormItem: (e) => {
+          console.log(e);
+          return <Checkbox onChange={() => {}} />;
+        },
       }));
 
       roleCols.unshift({

@@ -18,7 +18,7 @@ const Index: React.FC = () => {
 
   const { run: fetchProblems, loading: fetching } = useRequest(
     async (params: ProTablePagination) => {
-      const res = await Horse.problem.listProblemsApiV1DomainsDomainProblemsGet(
+      const res = await Horse.problem.v1ListProblems(
         domainUrl,
         transPagination(params),
       );

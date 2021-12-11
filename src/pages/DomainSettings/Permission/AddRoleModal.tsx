@@ -34,11 +34,7 @@ const Index: React.FC<IProps> = ({ domainUrl, onSuccess, roles }) => {
 
   const { run: createRole } = useRequest(
     async (values: DomainRoleCreate) => {
-      const response =
-        await Horse.domain.createDomainRoleApiV1DomainsDomainRolesPost(
-          domainUrl,
-          values,
-        );
+      const response = await Horse.domain.v1CreateDomainRole(domainUrl, values);
       return response.data;
     },
     {
