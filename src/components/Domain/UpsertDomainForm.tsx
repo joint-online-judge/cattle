@@ -1,14 +1,8 @@
 import React, { useRef, useEffect } from 'react';
-import { Button, Row, Col, Form, Input, message, Spin } from 'antd';
+import { Form, message } from 'antd';
 import { history, useIntl } from 'umi';
-import ProForm, {
-  ProFormInstance,
-  ProFormText,
-  ProFormDateTimePicker,
-  ProFormSwitch,
-} from '@ant-design/pro-form';
+import ProForm, { ProFormInstance, ProFormText } from '@ant-design/pro-form';
 import { useRequest } from 'ahooks';
-import { DOMAIN_HOST } from '@/constants';
 import {
   Horse,
   Domain,

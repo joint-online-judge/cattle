@@ -45,7 +45,7 @@ const Index: React.FC<IProps> = ({
       onSuccess: (res) => {
         if (res.errorCode === ErrorCode.UserAlreadyInDomainBadRequestError) {
           message.error('user already in domain');
-        } else if (ErrorCode.UserNotFoundError) {
+        } else if (res.errorCode === ErrorCode.UserNotFoundError) {
           message.error('user not found');
         } else if (res.errorCode === ErrorCode.Success) {
           message.success('add user success');

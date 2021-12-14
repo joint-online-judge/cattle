@@ -14,6 +14,7 @@ import ProblemList from './ProblemList';
 import AfterDue from './AfterDue';
 import BeforeAvailable from './BeforeAvailable';
 import { ErrorCode, Horse } from '@/utils/service';
+import { VERTICAL_GUTTER } from '@/constants';
 import ShadowCard from '@/components/ShadowCard';
 import SideMenuPage from '@/components/SideMenuPage';
 import MarkdownRender from '@/components/MarkdownRender';
@@ -81,7 +82,7 @@ const Index: React.FC<IRouteComponentProps> = ({ route }) => {
     <BeforeAvailable />
   ) : (
     <SideMenuPage route={route} shadowCard={false}>
-      <Row gutter={[0, 24]}>
+      <Row gutter={VERTICAL_GUTTER}>
         {problemSet?.content ? (
           <Col span={24}>
             <ShadowCard

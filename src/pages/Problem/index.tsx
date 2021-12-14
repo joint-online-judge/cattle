@@ -16,7 +16,6 @@ import Gravatar from '@/components/Gravatar';
 import Detail from './Detail';
 import Submit from './Submit';
 import Edit from './Edit';
-import Settings from './Settings';
 
 const Index: React.FC<IRouteComponentProps> = ({ route }) => {
   const intl = useIntl();
@@ -97,6 +96,7 @@ const Index: React.FC<IRouteComponentProps> = ({ route }) => {
             >
               {intl.formatMessage({ id: 'PROBLEM.SUBMIT_CODE' })}
             </Menu.Item>
+            <Menu.Divider />
             <Menu.Item key="edit" icon={<EditOutlined />} style={{ margin: 0 }}>
               {intl.formatMessage({ id: 'PROBLEM.EDIT' })}
             </Menu.Item>
@@ -152,9 +152,6 @@ const Index: React.FC<IRouteComponentProps> = ({ route }) => {
             problem={problemResp?.data?.data}
             onUpdateSuccess={refreshProblem}
           />
-        </PageContent>
-        <PageContent menuKey="settings" i18nKey="PROBLEM.SETTINGS">
-          <Settings problem={problemResp?.data?.data} />
         </PageContent>
       </SideMenuPage>
     </>

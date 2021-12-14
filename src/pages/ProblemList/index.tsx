@@ -26,7 +26,6 @@ const Index: React.FC = () => {
     },
     {
       manual: true,
-      onError: (res) => {},
     },
   );
 

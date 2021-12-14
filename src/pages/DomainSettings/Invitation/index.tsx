@@ -1,8 +1,10 @@
 import React from 'react';
 import { useParams } from 'umi';
-import { message } from 'antd';
+import { message, Row, Col } from 'antd';
 import { useRequest } from 'ahooks';
 import UpsertDomainForm from '@/components/Domain/UpsertDomainForm';
+import ShadowCard from '@/components/ShadowCard';
+import { VERTICAL_GUTTER } from '@/constants';
 import { Horse } from '@/utils/service';
 
 interface IProps {
@@ -14,7 +16,7 @@ const Index: React.FC<IProps> = ({ refresh }) => {
 
   const { data } = useRequest(
     async () => {
-      const response = await Horse.domain.v1GetDomain(domainUrl);
+      const response = await Horse.domain.v1ListDomainInvitations(domainUrl);
       return response.data.data;
     },
     {
@@ -24,7 +26,20 @@ const Index: React.FC<IProps> = ({ refresh }) => {
     },
   );
 
-  return <h1>Invitation</h1>;
+  return (
+    <Row gutter={VERTICAL_GUTTER}>
+      <Col span={24}>
+        <ShadowCard>
+          <h1>Invitation</h1>
+        </ShadowCard>
+      </Col>
+      <Col span={24}>
+        <ShadowCard>
+          <h1>Invitation</h1>
+        </ShadowCard>
+      </Col>
+    </Row>
+  );
 };
 
 export default Index;

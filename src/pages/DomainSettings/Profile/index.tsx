@@ -1,11 +1,16 @@
 import React from 'react';
-import { useParams, useModel } from 'umi';
+import { useModel } from 'umi';
 import UpsertDomainForm from '@/components/Domain/UpsertDomainForm';
+import ShadowCard from '@/components/ShadowCard';
 
 const Index: React.FC = () => {
   const { domain, refresh } = useModel('domain');
 
-  return <UpsertDomainForm initialValues={domain} onUpdateSuccess={refresh} />;
+  return (
+    <ShadowCard>
+      <UpsertDomainForm initialValues={domain} onUpdateSuccess={refresh} />
+    </ShadowCard>
+  );
 };
 
 export default Index;

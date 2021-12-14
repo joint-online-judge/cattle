@@ -1,16 +1,16 @@
 import React, { useMemo, useRef, useState, useEffect } from 'react';
-import { useParams, Link, useIntl } from 'umi';
+import { useParams, useIntl } from 'umi';
 import { useRequest } from 'ahooks';
-import { Space, message, Popconfirm, Button, Checkbox } from 'antd';
+import { message, Checkbox } from 'antd';
 import {
   EditableProTable,
   ProColumns,
   ActionType,
 } from '@ant-design/pro-table';
-import { TeamOutlined } from '@ant-design/icons';
 import { Horse, DomainPermission, DomainRoleCreate } from '@/utils/service';
 import { isArray, toPairs, fromPairs, flatten, uniq, groupBy } from 'lodash';
 import LoadFailResult from '@/components/LoadFailResult';
+import ShadowCard from '@/components/ShadowCard';
 import AddRoleModal from './AddRoleModal';
 
 type DataSourceType = {
@@ -130,54 +130,58 @@ const Index: React.FC = () => {
 
   const onChange = (e: any) => console.log(e);
 
-  return loadFailed ? (
-    <LoadFailResult />
-  ) : (
-    <EditableProTable<DataSourceType>
-      bordered
-      scroll={{ x: 'max-content' }}
-      loading={fetching || creating}
-      cardProps={false}
-      search={false}
-      options={false}
-      pagination={false}
-      columns={columns}
-      rowKey="id"
-      value={dataSource}
-      onChange={onChange}
-      recordCreatorProps={false}
-      toolbar={{
-        menu: {
-          type: 'tab',
-          activeKey: activekey,
-          items: categories.map((c) => ({
-            key: c,
-            label: <span>{c}</span>,
-          })),
-          onChange: (key: any) => {
-            setActiveKey(key);
-          },
-        },
-        actions: [
-          <AddRoleModal
-            domainUrl={domainUrl}
-            roles={roles}
-            onSuccess={refetch}
-          />,
-        ],
-      }}
-      editable={{
-        type: 'multiple',
-        editableKeys,
-        actionRender: (row, config, defaultDoms) => {
-          return [defaultDoms.delete];
-        },
-        onValuesChange: (record, recordList) => {
-          console.log(record, recordList);
-        },
-        onChange: setEditableRowKeys,
-      }}
-    />
+  return (
+    <ShadowCard>
+      {loadFailed ? (
+        <LoadFailResult />
+      ) : (
+        <EditableProTable<DataSourceType>
+          bordered
+          scroll={{ x: 'max-content' }}
+          loading={fetching || creating}
+          cardProps={false}
+          search={false}
+          options={false}
+          pagination={false}
+          columns={columns}
+          rowKey="id"
+          value={dataSource}
+          onChange={onChange}
+          recordCreatorProps={false}
+          toolbar={{
+            menu: {
+              type: 'tab',
+              activeKey: activekey,
+              items: categories.map((c) => ({
+                key: c,
+                label: <span>{c}</span>,
+              })),
+              onChange: (key: any) => {
+                setActiveKey(key);
+              },
+            },
+            actions: [
+              <AddRoleModal
+                domainUrl={domainUrl}
+                roles={roles}
+                onSuccess={refetch}
+              />,
+            ],
+          }}
+          editable={{
+            type: 'multiple',
+            editableKeys,
+            actionRender: (row, config, defaultDoms) => {
+              return [defaultDoms.delete];
+            },
+            onValuesChange: (record, recordList) => {
+              console.log(record, recordList);
+            },
+            onChange: setEditableRowKeys,
+          }}
+        />
+      )}
+    </ShadowCard>
   );
 };
 

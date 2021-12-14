@@ -1,5 +1,6 @@
 import React, { ReactNode } from 'react';
 import { Row, Col } from 'antd';
+import { VERTICAL_GUTTER } from '@/constants';
 import ShadowCard from '@/components/ShadowCard';
 
 interface IProps {
@@ -10,7 +11,7 @@ interface IProps {
 const Index: React.FC<IProps> = ({ children, extra }) => {
   return (
     <>
-      <Row gutter={[{ lg: 24, xl: 24, md: 24, sm: 24 }, 16]}>
+      <Row gutter={[{ lg: 24, xl: 24, md: 24, sm: 24 }, VERTICAL_GUTTER[1]]}>
         <Col xs={24} sm={24} md={16} xl={16}>
           {React.Children.map(children, (c) => (
             <ShadowCard>{c}</ShadowCard>

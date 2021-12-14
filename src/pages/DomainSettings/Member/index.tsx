@@ -9,6 +9,7 @@ import { Horse, UserWithDomainRole, DomainUserAdd } from '@/utils/service';
 import { transPagination } from '@/utils';
 import AddUserModal from './AddUserModal';
 import Gravatar from '@/components/Gravatar';
+import ShadowCard from '@/components/ShadowCard';
 
 const Index: React.FC = () => {
   const [modalVis, setModalVis] = useState<boolean>(false);
@@ -107,7 +108,7 @@ const Index: React.FC = () => {
   ];
 
   return (
-    <>
+    <ShadowCard>
       <ProTable<UserWithDomainRole>
         scroll={{ x: 'max-content' }}
         loading={fetching || deleting}
@@ -151,7 +152,7 @@ const Index: React.FC = () => {
         formRef={modalFormRef as any}
         editingUser={editingUser}
       />
-    </>
+    </ShadowCard>
   );
 };
 

@@ -1,12 +1,14 @@
 import React, { useMemo } from 'react';
-import { Table, Select, Row, Col, Form, Button, Upload } from 'antd';
+import { Table, Select, Row, Col, Form, Button, Upload, message } from 'antd';
 import { useIntl, useParams } from 'umi';
+import { useRequest } from 'ahooks';
 import { InboxOutlined } from '@ant-design/icons';
-import { isArray } from 'lodash';
+import { VERTICAL_GUTTER } from '@/constants';
 import {
   Problem,
   ProblemSolutionSubmit,
   RecordCodeType,
+  ErrorCode,
   Horse,
 } from '@/utils/service';
 import ShadowCard from '@/components/ShadowCard';
@@ -17,8 +19,31 @@ interface IProps {
 
 const Index: React.FC<IProps> = (props) => {
   const intl = useIntl();
-  const { domainUrl, problemId } =
-    useParams<{ domainUrl: string; problemId: string }>();
+  const { domainUrl, problemId, problemSetId } =
+    useParams<{
+      domainUrl: string;
+      problemId: string;
+      problemSetId?: string;
+    }>();
+
+  const { data: recordResp } = useRequest(
+    async () => {
+      const res = await Horse.record.v1ListRecordsInDomain(domainUrl, {
+        problem: problemId,
+        problemSet: problemSetId,
+      });
+      return res.data;
+    },
+    {
+      onSuccess: (res) => {
+        if (res.errorCode !== ErrorCode.Success)
+          message.error('fetch submissions failed');
+      },
+      onError: () => {
+        message.error('fetch submissions failed');
+      },
+    },
+  );
 
   const columns = [
     {
@@ -43,7 +68,7 @@ const Index: React.FC<IProps> = (props) => {
     },
   ];
 
-  const data = [
+  const dataSource = [
     {
       id: '1',
       status: 'ac',
@@ -69,7 +94,7 @@ const Index: React.FC<IProps> = (props) => {
   // }, [problem]);
 
   return (
-    <Row gutter={[0, { xs: 16, sm: 16, lg: 24, xl: 24, xxl: 24 }]}>
+    <Row gutter={VERTICAL_GUTTER}>
       <Col span={24}>
         <ShadowCard
           title={intl.formatMessage({ id: 'PROBLEM.RECENT_RECORD' })}
@@ -80,7 +105,7 @@ const Index: React.FC<IProps> = (props) => {
           <Table
             rowKey="id"
             columns={columns}
-            dataSource={data}
+            dataSource={dataSource}
             pagination={false}
           />
         </ShadowCard>

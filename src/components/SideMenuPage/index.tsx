@@ -7,6 +7,7 @@ import SettingsSideBar, {
   SettingsMenuItem,
 } from '@/components/Settings/SettingsSideBar';
 import ShadowCard from '@/components/ShadowCard';
+import { VERTICAL_GUTTER } from '@/constants';
 import { isArray } from 'lodash';
 
 interface IProps {
@@ -25,7 +26,7 @@ const Index: React.FC<IProps> = ({
   children,
   extra,
   route,
-  defaultTab,
+  defaultTab = '',
   menuItems,
   menu,
   routerMode = 'param',
@@ -37,16 +38,17 @@ const Index: React.FC<IProps> = ({
 
   const [key, setKey] = useState<string>(
     (() => {
-      if (defaultTab) return defaultTab;
-
       if (routerMode === 'query' && isArray(children)) {
         if (location.query?.tab && typeof location.query?.tab === 'string')
           return location.query?.tab;
 
+        if (defaultTab) return defaultTab;
+
         const firstValidChild = children.find((o) => o.props.menuKey);
         return firstValidChild?.props?.menuKey ?? '';
       }
-      return params.tab || '';
+
+      return params.tab ?? defaultTab;
     })(),
   );
 
@@ -117,21 +119,18 @@ const Index: React.FC<IProps> = ({
         return children.find((o) => o.props.menuKey === key) ?? null;
       return children;
     } else {
-      if (shadowCard) {
-        if (isArray(children)) {
-          return (
-            <Row gutter={[0, { xs: 16, sm: 16, lg: 24, xl: 24, xxl: 24 }]}>
-              {children.map((c, index) => (
-                <Col span={24} key={index}>
-                  <ShadowCard>{c}</ShadowCard>
-                </Col>
-              ))}
-            </Row>
-          );
-        }
-        return <ShadowCard>{children}</ShadowCard>;
+      if (isArray(children)) {
+        return (
+          <Row gutter={VERTICAL_GUTTER}>
+            {children.map((c, index) => (
+              <Col span={24} key={index}>
+                {shadowCard ? <ShadowCard>{c}</ShadowCard> : c}
+              </Col>
+            ))}
+          </Row>
+        );
       }
-      return children;
+      return shadowCard ? <ShadowCard>{children}</ShadowCard> : children;
     }
   }, [children]);
 
@@ -140,11 +139,11 @@ const Index: React.FC<IProps> = ({
       <Row
         gutter={[
           { xs: 16, sm: 16, lg: 24, xl: 24, xxl: 24 },
-          { xs: 16, sm: 16, lg: 24, xl: 24, xxl: 24 },
+          VERTICAL_GUTTER[1],
         ]}
       >
         <Col xs={24} sm={24} md={6} lg={6} xl={6}>
-          <Row gutter={[0, { xs: 16, sm: 16, lg: 24, xl: 24, xxl: 24 }]}>
+          <Row gutter={VERTICAL_GUTTER}>
             <Col span={24}>
               <SettingsSideBar
                 menu={menu}
