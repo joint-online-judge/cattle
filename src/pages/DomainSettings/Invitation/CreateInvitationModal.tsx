@@ -50,6 +50,10 @@ const Index: React.FC<IProps> = ({
       onSuccess: (res) => {
         if (res.errorCode === ErrorCode.Success) {
           message.success('create invitation success');
+        } else if (
+          res.errorCode === ErrorCode.DomainInvitationBadRequestError
+        ) {
+          message.error('code already used');
         } else {
           message.error('create invitation failed');
         }
@@ -75,6 +79,10 @@ const Index: React.FC<IProps> = ({
       onSuccess: (res) => {
         if (res.errorCode === ErrorCode.Success) {
           message.success('update invitation success');
+        } else if (
+          res.errorCode === ErrorCode.DomainInvitationBadRequestError
+        ) {
+          message.error('code already used');
         } else {
           message.error('update invitation failed');
         }
@@ -130,6 +138,7 @@ const Index: React.FC<IProps> = ({
       <ProFormDateTimePicker
         name="expireAt"
         label={intl.formatMessage({ id: 'ExpireAt' })}
+        help={'Empty means never expire'}
       />
     </ModalForm>
   );

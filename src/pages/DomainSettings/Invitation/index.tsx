@@ -2,12 +2,22 @@ import React, { useRef, useState } from 'react';
 import mm from 'moment';
 import { useParams } from 'umi';
 import { useRequest } from 'ahooks';
-import { message, Row, Col, Button, Collapse, Typography } from 'antd';
+import {
+  message,
+  Row,
+  Col,
+  Button,
+  Collapse,
+  Typography,
+  Spin,
+  Space,
+  Empty,
+} from 'antd';
 import { ProFormInstance } from '@ant-design/pro-form';
-import { PlusOutlined, SettingOutlined } from '@ant-design/icons';
+import { PlusOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import ShadowCard from '@/components/ShadowCard';
 import CopyablePre from '@/components/CopyablePre';
-import Horse, { DomainInvitation } from '@/utils/service';
+import Horse, { DomainInvitation, ErrorCode } from '@/utils/service';
 import CreateInvitationModal from './CreateInvitationModal';
 import { DOMAIN_HOST } from '@/constants';
 
@@ -34,12 +44,46 @@ const Index: React.FC = () => {
     },
   );
 
-  const genExtra = () => (
-    <SettingOutlined
-      onClick={(event) => {
-        event.stopPropagation();
-      }}
-    />
+  const { run: deleteInvitation, loading: deleting } = useRequest(
+    async (invitationId: string) => {
+      const response = await Horse.domain.v1DeleteDomainInvitation(
+        domainUrl,
+        invitationId,
+      );
+      return response.data;
+    },
+    {
+      manual: true,
+      onSuccess: (res) => {
+        if (res.errorCode === ErrorCode.Success) {
+          message.success('delete invitation success');
+        } else {
+          message.error('delete invitation failed');
+        }
+        refresh();
+      },
+      onError: () => {
+        message.error('delete invitation failed');
+      },
+    },
+  );
+
+  const genExtra = (invitation: DomainInvitation) => (
+    <Space>
+      <EditOutlined
+        onClick={(event) => {
+          event.stopPropagation();
+          setEditingInvitation(invitation);
+          setModalVis(true);
+        }}
+      />
+      <DeleteOutlined
+        onClick={(event) => {
+          event.stopPropagation();
+          deleteInvitation(invitation.id);
+        }}
+      />
+    </Space>
   );
 
   return (
@@ -61,35 +105,41 @@ const Index: React.FC = () => {
               </Button>
             }
           >
-            <Collapse defaultActiveKey={[0]}>
-              {(invitations ?? []).map((o, index) => (
-                <Panel
-                  header={`Code: ${o.code}`}
-                  key={index}
-                  extra={genExtra()}
-                >
-                  <Typography>
-                    <Paragraph>
-                      <ul>
-                        <li>角色分配: {o.role}</li>
-                        <li>用户可以访问此链接来加入此域:</li>
-                        <CopyablePre>
-                          {`${DOMAIN_HOST}/domain/${domainUrl}/join`}
-                        </CopyablePre>
-                        <li>或者，这是可以自动填写邀请码的:</li>
-                        <CopyablePre>
-                          {`${DOMAIN_HOST}/domain/${domainUrl}/join?code=${o.code}`}
-                        </CopyablePre>
-                        <li>
-                          过期时间:{' '}
-                          {mm(o.expireAt).format('YYYY-MM-DD HH:mm:ss')}
-                        </li>
-                      </ul>
-                    </Paragraph>
-                  </Typography>
-                </Panel>
-              ))}
-            </Collapse>
+            {invitations && invitations.length > 0 ? (
+              <Spin spinning={deleting}>
+                <Collapse defaultActiveKey={[0]}>
+                  {(invitations ?? []).map((o, index) => (
+                    <Panel
+                      header={`Code: ${o.code}`}
+                      key={index}
+                      extra={genExtra(o)}
+                    >
+                      <Typography>
+                        <Paragraph>
+                          <ul>
+                            <li>角色分配: {o.role}</li>
+                            <li>用户可以访问此链接来加入此域:</li>
+                            <CopyablePre>
+                              {`${DOMAIN_HOST}/domain/${domainUrl}/join`}
+                            </CopyablePre>
+                            <li>或者，这是可以自动填写邀请码的:</li>
+                            <CopyablePre>
+                              {`${DOMAIN_HOST}/domain/${domainUrl}/join?code=${o.code}`}
+                            </CopyablePre>
+                            <li>
+                              过期时间:{' '}
+                              {mm(o.expireAt).format('YYYY-MM-DD HH:mm:ss')}
+                            </li>
+                          </ul>
+                        </Paragraph>
+                      </Typography>
+                    </Panel>
+                  ))}
+                </Collapse>
+              </Spin>
+            ) : (
+              <Empty />
+            )}
           </ShadowCard>
         </Col>
       </Row>
@@ -99,6 +149,7 @@ const Index: React.FC = () => {
         onVisibleChange={setModalVis}
         formRef={formRef}
         domainUrl={domainUrl}
+        editingInvitation={editingInvitation}
         onSuccess={refresh}
       />
     </>
