@@ -93,7 +93,7 @@ const Index: React.FC = () => {
       },
       {
         path: problemResp?.data?.title ?? 'null',
-        breadcrumbName: problemResp?.data?.title ?? 'unknown',
+        breadcrumbName: problemResp?.data?.title,
       },
     ],
     [domainUrl, domain, problemResp],

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { PageHeader, PageHeaderProps } from 'antd';
+import { PageHeader, PageHeaderProps, Skeleton } from 'antd';
 import { Route } from 'antd/lib/breadcrumb/Breadcrumb';
 import { useModel, useIntl, Link } from 'umi';
 
@@ -29,8 +29,10 @@ const Index: React.FC<PageHeaderProps> = (props) => {
         <h1 className="m-0 text-3xl font-light">
           {intl.formatMessage({ id: header.titleI18nKey })}
         </h1>
-      ) : (
+      ) : header.title ? (
         <h1 className="m-0 text-3xl font-light">{header.title}</h1>
+      ) : (
+        <Skeleton.Input active={true} style={{ width: 240 }} />
       ),
       subTitle: header.subTitleI18nKey
         ? intl.formatMessage({ id: header.subTitleI18nKey })

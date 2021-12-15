@@ -66,7 +66,7 @@ export default {
   'PROBLEM.SUBMIT_AT': 'Submit At',
   // ProblemSet
   'PROBLEM_SET.PROBLEM_SET': 'Problem Set',
-  'PROBLEM_SET.INTRODUCTION': 'Problem Set Introduction',
+  'PROBLEM_SET.INTRODUCTION': 'Introduction',
   'PROBLEM_SET.CREATE.TITLE': 'Create Problem Set',
   'PROBLEM_SET.CREATE.FORM.SCOREBOARD_HIDDEN': 'Hide Scoreboard',
   'PROBLEM_SET.CREATE.FORM.UNLOCK_AT': 'Unlock Time',

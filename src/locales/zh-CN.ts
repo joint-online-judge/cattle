@@ -66,7 +66,7 @@ export default {
   'PROBLEM.SUBMIT_AT': '递交时间',
   // ProblemSet
   'PROBLEM_SET.PROBLEM_SET': '问题集',
-  'PROBLEM_SET.INTRODUCTION': '问题集介绍',
+  'PROBLEM_SET.INTRODUCTION': '介绍',
   'PROBLEM_SET.CREATE.TITLE': '创建问题集',
   'PROBLEM_SET.CREATE.FORM.SCOREBOARD_HIDDEN': '隐藏排行榜',
   'PROBLEM_SET.CREATE.FORM.UNLOCK_AT': '开始提交时间',
