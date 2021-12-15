@@ -1,6 +1,5 @@
 import React, { useEffect, useMemo } from 'react';
-import { useParams } from 'umi';
-import { useModel } from '@@/plugin-model/useModel';
+import { useParams, useModel } from 'umi';
 import SidePage from '@/components/SidePage';
 import { UpsertProblemSetForm } from '@/components/ProblemSet';
 

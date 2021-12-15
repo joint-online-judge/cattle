@@ -1,5 +1,5 @@
 export default {
-  // small-case noun
+  // lower-case noun
   domain: 'domain',
   // Simple Noun
   DOMAIN: 'Domain',
@@ -18,6 +18,7 @@ export default {
   DELETE: 'Delete',
   SUBMIT: 'Submit',
   MANAGE: 'Manage',
+  join: 'Join',
   // User
   'USER.PROFILE': 'Profile',
   'USER.LOGIN.JACCOUNT_LOG_IN': 'jAccount Login',
@@ -38,6 +39,8 @@ export default {
   'DOMAIN.HOME.PROBLEMS': 'Problems',
   'DOMAIN.HOME.MEMBERS': 'Members',
   'DOMAIN.HOME.SETTINGS': 'Settings',
+  'domain.invitation.join': 'Join Domain',
+  'domain.invitation.code': 'Invitation Code',
   // Problems
   'problem.problems': 'Problems',
   'PROBLEM.CREATE.TITLE': 'Create Problem',

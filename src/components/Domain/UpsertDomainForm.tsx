@@ -28,7 +28,6 @@ const Index: React.FC<IProps> = (props) => {
     {
       manual: true,
       onSuccess: (res) => {
-        console.log(res);
         if (res.data.errorCode === ErrorCode.Success) {
           if (res?.data?.data?.url) {
             history.push(`/domain/${res?.data?.data?.url}`);

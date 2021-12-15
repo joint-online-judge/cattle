@@ -128,7 +128,9 @@ const Index: React.FC = () => {
                             </CopyablePre>
                             <li>
                               过期时间:{' '}
-                              {mm(o.expireAt).format('YYYY-MM-DD HH:mm:ss')}
+                              {o.expireAt
+                                ? mm(o.expireAt).format('YYYY-MM-DD HH:mm:ss')
+                                : 'Never'}
                             </li>
                           </ul>
                         </Paragraph>
@@ -138,7 +140,12 @@ const Index: React.FC = () => {
                 </Collapse>
               </Spin>
             ) : (
-              <Empty />
+              <Empty
+                description={
+                  'No invitations. Only administrators can invite members.'
+                }
+                style={{ margin: 48 }}
+              />
             )}
           </ShadowCard>
         </Col>

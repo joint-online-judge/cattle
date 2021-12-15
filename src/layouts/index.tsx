@@ -1,13 +1,14 @@
 import React, { useEffect } from 'react';
-import { Col, Layout, Row, Alert, BackTop, message } from 'antd';
+import { Col, Layout, Row, Alert, BackTop, message, Spin } from 'antd';
+import { LoadingOutlined } from '@ant-design/icons';
 import { useModel, Link, useParams } from 'umi';
-import style from './style.less';
 import Footer from '@/components/Footer';
 import Header from '@/components/Header';
-import { MAIN_CONTENT_GRID } from '@/constants';
 import GlobalPageHeader from '@/components/GlobalPageHeader';
-import Logo from '@/assets/logo.svg';
 import DomainHeader from '@/components/DomainHeader';
+import { MAIN_CONTENT_GRID } from '@/constants';
+import Logo from '@/assets/logo.svg';
+import style from './style.less';
 
 const Index: React.FC = ({ children }) => {
   const { domainUrl } = useParams<{ domainUrl: string }>();

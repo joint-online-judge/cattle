@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Link, useIntl } from 'umi';
+import { Link, useIntl, useModel } from 'umi';
 import { useRequest } from 'ahooks';
 import {
   message,
@@ -10,8 +10,7 @@ import {
   List,
   Skeleton,
 } from 'antd';
-import { useModel } from '@@/plugin-model/useModel';
-import { Horse, Domain } from '@/utils/service';
+import { Horse } from '@/utils/service';
 import ShadowCard from '@/components/ShadowCard';
 
 const Index: React.FC = () => {

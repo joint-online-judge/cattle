@@ -26,6 +26,10 @@
         path: '/domain/:domainUrl/create-problem',
         component: '@/pages/CreateProblem',
       },
+      {
+        path: '/domain/:domainUrl/join',
+        component: '@/pages/JoinDomain',
+      },
 
       {
         path: '/domain/:domainUrl/settings/:tab',

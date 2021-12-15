@@ -1,5 +1,5 @@
 export default {
-  // small-case noun
+  // lower-case noun
   domain: '域',
   // 简单名词
   DOMAIN: '域',
@@ -18,6 +18,7 @@ export default {
   DELETE: '删除',
   SUBMIT: '提交',
   MANAGE: '管理',
+  join: '加入',
   // User
   'USER.PROFILE': '我的资料',
   'USER.LOGIN.JACCOUNT_LOG_IN': 'jAccount 登录',
@@ -38,6 +39,8 @@ export default {
   'DOMAIN.HOME.PROBLEMS': '题目',
   'DOMAIN.HOME.MEMBERS': '成员',
   'DOMAIN.HOME.SETTINGS': '设置',
+  'domain.invitation.join': '加入域',
+  'domain.invitation.code': '邀请码',
   // Problems
   'problem.problems': '题库',
   'PROBLEM.CREATE.TITLE': '创建问题',
