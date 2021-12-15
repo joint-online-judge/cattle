@@ -21,7 +21,9 @@ import Gravatar from '@/components/Gravatar';
 interface IProps extends ModalFormProps {
   domainUrl: string;
   onSuccess: () => void;
-  formRef: MutableRefObject<ProFormInstance<DomainUserAdd>>;
+  formRef:
+    | MutableRefObject<ProFormInstance<DomainUserAdd> | undefined>
+    | undefined;
   editingUser?: UserWithDomainRole;
 }
 

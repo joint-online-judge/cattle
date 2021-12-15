@@ -149,7 +149,7 @@ const Index: React.FC = () => {
         onSuccess={() => tableRef.current?.reload()}
         visible={modalVis}
         onVisibleChange={setModalVis}
-        formRef={modalFormRef as any}
+        formRef={modalFormRef}
         editingUser={editingUser}
       />
     </ShadowCard>
