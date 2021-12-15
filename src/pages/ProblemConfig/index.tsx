@@ -120,6 +120,7 @@ const Index: React.FC = () => {
         formRef={formRef}
         layout="vertical"
         onFinish={onFinish}
+        dateFormatter="number"
         omitNil
       >
         <ProFormUploadButton

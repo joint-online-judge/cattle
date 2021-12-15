@@ -108,6 +108,7 @@ const Index: React.FC = () => {
                 },
                 resetButtonProps: false,
               }}
+              dateFormatter="number"
               omitNil
             >
               <ProFormText

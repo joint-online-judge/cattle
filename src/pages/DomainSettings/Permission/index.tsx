@@ -72,7 +72,6 @@ const Index: React.FC = () => {
           valuePropName: 'checked',
         },
         renderFormItem: (e) => {
-          console.log(e);
           return <Checkbox onChange={() => {}} />;
         },
       }));

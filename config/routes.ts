@@ -80,6 +80,10 @@
         component: '@/pages/ProblemSetDetail/Settings',
       },
       {
+        path: '/domain/:domainUrl/problem-set/:problemSetId/p/:problemId',
+        component: '@/pages/Problem',
+      },
+      {
         path: '/domain/:domainUrl/problem-set/:problemSetId/:tab?',
         component: '@/pages/ProblemSetDetail',
         wrappers: ['@/wrappers/Auth'],
@@ -98,10 +102,6 @@
             path: '/domain/:domainUrl/problem-set/:problemSetId/settings',
             menuKey: 'settings',
             i18nKey: 'problem_set.side_menu.settings',
-          },
-          {
-            path: '/domain/:domainUrl/problem-set/:problemSetId/:problemId',
-            component: '@/pages/Problem',
           },
           {
             path: '/domain/:domainUrl/problem-set/:problemSetId',

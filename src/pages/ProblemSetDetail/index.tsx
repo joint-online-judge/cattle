@@ -31,7 +31,7 @@ const Index: React.FC<IRouteComponentProps> = ({ route }) => {
   const [beforeAvailable, setBeforeAvailable] = useState<boolean>(false);
   const [afterDue, setAfterDue] = useState<boolean>(false);
 
-  const { data: problemSet } = useRequest(
+  const { data: problemSet, loading } = useRequest(
     async () => {
       const res = await Horse.problemSet.v1GetProblemSet(
         domainUrl,
@@ -98,7 +98,7 @@ const Index: React.FC<IRouteComponentProps> = ({ route }) => {
       route={route}
       shadowCard={false}
       extra={
-        <ShadowCard>
+        <ShadowCard loading={loading}>
           <dl className={style.infoCard}>
             <dt>Status</dt>
             <dd>Finished</dd>
@@ -147,7 +147,15 @@ const Index: React.FC<IRouteComponentProps> = ({ route }) => {
 
         <Col span={24}>
           <ShadowCard
+            loading={loading}
             title={intl.formatMessage({ id: 'PROBLEM' })}
+            bodyStyle={
+              problemSet?.problems && problemSet.problems.length > 0
+                ? {
+                    padding: 0,
+                  }
+                : undefined
+            }
             extra={
               access.canCreateProblem ? (
                 <Button

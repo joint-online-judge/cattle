@@ -96,6 +96,7 @@ const Index: React.FC<IProps> = ({ domainUrl, onSuccess, roles }) => {
           formRef.current?.resetFields();
         },
       }}
+      dateFormatter="number"
     >
       <ProFormText
         name="role"

@@ -83,7 +83,7 @@ export default {
   'SETTINGS.SECURITY_SETTINGS': 'Security',
   'SETTINGS.I18N_LANG': 'Language',
   'SETTINGS.TIMEZONE': 'Timezone',
-  'SETTINGS.SWITCH_LANG': 'Switch Language',
+  'SETTINGS.SWITCH_LANG': 'Language',
   'SETTINGS.UPDATE_SETTINGS': 'Update Settings',
   'SETTINGS.DISPLAY_SETTINGS': 'Display Settings',
   'SETTINGS.DOMAIN': 'Settings',

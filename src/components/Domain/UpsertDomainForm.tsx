@@ -80,6 +80,7 @@ const Index: React.FC<IProps> = (props) => {
       layout="vertical"
       onFinish={onFinish}
       initialValues={initialValues}
+      dateFormatter="number"
       omitNil
     >
       <ProFormText

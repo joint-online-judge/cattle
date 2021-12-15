@@ -1,7 +1,7 @@
 import React from 'react';
 import { useIntl } from 'umi';
 import { Link } from 'react-router-dom';
-import { Col, Row, Typography } from 'antd';
+import { Divider, Row, Typography, Space } from 'antd';
 import { GithubOutlined } from '@ant-design/icons';
 import style from './style.less';
 
@@ -18,8 +18,7 @@ const items: LinkItem[] = [
   },
   {
     name: 'FOOTER.API',
-    path: '/api/v1',
-    external: true,
+    path: '/api',
   },
   {
     name: 'FOOTER.DOCS',
@@ -42,27 +41,27 @@ const Index: React.FC = () => {
   const intl = useIntl();
   return (
     <Row>
-      {items.map((item) => {
-        return (
-          <div className={style.footerItem} key={`${item.name}${item.path}`}>
-            {item.external ? (
-              <a href={item.path}>{intl.formatMessage({ id: item.name })}</a>
-            ) : (
-              <Link to={item.path}>
-                {intl.formatMessage({ id: item.name })}
-              </Link>
-            )}
-          </div>
-        );
-      })}
-      <Col>
+      <Space split={<Divider type="vertical" />}>
+        {items.map((item) => {
+          return (
+            <div key={`${item.name}${item.path}`}>
+              {item.external ? (
+                <a href={item.path}>{intl.formatMessage({ id: item.name })}</a>
+              ) : (
+                <Link to={item.path}>
+                  {intl.formatMessage({ id: item.name })}
+                </Link>
+              )}
+            </div>
+          );
+        })}
         <Typography.Link
           href="https://github.com/joint-online-judge"
           target="_blank"
         >
           <GithubOutlined className={style.githubIcon} />
         </Typography.Link>
-      </Col>
+      </Space>
     </Row>
   );
 };

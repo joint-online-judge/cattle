@@ -114,6 +114,7 @@ const Index: React.FC<IProps> = ({
       visible={visible}
       onVisibleChange={onVisibleChange}
       formRef={formRef}
+      dateFormatter="number"
     >
       <Form.Item
         name="role"
@@ -124,6 +125,7 @@ const Index: React.FC<IProps> = ({
           },
         ]}
       >
+        {/* TODO: Ban root option */}
         <DomainRoleSelect domainUrl={domainUrl} />
       </Form.Item>
       <ProFormText
