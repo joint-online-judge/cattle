@@ -15,8 +15,7 @@ const Index: React.FC<IProps> = (props) => {
 
   const { data, loading } = useRequest(
     async () => {
-      const response =
-        await Horse.domain.listDomainRolesApiV1DomainsDomainRolesGet(domainUrl);
+      const response = await Horse.domain.v1ListDomainRoles(domainUrl);
       return response.data.data?.results || [];
     },
     {

@@ -1,29 +1,16 @@
 import React from 'react';
-import { useParams, useModel } from 'umi';
-import { message } from 'antd';
-import { useRequest } from 'ahooks';
+import { useModel } from 'umi';
 import UpsertDomainForm from '@/components/Domain/UpsertDomainForm';
-import { Horse } from '@/utils/service';
+import ShadowCard from '@/components/ShadowCard';
 
 const Index: React.FC = () => {
-  const { refresh } = useModel('domain');
-  const { domainUrl } = useParams<{ domainUrl: string }>();
+  const { domain, refresh } = useModel('domain');
 
-  const { data } = useRequest(
-    async () => {
-      const response = await Horse.domain.getDomainApiV1DomainsDomainGet(
-        domainUrl,
-      );
-      return response.data.data;
-    },
-    {
-      onError: () => {
-        message.error('fetch domain failed');
-      },
-    },
+  return (
+    <ShadowCard>
+      <UpsertDomainForm initialValues={domain} onUpdateSuccess={refresh} />
+    </ShadowCard>
   );
-
-  return <UpsertDomainForm initialValues={data} onUpdateSuccess={refresh} />;
 };
 
 export default Index;

@@ -33,7 +33,7 @@ export default {
   'DOMAIN.CREATE.URL': '域网址 (ID)',
   'DOMAIN.CREATE.GRAVATAR': 'Gravatar 邮箱',
   'DOMAIN.CREATE.BULLETIN': '公告',
-  'DOMAIN.CREATE.CREATE': '创建',
+  'domain.create.tag': '标签',
   'DOMAIN.HOME.ASSIGNMENTS': '作业',
   'DOMAIN.HOME.PROBLEMS': '题目',
   'DOMAIN.HOME.MEMBERS': '成员',

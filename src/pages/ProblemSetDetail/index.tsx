@@ -14,6 +14,7 @@ import ProblemList from './ProblemList';
 import AfterDue from './AfterDue';
 import BeforeAvailable from './BeforeAvailable';
 import { ErrorCode, Horse } from '@/utils/service';
+import { VERTICAL_GUTTER } from '@/constants';
 import ShadowCard from '@/components/ShadowCard';
 import SideMenuPage from '@/components/SideMenuPage';
 import MarkdownRender from '@/components/MarkdownRender';
@@ -30,11 +31,10 @@ const Index: React.FC<IRouteComponentProps> = ({ route }) => {
 
   const { data: problemSet } = useRequest(
     async () => {
-      const res =
-        await Horse.problemSet.getProblemSetApiV1DomainsDomainProblemSetsProblemSetGet(
-          domainUrl,
-          problemSetId,
-        );
+      const res = await Horse.problemSet.v1GetProblemSet(
+        domainUrl,
+        problemSetId,
+      );
       // if (res.data.errorCode === ErrorCode.ProblemSetAfterDueError) {
       //   setAfterDue(true);
       // } else if (
@@ -47,7 +47,7 @@ const Index: React.FC<IRouteComponentProps> = ({ route }) => {
     },
     {
       onError: () => {
-        message.error('failed to fetch domain info');
+        message.error('failed to problem set info');
       },
     },
   );
@@ -55,7 +55,7 @@ const Index: React.FC<IRouteComponentProps> = ({ route }) => {
   const breads = useMemo(
     () => [
       {
-        path: domainUrl,
+        path: `domain/${domainUrl}`,
         breadcrumbName: domain?.name ?? 'unknown',
       },
       {
@@ -82,7 +82,7 @@ const Index: React.FC<IRouteComponentProps> = ({ route }) => {
     <BeforeAvailable />
   ) : (
     <SideMenuPage route={route} shadowCard={false}>
-      <Row gutter={[0, 24]}>
+      <Row gutter={VERTICAL_GUTTER}>
         {problemSet?.content ? (
           <Col span={24}>
             <ShadowCard

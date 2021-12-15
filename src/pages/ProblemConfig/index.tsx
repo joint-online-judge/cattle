@@ -1,12 +1,19 @@
 import React, { useRef, useMemo, useEffect } from 'react';
-import { Tooltip, Space, Button } from 'antd';
+import { Tooltip, Space, Button, message } from 'antd';
+import { UploadFile } from 'antd/lib/upload/interface';
 import { useIntl, useParams, useModel, useAccess, Link, history } from 'umi';
 import { useRequest } from 'ahooks';
-import ProTable, { ProColumns, ActionType } from '@ant-design/pro-table';
-import { EyeInvisibleOutlined, PlusOutlined } from '@ant-design/icons';
-import { Horse, Problem } from '@/utils/service';
-import { transPagination } from '@/utils';
+import ProForm, {
+  ProFormInstance,
+  ProFormUploadButton,
+} from '@ant-design/pro-form';
+import { EyeInvisibleOutlined } from '@ant-design/icons';
+import { Horse, Problem, FileUpload, ErrorCode } from '@/utils/service';
 import ShadowCard from '@/components/ShadowCard';
+
+interface FormValues {
+  file: Array<UploadFile>;
+}
 
 const Index: React.FC = () => {
   const intl = useIntl();
@@ -15,77 +22,69 @@ const Index: React.FC = () => {
   const { setHeader } = useModel('pageHeader');
   const { domainUrl, problemId } =
     useParams<{ domainUrl: string; problemId: string }>();
-  const ref = useRef<ActionType>();
+  const formRef = useRef<ProFormInstance<FormValues>>();
 
-  const { data: problem, refresh: refreshProblem } = useRequest(
+  const { data: problemResp, refresh: refreshProblem } = useRequest(
     async () => {
-      const res =
-        await Horse.problem.getProblemApiV1DomainsDomainProblemsProblemGet(
-          domainUrl,
-          problemId,
-        );
+      const res = await Horse.problem.v1GetProblem(domainUrl, problemId);
+      return res.data;
+    },
+    {
+      onSuccess: (res) => {
+        if (res.errorCode !== ErrorCode.Success)
+          message.error('get problem failed');
+      },
+      onError: () => {
+        message.error('get problem failed');
+      },
+    },
+  );
+
+  const {
+    data: problemConfig,
+    run: downloadConfig,
+    loading: downloading,
+  } = useRequest(
+    async () => {
+      const res = await Horse.problemConfig.v1DownloadProblemConfigArchive(
+        domainUrl,
+        problemId,
+        'latest',
+      );
       return res.data.data;
     },
     {
-      refreshDeps: [domainUrl, problemId],
+      manual: true,
       onError: (res) => {
         console.log('get problem fail', res);
       },
     },
   );
 
-  const { run: fetchProblems, loading: fetching } = useRequest(
-    async (params: ProTablePagination) => {
-      const res = await Horse.problem.listProblemsApiV1DomainsDomainProblemsGet(
+  const { run: uploadConfig, loading: uploading } = useRequest(
+    async (values: FileUpload) => {
+      const res = await Horse.problemConfig.v1UpdateProblemConfigByArchive(
         domainUrl,
-        transPagination(params),
+        problemId,
+        values,
       );
-      return res.data.data ?? { count: 0, results: [] };
+      return res.data;
     },
     {
       manual: true,
-      onError: (res) => {},
+      onSuccess: (res) => {
+        if (res.errorCode !== ErrorCode.Success) message.error('upload failed');
+      },
+      onError: () => {
+        message.error('upload failed');
+      },
     },
   );
-
-  const columns: ProColumns<Problem>[] = [
-    {
-      title: '标题',
-      width: 200,
-      dataIndex: 'title',
-      render: (_, record) => (
-        <Space>
-          <Link
-            to={`/domain/${domain?.url ?? record.domainId}/problem/${
-              record.url ?? record.id
-            }`}
-          >
-            {record.title}
-          </Link>
-          {record.hidden ? (
-            <Tooltip title="This problem is invisible to normal users.">
-              <EyeInvisibleOutlined />
-            </Tooltip>
-          ) : null}
-        </Space>
-      ),
-    },
-    {
-      title: '递交',
-      width: 120,
-      dataIndex: 'numSubmit',
-    },
-    {
-      title: 'AC数量',
-      width: 120,
-      dataIndex: 'numAccept',
-    },
-  ];
 
   const breads = useMemo(
     () => [
       {
-        path: domainUrl,
+        path: `domain/${domainUrl}`,
         breadcrumbName: domain?.name ?? 'unknown',
       },
       {
@@ -93,11 +92,11 @@ const Index: React.FC = () => {
         breadcrumbI18nKey: 'problem.problems',
       },
       {
-        path: problem?.title ?? 'null',
-        breadcrumbName: problem?.title ?? 'unknown',
+        path: problemResp?.data?.title ?? 'null',
+        breadcrumbName: problemResp?.data?.title ?? 'unknown',
       },
     ],
-    [domainUrl, domain, problem],
+    [domainUrl, domain, problemResp],
   );
 
   useEffect(() => {
@@ -107,23 +106,39 @@ const Index: React.FC = () => {
     });
   }, [breads]);
 
+  const onFinish = async (values: FormValues) => {
+    if (values?.file[0]?.originFileObj) {
+      await uploadConfig({
+        file: values.file[0].originFileObj,
+      });
+    }
+  };
+
   return (
-    <ShadowCard
-      extra={
-        access.canCreateProblem ? (
-          <Button
-            icon={<PlusOutlined />}
-            onClick={() => {
-              history.push(`/domain/${domainUrl}/create-problem`);
-            }}
-            type="primary"
-          >
-            {intl.formatMessage({ id: 'PROBLEM.CREATE.TITLE' })}
-          </Button>
-        ) : null
-      }
-    >
-      111
+    <ShadowCard>
+      <ProForm<FormValues>
+        formRef={formRef}
+        layout="vertical"
+        onFinish={onFinish}
+        omitNil
+      >
+        <ProFormUploadButton
+          width="md"
+          name="file"
+          label={intl.formatMessage({ id: 'PROBLEM.UPLOAD_FILE' })}
+          max={1}
+          fieldProps={{
+            beforeUpload: () => false,
+            accept: '.zip,.rar,.tar',
+          }}
+          rules={[
+            {
+              required: true,
+            },
+          ]}
+        />
+      </ProForm>
+      <Button onClick={downloadConfig}>Download</Button>
     </ShadowCard>
   );
 };

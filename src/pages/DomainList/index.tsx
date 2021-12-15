@@ -26,7 +26,7 @@ const Index: React.FC = () => {
 
   const { data, loading } = useRequest(
     async () => {
-      const res = await Horse.domain.listDomainsApiV1DomainsGet();
+      const res = await Horse.domain.v1ListDomains();
       return res?.data?.data?.results ?? [];
     },
     {

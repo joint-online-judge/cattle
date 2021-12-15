@@ -4,7 +4,7 @@ import { useModel, Link, useParams } from 'umi';
 import style from './style.less';
 import Footer from '@/components/Footer';
 import Header from '@/components/Header';
-import { CONTENT_GRID_LAYOUT } from '@/constants';
+import { MAIN_CONTENT_GRID } from '@/constants';
 import GlobalPageHeader from '@/components/GlobalPageHeader';
 import Logo from '@/assets/logo.svg';
 import DomainHeader from '@/components/DomainHeader';
@@ -67,7 +67,7 @@ const Index: React.FC = ({ children }) => {
               : style.pageContentNoHeader
           }
         >
-          <Col {...CONTENT_GRID_LAYOUT}>
+          <Col {...MAIN_CONTENT_GRID}>
             {headerVisible ? <GlobalPageHeader /> : null}
             {children}
           </Col>

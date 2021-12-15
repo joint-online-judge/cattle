@@ -3,7 +3,7 @@ import { Col, Row, Typography, Avatar, Spin, Button } from 'antd';
 import { useParams, useIntl, useModel, history } from 'umi';
 import { PlusOutlined } from '@ant-design/icons';
 import ProblemSetList from './ProblemSetList';
-import { gravatarImageUrl } from '@/utils';
+import { VERTICAL_GUTTER } from '@/constants';
 import ShadowCard from '@/components/ShadowCard';
 import MarkdownRender from '@/components/MarkdownRender';
 
@@ -20,7 +20,7 @@ const Index: React.FC = () => {
   }, []);
 
   return (
-    <Row gutter={[0, 24]}>
+    <Row gutter={VERTICAL_GUTTER}>
       {domain?.bulletin ? (
         <Col span={24}>
           <ShadowCard

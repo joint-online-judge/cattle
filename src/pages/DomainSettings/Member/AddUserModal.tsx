@@ -21,7 +21,9 @@ import Gravatar from '@/components/Gravatar';
 interface IProps extends ModalFormProps {
   domainUrl: string;
   onSuccess: () => void;
-  formRef: MutableRefObject<ProFormInstance<DomainUserAdd>>;
+  formRef:
+    | MutableRefObject<ProFormInstance<DomainUserAdd> | undefined>
+    | undefined;
   editingUser?: UserWithDomainRole;
 }
 
@@ -37,11 +39,7 @@ const Index: React.FC<IProps> = ({
 
   const { run: addUser } = useRequest(
     async (values: DomainUserAdd) => {
-      const response =
-        await Horse.domain.addDomainUserApiV1DomainsDomainUsersPost(
-          domainUrl,
-          values,
-        );
+      const response = await Horse.domain.v1AddDomainUser(domainUrl, values);
       return response.data;
     },
     {
@@ -49,7 +47,7 @@ const Index: React.FC<IProps> = ({
       onSuccess: (res) => {
         if (res.errorCode === ErrorCode.UserAlreadyInDomainBadRequestError) {
           message.error('user already in domain');
-        } else if (ErrorCode.UserNotFoundError) {
+        } else if (res.errorCode === ErrorCode.UserNotFoundError) {
           message.error('user not found');
         } else if (res.errorCode === ErrorCode.Success) {
           message.success('add user success');
@@ -64,12 +62,11 @@ const Index: React.FC<IProps> = ({
 
   const { run: updateUser } = useRequest(
     async (userId: string, values: DomainUserUpdate) => {
-      const response =
-        await Horse.domain.updateDomainUserApiV1DomainsDomainUsersUserPatch(
-          domainUrl,
-          userId,
-          values,
-        );
+      const response = await Horse.domain.v1UpdateDomainUser(
+        domainUrl,
+        userId,
+        values,
+      );
       return response.data;
     },
     {

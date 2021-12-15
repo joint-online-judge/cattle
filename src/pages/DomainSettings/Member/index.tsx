@@ -9,6 +9,7 @@ import { Horse, UserWithDomainRole, DomainUserAdd } from '@/utils/service';
 import { transPagination } from '@/utils';
 import AddUserModal from './AddUserModal';
 import Gravatar from '@/components/Gravatar';
+import ShadowCard from '@/components/ShadowCard';
 
 const Index: React.FC = () => {
   const [modalVis, setModalVis] = useState<boolean>(false);
@@ -21,11 +22,10 @@ const Index: React.FC = () => {
 
   const { run: fetchDomainUsers, loading: fetching } = useRequest(
     async (params: ProTablePagination) => {
-      const response =
-        await Horse.domain.listDomainUsersApiV1DomainsDomainUsersGet(
-          domainUrl,
-          transPagination(params),
-        );
+      const response = await Horse.domain.v1ListDomainUsers(
+        domainUrl,
+        transPagination(params),
+      );
       return response.data.data ?? { count: 0, results: [] };
     },
     {
@@ -38,11 +38,7 @@ const Index: React.FC = () => {
 
   const { run: removeUser, loading: deleting } = useRequest(
     async (userId: string) => {
-      const response =
-        await Horse.domain.removeDomainUserApiV1DomainsDomainUsersUserDelete(
-          domainUrl,
-          userId,
-        );
+      const response = await Horse.domain.v1RemoveDomainUser(domainUrl, userId);
       return response.data;
     },
     {
@@ -112,7 +108,7 @@ const Index: React.FC = () => {
   ];
 
   return (
-    <>
+    <ShadowCard>
       <ProTable<UserWithDomainRole>
         scroll={{ x: 'max-content' }}
         loading={fetching || deleting}
@@ -153,10 +149,10 @@ const Index: React.FC = () => {
         onSuccess={() => tableRef.current?.reload()}
         visible={modalVis}
         onVisibleChange={setModalVis}
-        formRef={modalFormRef as any}
+        formRef={modalFormRef}
         editingUser={editingUser}
       />
-    </>
+    </ShadowCard>
   );
 };
 

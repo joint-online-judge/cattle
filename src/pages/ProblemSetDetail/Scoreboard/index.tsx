@@ -14,9 +14,7 @@ const Index: React.FC<IProps> = ({ refresh }) => {
 
   const { data } = useRequest(
     async () => {
-      const response = await Horse.domain.getDomainApiV1DomainsDomainGet(
-        domainUrl,
-      );
+      const response = await Horse.domain.v1GetDomain(domainUrl);
       return response.data.data;
     },
     {

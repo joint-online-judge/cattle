@@ -1,7 +1,7 @@
 import React from 'react';
 import { Row, Col, Avatar } from 'antd';
 import { Link, useModel } from 'umi';
-import { CONTENT_GRID_LAYOUT } from '@/constants';
+import { MAIN_CONTENT_GRID } from '@/constants';
 import { gravatarImageUrl } from '@/utils';
 import style from './style.less';
 
@@ -14,7 +14,7 @@ const Index: React.FC = () => {
       justify="center"
       className={style.domainHeaderContainer}
     >
-      <Col {...CONTENT_GRID_LAYOUT}>
+      <Col {...MAIN_CONTENT_GRID}>
         <Row justify="space-between">
           <Col>
             <Link to={`/domain/${domain.url}`}>

@@ -26,10 +26,7 @@ const UpsertProblemSetForm: React.FC<IProps> = (props) => {
 
   const { run: createProblemSet, loading: creatingProblemSet } = useRequest(
     async (problemSet: ProblemSetCreate) =>
-      Horse.problemSet.createProblemSetApiV1DomainsDomainProblemSetsPost(
-        domainUrl,
-        problemSet,
-      ),
+      Horse.problemSet.v1CreateProblemSet(domainUrl, problemSet),
     {
       manual: true,
       onSuccess: (res) => {
@@ -43,11 +40,7 @@ const UpsertProblemSetForm: React.FC<IProps> = (props) => {
 
   const { run: updateProblemSet, loading: updatingProblemSet } = useRequest(
     async (id: string, problemSet: ProblemSetEdit) =>
-      Horse.problemSet.updateProblemSetApiV1DomainsDomainProblemSetsProblemSetPatch(
-        domainUrl,
-        id,
-        problemSet,
-      ),
+      Horse.problemSet.v1UpdateProblemSet(domainUrl, id, problemSet),
     {
       manual: true,
       onSuccess: (_res) => {

@@ -36,10 +36,7 @@ export const UpsertProblemForm: React.FC<IProps> = (props) => {
 
   const { run: createProblem } = useRequest(
     async (problem: ProblemCreate) =>
-      Horse.problem.createProblemApiV1DomainsDomainProblemsPost(
-        domainUrl,
-        problem,
-      ),
+      Horse.problem.v1CreateProblem(domainUrl, problem),
     {
       manual: true,
       onSuccess: (res) => {
@@ -60,11 +57,7 @@ export const UpsertProblemForm: React.FC<IProps> = (props) => {
 
   const { run: updateProblem } = useRequest(
     async (id: string, problem: ProblemEdit) =>
-      Horse.problem.updateProblemApiV1DomainsDomainProblemsProblemPatch(
-        domainUrl,
-        id,
-        problem,
-      ),
+      Horse.problem.v1UpdateProblem(domainUrl, id, problem),
     {
       manual: true,
       onSuccess: (res) => {

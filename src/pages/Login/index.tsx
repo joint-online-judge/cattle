@@ -32,7 +32,7 @@ const Index: React.FC = () => {
 
   const { data: oauths, loading: discovering } = useRequest(
     async () => {
-      const res = await Horse.auth.listOauth2ApiV1AuthOauth2Get();
+      const res = await Horse.auth.v1ListOauth2();
       return res.data?.data?.results ?? [];
     },
     {
@@ -45,7 +45,7 @@ const Index: React.FC = () => {
   const { loading: registering } = useRequest(
     async (registerInfo: UserCreate) => {
       return Horse.auth
-        .registerApiV1AuthRegisterPost({ responseType: 'json' }, registerInfo)
+        .v1Register({ responseType: 'json' }, registerInfo)
         .then((res) => {
           console.log(res);
           // window.location.href = res.data.redirect_url;
@@ -64,7 +64,7 @@ const Index: React.FC = () => {
       if (!initialState?.user) {
         // const from = query.get('from') ?? '/';
         return Horse.auth
-          .loginApiV1AuthLoginPost(
+          .v1Login(
             { responseType: 'json' },
             {
               username: '',
@@ -90,13 +90,10 @@ const Index: React.FC = () => {
   const { run: oauthLogin, loading: oauthLogining } = useRequest(
     async (oauthName) => {
       const from = query.get('from') ?? '/';
-      return Horse.auth.oauthAuthorizeApiV1AuthOauth2Oauth2AuthorizeGet(
-        oauthName,
-        {
-          responseType: 'redirect',
-          redirectUrl: `${DOMAIN_HOST}${from}`,
-        },
-      );
+      return Horse.auth.v1OauthAuthorize(oauthName, {
+        responseType: 'redirect',
+        redirectUrl: `${DOMAIN_HOST}${from}`,
+      });
     },
     {
       manual: true,

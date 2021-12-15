@@ -21,11 +21,9 @@ const Index: React.FC<IProps> = (props) => {
       if (typeof query !== 'string') return [];
       if (query.length < 2) return [];
 
-      const response =
-        await Horse.domain.searchDomainCandidatesApiV1DomainsDomainCandidatesGet(
-          domainUrl,
-          { query },
-        );
+      const response = await Horse.domain.v1SearchDomainCandidates(domainUrl, {
+        query,
+      });
       return response.data.data?.results || [];
     },
     {

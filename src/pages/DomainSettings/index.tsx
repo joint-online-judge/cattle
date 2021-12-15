@@ -15,7 +15,7 @@ const Index: React.FC<IRouteComponentProps> = ({ children, route }) => {
   const breads = useMemo(
     () => [
       {
-        path: domainUrl,
+        path: `domain/${domainUrl}`,
         breadcrumbName: domain?.name ?? 'unknown',
       },
       {
@@ -46,7 +46,9 @@ const Index: React.FC<IRouteComponentProps> = ({ children, route }) => {
           <MarkdownRender>{domain?.bulletin ?? ''}</MarkdownRender>
         </div>
       </ShadowCard>
-      <SideMenuPage route={route}>{children}</SideMenuPage>
+      <SideMenuPage route={route} shadowCard={false}>
+        {children}
+      </SideMenuPage>
     </>
   );
 };

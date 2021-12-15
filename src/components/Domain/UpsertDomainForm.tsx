@@ -1,8 +1,8 @@
-import React, { useEffect } from 'react';
-import { Button, Row, Col, Form, Input, message, Spin } from 'antd';
+import React, { useRef, useEffect } from 'react';
+import { Form, message } from 'antd';
 import { history, useIntl } from 'umi';
+import ProForm, { ProFormInstance, ProFormText } from '@ant-design/pro-form';
 import { useRequest } from 'ahooks';
-import style from './style.css';
 import {
   Horse,
   Domain,
@@ -21,11 +21,10 @@ export interface IProps {
 const Index: React.FC<IProps> = (props) => {
   const { initialValues, onUpdateSuccess, onCreateSuccess } = props;
   const intl = useIntl();
-  const [form] = Form.useForm();
+  const formRef = useRef<ProFormInstance<DomainCreate | DomainEdit>>();
 
   const { run: createDomain, loading: creatingDomain } = useRequest(
-    async (domain: DomainCreate) =>
-      Horse.domain.createDomainApiV1DomainsPost(domain),
+    async (domain: DomainCreate) => Horse.domain.v1CreateDomain(domain),
     {
       manual: true,
       onSuccess: (res) => {
@@ -49,7 +48,7 @@ const Index: React.FC<IProps> = (props) => {
 
   const { run: updateDomain, loading: updatingDomain } = useRequest(
     async (url: string, domain: DomainEdit) =>
-      Horse.domain.updateDomainApiV1DomainsDomainPatch(url, domain),
+      Horse.domain.v1UpdateDomain(url, domain),
     {
       manual: true,
       onSuccess: (res) => {
@@ -66,74 +65,64 @@ const Index: React.FC<IProps> = (props) => {
     },
   );
 
-  const onFinish = (values: Partial<Domain>) => {
-    if (initialValues?.url) {
-      updateDomain(initialValues.url, values);
-    } else if (values.url) {
-      createDomain(values as DomainCreate);
-    }
+  const onFinish = async (values: DomainCreate | DomainEdit) => {
+    initialValues?.url
+      ? await updateDomain(initialValues.url, values)
+      : createDomain(values as DomainCreate);
   };
 
   useEffect(() => {
-    form.setFieldsValue(initialValues);
-  }, [form, initialValues]);
+    formRef?.current?.setFieldsValue(initialValues ?? {});
+  }, [formRef, initialValues]);
 
   return (
-    <Spin spinning={updatingDomain || creatingDomain}>
-      <Form form={form} onFinish={onFinish} layout="vertical">
-        <Form.Item
-          name="name"
-          label={intl.formatMessage({ id: 'DOMAIN.CREATE.NAME' })}
-          rules={[
-            {
-              required: true,
-            },
-          ]}
-        >
-          <Input />
-        </Form.Item>
-        <Form.Item
-          name="url"
-          label={intl.formatMessage({ id: 'DOMAIN.CREATE.URL' })}
-          rules={[
-            {
-              required: true,
-            },
-          ]}
-        >
-          <Input disabled={Boolean(initialValues?.id)} />
-        </Form.Item>
-        <Form.Item
-          name="gravatar"
-          label={intl.formatMessage({ id: 'DOMAIN.CREATE.GRAVATAR' })}
-        >
-          <Input />
-        </Form.Item>
+    <ProForm<DomainCreate | DomainEdit>
+      formRef={formRef}
+      layout="vertical"
+      onFinish={onFinish}
+      initialValues={initialValues}
+      omitNil
+    >
+      <ProFormText
+        width="lg"
+        name="name"
+        label={intl.formatMessage({ id: 'DOMAIN.CREATE.NAME' })}
+        rules={[
+          {
+            required: true,
+          },
+        ]}
+      />
 
-        <Form.Item
-          name="bulletin"
-          label={intl.formatMessage({ id: 'DOMAIN.CREATE.BULLETIN' })}
-        >
-          <MarkdownEditor />
-        </Form.Item>
-        <Form.Item>
-          <Row>
-            <Col xs={9} sm={8} md={6}>
-              <Button
-                htmlType="submit"
-                type="primary"
-                loading={updatingDomain || creatingDomain}
-                block
-              >
-                {intl.formatMessage({
-                  id: initialValues?.url ? 'UPDATE' : 'DOMAIN.CREATE.CREATE',
-                })}
-              </Button>
-            </Col>
-          </Row>
-        </Form.Item>
-      </Form>
-    </Spin>
+      <ProFormText
+        width="lg"
+        name="url"
+        label={intl.formatMessage({ id: 'DOMAIN.CREATE.URL' })}
+        tooltip={'This will be displayed in the url of this domain.'}
+      />
+
+      <ProFormText
+        width="lg"
+        name="gravatar"
+        label={intl.formatMessage({ id: 'DOMAIN.CREATE.GRAVATAR' })}
+      />
+
+      <ProFormText
+        width="lg"
+        name="tag"
+        label={intl.formatMessage({ id: 'domain.create.tag' })}
+        tooltip={
+          'This field categorizes domains into groups. Admins can clone problems or manage problem groups within one domain group.'
+        }
+      />
+
+      <Form.Item
+        name="bulletin"
+        label={intl.formatMessage({ id: 'DOMAIN.CREATE.BULLETIN' })}
+      >
+        <MarkdownEditor />
+      </Form.Item>
+    </ProForm>
   );
 };
 

@@ -30,11 +30,10 @@ export default function DomainModel() {
         problemSetId.length > 0
       ) {
         setProblemSetId(problemSetId);
-        const res =
-          await Horse.problemSet.getProblemSetApiV1DomainsDomainProblemSetsProblemSetGet(
-            domainUrl,
-            problemSetId,
-          );
+        const res = await Horse.problemSet.v1GetProblemSet(
+          domainUrl,
+          problemSetId,
+        );
         return res.data.data;
       } else {
         setProblemSetId(undefined);

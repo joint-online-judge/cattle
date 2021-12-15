@@ -48,10 +48,7 @@ const Index: React.FC<IProps> = (props) => {
   ];
 
   const onFinish = (values: any) => {
-    Horse.problem.submitSolutionToProblemApiV1ProblemsProblemPost(
-      problem?.id ?? '',
-      values,
-    );
+    Horse.problem.v1SubmitSolutionToProblem(problem?.id ?? '', values);
     // submitProblem(problem?.id || '', values);
     console.log(values);
   };

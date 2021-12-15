@@ -43,7 +43,7 @@ export interface InitialState {
 
 export async function getInitialState(): Promise<InitialState> {
   try {
-    const res = await Horse.auth.getTokenApiV1AuthTokenGet({
+    const res = await Horse.auth.v1GetToken({
       responseType: 'json',
     });
     if (

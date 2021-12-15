@@ -1,15 +1,17 @@
 import React, { useMemo, useRef, useState, useEffect } from 'react';
-import { useParams, Link, useIntl } from 'umi';
-import { Space, message, Popconfirm, Button, Checkbox } from 'antd';
+import { useParams, useIntl } from 'umi';
+import { useRequest } from 'ahooks';
+import { message, Checkbox } from 'antd';
 import {
   EditableProTable,
   ProColumns,
   ActionType,
 } from '@ant-design/pro-table';
-import { TeamOutlined } from '@ant-design/icons';
-import { useRequest } from 'ahooks';
-import { Horse, DomainPermission } from '@/utils/service';
+import { Horse, DomainPermission, DomainRoleCreate } from '@/utils/service';
 import { isArray, toPairs, fromPairs, flatten, uniq, groupBy } from 'lodash';
+import LoadFailResult from '@/components/LoadFailResult';
+import ShadowCard from '@/components/ShadowCard';
+import AddRoleModal from './AddRoleModal';
 
 type DataSourceType = {
   id: string;
@@ -22,6 +24,7 @@ const Index: React.FC = () => {
   const { domainUrl } = useParams<{ domainUrl: string }>();
   const [editableKeys, setEditableRowKeys] = useState<React.Key[]>([]);
   const [activekey, setActiveKey] = useState<keyof DomainPermission>('general');
+  const [loadFailed, setLoadFailed] = useState<boolean>(false);
 
   const {
     run: fetchDomainRoles,
@@ -30,24 +33,20 @@ const Index: React.FC = () => {
     data: roles,
   } = useRequest(
     async () => {
-      const response =
-        await Horse.domain.listDomainRolesApiV1DomainsDomainRolesGet(domainUrl);
+      const response = await Horse.domain.v1ListDomainRoles(domainUrl);
       return response.data.data?.results ?? [];
     },
     {
       onError: () => {
+        setLoadFailed(true);
         message.error('fetch domain user failed');
       },
     },
   );
 
-  const { run: removeUser, loading: deleting } = useRequest(
-    async (userId: string) => {
-      const response =
-        await Horse.domain.removeDomainUserApiV1DomainsDomainUsersUserDelete(
-          domainUrl,
-          userId,
-        );
+  const { run: createRole, loading: creating } = useRequest(
+    async (values: DomainRoleCreate) => {
+      const response = await Horse.domain.v1CreateDomainRole(domainUrl, values);
       return response.data;
     },
     {
@@ -72,7 +71,10 @@ const Index: React.FC = () => {
         formItemProps: {
           valuePropName: 'checked',
         },
-        renderFormItem: () => <Checkbox />,
+        renderFormItem: (e) => {
+          console.log(e);
+          return <Checkbox onChange={() => {}} />;
+        },
       }));
 
       roleCols.unshift({
@@ -129,56 +131,57 @@ const Index: React.FC = () => {
   const onChange = (e: any) => console.log(e);
 
   return (
-    <EditableProTable<DataSourceType>
-      bordered
-      loading={fetching}
-      cardProps={false}
-      search={false}
-      options={false}
-      pagination={false}
-      columns={columns}
-      rowKey="id"
-      value={dataSource}
-      onChange={onChange}
-      recordCreatorProps={false}
-      toolbar={{
-        menu: {
-          type: 'tab',
-          activeKey: activekey,
-          items: categories.map((c) => ({
-            key: c,
-            label: <span>{c}</span>,
-          })),
-          onChange: (key: any) => {
-            setActiveKey(key);
-          },
-        },
-        actions: [
-          <Button
-            type="primary"
-            key="create"
-            icon={<TeamOutlined />}
-            onClick={() => {
-              // dataSource 就是当前数据，可以调用 api 将其保存
-              console.log(dataSource);
-            }}
-          >
-            创建角色
-          </Button>,
-        ],
-      }}
-      editable={{
-        type: 'multiple',
-        editableKeys,
-        actionRender: (row, config, defaultDoms) => {
-          return [defaultDoms.delete];
-        },
-        onValuesChange: (record, recordList) => {
-          console.log(record);
-        },
-        onChange: setEditableRowKeys,
-      }}
-    />
+    <ShadowCard>
+      {loadFailed ? (
+        <LoadFailResult />
+      ) : (
+        <EditableProTable<DataSourceType>
+          bordered
+          scroll={{ x: 'max-content' }}
+          loading={fetching || creating}
+          cardProps={false}
+          search={false}
+          options={false}
+          pagination={false}
+          columns={columns}
+          rowKey="id"
+          value={dataSource}
+          onChange={onChange}
+          recordCreatorProps={false}
+          toolbar={{
+            menu: {
+              type: 'tab',
+              activeKey: activekey,
+              items: categories.map((c) => ({
+                key: c,
+                label: <span>{c}</span>,
+              })),
+              onChange: (key: any) => {
+                setActiveKey(key);
+              },
+            },
+            actions: [
+              <AddRoleModal
+                domainUrl={domainUrl}
+                roles={roles}
+                onSuccess={refetch}
+              />,
+            ],
+          }}
+          editable={{
+            type: 'multiple',
+            editableKeys,
+            actionRender: (row, config, defaultDoms) => {
+              return [defaultDoms.delete];
+            },
+            onValuesChange: (record, recordList) => {
+              console.log(record, recordList);
+            },
+            onChange: setEditableRowKeys,
+          }}
+        />
+      )}
+    </ShadowCard>
   );
 };
 
