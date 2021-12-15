@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
-import { List, message, Typography, Skeleton, Divider, Badge } from 'antd';
+import { List, message, Typography, Skeleton, Progress, Badge } from 'antd';
 import { Link } from 'umi';
 import { useRequest } from 'ahooks';
 import mm from 'moment';
-import { Horse } from '@/utils/service';
+import Horse from '@/utils/service';
 
 interface IProps {
   domainId: string;
@@ -19,7 +19,9 @@ const Index: React.FC<IProps> = ({ domainId }) => {
   } = useRequest(
     async () => {
       if (!domainId) return [];
-      const res = await Horse.problemSet.v1ListProblemSets(domainId);
+      const res = await Horse.problemSet.v1ListProblemSets(domainId, {
+        ordering: '-created_at',
+      });
       return res?.data?.data?.results ?? [];
     },
     {
@@ -31,23 +33,31 @@ const Index: React.FC<IProps> = ({ domainId }) => {
   );
 
   const getStatusBadge = (
-    availableTimeString: string | undefined,
-    dueTimeString: string | undefined,
+    unlockAtString: string | undefined,
+    dueAtString: string | undefined,
+    lockAtString: string | undefined,
   ) => {
-    if (!availableTimeString || !dueTimeString) {
-      return <Badge status="default" text="Unknown" />;
-    }
-
     const now = Date.now();
-    const availableTime = new Date(availableTimeString).getTime();
-    const dueTime = new Date(dueTimeString).getTime();
+    const unlockAt = unlockAtString
+      ? new Date(unlockAtString).getTime()
+      : undefined;
+    const dueAt = dueAtString ? new Date(dueAtString).getTime() : undefined;
+    const lockAt = lockAtString ? new Date(lockAtString).getTime() : undefined;
 
-    if (now < availableTime) {
+    if (unlockAt && now < unlockAt) {
       return <Badge status="default" text="Not Started" />;
     }
 
-    if (now > dueTime) {
-      return <Badge status="error" text="Overdue" />;
+    if (lockAt && now > lockAt) {
+      return <Badge status="error" text="Ended" />;
+    }
+
+    if (lockAt && now > lockAt) {
+      return <Badge status="error" text="Ended" />;
+    }
+
+    if (dueAt && now > dueAt) {
+      return <Badge status="warning" text="Overdue" />;
     }
 
     return <Badge status="processing" text="Ongoing" />;
@@ -65,14 +75,7 @@ const Index: React.FC<IProps> = ({ domainId }) => {
         dataSource={problemSets ?? []}
         renderItem={(item) => (
           <List.Item
-            actions={[
-              <Link to={`/domain/${domainId}/problem-set/${item.id}`}>
-                Detail
-              </Link>,
-              <Link to={`/domain/${domainId}/problem-set/${item.id}/settings`}>
-                Edit
-              </Link>,
-            ]}
+            actions={[getStatusBadge(item.unlockAt, item.dueAt, item.lockAt)]}
           >
             <Skeleton title={false} loading={loading} active>
               <List.Item.Meta
@@ -83,13 +86,12 @@ const Index: React.FC<IProps> = ({ domainId }) => {
                 }
                 description={
                   <>
-                    {mm(item.unlockAt).format('YYYY-MM-DD HH:mm')}
-                    <Divider type="vertical" />
-                    {mm(item.lockAt).format('YYYY-MM-DD HH:mm')}
+                    {item.dueAt
+                      ? mm(item.dueAt).format('YYYY-MM-DD HH:mm')
+                      : 'No Due Date'}
                   </>
                 }
               />
-              <div>{getStatusBadge(item.unlockAt, item.dueAt)}</div>
             </Skeleton>
           </List.Item>
         )}

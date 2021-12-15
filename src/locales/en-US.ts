@@ -1,5 +1,5 @@
 export default {
-  // small-case noun
+  // lower-case noun
   domain: 'domain',
   // Simple Noun
   DOMAIN: 'Domain',
@@ -18,6 +18,7 @@ export default {
   DELETE: 'Delete',
   SUBMIT: 'Submit',
   MANAGE: 'Manage',
+  join: 'Join',
   // User
   'USER.PROFILE': 'Profile',
   'USER.LOGIN.JACCOUNT_LOG_IN': 'jAccount Login',
@@ -38,6 +39,8 @@ export default {
   'DOMAIN.HOME.PROBLEMS': 'Problems',
   'DOMAIN.HOME.MEMBERS': 'Members',
   'DOMAIN.HOME.SETTINGS': 'Settings',
+  'domain.invitation.join': 'Join Domain',
+  'domain.invitation.code': 'Invitation Code',
   // Problems
   'problem.problems': 'Problems',
   'PROBLEM.CREATE.TITLE': 'Create Problem',
@@ -63,7 +66,7 @@ export default {
   'PROBLEM.SUBMIT_AT': 'Submit At',
   // ProblemSet
   'PROBLEM_SET.PROBLEM_SET': 'Problem Set',
-  'PROBLEM_SET.INTRODUCTION': 'Problem Set Introduction',
+  'PROBLEM_SET.INTRODUCTION': 'Introduction',
   'PROBLEM_SET.CREATE.TITLE': 'Create Problem Set',
   'PROBLEM_SET.CREATE.FORM.SCOREBOARD_HIDDEN': 'Hide Scoreboard',
   'PROBLEM_SET.CREATE.FORM.UNLOCK_AT': 'Unlock Time',
@@ -80,7 +83,7 @@ export default {
   'SETTINGS.SECURITY_SETTINGS': 'Security',
   'SETTINGS.I18N_LANG': 'Language',
   'SETTINGS.TIMEZONE': 'Timezone',
-  'SETTINGS.SWITCH_LANG': 'Switch Language',
+  'SETTINGS.SWITCH_LANG': 'Language',
   'SETTINGS.UPDATE_SETTINGS': 'Update Settings',
   'SETTINGS.DISPLAY_SETTINGS': 'Display Settings',
   'SETTINGS.DOMAIN': 'Settings',

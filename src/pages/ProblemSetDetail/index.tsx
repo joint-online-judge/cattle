@@ -1,5 +1,6 @@
 import React, { useMemo, useEffect, useState } from 'react';
-import { message, Typography, Spin, Button, Row, Col } from 'antd';
+import { message, Typography, Spin, Button, Row, Col, Progress } from 'antd';
+import mm from 'moment';
 import {
   useParams,
   useIntl,
@@ -18,6 +19,7 @@ import { VERTICAL_GUTTER } from '@/constants';
 import ShadowCard from '@/components/ShadowCard';
 import SideMenuPage from '@/components/SideMenuPage';
 import MarkdownRender from '@/components/MarkdownRender';
+import style from './style.less';
 
 const Index: React.FC<IRouteComponentProps> = ({ route }) => {
   const intl = useIntl();
@@ -29,7 +31,7 @@ const Index: React.FC<IRouteComponentProps> = ({ route }) => {
   const [beforeAvailable, setBeforeAvailable] = useState<boolean>(false);
   const [afterDue, setAfterDue] = useState<boolean>(false);
 
-  const { data: problemSet } = useRequest(
+  const { data: problemSet, loading } = useRequest(
     async () => {
       const res = await Horse.problemSet.v1GetProblemSet(
         domainUrl,
@@ -52,6 +54,17 @@ const Index: React.FC<IRouteComponentProps> = ({ route }) => {
     },
   );
 
+  const acRate: number = useMemo(() => {
+    if (
+      typeof problemSet?.numSubmit === 'number' &&
+      typeof problemSet?.numAccept === 'number' &&
+      problemSet.numSubmit > 0
+    ) {
+      return Math.ceil(problemSet.numAccept / problemSet.numSubmit);
+    }
+    return 0;
+  }, [problemSet]);
+
   const breads = useMemo(
     () => [
       {
@@ -72,7 +85,7 @@ const Index: React.FC<IRouteComponentProps> = ({ route }) => {
   useEffect(() => {
     setHeader({
       routes: breads,
-      title: problemSet?.title ?? 'unknown',
+      title: problemSet?.title,
     });
   }, [breads]);
 
@@ -81,7 +94,40 @@ const Index: React.FC<IRouteComponentProps> = ({ route }) => {
   ) : beforeAvailable ? (
     <BeforeAvailable />
   ) : (
-    <SideMenuPage route={route} shadowCard={false}>
+    <SideMenuPage
+      route={route}
+      shadowCard={false}
+      extra={
+        <ShadowCard loading={loading}>
+          <dl className={style.infoCard}>
+            <dt>Status</dt>
+            <dd>Finished</dd>
+            <dt>Due At</dt>
+            <dd>
+              {problemSet?.dueAt
+                ? mm(problemSet.dueAt).format('YYYY-MM-DD HH:mm:ss')
+                : 'Never'}
+            </dd>
+            <dt>Lock At</dt>
+            <dd>
+              {problemSet?.lockAt
+                ? mm(problemSet.lockAt).format('YYYY-MM-DD HH:mm:ss')
+                : 'Never'}
+            </dd>
+            <dt>Accept Rate</dt>
+            <dd>
+              <Progress
+                type="dashboard"
+                width={80}
+                success={{ percent: acRate }}
+                format={() => `${acRate}%`}
+                style={{ marginTop: 12 }}
+              />
+            </dd>
+          </dl>
+        </ShadowCard>
+      }
+    >
       <Row gutter={VERTICAL_GUTTER}>
         {problemSet?.content ? (
           <Col span={24}>
@@ -101,7 +147,15 @@ const Index: React.FC<IRouteComponentProps> = ({ route }) => {
 
         <Col span={24}>
           <ShadowCard
+            loading={loading}
             title={intl.formatMessage({ id: 'PROBLEM' })}
+            bodyStyle={
+              problemSet?.problems && problemSet.problems.length > 0
+                ? {
+                    padding: 0,
+                  }
+                : undefined
+            }
             extra={
               access.canCreateProblem ? (
                 <Button

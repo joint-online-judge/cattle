@@ -38,9 +38,9 @@ const Index: React.FC = () => {
       <Menu.Item key="home">
         <Link to="/">{intl.formatMessage({ id: 'HOME' })}</Link>
       </Menu.Item>
-      <Menu.Item key="domain">
+      {/* <Menu.Item key="domain">
         <Link to="/domain">{intl.formatMessage({ id: 'menu.domain' })}</Link>
-      </Menu.Item>
+      </Menu.Item> */}
       {domainUrl ? (
         <Menu.Item key="problem_list">
           <Link to={`/domain/${domainUrl}/problem`}>

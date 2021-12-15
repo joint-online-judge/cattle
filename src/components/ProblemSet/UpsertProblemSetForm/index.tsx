@@ -14,6 +14,7 @@ import {
   ProblemSetEdit,
 } from '@/utils/service';
 import MarkdownEditor from '@/components/MarkdownEditor';
+import mm from 'moment';
 
 export interface IProps {
   initialValues?: Partial<ProblemSet>;
@@ -51,6 +52,8 @@ const UpsertProblemSetForm: React.FC<IProps> = (props) => {
   );
 
   const onFinish = async (values: ProblemSetCreate | ProblemSetEdit) => {
+    console.log(values);
+    console.log(mm(values.unlockAt));
     initialValues?.id
       ? await updateProblemSet(initialValues?.id, values)
       : await createProblemSet(values as ProblemSetCreate);
@@ -61,6 +64,7 @@ const UpsertProblemSetForm: React.FC<IProps> = (props) => {
       layout="vertical"
       onFinish={onFinish}
       initialValues={initialValues}
+      dateFormatter="number"
       omitNil
     >
       <ProFormText

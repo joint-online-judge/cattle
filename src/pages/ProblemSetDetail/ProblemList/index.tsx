@@ -1,19 +1,19 @@
-import { List, Button, Empty, Space } from 'antd';
 import React from 'react';
-import { Link, useParams, useAccess } from 'umi';
-import { ProblemPreview } from '@/utils/service';
-import { isArray } from 'lodash';
+import { List, Button, Empty, Space, Table } from 'antd';
+import { Link, useParams, useIntl } from 'umi';
+import { ProblemPreviewWithRecordState, RecordState } from '@/utils/service';
+import { isArray, isNil } from 'lodash';
 
 interface IProps {
-  problems: ProblemPreview[] | undefined;
+  problems: ProblemPreviewWithRecordState[] | undefined;
 }
 
 const Index: React.FC<IProps> = ({ problems }) => {
-  const access = useAccess();
-  const { domainUrl } =
+  const intl = useIntl();
+  const { domainUrl, problemSetId } =
     useParams<{ problemSetId: string; domainUrl: string }>();
 
-  return isArray(problems) && problems.length > 0 ? (
+  const a = (
     <List
       itemLayout="horizontal"
       size="large"
@@ -25,6 +25,44 @@ const Index: React.FC<IProps> = ({ problems }) => {
           </Link>
         </List.Item>
       )}
+    />
+  );
+
+  const getRecordState = (problem: ProblemPreviewWithRecordState) => {
+    if (isNil(problem.recordState)) {
+    }
+    return problem.recordState;
+  };
+
+  const columns = [
+    {
+      title: intl.formatMessage({ id: 'PROBLEM.STATUS' }),
+      dataIndex: 'recordState',
+      width: 120,
+      render: (_: any, row: ProblemPreviewWithRecordState) =>
+        getRecordState(row),
+    },
+    {
+      title: intl.formatMessage({ id: 'PROBLEM' }),
+      dataIndex: 'title',
+      render: (_: any, row: ProblemPreviewWithRecordState) => (
+        <Link
+          to={`/domain/${domainUrl}/problem-set/${problemSetId}/p/${
+            row.url ?? row.id
+          }`}
+        >
+          {row.title}
+        </Link>
+      ),
+    },
+  ];
+
+  return isArray(problems) && problems.length > 0 ? (
+    <Table
+      rowKey="id"
+      columns={columns}
+      dataSource={problems}
+      pagination={false}
     />
   ) : (
     <Empty description={<span>There are no problems</span>}>

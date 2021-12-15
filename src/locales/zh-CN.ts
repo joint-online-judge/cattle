@@ -1,5 +1,5 @@
 export default {
-  // small-case noun
+  // lower-case noun
   domain: '域',
   // 简单名词
   DOMAIN: '域',
@@ -18,6 +18,7 @@ export default {
   DELETE: '删除',
   SUBMIT: '提交',
   MANAGE: '管理',
+  join: '加入',
   // User
   'USER.PROFILE': '我的资料',
   'USER.LOGIN.JACCOUNT_LOG_IN': 'jAccount 登录',
@@ -38,6 +39,8 @@ export default {
   'DOMAIN.HOME.PROBLEMS': '题目',
   'DOMAIN.HOME.MEMBERS': '成员',
   'DOMAIN.HOME.SETTINGS': '设置',
+  'domain.invitation.join': '加入域',
+  'domain.invitation.code': '邀请码',
   // Problems
   'problem.problems': '题库',
   'PROBLEM.CREATE.TITLE': '创建问题',
@@ -63,7 +66,7 @@ export default {
   'PROBLEM.SUBMIT_AT': '递交时间',
   // ProblemSet
   'PROBLEM_SET.PROBLEM_SET': '问题集',
-  'PROBLEM_SET.INTRODUCTION': '问题集介绍',
+  'PROBLEM_SET.INTRODUCTION': '介绍',
   'PROBLEM_SET.CREATE.TITLE': '创建问题集',
   'PROBLEM_SET.CREATE.FORM.SCOREBOARD_HIDDEN': '隐藏排行榜',
   'PROBLEM_SET.CREATE.FORM.UNLOCK_AT': '开始提交时间',
