@@ -19,7 +19,9 @@ const Index: React.FC<IProps> = ({ domainId }) => {
   } = useRequest(
     async () => {
       if (!domainId) return [];
-      const res = await Horse.problemSet.v1ListProblemSets(domainId);
+      const res = await Horse.problemSet.v1ListProblemSets(domainId, {
+        ordering: '-created_at',
+      });
       return res?.data?.data?.results ?? [];
     },
     {

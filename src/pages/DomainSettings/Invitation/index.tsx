@@ -20,6 +20,7 @@ import CopyablePre from '@/components/CopyablePre';
 import Horse, { DomainInvitation, ErrorCode } from '@/utils/service';
 import CreateInvitationModal from './CreateInvitationModal';
 import { DOMAIN_HOST } from '@/constants';
+import { isArray } from 'lodash';
 
 const { Panel } = Collapse;
 const { Paragraph } = Typography;
@@ -35,7 +36,10 @@ const Index: React.FC = () => {
   const { data: invitations, refresh } = useRequest(
     async () => {
       const response = await Horse.domain.v1ListDomainInvitations(domainUrl);
-      return response.data?.data?.results || [];
+      // @chujie: there won't be many invitations. It's ok to sort at frontend.
+      if (isArray(response.data?.data?.results))
+        return response.data?.data?.results.reverse();
+      return [];
     },
     {
       onError: () => {
