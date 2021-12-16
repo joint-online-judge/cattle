@@ -12,9 +12,13 @@ import {
 } from 'antd';
 import { useLocation, useModel, history } from 'umi';
 import { useRequest } from 'ahooks';
-import { isNil, isArray } from 'lodash';
+import { isArray, pick } from 'lodash';
 import style from './style.less';
-import { Horse, UserCreate } from '@/utils/service';
+import Horse, {
+  UserCreate,
+  OAuth2PasswordRequestForm,
+  ErrorCode,
+} from '@/utils/service';
 import { DOMAIN_HOST } from '@/constants';
 import Logo from '@/assets/logo.svg';
 import { useCallback } from 'react';
@@ -27,8 +31,8 @@ type OperationType = 'login' | 'register';
 
 const Index: React.FC = () => {
   const [opType, setOpType] = useState<OperationType>('login');
-  const { initialState } = useModel('@@initialState');
   const query = useQuery();
+  const { refresh } = useModel('@@initialState');
 
   const { data: oauths, loading: discovering } = useRequest(
     async () => {
@@ -42,47 +46,57 @@ const Index: React.FC = () => {
     },
   );
 
-  const { loading: registering } = useRequest(
-    async (registerInfo: UserCreate) => {
-      return Horse.auth
-        .v1Register({ responseType: 'json' }, registerInfo)
-        .then((res) => {
-          console.log(res);
-          // window.location.href = res.data.redirect_url;
-        });
-    },
+  const { run: register, loading: registering } = useRequest(
+    async (registerInfo: UserCreate) =>
+      Horse.auth.v1Register({ responseType: 'json' }, registerInfo),
     {
       manual: true,
-      onError: (res) => {
-        console.error(res);
+      onSuccess: (res) => {
+        if (res?.data?.errorCode === ErrorCode.Success) {
+          message.success('register success');
+          refresh().then(() => {
+            history.replace(query.get('from') ?? '/');
+          });
+        } else if (res?.data?.errorCode === ErrorCode.UserRegisterError) {
+          message.error('incomplete info');
+        } else if (res?.data?.errorCode === ErrorCode.IntegrityError) {
+          message.error('username/email already used');
+        } else {
+          message.error('register failed');
+        }
+      },
+      onError: () => {
+        message.error('register failed');
       },
     },
   );
 
-  const { loading: simpleLogining } = useRequest(
-    async () => {
-      if (!initialState?.user) {
-        // const from = query.get('from') ?? '/';
-        return Horse.auth
-          .v1Login(
-            { responseType: 'json' },
-            {
-              username: '',
-              password: '',
-            },
-          )
-          .then((res) => {
-            console.log(res);
-            // window.location.href = res.data.redirect_url;
-          });
+  const { run: simpleLogin, loading: simpleLogining } = useRequest(
+    async (values: OAuth2PasswordRequestForm) => {
+      // https://github.com/axios/axios/blob/master/dist/axios.js#L1283
+      const params = new URLSearchParams();
+      for (const [key, value] of Object.entries(values)) {
+        params.append(key, value);
       }
-
-      return Promise.resolve();
+      // @Chujie: pass URLSearchParams to axios; otherwise data will be stringified directly.
+      return Horse.auth.v1Login({ responseType: 'json' }, params as any);
     },
     {
       manual: true,
-      onError: (res) => {
-        console.error(res);
+      onSuccess: (res) => {
+        if (res?.data?.errorCode === ErrorCode.Success) {
+          message.success('login success');
+          refresh().then(() => {
+            history.replace(query.get('from') ?? '/');
+          });
+        } else if (res?.data?.errorCode === ErrorCode.UsernamePasswordError) {
+          message.error('wrong username or password');
+        } else {
+          message.error('login failed');
+        }
+      },
+      onError: () => {
+        message.error('login failed');
       },
     },
   );
@@ -102,7 +116,7 @@ const Index: React.FC = () => {
           message.loading('Redirecting...', 10);
           window.location.href = res.data.data?.redirectUrl;
         } else {
-          message.error('Failed to intialize oauth');
+          message.error('failed to intialize oauth');
         }
       },
       onError: (err) => {
@@ -133,7 +147,7 @@ const Index: React.FC = () => {
             //     className={style.oauthImg}
             //   />
             // }
-            loading={loading}
+            loading={oauthLogining}
             onClick={async () => oauthLogin(o.oauthName)}
           >
             Sign in with {o.displayName}
@@ -153,7 +167,16 @@ const Index: React.FC = () => {
         </div>
         <h1 className={style.loginTitle}>Sign in to JOJ</h1>
         <h2 className={style.loginSubtitle}>New generation of Online Judge</h2>
-        <Form layout="vertical">
+        <Form
+          layout="vertical"
+          onFinish={(values) => {
+            if (opType === 'login') {
+              simpleLogin(pick(values, ['username', 'password']));
+            } else if (opType === 'register') {
+              register(pick(values, ['username', 'password', 'email']));
+            }
+          }}
+        >
           <Tabs
             centered
             activeKey={opType}
@@ -176,7 +199,7 @@ const Index: React.FC = () => {
                   },
                 ]}
               >
-                <Input placeholder={'用户名: admin or user'} />
+                <Input placeholder={'用户名'} />
               </Form.Item>
               <Form.Item
                 name="password"
@@ -185,7 +208,7 @@ const Index: React.FC = () => {
                   { required: true, message: 'Please input your Password!' },
                 ]}
               >
-                <Input.Password placeholder={'密码: ant.design'} />
+                <Input.Password placeholder={'密码'} />
               </Form.Item>
               <Row justify="end" style={{ marginBottom: '12px' }}>
                 <Col>
@@ -227,7 +250,7 @@ const Index: React.FC = () => {
                   { required: true, message: 'Please input your Password!' },
                 ]}
               >
-                <Input.Password placeholder={'密码: ant.design'} />
+                <Input.Password placeholder={'密码'} />
               </Form.Item>
               <Form.Item
                 name="confirm"
@@ -255,6 +278,13 @@ const Index: React.FC = () => {
                 ]}
               >
                 <Input.Password />
+              </Form.Item>
+              <Form.Item
+                name="email"
+                label="Email"
+                rules={[{ required: true }, { type: 'email' }]}
+              >
+                <Input />
               </Form.Item>
               <Form.Item>
                 <Button

@@ -44,6 +44,7 @@ const Index: React.FC = () => {
               {intl.formatMessage({ id: 'PROBLEM_SET.CREATE.TITLE' })}
             </Button>
           }
+          bodyStyle={{ padding: 0 }}
         >
           <ProblemSetList domainId={domainUrl} />
         </ShadowCard>

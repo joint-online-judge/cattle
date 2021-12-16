@@ -105,6 +105,7 @@ const Index: React.FC = () => {
               tabs={{
                 activeKey: tab,
                 onChange: setTab,
+                animated: { inkBar: true, tabPane: true },
               }}
             >
               <ProCard.TabPane key="tab1" tab="Add Existed">

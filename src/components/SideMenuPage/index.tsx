@@ -142,7 +142,7 @@ const Index: React.FC<IProps> = ({
           VERTICAL_GUTTER[1],
         ]}
       >
-        <Col xs={24} sm={24} md={6} lg={7} xl={7}>
+        <Col xs={24} sm={24} md={8} lg={7} xl={7}>
           <Row gutter={VERTICAL_GUTTER}>
             <Col span={24}>
               <SettingsSideBar
@@ -155,7 +155,7 @@ const Index: React.FC<IProps> = ({
             <Col span={24}>{extra}</Col>
           </Row>
         </Col>
-        <Col xs={24} sm={24} md={18} lg={17} xl={17}>
+        <Col xs={24} sm={24} md={16} lg={17} xl={17}>
           {mainContent}
         </Col>
       </Row>

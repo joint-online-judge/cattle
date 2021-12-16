@@ -1,10 +1,26 @@
-import { AxiosResponse, AxiosError } from 'axios';
+import axios, { AxiosResponse, AxiosError } from 'axios';
 import { notification } from 'antd';
 import { throttle } from 'lodash';
 import { Api } from '@/client';
 
+// @ts-ignore
+import qs from 'qs';
+
 export const Horse = new Api({
   timeout: 10000,
+  // transformRequest: (data, headers) => {
+  //   // Refer: https://github.com/axios/axios#using-applicationx-www-form-urlencoded-format
+  //   if (
+  //     headers &&
+  //     (headers['Content-Type'] ?? headers['content-type']) === 'application/x-www-form-urlencoded'
+  //   ) {
+  //     if (typeof data === 'object') {
+  //       return qs.stringify(data);
+  //     }
+  //     axios.defaults.transformRequest
+  //   }
+  //   return data;
+  // }
 });
 
 const throttleWarn = throttle(() => {

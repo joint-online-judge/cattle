@@ -7,8 +7,8 @@ const { Text } = Typography;
 const Index: React.FC = () => {
   return (
     <Row justify="center" className={style.footerLayout}>
-      <Col span={16}>
-        <Row justify="space-between">
+      <Col span={16} xs={23} sm={23} md={20}>
+        <Row justify="space-between" gutter={[0, 12]}>
           <Col>
             <Text type="secondary">
               © 2021-{new Date().getFullYear()} Joint Online Judge
