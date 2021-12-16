@@ -41,7 +41,7 @@ const Index: React.FC = () => {
   const intl = useIntl();
   return (
     <Row>
-      <Space split={<Divider type="vertical" />}>
+      <Space split={<Divider type="vertical" />} wrap={true} size="small">
         {items.map((item) => {
           return (
             <div key={`${item.name}${item.path}`}>

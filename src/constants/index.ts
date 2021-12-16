@@ -5,8 +5,8 @@ export const DOMAIN_HOST = window.location.origin;
 export const LOCAL_STORAGE_SETTINGS_KEY = 'JOJ_SETTINGS';
 
 export const MAIN_CONTENT_GRID = {
-  xs: 22,
-  sm: 20,
+  xs: 23,
+  sm: 22,
   md: 22,
   lg: 20,
   xl: 18,
