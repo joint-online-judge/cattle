@@ -9,7 +9,7 @@ export interface GravatarProps extends AvatarProps {
 
 const Index: React.FC<GravatarProps> = (props) => {
   const { gravatar, ...otherProps } = props;
-  const imageUrl = gravatar ? gravatarImageUrl(gravatar) : undefined;
+  const imageUrl = gravatar ? gravatarImageUrl(gravatar, 300) : undefined;
 
   const avatarSrc = {
     src: imageUrl,
