@@ -149,6 +149,10 @@
       { exact: true, path: '/settings', component: '@/pages/UserSettings' },
       { exact: true, path: '/domain', component: '@/pages/DomainList' },
       { exact: true, path: '/admin', redirect: '/admin/domain' },
+      {
+        path: '/user/:username',
+        component: '@/pages/Profile',
+      },
 
       {
         path: '/admin/:tab',
