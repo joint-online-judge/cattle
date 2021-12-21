@@ -1,10 +1,10 @@
 import React from 'react';
 import { IRouteComponentProps, useIntl } from 'umi';
+import { ConfigProvider, Menu } from 'antd';
 import General from './General';
 import SideMenuPage, { PageContent } from '@/components/SideMenuPage';
-
 import Domains from '@/components/Domain/Domains';
-import { Menu } from 'antd';
+import Account from './Account';
 
 // const menuItems: SettingsMenuItem[] = [
 //   {
@@ -28,7 +28,7 @@ import { Menu } from 'antd';
 const Index: React.FC<IRouteComponentProps> = ({ route }) => {
   const intl = useIntl();
   return (
-    <>
+    <ConfigProvider autoInsertSpaceInButton={false}>
       <SideMenuPage
         defaultTab="SETTINGS.GENERAL_SETTINGS"
         route={route}
@@ -60,11 +60,14 @@ const Index: React.FC<IRouteComponentProps> = ({ route }) => {
         <PageContent menuKey="SETTINGS.GENERAL_SETTINGS">
           <General />
         </PageContent>
+        <PageContent menuKey="SETTINGS.ACCOUNT_SETTINGS">
+          <Account />
+        </PageContent>
         <PageContent menuKey="DOMAIN.DOMAINS">
           <Domains />
         </PageContent>
       </SideMenuPage>
-    </>
+    </ConfigProvider>
   );
 };
 
