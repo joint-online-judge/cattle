@@ -1,64 +1,70 @@
-import React, { useState } from 'react';
-import { Col, Row } from 'antd';
+import React from 'react';
+import { IRouteComponentProps, useIntl } from 'umi';
 import General from './General';
-import SettingsSideBar, {
-  SettingsMenuItem,
-} from '@/components/Settings/SettingsSideBar';
+import SideMenuPage, { PageContent } from '@/components/SideMenuPage';
+
 import Domains from '@/components/Domain/Domains';
-import ShadowCard from '@/components/ShadowCard';
+import { Menu } from 'antd';
 
-const menuItems: SettingsMenuItem[] = [
-  {
-    menuKey: 'SETTINGS.GENERAL_SETTINGS',
-    component: <General />,
-  },
-  {
-    menuKey: 'SETTINGS.ACCOUNT_SETTINGS',
-    // TODO: component: (<General />),
-  },
-  {
-    menuKey: 'SETTINGS.SECURITY_SETTINGS',
-    // TODO: component: (<General />),
-  },
-  {
-    menuKey: 'DOMAIN.DOMAINS',
-    component: <Domains />,
-  },
-];
+// const menuItems: SettingsMenuItem[] = [
+//   {
+//     menuKey: 'SETTINGS.GENERAL_SETTINGS',
+//     component: <General />,
+//   },
+//   {
+//     menuKey: 'SETTINGS.ACCOUNT_SETTINGS',
+//     // TODO: component: (<General />),
+//   },
+//   {
+//     menuKey: 'SETTINGS.SECURITY_SETTINGS',
+//     // TODO: component: (<General />),
+//   },
+//   {
+//     menuKey: 'DOMAIN.DOMAINS',
+//     component: <Domains />,
+//   },
+// ];
 
-const Index: React.FC = () => {
-  const [key, setKey] = useState<string>(menuItems[0].key);
-
+const Index: React.FC<IRouteComponentProps> = ({ route }) => {
+  const intl = useIntl();
   return (
-    <div>
-      <Row
-        gutter={[
-          {
-            lg: 24,
-            xl: 32,
-          },
-          {
-            xs: 16,
-            sm: 16,
-          },
-        ]}
+    <>
+      <SideMenuPage
+        defaultTab="SETTINGS.GENERAL_SETTINGS"
+        route={route}
+        routerMode="param"
+        matchMode="children"
+        menu={
+          <Menu mode="inline">
+            <Menu.Item
+              key="SETTINGS.GENERAL_SETTINGS"
+              style={{ margin: 0 }}
+            >
+              {intl.formatMessage({ id: 'SETTINGS.GENERAL_SETTINGS' })}
+            </Menu.Item>
+            <Menu.Item
+              key="SETTINGS.ACCOUNT_SETTINGS"
+              style={{ margin: 0 }}
+            >
+              {intl.formatMessage({ id: 'SETTINGS.ACCOUNT_SETTINGS' })}
+            </Menu.Item>
+            <Menu.Item
+              key="DOMAIN.DOMAINS"
+              style={{ margin: 0 }}
+            >
+              {intl.formatMessage({ id: 'DOMAIN.DOMAINS' })}
+            </Menu.Item>
+          </Menu>
+        }
       >
-        <Col xs={24} sm={24} lg={6}>
-          <SettingsSideBar
-            items={menuItems}
-            selectedKeys={[key]}
-            onClick={({ key: menuKey }) => {
-              setKey(menuKey);
-            }}
-          />
-        </Col>
-        <Col xs={24} sm={24} lg={18}>
-          <ShadowCard>
-            {key ? menuItems.find((o) => o.key === key)?.component : null}
-          </ShadowCard>
-        </Col>
-      </Row>
-    </div>
+        <PageContent menuKey="SETTINGS.GENERAL_SETTINGS">
+          <General />
+        </PageContent>
+        <PageContent menuKey="DOMAIN.DOMAINS">
+          <Domains />
+        </PageContent>
+      </SideMenuPage>
+    </>
   );
 };
 
