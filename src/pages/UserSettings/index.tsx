@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { IRouteComponentProps, useIntl } from 'umi';
 import { ConfigProvider, Menu } from 'antd';
 import General from './General';
 import SideMenuPage, { PageContent } from '@/components/SideMenuPage';
 import Domains from '@/components/Domain/Domains';
 import Account from './Account';
+import { useModel } from '@@/plugin-model/useModel';
 
 // const menuItems: SettingsMenuItem[] = [
 //   {
@@ -27,6 +28,22 @@ import Account from './Account';
 
 const Index: React.FC<IRouteComponentProps> = ({ route }) => {
   const intl = useIntl();
+  const { setHeader } = useModel('pageHeader');
+  const breads = useMemo(
+    () => [
+      {
+        path: 'settings',
+        breadcrumbI18nKey: 'settings.header',
+      },
+    ],
+    [],
+  );
+  useEffect(() => {
+    setHeader({
+      routes: breads,
+      titleI18nKey: 'settings.header',
+    });
+  }, []);
   return (
     <ConfigProvider autoInsertSpaceInButton={false}>
       <SideMenuPage
