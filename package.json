@@ -33,6 +33,7 @@
     "@ant-design/pro-list": "^1.20.3",
     "@ant-design/pro-table": "^2.58.1",
     "@umijs/preset-react": "1.x",
+    "antd-img-crop": "^4.0.2",
     "autoprefixer": "^9",
     "axios": "^0.24.0",
     "cross-env": "^7.0.3",

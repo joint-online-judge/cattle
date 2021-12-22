@@ -3,6 +3,7 @@ import React from 'react';
 import { useIntl } from 'umi';
 
 import { useModel } from '@@/plugin-model/useModel';
+import ImageUpload from './AvatarUpload';
 
 const Index: React.FC = () => {
   const intl = useIntl();
@@ -51,6 +52,9 @@ const Index: React.FC = () => {
               </Button>
             </Form.Item>
           </Form>
+        </Col>
+        <Col span={12}>
+          <ImageUpload />
         </Col>
       </Row>
     </>
