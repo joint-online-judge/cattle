@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useModel, useIntl, useLocation, Link } from 'umi';
+import { Link, useIntl, useLocation, useModel } from 'umi';
 import { Dropdown, Menu, Modal, Space } from 'antd';
 import { DownOutlined } from '@ant-design/icons';
 import Gravatar from '@/components/Gravatar';
@@ -15,7 +15,7 @@ export const Index: React.FC = () => {
     <Menu>
       <Menu.Item key="username">
         <Link to={`/user/${initialState?.user?.username ?? ''}`}>
-          <b>{initialState?.user?.username ?? ''}</b>
+          <span className="font-semibold">{initialState?.user?.username ?? ''}</span>
         </Link>
       </Menu.Item>
       <Menu.Divider key="divider-1" />
@@ -49,16 +49,11 @@ export const Index: React.FC = () => {
     <>
       <Dropdown overlay={subMenu} placement="bottomRight" arrow>
         <Space>
-          <Gravatar user={initialState?.user} />
-          <span>
+          <Gravatar gravatar={initialState?.user?.gravatar} />
+          <span className="text-sm">
             {initialState?.user.realName || initialState?.user.username}
           </span>
-          <DownOutlined
-            style={{
-              minWidth: '10px',
-              fontSize: '10px',
-            }}
-          />
+          <DownOutlined className="text-sm" />
         </Space>
       </Dropdown>
       <Modal

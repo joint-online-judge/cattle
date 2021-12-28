@@ -1,11 +1,14 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import SidePage from '@/components/SidePage';
 import { useModel } from '@@/plugin-model/useModel';
 import ProfileCard from '@/components/Profile/ProfileCard';
 
 const Index: React.FC = () => {
-  const { initialState } = useModel('@@initialState');
+  const { removeHeader } = useModel('pageHeader');
   // todo: replace with user profile
+  useEffect(() => {
+    removeHeader();
+  }, []);
   return (
     <SidePage
       position="left"

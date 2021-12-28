@@ -1,16 +1,14 @@
 import React from 'react';
 import { VERTICAL_GUTTER } from '@/constants';
-import { Col, Row, Typography } from 'antd';
+import { Col, Row } from 'antd';
 import Gravatar from '@/components/Gravatar';
-import style from '@/components/Profile/style.less';
 import { MailOutlined, ProfileOutlined } from '@ant-design/icons';
 
-const { Text } = Typography;
 const Index = () => {
   return (
     <Row align="middle" justify="start" gutter={VERTICAL_GUTTER}>
       <Col span={24}>
-        <Row justify="center">
+        <Row justify="start">
           <Gravatar
             gravatar="shili2017@sjtu.edu.cn"
             size={200}
@@ -20,10 +18,10 @@ const Index = () => {
       <Col span={24}>
         <Row align="middle">
           <Col span={24}>
-            <Text strong className={style.nameBadge}>Shi Li</Text>
+            <span className="font-semibold text-2xl">Li Shi</span>
           </Col>
           <Col span={24}>
-            <Text type="secondary">fcq8080</Text>
+            <span className="text-lg text-gray-400">fcq8080</span>
           </Col>
         </Row>
       </Col>
@@ -33,7 +31,7 @@ const Index = () => {
             <MailOutlined />
           </Col>
           <Col>
-            <Text>shili2017@sjtu.edu.cn</Text>
+            <span className="text-sm">shili2017@sjtu.edu.cn</span>
           </Col>
         </Row>
       </Col>
@@ -43,7 +41,7 @@ const Index = () => {
             <ProfileOutlined />
           </Col>
           <Col>
-            <Text>517370910102</Text>
+            <span className="text-sm">517370910102</span>
           </Col>
         </Row>
       </Col>
