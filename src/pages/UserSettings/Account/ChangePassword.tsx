@@ -1,4 +1,4 @@
-import { Button, Form, Input, message, Spin, Typography } from 'antd';
+import { Button, Col, Form, Input, message, Spin } from 'antd';
 import { pick } from 'lodash';
 import React from 'react';
 import { useIntl } from 'umi';
@@ -28,71 +28,77 @@ export default function() {
     });
   return (
     <>
-      <Typography.Title level={3}>
+      <h3 className="text-2xl font-semibold">
         {intl.formatMessage(
-          { id: 'SETTINGS.ACCOUNT.PASSWORD.HEADER' })}
-      </Typography.Title>
-      <Spin spinning={loading}>
-        <Form
-          layout="vertical"
-          onFinish={async (value) => {
-            await run(pick(value, ['newPassword', 'currentPassword']));
-          }}
-        >
-          <Form.Item
-            name="currentPassword"
-            label={intl.formatMessage(
-              { id: 'SETTINGS.ACCOUNT.PASSWORD.CURRENT' })}
-            rules={[
-              { required: true, message: 'Please input the current password' },
-            ]}
+          { id: 'settings.account.password.header' })}
+      </h3>
+      <Col span={12}>
+        <Spin spinning={loading}>
+          <Form
+            layout="vertical"
+            onFinish={async (value) => {
+              await run(pick(value, ['newPassword', 'currentPassword']));
+            }}
           >
-            <Input.Password />
-          </Form.Item>
-          <Form.Item
-            name="newPassword"
-            label={intl.formatMessage({ id: 'SETTINGS.ACCOUNT.PASSWORD.NEW' })}
-            rules={[
-              { required: true, message: 'Please input the new password' },
-            ]}
-          >
-            <Input.Password />
-          </Form.Item>
-          <Form.Item
-            name="confirmPassword"
-            label={intl.formatMessage(
-              { id: 'SETTINGS.ACCOUNT.PASSWORD.CONFIRM' })}
-            rules={[
-              { required: true, message: 'Please confirm the new password' },
-              ({ getFieldValue }) => ({
-                  async validator(_, value) {
-                    if (!value || getFieldValue('newPassword') === value) {
-                      return Promise.resolve();
-                    }
-                    return Promise.reject(
-                      new Error(
-                        'passwords do not match',
-                      ),
-                    );
-                  },
-                }
-              ),
-            ]}
-          >
-            <Input.Password />
-          </Form.Item>
-          <Form.Item>
-            <Button
-              type="primary"
-              htmlType="submit"
-              loading={loading}
+            <Form.Item
+              name="currentPassword"
+              label={intl.formatMessage(
+                { id: 'SETTINGS.ACCOUNT.PASSWORD.CURRENT' })}
+              rules={[
+                {
+                  required: true,
+                  message: 'Please input the current password',
+                },
+              ]}
             >
-              {intl.formatMessage(
-                { id: 'SETTINGS.ACCOUNT.PASSWORD.UPDATE_PASSWORD' })}
-            </Button>
-          </Form.Item>
-        </Form>
-      </Spin>
+              <Input.Password />
+            </Form.Item>
+            <Form.Item
+              name="newPassword"
+              label={intl.formatMessage(
+                { id: 'SETTINGS.ACCOUNT.PASSWORD.NEW' })}
+              rules={[
+                { required: true, message: 'Please input the new password' },
+              ]}
+            >
+              <Input.Password />
+            </Form.Item>
+            <Form.Item
+              name="confirmPassword"
+              label={intl.formatMessage(
+                { id: 'SETTINGS.ACCOUNT.PASSWORD.CONFIRM' })}
+              rules={[
+                { required: true, message: 'Please confirm the new password' },
+                ({ getFieldValue }) => ({
+                    async validator(_, value) {
+                      if (!value || getFieldValue('newPassword') === value) {
+                        return Promise.resolve();
+                      }
+                      return Promise.reject(
+                        new Error(
+                          'passwords do not match',
+                        ),
+                      );
+                    },
+                  }
+                ),
+              ]}
+            >
+              <Input.Password />
+            </Form.Item>
+            <Form.Item>
+              <Button
+                type="primary"
+                htmlType="submit"
+                loading={loading}
+              >
+                {intl.formatMessage(
+                  { id: 'settings.account.password.update' })}
+              </Button>
+            </Form.Item>
+          </Form>
+        </Spin>
+      </Col>
     </>
   );
 }

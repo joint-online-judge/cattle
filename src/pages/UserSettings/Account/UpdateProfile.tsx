@@ -1,21 +1,20 @@
-import { Button, Col, Form, Input, Row, Typography } from 'antd';
+import { Button, Col, Form, Input, Row } from 'antd';
 import React from 'react';
-import { useIntl } from 'umi';
-
-import { useModel } from '@@/plugin-model/useModel';
-import ImageUpload from './AvatarUpload';
+import { useIntl, useModel } from 'umi';
+import AvatarUpload from './AvatarUpload';
+import { VERTICAL_GUTTER } from '@/constants';
 
 const Index: React.FC = () => {
   const intl = useIntl();
   const { initialState } = useModel('@@initialState');
   return (
     <>
-      <Typography.Title level={3}>
+      <h3 className="text-2xl font-semibold">
         {intl.formatMessage(
           { id: 'settings.account.profile.header' })}
-      </Typography.Title>
+      </h3>
 
-      <Row>
+      <Row gutter={VERTICAL_GUTTER}>
         <Col span={12}>
           <Form
             layout="vertical"
@@ -53,8 +52,9 @@ const Index: React.FC = () => {
             </Form.Item>
           </Form>
         </Col>
+        
         <Col span={12}>
-          <ImageUpload />
+          <AvatarUpload />
         </Col>
       </Row>
     </>
