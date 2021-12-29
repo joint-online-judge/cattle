@@ -39,11 +39,13 @@ export default function DomainModel() {
         );
 
         if (perm.data.errorCode !== ErrorCode.Success) {
+          // Note: possible that user is root but not in the domain
           setErrorCode(perm.data.errorCode);
-          return;
+        } else {
+          // All requests succeeded
+          setErrorCode(undefined);
         }
 
-        setErrorCode(undefined); // All requests succeeded
         return {
           domain: res.data.data,
           role: perm.data.data?.role,

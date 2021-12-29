@@ -35,25 +35,30 @@ const Index: React.FC = ({ children }) => {
 
   const renderMain = () => {
     if (domainUrl && !domainLoading && isNil(domain)) {
-      let errMsg = 'Unknown';
+      let errTitle = 'Unknown Error';
+      let errMsg = 'Failed to load domain info.';
 
       // TODO: error msg i18n & image
       if (errorCode === ErrorCode.DomainNotFoundError) {
-        errMsg = 'Domain Not Found';
+        errTitle = 'Domain Not Found';
+        errMsg = 'Please check your URL.';
       } else if (errorCode === ErrorCode.DomainUserNotFoundError) {
-        errMsg = 'User Not Found in Domain';
+        errTitle = 'User Not Found in Domain';
+        errMsg = 'You are not a member of this domain.';
       } else if (errorCode === ErrorCode.DomainRoleNotFoundError) {
-        errMsg = 'Domain Role Not Found';
+        errTitle = 'Domain Role Not Found';
+        errMsg = 'Please contact the domain administrator.';
       } else if (errorCode === 403) {
-        errMsg = 'You are not a member';
+        errTitle = 'No Permission';
+        errMsg = 'You are not a member of this domain.';
       }
 
       return (
         <Result
-          status="404"
-          title="Cannot Load Domain"
-          subTitle={errMsg}
           className="mt-16"
+          status="404"
+          title={errTitle}
+          subTitle={errMsg}
         />
       );
     }

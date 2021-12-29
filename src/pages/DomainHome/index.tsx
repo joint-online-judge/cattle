@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { Col, Row, Button } from 'antd';
-import { useParams, useIntl, useModel, history } from 'umi';
+import { useParams, useIntl, useModel, history, useAccess, Access } from 'umi';
 import { PlusOutlined } from '@ant-design/icons';
 import ProblemSetList from './ProblemSetList';
 import { VERTICAL_GUTTER } from '@/constants';
@@ -12,6 +12,7 @@ const Index: React.FC = () => {
   const { domainUrl } = useParams<{ domainUrl: string }>();
   const { domain } = useModel('domain');
   const { removeHeader } = useModel('pageHeader');
+  const access = useAccess();
 
   useEffect(() => {
     removeHeader();
@@ -32,15 +33,17 @@ const Index: React.FC = () => {
         <ShadowCard
           title={intl.formatMessage({ id: 'PROBLEM_SET.PROBLEM_SET' })}
           extra={
-            <Button
-              icon={<PlusOutlined />}
-              onClick={() => {
-                history.push(`/domain/${domainUrl}/create-problem-set`);
-              }}
-              type="primary"
-            >
-              {intl.formatMessage({ id: 'PROBLEM_SET.CREATE.TITLE' })}
-            </Button>
+            <Access accessible={access.canCreateProblemSet}>
+              <Button
+                icon={<PlusOutlined />}
+                onClick={() => {
+                  history.push(`/domain/${domainUrl}/create-problem-set`);
+                }}
+                type="primary"
+              >
+                {intl.formatMessage({ id: 'PROBLEM_SET.CREATE.TITLE' })}
+              </Button>
+            </Access>
           }
           bodyStyle={{ padding: 0 }}
         >
