@@ -1,13 +1,11 @@
 import React, { useEffect } from 'react';
-import { Col, Row, Typography, Avatar, Spin, Button } from 'antd';
+import { Col, Row, Button } from 'antd';
 import { useParams, useIntl, useModel, history } from 'umi';
 import { PlusOutlined } from '@ant-design/icons';
 import ProblemSetList from './ProblemSetList';
 import { VERTICAL_GUTTER } from '@/constants';
 import ShadowCard from '@/components/ShadowCard';
 import MarkdownRender from '@/components/MarkdownRender';
-
-const { Title } = Typography;
 
 const Index: React.FC = () => {
   const intl = useIntl();
