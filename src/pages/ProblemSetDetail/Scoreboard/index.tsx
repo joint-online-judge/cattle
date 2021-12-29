@@ -1,5 +1,5 @@
-import React from 'react';
-import { useParams } from 'umi';
+import React, { useEffect } from 'react';
+import { useParams, useModel } from 'umi';
 import { message } from 'antd';
 import { useRequest } from 'ahooks';
 import UpsertDomainForm from '@/components/Domain/UpsertDomainForm';
@@ -11,6 +11,7 @@ interface IProps {
 
 const Index: React.FC<IProps> = ({ refresh }) => {
   const { domainUrl } = useParams<{ domainUrl: string }>();
+  const { setHeader } = useModel('pageHeader');
 
   const { data } = useRequest(
     async () => {
@@ -23,6 +24,10 @@ const Index: React.FC<IProps> = ({ refresh }) => {
       },
     },
   );
+
+  useEffect(() => {
+    setHeader({});
+  }, []);
 
   return <h1>Invitation</h1>;
 };

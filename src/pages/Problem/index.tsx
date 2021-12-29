@@ -69,7 +69,7 @@ const Index: React.FC<IRouteComponentProps> = ({ route }) => {
   useEffect(() => {
     setHeader({
       routes: breads,
-      title: problemResp?.data.data?.title ?? 'Problem',
+      title: problemResp?.data.data?.title,
     });
   }, [breads, problemResp]);
 
