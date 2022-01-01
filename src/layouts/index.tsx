@@ -9,7 +9,6 @@ import DomainHeader from '@/components/DomainHeader';
 import ErrorBoundary from '@/components/ErrorBoundary';
 import { MAIN_CONTENT_GRID } from '@/constants';
 import { ErrorCode } from '@/utils/service';
-import Logo from '@/assets/logo.svg';
 import style from './style.less';
 
 const Index: React.FC = ({ children }) => {
@@ -89,18 +88,7 @@ const Index: React.FC = ({ children }) => {
         <Layout.Header
           className={domainUrl ? style.domainLayoutHeader : style.pageHeader}
         >
-          {/* TODO: responsive nav */}
-          <Row wrap={false} align={'middle'} gutter={12}>
-            <Col flex={'none'}>
-              <Row wrap={false} align={'middle'}>
-                <img src={Logo} alt="logo" className={style.pageTitleLogo} />
-                <span className={style.pageTitle}>Joint Online Judge</span>
-              </Row>
-            </Col>
-            <Col flex={'auto'}>
-              <Header />
-            </Col>
-          </Row>
+          <Header />
         </Layout.Header>
         <Layout.Content className={style.pageBody}>
           <ErrorBoundary>{renderMain()}</ErrorBoundary>
