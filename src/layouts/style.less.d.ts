@@ -8,8 +8,6 @@ interface CssExports {
   'pageFooter': string;
   'pageHeader': string;
   'pageLayout': string;
-  'pageTitle': string;
-  'pageTitleLogo': string;
 }
 export const cssExports: CssExports;
 export default cssExports;

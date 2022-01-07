@@ -5,7 +5,7 @@ import { useModel, useIntl, Link } from 'umi';
 
 function itemRender(
   route: Route,
-  parameters: any,
+  _parameters: any,
   routes: Route[],
   paths: string[],
 ) {

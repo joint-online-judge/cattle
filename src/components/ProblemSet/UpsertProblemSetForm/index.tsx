@@ -32,8 +32,12 @@ const UpsertProblemSetForm: React.FC<IProps> = (props) => {
       manual: true,
       onSuccess: (res) => {
         if (res?.data?.data?.id) {
-          message.success('create success');
-          history.push(`/domain/${domainUrl}/problem-set/${res.data.data.id}`);
+          message.success(intl.formatMessage({ id: 'msg.success.create' }));
+          history.push(
+            `/domain/${domainUrl}/problem-set/${
+              res.data.data.url ?? res.data.data.id
+            }`,
+          );
         }
       },
     },
@@ -46,7 +50,7 @@ const UpsertProblemSetForm: React.FC<IProps> = (props) => {
       manual: true,
       onSuccess: (_res) => {
         // todo: add errCode
-        message.success('update success');
+        message.success(intl.formatMessage({ id: 'msg.success.update' }));
       },
     },
   );

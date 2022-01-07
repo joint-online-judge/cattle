@@ -6,6 +6,7 @@ import {
   useIntl,
   useModel,
   useAccess,
+  Access,
   history,
   IRouteComponentProps,
 } from 'umi';
@@ -157,7 +158,7 @@ const Index: React.FC<IRouteComponentProps> = ({ route }) => {
                 : undefined
             }
             extra={
-              access.canCreateProblem ? (
+              <Access accessible={access.canCreateProblem}>
                 <Button
                   icon={<PlusOutlined />}
                   onClick={() => {
@@ -167,7 +168,7 @@ const Index: React.FC<IRouteComponentProps> = ({ route }) => {
                 >
                   {intl.formatMessage({ id: 'PROBLEM.CREATE.TITLE' })}
                 </Button>
-              ) : null
+              </Access>
             }
           >
             <ProblemList problems={problemSet?.problems} />

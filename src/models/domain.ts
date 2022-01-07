@@ -1,8 +1,9 @@
 import { useState } from 'react';
+import { AxiosError } from 'axios';
 import { useModel } from 'umi';
 import { useRequest } from 'ahooks';
 import { message } from 'antd';
-import { Horse } from '@/utils/service';
+import Horse, { ErrorCode } from '@/utils/service';
 
 /**
  * Global domain data model.
@@ -13,6 +14,7 @@ import { Horse } from '@/utils/service';
  */
 export default function DomainModel() {
   const [domainUrl, setDomainUrl] = useState<string>();
+  const [errorCode, setErrorCode] = useState<ErrorCode | 403>();
   const { initialState, setInitialState } = useModel('@@initialState');
 
   const {
@@ -25,10 +27,25 @@ export default function DomainModel() {
       if (typeof domainUrl === 'string' && domainUrl.length > 0) {
         setDomainUrl(domainUrl);
         const res = await Horse.domain.v1GetDomain(domainUrl);
+
+        if (res.data.errorCode !== ErrorCode.Success) {
+          setErrorCode(res.data.errorCode);
+          return;
+        }
+
         const perm = await Horse.domain.v1GetDomainUserPermission(
           domainUrl,
           'me',
         );
+
+        if (perm.data.errorCode !== ErrorCode.Success) {
+          // Note: possible that user is root but not in the domain
+          setErrorCode(perm.data.errorCode);
+        } else {
+          // All requests succeeded
+          setErrorCode(undefined);
+        }
+
         return {
           domain: res.data.data,
           role: perm.data.data?.role,
@@ -49,11 +66,12 @@ export default function DomainModel() {
             role: res?.role,
             permission: res?.permission,
           },
-        });
+        }); // For access.ts to get permissions
       },
-      onError: () => {
-        // TODO: i18n message
-        message.error('failed to fetch domain info');
+      onError: (err) => {
+        if ((err as AxiosError)?.response?.status === 403) {
+          setErrorCode(403);
+        }
       },
     },
   );
@@ -66,5 +84,6 @@ export default function DomainModel() {
     fetchDomain,
     refresh,
     loading,
+    errorCode,
   };
 }

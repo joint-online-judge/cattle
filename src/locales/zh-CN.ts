@@ -103,8 +103,8 @@ export default {
   'zh-CN': '简体中文',
   'en-US': 'English',
   // Form
-  'FORM.INPUT_PLACEHOLDER': '请输入{field}',
-  'FORM.SELECT_PLACEHOLDER': '请选择{field}',
+  'form.input_placeholder': '请输入',
+  'form.select_placeholder': '请选择',
   'form.domain_candidate_search.placeholder': '按用户名/邮箱/学号/真名搜索',
   'form.domain_role_select.placeholder': '请选择一个角色',
   'form.domain_role_select.error_placeholder': '加载选项失败',

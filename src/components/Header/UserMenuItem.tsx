@@ -5,7 +5,11 @@ import { DownOutlined } from '@ant-design/icons';
 import Gravatar from '@/components/Gravatar';
 import LangSelect from '@/components/LangSelect';
 
-export const Index: React.FC = () => {
+interface IProps {
+  mini?: boolean;
+}
+
+export const Index: React.FC<IProps> = ({ mini = false }) => {
   const [modalVisible, setModalVisible] = useState(false);
   const { initialState } = useModel('@@initialState');
   const intl = useIntl();
@@ -47,18 +51,27 @@ export const Index: React.FC = () => {
 
   return initialState?.user ? (
     <>
-      <Dropdown overlay={subMenu} placement="bottomRight" arrow>
+      <Dropdown
+        trigger={['click']}
+        overlay={subMenu}
+        placement="bottomRight"
+        arrow
+      >
         <Space>
-          <Gravatar user={initialState?.user} />
-          <span>
-            {initialState?.user.realName || initialState?.user.username}
-          </span>
-          <DownOutlined
-            style={{
-              minWidth: '10px',
-              fontSize: '10px',
-            }}
-          />
+          <Gravatar gravatar={initialState.user?.gravatar} />
+          {mini ? null : (
+            <>
+              <span>
+                {initialState?.user.realName || initialState?.user.username}
+              </span>
+              <DownOutlined
+                style={{
+                  minWidth: '10px',
+                  fontSize: '10px',
+                }}
+              />
+            </>
+          )}
         </Space>
       </Dropdown>
       <Modal
