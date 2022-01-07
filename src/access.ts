@@ -1,4 +1,5 @@
 import { InitialState } from './app';
+import { mapValues } from 'lodash';
 
 function permissions(initialState: InitialState) {
   const { user, domainPermission } = initialState ?? {};
@@ -17,10 +18,7 @@ function permissions(initialState: InitialState) {
 
   if (user?.role === 'root') {
     // root shall have all permission
-    for (const key in perms) {
-      // @ts-ignore
-      perms[key] = true;
-    }
+    return mapValues(perms, () => true);
   }
 
   return perms;
