@@ -1,7 +1,7 @@
 {
   "private": true,
   "scripts": {
-    "gen:api": "swagger-typescript-api --axios --module-name-first-tag -p ./openapi/openapi.json -o ./src/client -n index.ts",
+    "gen:api": "swagger-typescript-api --axios --module-name-first-tag -p http://localhost:34765/api/v1/openapi.json -o ./src/client -n index.ts",
     "gen:api-staging": "swagger-typescript-api --axios --module-name-first-tag -p http://nichujie.xyz/api/v1/openapi.json -o ./src/client -n index.ts",
     "prestart": "npm run gen:api",
     "prestart:staging": "npm run gen:api-staging",
