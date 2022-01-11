@@ -131,4 +131,5 @@ export default {
   'menu.admin': 'Site Manage',
   'menu.domain_manage': 'Domain Manage',
   'menu.problem_list': 'Problems',
+  'menu.problem_set': 'Problem Sets',
 };

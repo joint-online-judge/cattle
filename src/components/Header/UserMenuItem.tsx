@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useModel, useIntl, useLocation, Link } from 'umi';
+import { Link, useAccess, useIntl, useLocation, useModel } from 'umi';
 import { Dropdown, Menu, Modal, Space } from 'antd';
 import { DownOutlined } from '@ant-design/icons';
 import Gravatar from '@/components/Gravatar';
@@ -14,7 +14,7 @@ export const Index: React.FC<IProps> = ({ mini = false }) => {
   const { initialState } = useModel('@@initialState');
   const intl = useIntl();
   const location = useLocation();
-
+  const access = useAccess();
   const subMenu = (
     <Menu>
       <Menu.Item key="username">
@@ -43,6 +43,16 @@ export const Index: React.FC<IProps> = ({ mini = false }) => {
         {intl.formatMessage({ id: 'SETTINGS.SWITCH_LANG' })}
       </Menu.Item>
       <Menu.Divider key="divider-3" />
+      {access.isRoot
+        ? <>
+          <Menu.Item
+            key="menu.admin"
+          >
+            <Link to="/admin">{intl.formatMessage({ id: 'menu.admin' })}</Link>
+          </Menu.Item>
+          <Menu.Divider key="divider-5" />
+        </>
+        : null}
       <Menu.Item key="USER.LOG_OUT">
         <Link to={'/logout'}>{intl.formatMessage({ id: 'USER.LOG_OUT' })}</Link>
       </Menu.Item>
