@@ -14,12 +14,12 @@ const Index: React.FC<IProps> = ({ children, extra, position }) => {
   return (
     <>
       <Row gutter={[{ lg: 24, xl: 24, md: 24, sm: 24 }, VERTICAL_GUTTER[1]]}>
-        <Col xs={24} sm={24} md={16} xl={16} order={childrenOrder}>
+        <Col xs={24} sm={24} md={16} xl={16} xxl={18} order={childrenOrder}>
           {React.Children.map(children, (c) => (
             <ShadowCard>{c}</ShadowCard>
           ))}
         </Col>
-        <Col xs={24} sm={24} md={8} xl={8}>
+        <Col xs={24} sm={24} md={8} xl={8} xxl={6}>
           {React.Children.map(extra, (c) => (
             <ShadowCard>{c}</ShadowCard>
           ))}
