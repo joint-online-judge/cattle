@@ -1,7 +1,7 @@
 import React from 'react';
 import ChangePassword from './ChangePassword';
 import UpdateProfile from '@/pages/UserSettings/Account/UpdateProfile';
-import { Col, Row } from 'antd';
+import { Col, Divider, Row } from 'antd';
 import { VERTICAL_GUTTER } from '@/constants';
 
 const Index: React.FC = () => {
@@ -12,6 +12,7 @@ const Index: React.FC = () => {
         <Col span={24}>
           <UpdateProfile />
         </Col>
+        <Divider />
         <Col span={24}>
           <ChangePassword />
         </Col>

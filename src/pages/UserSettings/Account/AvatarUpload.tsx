@@ -1,6 +1,6 @@
 import { Button, Col, Form, Input, Modal, Row } from 'antd';
 import React, { useEffect, useState } from 'react';
-import { MailOutlined } from '@ant-design/icons';
+import { EditOutlined } from '@ant-design/icons';
 import Gravatar from '@/components/Gravatar';
 import { VERTICAL_GUTTER } from '@/constants';
 import { useModel } from '@@/plugin-model/useModel';
@@ -24,7 +24,7 @@ const AvatarUpload: React.FC = () => {
             <Gravatar src={gravatar} size={150} />
           </Row>
         </Col>
-        <Button icon={<MailOutlined />} onClick={() => {
+        <Button icon={<EditOutlined />} onClick={() => {
           setModalVisible(true);
         }}>
           Update Gravatar
@@ -35,7 +35,7 @@ const AvatarUpload: React.FC = () => {
         title="Update Gravatar"
         visible={modalVisible}
         onOk={() => {
-          // todo: update gravatar use imageUrl
+          // todo: update gravatar info use the preview state
           setModalVisible(false);
         }}
         onCancel={() => {

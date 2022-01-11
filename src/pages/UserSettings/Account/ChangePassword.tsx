@@ -29,8 +29,7 @@ export default function() {
   return (
     <>
       <h3 className="text-2xl font-semibold">
-        {intl.formatMessage(
-          { id: 'settings.account.password.header' })}
+        New Password
       </h3>
       <Col span={12}>
         <Spin spinning={loading}>
@@ -92,8 +91,7 @@ export default function() {
                 htmlType="submit"
                 loading={loading}
               >
-                {intl.formatMessage(
-                  { id: 'settings.account.password.update' })}
+                Submit
               </Button>
             </Form.Item>
           </Form>

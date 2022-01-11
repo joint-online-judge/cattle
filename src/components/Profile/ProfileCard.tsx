@@ -1,16 +1,19 @@
 import React from 'react';
 import { VERTICAL_GUTTER } from '@/constants';
-import { Col, Row } from 'antd';
+import { Button, Col, Row } from 'antd';
+import { history } from 'umi';
 import Gravatar from '@/components/Gravatar';
-import { MailOutlined, ProfileOutlined } from '@ant-design/icons';
+import { EditOutlined, MailOutlined, ProfileOutlined } from '@ant-design/icons';
+import { useModel } from '@@/plugin-model/useModel';
 
 const Index = () => {
+  const { initialState } = useModel('@@initialState');
   return (
-    <Row align="middle" justify="start" gutter={VERTICAL_GUTTER}>
+    <Row align="middle" justify="center" gutter={VERTICAL_GUTTER}>
       <Col span={24}>
-        <Row justify="start">
+        <Row justify="center">
           <Gravatar
-            gravatar="shili2017@sjtu.edu.cn"
+            gravatar={initialState?.user?.gravatar}
             size={200}
           />
         </Row>
@@ -18,12 +21,28 @@ const Index = () => {
       <Col span={24}>
         <Row align="middle">
           <Col span={24}>
-            <span className="font-semibold text-2xl">Li Shi</span>
+            <span
+              className="font-semibold text-2xl">
+              {initialState?.user?.realName
+              || initialState?.user?.username}
+            </span>
           </Col>
           <Col span={24}>
-            <span className="text-lg text-gray-400">fcq8080</span>
+            <span
+              className="text-lg text-gray-400">{initialState?.user?.username}
+            </span>
           </Col>
         </Row>
+      </Col>
+      <Col span={24}>
+        <Button
+          block
+          icon={<EditOutlined />}
+          onClick={() => {
+            history.push('/settings');
+          }}>
+          Edit Profile
+        </Button>
       </Col>
       <Col span={24}>
         <Row align="middle" gutter={8}>
@@ -31,20 +50,21 @@ const Index = () => {
             <MailOutlined />
           </Col>
           <Col>
-            <span className="text-sm">shili2017@sjtu.edu.cn</span>
+            <span className="text-sm">{initialState?.user?.email}</span>
           </Col>
         </Row>
       </Col>
-      <Col span={24}>
+      {initialState?.user?.studentId
+      && <Col span={24}>
         <Row align="middle" gutter={8}>
           <Col>
             <ProfileOutlined />
           </Col>
           <Col>
-            <span className="text-sm">517370910102</span>
+            <span className="text-sm">{initialState?.user?.studentId}</span>
           </Col>
         </Row>
-      </Col>
+      </Col>}
     </Row>
   );
 };
