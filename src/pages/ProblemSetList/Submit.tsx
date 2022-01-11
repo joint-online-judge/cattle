@@ -91,7 +91,7 @@ const Index: React.FC<IProps> = (props) => {
               >
                 <Select
                   placeholder={intl.formatMessage(
-                    { id: 'FORM.SELECT_PLACEHOLDER' },
+                    { id: 'form.select_placeholder' },
                     { field: intl.formatMessage({ id: 'PROBLEM.LANGUAGES' }) },
                   )}
                 >

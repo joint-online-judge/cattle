@@ -5,7 +5,11 @@ import { DownOutlined } from '@ant-design/icons';
 import Gravatar from '@/components/Gravatar';
 import LangSelect from '@/components/LangSelect';
 
-export const Index: React.FC = () => {
+interface IProps {
+  mini?: boolean;
+}
+
+export const Index: React.FC<IProps> = ({ mini = false }) => {
   const [modalVisible, setModalVisible] = useState(false);
   const { initialState } = useModel('@@initialState');
   const intl = useIntl();
@@ -15,7 +19,8 @@ export const Index: React.FC = () => {
     <Menu>
       <Menu.Item key="username">
         <Link to={`/user/${initialState?.user?.username ?? ''}`}>
-          <span className="font-semibold">{initialState?.user?.username ?? ''}</span>
+          <span className="font-semibold">{initialState?.user?.username ??
+          ''}</span>
         </Link>
       </Menu.Item>
       <Menu.Divider key="divider-1" />
@@ -47,7 +52,12 @@ export const Index: React.FC = () => {
 
   return initialState?.user ? (
     <>
-      <Dropdown overlay={subMenu} placement="bottomRight" arrow>
+      <Dropdown
+        trigger={['click']}
+        overlay={subMenu}
+        placement="bottomRight"
+        arrow
+      >
         <Space>
           <Gravatar gravatar={initialState?.user?.gravatar} />
           <span className="text-sm">

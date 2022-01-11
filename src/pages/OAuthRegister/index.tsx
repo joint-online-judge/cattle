@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Row, Col, Form, Input, Button, message } from 'antd';
 import { HeartFilled } from '@ant-design/icons';
-import { useLocation, useModel, history } from 'umi';
+import { useLocation, useModel, history, useIntl } from 'umi';
 import { useRequest } from 'ahooks';
 import { omitBy, isNil } from 'lodash';
 import style from './style.less';
@@ -20,7 +20,9 @@ const oauthLogoMap: Record<string, string> = {
 
 const Index: React.FC = () => {
   const { initialState, refresh } = useModel('@@initialState');
+  const [form] = Form.useForm();
   const query = useQuery();
+  const intl = useIntl();
 
   const { run: register, loading: registering } = useRequest(
     async (registerInfo: UserCreate) =>
@@ -56,6 +58,18 @@ const Index: React.FC = () => {
     }
   };
 
+  useEffect(() => {
+    form.setFieldsValue(
+      omitBy(
+        {
+          username: initialState?.user?.username,
+          email: initialState?.user?.email,
+        },
+        isNil,
+      ),
+    );
+  }, [initialState]);
+
   return (
     <Row justify="center" style={{ height: '100vh' }}>
       <Col xxl={5} xl={6} lg={8} md={12} sm={18} xs={20}>
@@ -75,24 +89,32 @@ const Index: React.FC = () => {
           </h2>
         </div>
 
-        <Form layout="vertical" onFinish={onFinish}>
+        <Form layout="vertical" form={form} onFinish={onFinish}>
           <Form.Item name="username" label="Username">
-            <Input placeholder={'username'} />
+            <Input
+              placeholder={intl.formatMessage({ id: 'form.input_placeholder' })}
+            />
           </Form.Item>
           <Form.Item
             name="email"
             label="Email"
             rules={[
+              { required: true },
               {
                 type: 'email',
                 message: 'This is not a valid email!',
               },
             ]}
           >
-            <Input placeholder={'email'} />
+            <Input
+              placeholder={intl.formatMessage({ id: 'form.input_placeholder' })}
+              disabled={!!initialState?.user?.email}
+            />
           </Form.Item>
           <Form.Item name="password" label="Password">
-            <Input.Password placeholder={'password'} />
+            <Input.Password
+              placeholder={intl.formatMessage({ id: 'form.input_placeholder' })}
+            />
           </Form.Item>
           <Form.Item
             name="confirm"
@@ -115,7 +137,9 @@ const Index: React.FC = () => {
               }),
             ]}
           >
-            <Input.Password />
+            <Input.Password
+              placeholder={intl.formatMessage({ id: 'form.input_placeholder' })}
+            />
           </Form.Item>
           <Form.Item>
             <Button

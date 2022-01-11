@@ -103,8 +103,8 @@ export default {
   'zh-CN': '简体中文',
   'en-US': 'English',
   // Form
-  'FORM.INPUT_PLACEHOLDER': 'please input {field}',
-  'FORM.SELECT_PLACEHOLDER': 'please select {field}',
+  'form.input_placeholder': 'Please enter',
+  'form.select_placeholder': 'Please select',
   'form.domain_candidate_search.placeholder':
     'search by username/email/student ID/real name',
   'form.domain_role_select.placeholder': 'please select a role',

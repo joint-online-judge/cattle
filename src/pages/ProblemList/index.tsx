@@ -1,6 +1,14 @@
 import React, { useRef, useMemo, useEffect } from 'react';
 import { Tooltip, Space, Button } from 'antd';
-import { useIntl, useParams, useModel, useAccess, Link, history } from 'umi';
+import {
+  useIntl,
+  useParams,
+  useModel,
+  useAccess,
+  Access,
+  Link,
+  history,
+} from 'umi';
 import { useRequest } from 'ahooks';
 import ProTable, { ProColumns, ActionType } from '@ant-design/pro-table';
 import { EyeInvisibleOutlined, PlusOutlined } from '@ant-design/icons';
@@ -86,7 +94,7 @@ const Index: React.FC = () => {
   return (
     <ShadowCard
       extra={
-        access.canCreateProblem ? (
+        <Access accessible={access.canCreateProblem}>
           <Button
             icon={<PlusOutlined />}
             onClick={() => {
@@ -96,7 +104,7 @@ const Index: React.FC = () => {
           >
             {intl.formatMessage({ id: 'PROBLEM.CREATE.TITLE' })}
           </Button>
-        ) : null
+        </Access>
       }
     >
       <ProTable<Problem>

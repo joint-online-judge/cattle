@@ -40,11 +40,7 @@ const Index: React.FC = () => {
     },
   );
 
-  const {
-    data: problemConfig,
-    run: downloadConfig,
-    loading: downloading,
-  } = useRequest(
+  const { run: downloadConfig, loading: downloading } = useRequest(
     async () => {
       const res = await Horse.problemConfig.v1DownloadProblemConfigArchive(
         domainUrl,
@@ -67,6 +63,26 @@ const Index: React.FC = () => {
         domainUrl,
         problemId,
         values,
+      );
+      return res.data;
+    },
+    {
+      manual: true,
+      onSuccess: (res) => {
+        if (res.errorCode !== ErrorCode.Success) message.error('upload failed');
+      },
+      onError: () => {
+        message.error('upload failed');
+      },
+    },
+  );
+
+  const { run: commit, loading: commiting } = useRequest(
+    async () => {
+      const res = await Horse.problemConfig.v1CommitProblemConfig(
+        domainUrl,
+        problemId,
+        {},
       );
       return res.data;
     },
@@ -139,6 +155,7 @@ const Index: React.FC = () => {
           ]}
         />
       </ProForm>
+      <Button onClick={commit}>Commit</Button>
       <Button onClick={downloadConfig}>Download</Button>
     </ShadowCard>
   );

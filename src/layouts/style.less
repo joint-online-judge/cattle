@@ -1,13 +1,3 @@
-.pageTitleLogo {
-  width: 2.5em;
-}
-
-.pageTitle {
-  line-height: 64px;
-  font-size: 1.5em;
-  margin: 0 16px;
-}
-
 .pageLayout {
   min-height: 100vh;
   background: #ffffff;
@@ -17,6 +7,18 @@
   background: inherit;
   box-shadow: 0 2px 8px #dfdfdf;
   z-index: 5;
+}
+
+.domainLayoutHeader {
+  background: inherit;
+  z-index: 5;
+}
+
+@media (max-width: 768px) {
+  .pageHeader,
+  .domainLayoutHeader {
+    padding: 0 16px;
+  }
 }
 
 .pageBody {
@@ -33,9 +35,4 @@
 
 .pageFooter {
   background-color: #f7f7f7;
-}
-
-.domainLayoutHeader {
-  background: inherit;
-  z-index: 5;
 }
