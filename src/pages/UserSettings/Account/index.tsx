@@ -1,6 +1,6 @@
 import React from 'react';
 import ChangePassword from './ChangePassword';
-import UpdateProfile from '@/pages/UserSettings/Account/UpdateProfile';
+import EditProfile from './EditProfile';
 import { Col, Divider, Row } from 'antd';
 import { VERTICAL_GUTTER } from '@/constants';
 
@@ -10,7 +10,7 @@ const Index: React.FC = () => {
     <>
       <Row gutter={VERTICAL_GUTTER}>
         <Col span={24}>
-          <UpdateProfile />
+          <EditProfile />
         </Col>
         <Divider />
         <Col span={24}>

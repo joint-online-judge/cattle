@@ -1,7 +1,7 @@
 import React from 'react';
 import { VERTICAL_GUTTER } from '@/constants';
-import { Button, Col, Row } from 'antd';
-import { history } from 'umi';
+import { Button, Col, Row, Tooltip } from 'antd';
+import { history, Link } from 'umi';
 import Gravatar from '@/components/Gravatar';
 import { EditOutlined, MailOutlined, ProfileOutlined } from '@ant-design/icons';
 import { useModel } from '@@/plugin-model/useModel';
@@ -12,10 +12,14 @@ const Index = () => {
     <Row align="middle" justify="center" gutter={VERTICAL_GUTTER}>
       <Col span={24}>
         <Row justify="center">
-          <Gravatar
-            gravatar={initialState?.user?.gravatar}
-            size={200}
-          />
+          <Tooltip title="Change your avatar" placement="bottom">
+            <Link to="/settings">
+              <Gravatar
+                gravatar={initialState?.user?.gravatar}
+                size={200}
+              />
+            </Link>
+          </Tooltip>
         </Row>
       </Col>
       <Col span={24}>
