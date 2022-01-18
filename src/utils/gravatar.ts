@@ -2,7 +2,7 @@ import md5 from 'crypto-js/md5';
 
 export const gravatarImageUrl = (
   mail: string | undefined,
-  size?: number,
+  size?: number | undefined,
 ): string => {
   if (typeof mail !== 'string') return 'https://sdn.geekzu.org/avatar';
 
