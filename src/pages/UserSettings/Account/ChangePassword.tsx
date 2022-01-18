@@ -1,4 +1,4 @@
-import { Button, Col, Form, Input, message, Spin } from 'antd';
+import { Button, Card, Col, Form, Input, message, Spin } from 'antd';
 import { pick } from 'lodash';
 import React from 'react';
 import { useIntl } from 'umi';
@@ -9,9 +9,9 @@ import Horse from '@/utils/service';
 export default function() {
   const intl = useIntl();
   const { run, loading } = useRequest(
-    async (passwordInfo: UserResetPassword) => {
-      return Horse.user.v1ChangePassword(passwordInfo);
-    }, {
+    async (passwordInfo: UserResetPassword) =>
+      Horse.user.v1ChangePassword(passwordInfo),
+    {
       manual: true,
       onSuccess: (res) => {
         if (res?.data?.errorCode === ErrorCode.Success) {
@@ -27,10 +27,13 @@ export default function() {
       },
     });
   return (
-    <>
-      <h3 className="text-2xl font-semibold">
-        New Password
-      </h3>
+    <Card
+      title={
+        <span className="text-2xl font-semibold">
+          New Password
+        </span>
+      }
+    >
       <Col span={12}>
         <Spin spinning={loading}>
           <Form
@@ -97,6 +100,6 @@ export default function() {
           </Form>
         </Spin>
       </Col>
-    </>
+    </Card>
   );
 }

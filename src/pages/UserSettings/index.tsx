@@ -23,6 +23,7 @@ const Index: React.FC<IRouteComponentProps> = ({ children, route }) => {
   return (
     <SideMenuPage
       route={route}
+      shadowCard={false}
     >
       {children}
     </SideMenuPage>
