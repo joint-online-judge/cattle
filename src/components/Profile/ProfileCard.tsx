@@ -3,6 +3,7 @@ import { VERTICAL_GUTTER } from '@/constants';
 import { Button, Col, Row, Tooltip } from 'antd';
 import { history, Link } from 'umi';
 import Gravatar from '@/components/Gravatar';
+import IconText from '@/components/IconText';
 import { EditOutlined, MailOutlined, ProfileOutlined } from '@ant-design/icons';
 import { useModel } from '@@/plugin-model/useModel';
 
@@ -26,17 +27,13 @@ const Index = () => {
       <Col span={24}>
         <Row align="middle">
           <Col span={24}>
-            <span
-              className="font-semibold text-2xl"
-            >
+            <span className="font-semibold text-2xl">
               {initialState?.user?.realName
               || initialState?.user?.username}
             </span>
           </Col>
           <Col span={24}>
-            <span
-              className="text-lg text-gray-400"
-            >
+            <span className="text-lg text-gray-400">
               {initialState?.user?.username}
             </span>
           </Col>
@@ -56,26 +53,20 @@ const Index = () => {
       </Col>
 
       <Col span={24}>
-        <Row align="middle" gutter={8}>
-          <Col>
-            <MailOutlined />
-          </Col>
-          <Col>
-            <span className="text-sm">{initialState?.user?.email}</span>
-          </Col>
-        </Row>
+        <IconText
+          icon={<MailOutlined />}
+          text={initialState?.user?.email}
+          className="text-sm"
+        />
       </Col>
 
       {initialState?.user?.studentId
       && <Col span={24}>
-        <Row align="middle" gutter={8}>
-          <Col>
-            <ProfileOutlined />
-          </Col>
-          <Col>
-            <span className="text-sm">{initialState?.user?.studentId}</span>
-          </Col>
-        </Row>
+        <IconText
+          icon={<ProfileOutlined />}
+          text={initialState?.user?.studentId}
+          className="text-sm"
+        />
       </Col>}
     </Row>
   );
