@@ -13,7 +13,7 @@ const Index = () => {
       <Col span={24}>
         <Row justify="center">
           <Tooltip title="Change your avatar" placement="bottom">
-            <Link to="/settings">
+            <Link to="/settings/account">
               <Gravatar
                 gravatar={initialState?.user?.gravatar}
                 size={200}
@@ -22,32 +22,39 @@ const Index = () => {
           </Tooltip>
         </Row>
       </Col>
+
       <Col span={24}>
         <Row align="middle">
           <Col span={24}>
             <span
-              className="font-semibold text-2xl">
+              className="font-semibold text-2xl"
+            >
               {initialState?.user?.realName
               || initialState?.user?.username}
             </span>
           </Col>
           <Col span={24}>
             <span
-              className="text-lg text-gray-400">{initialState?.user?.username}
+              className="text-lg text-gray-400"
+            >
+              {initialState?.user?.username}
             </span>
           </Col>
         </Row>
       </Col>
+
       <Col span={24}>
         <Button
           block
           icon={<EditOutlined />}
           onClick={() => {
-            history.push('/settings');
-          }}>
+            history.push('/settings/account');
+          }}
+        >
           Edit Profile
         </Button>
       </Col>
+
       <Col span={24}>
         <Row align="middle" gutter={8}>
           <Col>
@@ -58,6 +65,7 @@ const Index = () => {
           </Col>
         </Row>
       </Col>
+
       {initialState?.user?.studentId
       && <Col span={24}>
         <Row align="middle" gutter={8}>

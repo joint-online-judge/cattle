@@ -1,10 +1,6 @@
 import React, { useEffect, useMemo } from 'react';
 import { IRouteComponentProps, useIntl } from 'umi';
-import { ConfigProvider, Menu } from 'antd';
-import General from './General';
-import SideMenuPage, { PageContent } from '@/components/SideMenuPage';
-import Domains from '@/components/Domain/Domains';
-import Account from './Account';
+import SideMenuPage from '@/components/SideMenuPage';
 import { useModel } from '@@/plugin-model/useModel';
 
 // const menuItems: SettingsMenuItem[] = [
@@ -26,7 +22,7 @@ import { useModel } from '@@/plugin-model/useModel';
 //   },
 // ];
 
-const Index: React.FC<IRouteComponentProps> = ({ route }) => {
+const Index: React.FC<IRouteComponentProps> = ({ children, route }) => {
   const intl = useIntl();
   const { setHeader } = useModel('pageHeader');
   const breads = useMemo(
@@ -45,46 +41,11 @@ const Index: React.FC<IRouteComponentProps> = ({ route }) => {
     });
   }, []);
   return (
-    <ConfigProvider autoInsertSpaceInButton={false}>
-      <SideMenuPage
-        defaultTab="SETTINGS.GENERAL_SETTINGS"
-        route={route}
-        routerMode="param"
-        matchMode="children"
-        menu={
-          <Menu mode="inline">
-            <Menu.Item
-              key="SETTINGS.GENERAL_SETTINGS"
-              style={{ margin: 0 }}
-            >
-              {intl.formatMessage({ id: 'SETTINGS.GENERAL_SETTINGS' })}
-            </Menu.Item>
-            <Menu.Item
-              key="SETTINGS.ACCOUNT_SETTINGS"
-              style={{ margin: 0 }}
-            >
-              {intl.formatMessage({ id: 'SETTINGS.ACCOUNT_SETTINGS' })}
-            </Menu.Item>
-            <Menu.Item
-              key="DOMAIN.DOMAINS"
-              style={{ margin: 0 }}
-            >
-              {intl.formatMessage({ id: 'DOMAIN.DOMAINS' })}
-            </Menu.Item>
-          </Menu>
-        }
-      >
-        <PageContent menuKey="SETTINGS.GENERAL_SETTINGS">
-          <General />
-        </PageContent>
-        <PageContent menuKey="SETTINGS.ACCOUNT_SETTINGS">
-          <Account />
-        </PageContent>
-        <PageContent menuKey="DOMAIN.DOMAINS">
-          <Domains />
-        </PageContent>
-      </SideMenuPage>
-    </ConfigProvider>
+    <SideMenuPage
+      route={route}
+    >
+      {children}
+    </SideMenuPage>
   );
 };
 
