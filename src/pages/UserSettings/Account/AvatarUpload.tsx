@@ -6,7 +6,7 @@ import Gravatar from '@/components/Gravatar';
 import { VERTICAL_GUTTER } from '@/constants';
 import { useModel } from '@@/plugin-model/useModel';
 import { useRequest } from 'ahooks';
-import Horse from '@/utils/service';
+import Horse, { ErrorCode } from '@/utils/service';
 
 const AvatarUpload: React.FC = () => {
   const { initialState, refresh } = useModel('@@initialState');
@@ -15,21 +15,24 @@ const AvatarUpload: React.FC = () => {
   const [okDisabled, setOkDisabled] = useState(false);
   const [form] = Form.useForm();
 
-  const { run: changeGravatar, loading } = useRequest(async (url) => {
-    await Horse.user.v1UpdateCurrentUser({ gravatar: url });
-  }, {
-    manual: true,
-    onSuccess: async () => {
-      message.success('change gravatar success');
-      await Horse.auth.v1Refresh({
-        responseType: 'json',
-      });
-      await refresh();
-    },
-    onError: () => {
-      message.error('change gravatar fails');
-    },
-  });
+  const { run: updateGravatar, loading } = useRequest(
+    async (gravatar: string) =>
+      Horse.user.v1UpdateCurrentUser({ gravatar }),
+    {
+      manual: true,
+      onSuccess: async (res) => {
+        if (res.data.errorCode == ErrorCode.Success) {
+          message.success('change gravatar success');
+          await Horse.auth.v1Refresh({ responseType: 'json' });
+          await refresh();
+        } else {
+          message.error('change gravatar fails');
+        }
+      },
+      onError: async () => {
+        message.error('change gravatar fails');
+      },
+    });
 
   const debouncedSetPreview = debounce((value: string) => {
     setPreview(value);
@@ -61,7 +64,7 @@ const AvatarUpload: React.FC = () => {
 
   const submitPatch = async () => {
     const values = await form.validateFields();
-    await changeGravatar(values.gravatar);
+    await updateGravatar(values.gravatar);
     setModalVisible(false);
   };
 
