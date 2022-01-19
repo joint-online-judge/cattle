@@ -60,8 +60,8 @@ const Index: React.FC = () => {
   const { run: uploadConfig, loading: uploading } = useRequest(
     async (values: FileUpload) => {
       const res = await Horse.problemConfig.v1UpdateProblemConfigByArchive(
-        domainUrl,
         problemId,
+        domainUrl,
         values,
       );
       return res.data;
@@ -80,8 +80,8 @@ const Index: React.FC = () => {
   const { run: commit, loading: commiting } = useRequest(
     async () => {
       const res = await Horse.problemConfig.v1CommitProblemConfig(
-        domainUrl,
         problemId,
+        domainUrl,
         {},
       );
       return res.data;
@@ -89,10 +89,10 @@ const Index: React.FC = () => {
     {
       manual: true,
       onSuccess: (res) => {
-        if (res.errorCode !== ErrorCode.Success) message.error('upload failed');
+        if (res.errorCode !== ErrorCode.Success) message.error('commit failed');
       },
       onError: () => {
-        message.error('upload failed');
+        message.error('commit failed');
       },
     },
   );
