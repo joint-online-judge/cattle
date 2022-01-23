@@ -9,6 +9,7 @@ export default {
   HOME: 'Home',
   TITLE: 'Title',
   ADMIN: 'Admin',
+  PERMISSION: 'Permission',
   // Simple Verb
   CREATE: 'Create',
   ADD: 'Add',
@@ -91,6 +92,8 @@ export default {
   'SETTINGS.DOMAIN.INVITATION': 'Invitation',
   'SETTINGS.DOMAIN.MEMBERS': 'Members',
   'SETTINGS.DOMAIN.PERMISSION': 'Permission',
+  'settings.domain.permission.config': 'Permission Control',
+  'settings.domain.permission.role': 'Role Management',
   // Admin
   'admin.menu.domain': 'Domain Manage',
   // Footer

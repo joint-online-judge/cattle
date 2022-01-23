@@ -1,17 +1,24 @@
-import React, { useMemo, useRef, useState, useEffect } from 'react';
+import React, { useMemo, useState, useEffect } from 'react';
 import { useParams, useIntl } from 'umi';
 import { useRequest } from 'ahooks';
-import { message, Checkbox } from 'antd';
+import { message, Checkbox, Form } from 'antd';
+import { EditableProTable, ProColumns } from '@ant-design/pro-table';
+import Horse, {
+  DomainPermission,
+  DomainRoleEdit,
+  ErrorCode,
+} from '@/utils/service';
 import {
-  EditableProTable,
-  ProColumns,
-  ActionType,
-} from '@ant-design/pro-table';
-import { Horse, DomainPermission, DomainRoleCreate } from '@/utils/service';
-import { isArray, toPairs, fromPairs, flatten, uniq, groupBy } from 'lodash';
+  isArray,
+  toPairs,
+  fromPairs,
+  flatten,
+  uniq,
+  groupBy,
+  merge,
+} from 'lodash';
 import LoadFailResult from '@/components/LoadFailResult';
 import ShadowCard from '@/components/ShadowCard';
-import AddRoleModal from './AddRoleModal';
 
 type DataSourceType = {
   id: string;
@@ -20,23 +27,27 @@ type DataSourceType = {
 
 const Index: React.FC = () => {
   const intl = useIntl();
-  const ref = useRef<ActionType>();
+  const [form] = Form.useForm();
   const { domainUrl } = useParams<{ domainUrl: string }>();
   const [editableKeys, setEditableRowKeys] = useState<React.Key[]>([]);
   const [activekey, setActiveKey] = useState<keyof DomainPermission>('general');
   const [loadFailed, setLoadFailed] = useState<boolean>(false);
 
   const {
-    run: fetchDomainRoles,
     refresh: refetch,
     loading: fetching,
     data: roles,
   } = useRequest(
     async () => {
-      const response = await Horse.domain.v1ListDomainRoles(domainUrl);
+      const response = await Horse.domain.v1ListDomainRoles(domainUrl, {
+        ordering: 'created_at',
+      });
       return response.data.data?.results ?? [];
     },
     {
+      onSuccess: () => {
+        form.resetFields();
+      },
       onError: () => {
         setLoadFailed(true);
         message.error('fetch domain user failed');
@@ -44,19 +55,30 @@ const Index: React.FC = () => {
     },
   );
 
-  const { run: createRole, loading: creating } = useRequest(
-    async (values: DomainRoleCreate) => {
-      const response = await Horse.domain.v1CreateDomainRole(domainUrl, values);
+  const { run: updateRole, loading: updating } = useRequest(
+    async (role: string, data: DomainRoleEdit) => {
+      const response = await Horse.domain.v1UpdateDomainRole(
+        domainUrl,
+        role,
+        data,
+      );
       return response.data;
     },
     {
       manual: true,
-      onSuccess: () => {
-        ref.current?.reload();
-        message.success('remove domain user success');
+      onSuccess: (res) => {
+        if (res.errorCode === ErrorCode.Success) {
+          message.success('update success');
+        } else if (res.errorCode === ErrorCode.DomainRoleReadOnlyError) {
+          message.error('this role is read-only');
+        } else {
+          message.error('update failed');
+        }
+        refetch();
       },
       onError: () => {
-        message.error('remove domain user failed');
+        refetch();
+        message.error('fetch domain user failed');
       },
     },
   );
@@ -65,20 +87,38 @@ const Index: React.FC = () => {
     if (isArray(roles)) {
       const roleCols: ProColumns<DataSourceType>[] = roles.map((role) => ({
         title: role.role,
-        width: 80,
+        width: 60,
         dataIndex: role.role,
         align: 'center',
         formItemProps: {
           valuePropName: 'checked',
         },
         renderFormItem: (e) => {
-          return <Checkbox onChange={() => {}} />;
+          return (
+            <Checkbox
+              onChange={(domEvent) => {
+                // @ts-ignore
+                const row = e.entity as Record<string, string>;
+                const role = e.dataIndex as string;
+                const originDomainRole = roles.find((r) => r.role === role);
+
+                if (originDomainRole === undefined) return;
+                updateRole(role, {
+                  permission: merge(originDomainRole.permission, {
+                    [activekey]: {
+                      [row.permission]: domEvent.target.checked,
+                    },
+                  }),
+                });
+              }}
+            />
+          );
         },
       }));
 
       roleCols.unshift({
-        title: intl.formatMessage({ id: 'Permissions' }),
-        width: 160,
+        title: intl.formatMessage({ id: 'PERMISSION' }),
+        width: 200,
         dataIndex: 'permission',
         editable: false,
       });
@@ -119,15 +159,12 @@ const Index: React.FC = () => {
       permission: pair[0],
       ...fromPairs(pair[1].map((o) => o.roleValue)),
     }));
-
     return dataSource as DataSourceType[];
   }, [roles, activekey]);
 
   useEffect(() => {
     setEditableRowKeys(dataSource.map((o) => o.id));
   }, [dataSource]);
-
-  const onChange = (e: any) => console.log(e);
 
   return (
     <ShadowCard>
@@ -136,16 +173,15 @@ const Index: React.FC = () => {
       ) : (
         <EditableProTable<DataSourceType>
           bordered
+          rowKey="id"
+          columns={columns}
+          value={dataSource}
           scroll={{ x: 'max-content' }}
-          loading={fetching || creating}
+          loading={fetching || updating}
           cardProps={false}
           search={false}
           options={false}
           pagination={false}
-          columns={columns}
-          rowKey="id"
-          value={dataSource}
-          onChange={onChange}
           recordCreatorProps={false}
           toolbar={{
             menu: {
@@ -159,23 +195,11 @@ const Index: React.FC = () => {
                 setActiveKey(key);
               },
             },
-            actions: [
-              <AddRoleModal
-                domainUrl={domainUrl}
-                roles={roles}
-                onSuccess={refetch}
-              />,
-            ],
           }}
           editable={{
             type: 'multiple',
+            form,
             editableKeys,
-            actionRender: (row, config, defaultDoms) => {
-              return [defaultDoms.delete];
-            },
-            onValuesChange: (record, recordList) => {
-              console.log(record, recordList);
-            },
             onChange: setEditableRowKeys,
           }}
         />
