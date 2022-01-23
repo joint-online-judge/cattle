@@ -34,32 +34,37 @@ const routes: Array<IRoute> = [
       },
 
       {
-        path: '/domain/:domainUrl/settings/:tab',
+        path: '/domain/:domainUrl/settings/:tab/:subTab?',
         component: '@/pages/DomainSettings',
         routes: [
           {
             path: '/domain/:domainUrl/settings/profile',
             component: '@/pages/DomainSettings/Profile',
             menuKey: 'profile',
-            i18nKey: 'SETTINGS.DOMAIN.PROFILE',
           },
           {
             path: '/domain/:domainUrl/settings/invitation',
             component: '@/pages/DomainSettings/Invitation',
             menuKey: 'invitation',
-            i18nKey: 'SETTINGS.DOMAIN.INVITATION',
           },
           {
             path: '/domain/:domainUrl/settings/member',
             component: '@/pages/DomainSettings/Member',
             menuKey: 'member',
-            i18nKey: 'SETTINGS.DOMAIN.MEMBERS',
+          },
+          {
+            path: '/domain/:domainUrl/settings/permission/role',
+            component: '@/pages/DomainSettings/Permission/Role',
+            menuKey: 'permission',
+          },
+          {
+            path: '/domain/:domainUrl/settings/permission/config',
+            component: '@/pages/DomainSettings/Permission/Config',
+            menuKey: 'permission',
           },
           {
             path: '/domain/:domainUrl/settings/permission',
-            component: '@/pages/DomainSettings/Permission',
-            menuKey: 'permission',
-            i18nKey: 'SETTINGS.DOMAIN.PERMISSION',
+            redirect: '/domain/:domainUrl/settings/permission/config',
           },
           { component: '@/pages/NotFound' },
         ],

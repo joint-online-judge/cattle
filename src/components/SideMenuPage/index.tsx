@@ -34,7 +34,7 @@ const Index: React.FC<IProps> = ({
   shadowCard = true,
 }) => {
   const location: Location = useLocation();
-  const params = useParams<{ tab?: string }>();
+  const params = useParams<{ tab?: string; subTab?: string }>();
 
   const [key, setKey] = useState<string>(
     (() => {
@@ -48,7 +48,7 @@ const Index: React.FC<IProps> = ({
         return firstValidChild?.props?.menuKey ?? '';
       }
 
-      return params.tab ?? defaultTab;
+      return params.subTab ?? params.tab ?? defaultTab;
     })(),
   );
 
@@ -92,20 +92,22 @@ const Index: React.FC<IProps> = ({
     return items as SettingsMenuItem[];
   }, [children, menuItems, matchMode]);
 
-  const menuOnClick = useCallback(
-    (event) => {
-      setKey(event.key);
+  const menuOnClick: MenuProps['onClick'] = useCallback(
+    (event: { key: string; keyPath: string[] }) => {
+      const [newTab, newSubTab] = event.keyPath.reverse();
 
+      setKey(newSubTab ?? newTab);
       if (routerMode === 'query') {
         history.replace({
           pathname: location.pathname,
-          query: { tab: event.key.toString() },
+          query: { tab: newTab, subTab: newSubTab },
         });
       } else if (route && route.path) {
         history.push(
           generatePath(route.path, {
             ...params,
-            tab: event.key,
+            tab: newTab,
+            subTab: newSubTab,
           }),
         );
       }

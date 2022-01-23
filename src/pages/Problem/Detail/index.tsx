@@ -1,10 +1,10 @@
 import React from 'react';
 import { Empty } from 'antd';
-import { Problem } from '@/client';
+import { ProblemDetailWithLatestRecord } from '@/client';
 import MarkdownRender from '@/components/MarkdownRender';
 
 interface ProblemHomeProps {
-  problem: Problem | undefined;
+  problem: ProblemDetailWithLatestRecord | undefined;
 }
 
 const Index: React.FC<ProblemHomeProps> = (props) => {

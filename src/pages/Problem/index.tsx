@@ -82,29 +82,17 @@ const Index: React.FC<IRouteComponentProps> = ({ route }) => {
         matchMode="children"
         menu={
           <Menu mode="inline">
-            <Menu.Item
-              key="detail"
-              icon={<ReadOutlined />}
-              style={{ margin: 0 }}
-            >
+            <Menu.Item key="detail" icon={<ReadOutlined />}>
               {intl.formatMessage({ id: 'PROBLEM.HOME' })}
             </Menu.Item>
-            <Menu.Item
-              key="submit"
-              icon={<CodeOutlined />}
-              style={{ margin: 0 }}
-            >
+            <Menu.Item key="submit" icon={<CodeOutlined />}>
               {intl.formatMessage({ id: 'PROBLEM.SUBMIT_CODE' })}
             </Menu.Item>
             <Menu.Divider />
-            <Menu.Item key="edit" icon={<EditOutlined />} style={{ margin: 0 }}>
+            <Menu.Item key="edit" icon={<EditOutlined />}>
               {intl.formatMessage({ id: 'PROBLEM.EDIT' })}
             </Menu.Item>
-            <Menu.Item
-              key="settings"
-              icon={<SettingOutlined />}
-              style={{ margin: 0 }}
-            >
+            <Menu.Item key="settings" icon={<SettingOutlined />}>
               {intl.formatMessage({ id: 'PROBLEM.SETTINGS' })}
             </Menu.Item>
           </Menu>
