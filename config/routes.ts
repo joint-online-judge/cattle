@@ -88,7 +88,7 @@ const routes: Array<IRoute> = [
       },
       {
         path: '/domain/:domainUrl/problem-set/:problemSetId/p/:problemId',
-        component: '@/pages/Problem',
+        component: '@/pages/ProblemDetail',
       },
       {
         path: '/domain/:domainUrl/problem-set/:problemSetId/:tab?',
@@ -96,19 +96,8 @@ const routes: Array<IRoute> = [
         wrappers: ['@/wrappers/Auth'],
         routes: [
           {
-            path: '/domain/:domainUrl/problem-set/:problemSetId/scoreboard',
-            menuKey: 'scoreboard',
-            i18nKey: 'problem_set.side_menu.scoreboard',
-          },
-          {
-            path: '/domain/:domainUrl/problem-set/:problemSetId/system-test',
-            menuKey: 'system-test',
-            i18nKey: 'problem_set.side_menu.system_test',
-          },
-          {
-            path: '/domain/:domainUrl/problem-set/:problemSetId/settings',
-            menuKey: 'settings',
-            i18nKey: 'problem_set.side_menu.settings',
+            path: '/domain/:domainUrl/problem-set/:problemSetId/edit',
+            component: '@/pages/ProblemSetDetail',
           },
           {
             path: '/domain/:domainUrl/problem-set/:problemSetId',
@@ -130,7 +119,7 @@ const routes: Array<IRoute> = [
       },
       {
         path: '/domain/:domainUrl/problem/:problemId/:tab?',
-        component: '@/pages/Problem',
+        component: '@/pages/ProblemDetail',
         wrappers: ['@/wrappers/Auth'],
       },
       {

@@ -74,9 +74,11 @@ export default {
   'PROBLEM_SET.CREATE.FORM.DUE_AT': '结束时间',
   'PROBLEM_SET.CREATE.FORM.LOCK_AT': '截止提交时间',
   'PROBLEM_SET.CREATE.FORM.URL': '问题集URL',
+  'problem_set.side_menu.detail': '问题集详情',
   'problem_set.side_menu.scoreboard': '成绩榜',
   'problem_set.side_menu.system_test': '评测与导出',
-  'problem_set.side_menu.settings': '问题集设置',
+  'problem_set.side_menu.edit': '编辑信息',
+  'problem_set.side_menu.settings': '问题配置',
   // Settings
   'SETTINGS.SETTINGS': '偏好设置',
   'SETTINGS.GENERAL_SETTINGS': '通用设置',

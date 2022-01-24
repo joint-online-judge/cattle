@@ -1,30 +1,27 @@
 import React, { useMemo, useEffect, useState } from 'react';
-import { message, Typography, Spin, Button, Row, Col, Progress } from 'antd';
-import mm from 'moment';
+import { message, Progress, Menu } from 'antd';
 import {
-  useParams,
-  useIntl,
-  useModel,
-  useAccess,
-  Access,
-  history,
-  IRouteComponentProps,
-} from 'umi';
+  EyeOutlined,
+  TrophyOutlined,
+  SettingOutlined,
+  CodeOutlined,
+  ReadOutlined,
+  EditOutlined,
+} from '@ant-design/icons';
+import { useParams, useIntl, useModel, IRouteComponentProps } from 'umi';
+import mm from 'moment';
 import { useRequest } from 'ahooks';
-import { PlusOutlined } from '@ant-design/icons';
-import ProblemList from './ProblemList';
+
+import ViewDetail from './ViewDetail';
 import AfterDue from './AfterDue';
 import BeforeAvailable from './BeforeAvailable';
-import { ErrorCode, Horse } from '@/utils/service';
-import { VERTICAL_GUTTER } from '@/constants';
+import { Horse } from '@/utils/service';
 import ShadowCard from '@/components/ShadowCard';
-import SideMenuPage from '@/components/SideMenuPage';
-import MarkdownRender from '@/components/MarkdownRender';
+import SideMenuPage, { PageContent } from '@/components/SideMenuPage';
 import style from './style.less';
 
 const Index: React.FC<IRouteComponentProps> = ({ route }) => {
   const intl = useIntl();
-  const access = useAccess();
   const { setHeader } = useModel('pageHeader');
   const { domain } = useModel('domain');
   const { domainUrl, problemSetId } =
@@ -98,6 +95,28 @@ const Index: React.FC<IRouteComponentProps> = ({ route }) => {
     <SideMenuPage
       route={route}
       shadowCard={false}
+      matchMode="children"
+      defaultTab="detail"
+      menu={
+        <Menu mode="inline">
+          <Menu.Item key="detail" icon={<EyeOutlined />}>
+            {intl.formatMessage({ id: 'problem_set.side_menu.detail' })}
+          </Menu.Item>
+          <Menu.Item key="scoreboard" icon={<TrophyOutlined />}>
+            {intl.formatMessage({ id: 'problem_set.side_menu.scoreboard' })}
+          </Menu.Item>
+          <Menu.Divider />
+          <Menu.Item key="system-test" icon={<CodeOutlined />}>
+            {intl.formatMessage({ id: 'problem_set.side_menu.system_test' })}
+          </Menu.Item>
+          <Menu.Item key="edit" icon={<EditOutlined />}>
+            {intl.formatMessage({ id: 'problem_set.side_menu.edit' })}
+          </Menu.Item>
+          <Menu.Item key="settings" icon={<SettingOutlined />}>
+            {intl.formatMessage({ id: 'problem_set.side_menu.settings' })}
+          </Menu.Item>
+        </Menu>
+      }
       extra={
         <ShadowCard loading={loading}>
           <dl className={style.infoCard}>
@@ -129,52 +148,12 @@ const Index: React.FC<IRouteComponentProps> = ({ route }) => {
         </ShadowCard>
       }
     >
-      <Row gutter={VERTICAL_GUTTER}>
-        {problemSet?.content ? (
-          <Col span={24}>
-            <ShadowCard
-              title={intl.formatMessage({ id: 'PROBLEM_SET.INTRODUCTION' })}
-            >
-              <Spin spinning={!problemSet}>
-                {problemSet ? (
-                  <Typography>
-                    <MarkdownRender>{problemSet.content ?? ''}</MarkdownRender>
-                  </Typography>
-                ) : null}
-              </Spin>
-            </ShadowCard>
-          </Col>
-        ) : null}
-
-        <Col span={24}>
-          <ShadowCard
-            loading={loading}
-            title={intl.formatMessage({ id: 'PROBLEM' })}
-            bodyStyle={
-              problemSet?.problems && problemSet.problems.length > 0
-                ? {
-                    padding: 0,
-                  }
-                : undefined
-            }
-            extra={
-              <Access accessible={access.canCreateProblem}>
-                <Button
-                  icon={<PlusOutlined />}
-                  onClick={() => {
-                    history.push(`/domain/${domainUrl}/create-problem`);
-                  }}
-                  type="primary"
-                >
-                  {intl.formatMessage({ id: 'PROBLEM.CREATE.TITLE' })}
-                </Button>
-              </Access>
-            }
-          >
-            <ProblemList problems={problemSet?.problems} />
-          </ShadowCard>
-        </Col>
-      </Row>
+      <PageContent menuKey="detail" shadowCard={false}>
+        <ViewDetail problemSet={problemSet} loading={loading} />
+      </PageContent>
+      <PageContent menuKey="edit" shadowCard={false}>
+        <h1>TODO: edit problem set</h1>
+      </PageContent>
     </SideMenuPage>
   );
 };

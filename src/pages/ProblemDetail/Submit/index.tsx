@@ -19,12 +19,11 @@ interface IProps {
 
 const Index: React.FC<IProps> = (props) => {
   const intl = useIntl();
-  const { domainUrl, problemId, problemSetId } =
-    useParams<{
-      domainUrl: string;
-      problemId: string;
-      problemSetId?: string;
-    }>();
+  const { domainUrl, problemId, problemSetId } = useParams<{
+    domainUrl: string;
+    problemId: string;
+    problemSetId?: string;
+  }>();
 
   const { data: recordResp } = useRequest(
     async () => {

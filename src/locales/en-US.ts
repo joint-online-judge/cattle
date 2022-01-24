@@ -74,9 +74,11 @@ export default {
   'PROBLEM_SET.CREATE.FORM.DUE_AT': 'Due Time',
   'PROBLEM_SET.CREATE.FORM.LOCK_AT': 'Lock Time',
   'PROBLEM_SET.CREATE.FORM.URL': 'Problem Set URL',
+  'problem_set.side_menu.detail': 'View Detail',
   'problem_set.side_menu.scoreboard': 'Scoreboard',
   'problem_set.side_menu.system_test': 'Judge and Export',
-  'problem_set.side_menu.settings': 'Settings',
+  'problem_set.side_menu.edit': 'Edit Basic Info',
+  'problem_set.side_menu.settings': 'Problem Settings',
   // Settings
   'SETTINGS.SETTINGS': 'Settings',
   'SETTINGS.GENERAL_SETTINGS': 'General',
