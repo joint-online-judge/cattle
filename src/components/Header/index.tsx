@@ -1,33 +1,13 @@
 import React, { useState } from 'react';
-import { matchPath } from 'react-router';
 import { Button, Col, Menu, Row } from 'antd';
 import { MenuOutlined } from '@ant-design/icons';
-import { Link, useAccess, useIntl, useLocation, useModel } from 'umi';
+import { Link } from 'umi';
 import UserMenuItem from './UserMenuItem';
 import Logo from '@/assets/logo.svg';
 import style from './style.less';
 
 const Index: React.FC = () => {
-  const intl = useIntl();
-  const access = useAccess();
-  const location = useLocation();
-  const { domainUrl, domain } = useModel('domain');
   const [drawerVisible, setDrawerVisible] = useState<boolean>(false);
-
-  const matchMenuKey = () => {
-    if (matchPath(location.pathname, { path: '/domain/:domainUrl/settings' }))
-      return 'domain_manage';
-
-    if (matchPath(location.pathname, { path: '/domain/:domainUrl/problem' }))
-      return 'problem_list';
-
-    if (matchPath(location.pathname, { path: '/domain' })) return 'domain';
-    if (matchPath(location.pathname, { path: '/admin' })) return 'admin';
-
-    return 'home';
-  };
-
-  const [current, setCurrent] = useState(matchMenuKey());
 
   return (
     <Row style={{ height: '100%' }} align="middle">
