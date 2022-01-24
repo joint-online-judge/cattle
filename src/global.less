@@ -1,4 +1,3 @@
-// @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
@@ -16,7 +15,7 @@ body,
   min-height: 100vh;
 }
 
-// Compatible with IE11
+/* Compatible with IE11 */
 @media screen and(-ms-high-contrast: active), (-ms-high-contrast: none) {
   body .ant-design-pro > .ant-layout {
     min-height: 100vh;
@@ -39,3 +38,13 @@ object {
   display: inline;
 }
 /**  Restore some styles normalized by Tailwind  **/
+
+.settings-side-bar {
+  .ant-menu-inline {
+    .ant-menu-item,
+    .ant-menu-item:not(:last-child),
+    .ant-menu-submenu-title {
+      margin: 0px;
+    }
+  }
+}

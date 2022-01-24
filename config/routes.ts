@@ -34,32 +34,37 @@ const routes: Array<IRoute> = [
       },
 
       {
-        path: '/domain/:domainUrl/settings/:tab',
+        path: '/domain/:domainUrl/settings/:tab/:subTab?',
         component: '@/pages/DomainSettings',
         routes: [
           {
             path: '/domain/:domainUrl/settings/profile',
             component: '@/pages/DomainSettings/Profile',
             menuKey: 'profile',
-            i18nKey: 'SETTINGS.DOMAIN.PROFILE',
           },
           {
             path: '/domain/:domainUrl/settings/invitation',
             component: '@/pages/DomainSettings/Invitation',
             menuKey: 'invitation',
-            i18nKey: 'SETTINGS.DOMAIN.INVITATION',
           },
           {
             path: '/domain/:domainUrl/settings/member',
             component: '@/pages/DomainSettings/Member',
             menuKey: 'member',
-            i18nKey: 'SETTINGS.DOMAIN.MEMBERS',
+          },
+          {
+            path: '/domain/:domainUrl/settings/permission/role',
+            component: '@/pages/DomainSettings/Permission/Role',
+            menuKey: 'permission',
+          },
+          {
+            path: '/domain/:domainUrl/settings/permission/config',
+            component: '@/pages/DomainSettings/Permission/Config',
+            menuKey: 'permission',
           },
           {
             path: '/domain/:domainUrl/settings/permission',
-            component: '@/pages/DomainSettings/Permission',
-            menuKey: 'permission',
-            i18nKey: 'SETTINGS.DOMAIN.PERMISSION',
+            redirect: '/domain/:domainUrl/settings/permission/config',
           },
           { component: '@/pages/NotFound' },
         ],
@@ -148,9 +153,42 @@ const routes: Array<IRoute> = [
     wrappers: ['@/wrappers/Auth'],
     routes: [
       { exact: true, path: '/', component: '@/pages/DomainList' },
-      { exact: true, path: '/settings', component: '@/pages/UserSettings' },
+      {
+        exact: true,
+        path: '/settings/:tab',
+        component: '@/pages/UserSettings',
+        routes: [
+          {
+            path: '/settings/general',
+            component: '@/pages/UserSettings/General',
+            menuKey: 'general',
+            i18nKey: 'settings.site.general',
+          },
+          {
+            path: '/settings/account',
+            component: '@/pages/UserSettings/Account',
+            menuKey: 'account',
+            i18nKey: 'settings.site.account',
+          },
+          {
+            path: '/settings/domains',
+            component: '@/pages/UserSettings/General',
+            menuKey: 'domains',
+            i18nKey: 'settings.site.domains',
+          },
+        ],
+      },
+      {
+        exact: true,
+        path: '/settings',
+        redirect: '/settings/general',
+      },
       { exact: true, path: '/domain', component: '@/pages/DomainList' },
       { exact: true, path: '/admin', redirect: '/admin/domain' },
+      {
+        path: '/user/:username',
+        component: '@/pages/Profile',
+      },
 
       {
         path: '/admin/:tab',

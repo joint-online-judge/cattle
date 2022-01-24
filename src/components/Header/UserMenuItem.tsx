@@ -19,7 +19,8 @@ export const Index: React.FC<IProps> = ({ mini = false }) => {
     <Menu>
       <Menu.Item key="username">
         <Link to={`/user/${initialState?.user?.username ?? ''}`}>
-          <b>{initialState?.user?.username ?? ''}</b>
+          <span className="font-semibold">{initialState?.user?.username ??
+          ''}</span>
         </Link>
       </Menu.Item>
       <Menu.Divider key="divider-1" />
@@ -68,20 +69,11 @@ export const Index: React.FC<IProps> = ({ mini = false }) => {
         arrow
       >
         <Space>
-          <Gravatar gravatar={initialState.user?.gravatar} />
-          {mini ? null : (
-            <>
-              <span>
-                {initialState?.user.realName || initialState?.user.username}
-              </span>
-              <DownOutlined
-                style={{
-                  minWidth: '10px',
-                  fontSize: '10px',
-                }}
-              />
-            </>
-          )}
+          <Gravatar gravatar={initialState?.user?.gravatar} />
+          <span className="text-sm">
+            {initialState?.user.realName || initialState?.user.username}
+          </span>
+          <DownOutlined className="text-sm" />
         </Space>
       </Dropdown>
       <Modal

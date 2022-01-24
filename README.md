@@ -72,6 +72,9 @@ to proxy the local frontend to the staging domain:
 nichujie.xyz 127.0.0.1:8000
 ```
 Then you should have your `127.0.0.1:8000` proxied to `nichujie.xyz`.
+
+Now you can visit `nichujie.xyz` in your browser to access your **local frontend server**. After you save your code locally, the webpage shall reload automatically. 
+
 ### Production Staging
 
 TODO: In the future, we may setup a staging development environment which runs frontend locally, while connecting to 

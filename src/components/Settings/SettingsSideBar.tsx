@@ -22,18 +22,18 @@ const Index: React.FC<SettingsSideBarProps> = (props) => {
   const { items, menu, ...otherProps } = props;
 
   return (
-    <ShadowCard bodyStyle={{ padding: 0 }} style={{ overflow: 'hidden' }}>
+    <ShadowCard
+      bodyStyle={{ padding: 0 }}
+      style={{ overflow: 'hidden' }}
+      className="settings-side-bar"
+    >
       {menu ? (
         React.cloneElement<MenuProps>(menu, { ...otherProps })
       ) : (
         <Menu mode="inline" {...otherProps}>
           {items.map((item) => (
             <Fragment key={`${item.menuKey}-fragment`}>
-              <Menu.Item
-                style={{ margin: 0 }}
-                key={item.menuKey}
-                {...item.menuItemProps}
-              >
+              <Menu.Item key={item.menuKey} {...item.menuItemProps}>
                 {item.node ||
                   item.text ||
                   (item.i18nKey && intl.formatMessage({ id: item.i18nKey })) ||

@@ -9,6 +9,7 @@ export default {
   HOME: '首页',
   TITLE: '标题',
   ADMIN: '管理',
+  PERMISSION: '权限',
   // 简单动词
   CREATE: '创建',
   ADD: '增加',
@@ -91,6 +92,8 @@ export default {
   'SETTINGS.DOMAIN.INVITATION': '成员邀请',
   'SETTINGS.DOMAIN.MEMBERS': '成员管理',
   'SETTINGS.DOMAIN.PERMISSION': '权限管理',
+  'settings.domain.permission.config': '权限控制',
+  'settings.domain.permission.role': '角色管理',
   // Admin
   'admin.menu.domain': '域管理',
   // Footer

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button, Form, PageHeader } from 'antd';
 import { useIntl } from 'umi';
-import style from './style.css';
+import style from './style.less';
 
 // const options = {
 //   i18nLang: [
@@ -25,7 +25,6 @@ const Index: React.FC = () => {
     <>
       <PageHeader
         title={intl.formatMessage({ id: 'SETTINGS.DISPLAY_SETTINGS' })}
-        className={style.settingsTitle}
       />
       <Form
         form={form}
