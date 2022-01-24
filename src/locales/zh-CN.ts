@@ -131,6 +131,7 @@ export default {
   // Menu
   'menu.domain': '我的域',
   'menu.admin': '全站管理',
+  'menu.domain.overview': '概要',
   'menu.domain_manage': '域管理',
   'menu.problem_list': '题库',
   'menu.problem_set': '问题集',
