@@ -1,61 +1,118 @@
-import React from 'react';
-import { Row, Col, Avatar, Skeleton } from 'antd';
-import { Link, useModel } from 'umi';
+import React, { useMemo, useState } from 'react';
+import { Col, Menu, Row, Skeleton } from 'antd';
+import { Link, useAccess, useIntl, useModel } from 'umi';
+import {
+  BarsOutlined,
+  FormOutlined,
+  HomeOutlined,
+  SettingOutlined,
+} from '@ant-design/icons';
 import { MAIN_CONTENT_GRID } from '@/constants';
-import { gravatarImageUrl } from '@/utils';
+import ShadowCard from '@/components/ShadowCard';
+import Gravatar from '@/components/Gravatar';
 import style from './style.less';
+import { matchPath } from 'react-router';
 
 const Index: React.FC = () => {
-  const { domain, loading } = useModel('domain');
+  const { domain, loading, domainUrl } = useModel('domain');
+  const intl = useIntl();
+  const access = useAccess();
+  const matchMenuKey = () => {
+    if (matchPath(location.pathname, { path: '/domain/:domainUrl/settings' }))
+      return 'domain_manage';
 
-  if (loading) {
-    return (
-      <Row
-        align="middle"
-        justify="center"
-        className={style.domainHeaderContainer}
-      >
-        <Col {...MAIN_CONTENT_GRID}>
+    if (matchPath(location.pathname, { path: '/domain/:domainUrl/problem' }))
+      return 'problem_list';
+
+    if (matchPath(location.pathname, { path: '/domain' })) return 'domain';
+
+    return 'home';
+  };
+  const [current, setCurrent] = useState(matchMenuKey());
+
+  const domainInfo = useMemo(
+    () => {
+      if (loading) {
+        return (
           <Skeleton paragraph={{ rows: 1 }} active />
-        </Col>
-      </Row>
-    );
-  }
+        );
+      }
 
-  if (domain) {
-    return (
-      <Row
-        align="middle"
-        justify="center"
-        className={style.domainHeaderContainer}
-      >
-        <Col {...MAIN_CONTENT_GRID}>
-          <Row justify="space-between">
+      if (domain) {
+        return (
+          <Row justify="start" className="mt-10 mb-6" align="middle">
+            <Col>
+              <Gravatar gravatar={domain?.gravatar} size={60} />
+            </Col>
             <Col>
               <Link to={`/domain/${domain.url}`}>
-                <h1 className="text-5xl text-white font-light mb-3">
+                <h1
+                  className={`text-3xl text-black font-semibold ml-8`}>
                   {domain.name}
                 </h1>
               </Link>
-              <h2 className="text-sm font-light text-white text-opacity-60">
-                Powered by JOJ Team
-              </h2>
-            </Col>
-            <Col>
-              <Avatar
-                shape="square"
-                size={100}
-                src={gravatarImageUrl(domain.gravatar)}
-                alt={`@${domain.name}`}
-              />
             </Col>
           </Row>
+        );
+      }
+      return null;
+    }, [domain, domainUrl, loading]);
+
+  const domainMenu = (
+    <Menu
+      mode="horizontal"
+      selectedKeys={[current]}
+      onClick={(e) => {
+        setCurrent(e.key);
+      }}
+    >
+      <>
+        <Menu.Item key="domain" icon={<HomeOutlined />}>
+          <Link to={`/domain/${domainUrl}`}>
+            {intl.formatMessage({ id: 'menu.domain.overview' })}
+          </Link>
+        </Menu.Item>
+        <Menu.Item key="problem_set" icon={<FormOutlined />}>
+          <Link to={`/domain/${domainUrl}`}>
+            {intl.formatMessage({ id: 'menu.problem_set' })}
+          </Link>
+        </Menu.Item>
+        <Menu.Item key="problem_list" icon={<BarsOutlined />}>
+          <Link to={`/domain/${domainUrl}/problem`}>
+            {intl.formatMessage({ id: 'menu.problem_list' })}
+          </Link>
+        </Menu.Item>
+        {
+          // Note: do not use <Access> of umi -- antd menu cannot regonize wrapped component.
+          access.isRoot ? (
+            <Menu.Item key="domain_manage" icon={<SettingOutlined />}>
+              <Link to={`/domain/${domainUrl}/settings/profile`}>
+                {intl.formatMessage({ id: 'menu.domain_manage' })}
+              </Link>
+            </Menu.Item>
+          ) : null
+        }
+      </>
+    </Menu>
+  );
+
+  return (
+    <ShadowCard
+      bodyStyle={{ paddingTop: 0, paddingBottom: 0 }}
+    >
+      <Row
+        align="middle"
+        justify="center"
+        className={style.domainHeaderContainer}
+      >
+        <Col {...MAIN_CONTENT_GRID}>
+          {domainInfo}
+          {domainMenu}
         </Col>
       </Row>
-    );
-  }
+    </ShadowCard>
+  );
 
-  return null;
 };
 
 export default Index;

@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { isNil } from 'lodash';
-import { Col, Layout, Row, BackTop, message, Result } from 'antd';
+import { BackTop, Col, Layout, message, Result, Row } from 'antd';
 import { useModel, useParams } from 'umi';
 import Footer from '@/components/Footer';
 import Header from '@/components/Header';
@@ -86,7 +86,7 @@ const Index: React.FC = ({ children }) => {
     <ErrorBoundary>
       <Layout className={style.pageLayout}>
         <Layout.Header
-          className={domainUrl ? style.domainLayoutHeader : style.pageHeader}
+          className={style.pageHeader}
         >
           <Header />
         </Layout.Header>

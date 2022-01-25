@@ -1,7 +1,13 @@
 import React, { useState } from 'react';
-import { Link, useIntl, useLocation, useModel } from 'umi';
-import { Dropdown, Menu, Modal, Space } from 'antd';
-import { DownOutlined } from '@ant-design/icons';
+import { Link, useAccess, useIntl, useLocation, useModel } from 'umi';
+import { Col, Dropdown, Menu, Modal, Row } from 'antd';
+import {
+  ApartmentOutlined,
+  LogoutOutlined,
+  SettingOutlined,
+  TranslationOutlined,
+  UserOutlined,
+} from '@ant-design/icons';
 import Gravatar from '@/components/Gravatar';
 import LangSelect from '@/components/LangSelect';
 
@@ -14,37 +20,39 @@ export const Index: React.FC<IProps> = ({ mini = false }) => {
   const { initialState } = useModel('@@initialState');
   const intl = useIntl();
   const location = useLocation();
-
+  const access = useAccess();
   const subMenu = (
     <Menu>
-      <Menu.Item key="username">
-        <Link to={`/user/${initialState?.user?.username ?? ''}`}>
-          <span className="font-semibold">{initialState?.user?.username ??
-          ''}</span>
-        </Link>
-      </Menu.Item>
-      <Menu.Divider key="divider-1" />
-      <Menu.Item key="USER.PROFILE">
+      <Menu.Item key="USER.PROFILE" icon={<UserOutlined />}>
         <Link to={`/user/${initialState?.user?.username ?? ''}`}>
           {intl.formatMessage({ id: 'USER.PROFILE' })}
         </Link>
       </Menu.Item>
       <Menu.Divider key="divider-2" />
-      <Menu.Item key="SETTINGS.SETTINGS">
-        <Link to={'/settings'}>
-          {intl.formatMessage({ id: 'SETTINGS.SETTINGS' })}
-        </Link>
-      </Menu.Item>
       <Menu.Item
         key="SETTINGS.SWITCH_LANG"
+        icon={<TranslationOutlined />}
         onClick={() => {
           setModalVisible(true);
         }}
       >
         {intl.formatMessage({ id: 'SETTINGS.SWITCH_LANG' })}
       </Menu.Item>
+      <Menu.Item key="SETTINGS.SETTINGS" icon={<SettingOutlined />}>
+        <Link to={'/settings'}>
+          {intl.formatMessage({ id: 'SETTINGS.SETTINGS' })}
+        </Link>
+      </Menu.Item>
       <Menu.Divider key="divider-3" />
-      <Menu.Item key="USER.LOG_OUT">
+      {access.isRoot
+        ? <>
+          <Menu.Item key="menu.admin" icon={<ApartmentOutlined />}>
+            <Link to="/admin">{intl.formatMessage({ id: 'menu.admin' })}</Link>
+          </Menu.Item>
+          <Menu.Divider key="divider-5" />
+        </>
+        : null}
+      <Menu.Item key="USER.LOG_OUT" icon={<LogoutOutlined />} danger>
         <Link to={'/logout'}>{intl.formatMessage({ id: 'USER.LOG_OUT' })}</Link>
       </Menu.Item>
     </Menu>
@@ -58,13 +66,18 @@ export const Index: React.FC<IProps> = ({ mini = false }) => {
         placement="bottomRight"
         arrow
       >
-        <Space>
-          <Gravatar gravatar={initialState?.user?.gravatar} />
-          <span className="text-sm">
-            {initialState?.user.realName || initialState?.user.username}
-          </span>
-          <DownOutlined className="text-sm" />
-        </Space>
+        <Row align="middle" gutter={8}>
+          <Col>
+            <Gravatar gravatar={initialState?.user?.gravatar} size={40} />
+          </Col>
+          {mini ? null :
+            <Col>
+                <span className="text-base">
+                  {initialState?.user.realName || initialState?.user.username}
+                </span>
+            </Col>
+          }
+        </Row>
       </Dropdown>
       <Modal
         title={intl.formatMessage({ id: 'SETTINGS.SWITCH_LANG' })}

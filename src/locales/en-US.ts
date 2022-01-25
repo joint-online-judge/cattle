@@ -136,6 +136,8 @@ export default {
   // Menu
   'menu.domain': 'Domains',
   'menu.admin': 'Site Manage',
+  'menu.domain.overview': 'Overview',
   'menu.domain_manage': 'Domain Manage',
   'menu.problem_list': 'Problems',
+  'menu.problem_set': 'Problem Sets',
 };

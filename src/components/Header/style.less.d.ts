@@ -7,6 +7,7 @@ interface CssExports {
   'menu': string;
   'pageTitle': string;
   'pageTitleLogo': string;
+  'textContainer': string;
 }
 export const cssExports: CssExports;
 export default cssExports;
