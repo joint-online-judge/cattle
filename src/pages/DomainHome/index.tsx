@@ -1,16 +1,13 @@
 import React, { useEffect } from 'react';
-import { Col, Row, Button } from 'antd';
-import { useParams, useIntl, useModel, history, useAccess, Access } from 'umi';
+import { Button } from 'antd';
+import { Access, history, useAccess, useIntl, useModel, useParams } from 'umi';
 import { PlusOutlined } from '@ant-design/icons';
 import ProblemSetList from './ProblemSetList';
-import { VERTICAL_GUTTER } from '@/constants';
 import ShadowCard from '@/components/ShadowCard';
-import MarkdownRender from '@/components/MarkdownRender';
 
 const Index: React.FC = () => {
   const intl = useIntl();
   const { domainUrl } = useParams<{ domainUrl: string }>();
-  const { domain } = useModel('domain');
   const { removeHeader } = useModel('pageHeader');
   const access = useAccess();
 
@@ -19,38 +16,26 @@ const Index: React.FC = () => {
   }, []);
 
   return (
-    <Row gutter={VERTICAL_GUTTER}>
-      {domain?.bulletin ? (
-        <Col span={24}>
-          <ShadowCard
-            title={intl.formatMessage({ id: 'DOMAIN.CREATE.BULLETIN' })}
+    <ShadowCard
+      title={intl.formatMessage({ id: 'PROBLEM_SET.PROBLEM_SET' })}
+      extra={
+        <Access accessible={access.canCreateProblemSet}>
+          <Button
+            icon={<PlusOutlined />}
+            onClick={() => {
+              history.push(`/domain/${domainUrl}/create-problem-set`);
+            }}
+            type="primary"
           >
-            <MarkdownRender>{domain?.bulletin ?? ''}</MarkdownRender>
-          </ShadowCard>
-        </Col>
-      ) : null}
-      <Col span={24}>
-        <ShadowCard
-          title={intl.formatMessage({ id: 'PROBLEM_SET.PROBLEM_SET' })}
-          extra={
-            <Access accessible={access.canCreateProblemSet}>
-              <Button
-                icon={<PlusOutlined />}
-                onClick={() => {
-                  history.push(`/domain/${domainUrl}/create-problem-set`);
-                }}
-                type="primary"
-              >
-                {intl.formatMessage({ id: 'PROBLEM_SET.CREATE.TITLE' })}
-              </Button>
-            </Access>
-          }
-          bodyStyle={{ padding: 0 }}
-        >
-          <ProblemSetList domainId={domainUrl} />
-        </ShadowCard>
-      </Col>
-    </Row>
+            {intl.formatMessage({ id: 'PROBLEM_SET.CREATE.TITLE' })}
+          </Button>
+        </Access>
+      }
+      bodyStyle={{ padding: 0 }}
+    >
+      <ProblemSetList domainId={domainUrl} />
+    </ShadowCard>
+
   );
 };
 
