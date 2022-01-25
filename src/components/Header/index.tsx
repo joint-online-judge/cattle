@@ -12,21 +12,31 @@ const Index: React.FC = () => {
   return (
     <Row style={{ height: '100%' }} align="middle">
       <Col xs={0} sm={0} md={24} lg={24} xl={24} xxl={24}>
-        <Row wrap={false} align="middle" gutter={12}>
-          <Col flex={'none'}>
-            <Row wrap={false} align="middle">
-              <img src={Logo} alt="logo" className={style.pageTitleLogo} />
-              <Link to="/" className={style.pageTitle}>
-                Joint Online Judge
-              </Link>
-            </Row>
+        <Row align="middle" justify="space-between">
+          <Col>
+            <Link to="/">
+              <Row gutter={16} align="middle">
+                <Col>
+                  <img src={Logo} alt="logo"
+                       className={style.pageTitleLogo} />
+                </Col>
+                <Col>
+                  <div className={style.textContainer}>
+                    <span className="text-2xl text-black text-bold">
+                        Joint Online Judge
+                      </span>
+                  </div>
+                </Col>
+              </Row>
+            </Link>
           </Col>
-          <Col flex={'auto'}>
+          <Col>
             <Menu
               mode="horizontal"
               className={style.menu}
+              selectedKeys={[]}
             >
-              <Menu.Item key="user" className={style.headerFloatRightItem}>
+              <Menu.Item key="user">
                 <UserMenuItem />
               </Menu.Item>
             </Menu>
