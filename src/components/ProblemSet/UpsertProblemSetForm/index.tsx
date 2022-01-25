@@ -59,9 +59,24 @@ const UpsertProblemSetForm: React.FC<IProps> = (props) => {
     console.log(values);
     console.log(mm(values.unlockAt));
     initialValues?.id
-      ? await updateProblemSet(initialValues?.id, values)
+      ? await updateProblemSet(
+          initialValues?.id,
+          filterChanged(values, initialValues),
+        )
       : await createProblemSet(values as ProblemSetCreate);
   };
+
+  function filterChanged(
+    problemSet: ProblemSetEdit,
+    initial: Partial<ProblemSet>,
+  ): ProblemSetEdit {
+    return Object.fromEntries(
+      Object.entries(problemSet).filter(
+        ([key, value]) =>
+          key in initial && initial[key as keyof ProblemSetEdit] !== value,
+      ),
+    );
+  }
 
   return (
     <ProForm<ProblemSetCreate | ProblemSetEdit>
