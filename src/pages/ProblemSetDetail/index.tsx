@@ -1,24 +1,23 @@
-import React, { useMemo, useEffect, useState } from 'react';
-import { message, Progress, Menu } from 'antd';
-import {
-  EyeOutlined,
-  TrophyOutlined,
-  SettingOutlined,
-  CodeOutlined,
-  ReadOutlined,
-  EditOutlined,
-} from '@ant-design/icons';
-import { useParams, useIntl, useModel, IRouteComponentProps } from 'umi';
-import mm from 'moment';
-import { useRequest } from 'ahooks';
-
-import ViewDetail from './ViewDetail';
-import AfterDue from './AfterDue';
-import BeforeAvailable from './BeforeAvailable';
-import { Horse } from '@/utils/service';
 import ShadowCard from '@/components/ShadowCard';
 import SideMenuPage, { PageContent } from '@/components/SideMenuPage';
+import { Horse } from '@/utils/service';
+import {
+  CodeOutlined,
+  EditOutlined,
+  EyeOutlined,
+  SettingOutlined,
+  TrophyOutlined,
+} from '@ant-design/icons';
+import { useRequest } from 'ahooks';
+import { Menu, message, Progress } from 'antd';
+import mm from 'moment';
+import React, { useEffect, useMemo, useState } from 'react';
+import { IRouteComponentProps, useIntl, useModel, useParams } from 'umi';
+import AfterDue from './AfterDue';
+import BeforeAvailable from './BeforeAvailable';
+import EditDetail from './EditDetail';
 import style from './style.less';
+import ViewDetail from './ViewDetail';
 
 const Index: React.FC<IRouteComponentProps> = ({ route }) => {
   const intl = useIntl();
@@ -152,7 +151,7 @@ const Index: React.FC<IRouteComponentProps> = ({ route }) => {
         <ViewDetail problemSet={problemSet} loading={loading} />
       </PageContent>
       <PageContent menuKey="edit" shadowCard={false}>
-        <h1>TODO: edit problem set</h1>
+        <EditDetail problemSet={problemSet} loading={loading} />
       </PageContent>
     </SideMenuPage>
   );
