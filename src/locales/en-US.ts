@@ -68,6 +68,8 @@ export default {
   // ProblemSet
   'PROBLEM_SET.PROBLEM_SET': 'Problem Set',
   'PROBLEM_SET.INTRODUCTION': 'Introduction',
+  'PROBLEM_SET.CREATE.FORM.CONTENT': 'Description',
+  'PROBLEM_SET.CREATE.FORM.HIDDEN': 'Hidden',
   'PROBLEM_SET.CREATE.TITLE': 'Create Problem Set',
   'PROBLEM_SET.CREATE.FORM.SCOREBOARD_HIDDEN': 'Hide Scoreboard',
   'PROBLEM_SET.CREATE.FORM.UNLOCK_AT': 'Unlock Time',

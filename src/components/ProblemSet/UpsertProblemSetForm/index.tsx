@@ -1,20 +1,20 @@
-import React from 'react';
-import { Form, Row, Col, message } from 'antd';
-import ProForm, {
-  ProFormText,
-  ProFormDateTimePicker,
-  ProFormSwitch,
-} from '@ant-design/pro-form';
-import { useIntl, history } from 'umi';
-import { useRequest } from 'ahooks';
+import MarkdownEditor from '@/components/MarkdownEditor';
 import {
   Horse,
   ProblemSet,
   ProblemSetCreate,
   ProblemSetEdit,
 } from '@/utils/service';
-import MarkdownEditor from '@/components/MarkdownEditor';
+import ProForm, {
+  ProFormDateTimePicker,
+  ProFormSwitch,
+  ProFormText,
+} from '@ant-design/pro-form';
+import { useRequest } from 'ahooks';
+import { Col, Form, message, Row } from 'antd';
 import mm from 'moment';
+import React from 'react';
+import { history, useIntl } from 'umi';
 
 export interface IProps {
   initialValues?: Partial<ProblemSet>;
@@ -116,7 +116,7 @@ const UpsertProblemSetForm: React.FC<IProps> = (props) => {
           <ProFormSwitch
             name="hidden"
             valuePropName="checked"
-            label={intl.formatMessage({ id: 'PROBLEM.CREATE.FORM.HIDDEN' })}
+            label={intl.formatMessage({ id: 'PROBLEM_SET.CREATE.FORM.HIDDEN' })}
             rules={[{ required: true }]}
           />
         </Col>
@@ -134,7 +134,7 @@ const UpsertProblemSetForm: React.FC<IProps> = (props) => {
 
       <Form.Item
         name="content"
-        label={intl.formatMessage({ id: 'PROBLEM.CREATE.FORM.CONTENT' })}
+        label={intl.formatMessage({ id: 'PROBLEM_SET.CREATE.FORM.CONTENT' })}
       >
         <MarkdownEditor />
       </Form.Item>
