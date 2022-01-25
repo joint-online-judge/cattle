@@ -1,8 +1,15 @@
 import React, { useMemo, useState } from 'react';
 import { Col, Menu, Row, Skeleton } from 'antd';
 import { Link, useAccess, useIntl, useModel } from 'umi';
+import {
+  BarsOutlined,
+  FormOutlined,
+  HomeOutlined,
+  SettingOutlined,
+} from '@ant-design/icons';
 import { MAIN_CONTENT_GRID } from '@/constants';
 import ShadowCard from '@/components/ShadowCard';
+import Gravatar from '@/components/Gravatar';
 import style from './style.less';
 import { matchPath } from 'react-router';
 
@@ -33,17 +40,17 @@ const Index: React.FC = () => {
 
       if (domain) {
         return (
-          <Row justify="space-between">
+          <Row justify="start" className="mt-10 mb-6" align="middle">
+            <Col>
+              <Gravatar gravatar={domain?.gravatar} size={60} />
+            </Col>
             <Col>
               <Link to={`/domain/${domain.url}`}>
                 <h1
-                  className={`text-3xl text-black font-semibold mb-3 mt-5 ${style.domainTitle}`}>
+                  className={`text-3xl text-black font-semibold ml-8`}>
                   {domain.name}
                 </h1>
               </Link>
-              {/*<h2 className=`text-sm font-light text-white text-opacity-60">*/}
-              {/*  Powered by JOJ Team*/}
-              {/*</h2>*/}
             </Col>
           </Row>
         );
@@ -60,17 +67,17 @@ const Index: React.FC = () => {
       }}
     >
       <>
-        <Menu.Item key="domain">
+        <Menu.Item key="domain" icon={<HomeOutlined />}>
           <Link to={`/domain/${domainUrl}`}>
             {intl.formatMessage({ id: 'menu.domain.overview' })}
           </Link>
         </Menu.Item>
-        <Menu.Item key="problem_set">
+        <Menu.Item key="problem_set" icon={<FormOutlined />}>
           <Link to={`/domain/${domainUrl}`}>
             {intl.formatMessage({ id: 'menu.problem_set' })}
           </Link>
         </Menu.Item>
-        <Menu.Item key="problem_list">
+        <Menu.Item key="problem_list" icon={<BarsOutlined />}>
           <Link to={`/domain/${domainUrl}/problem`}>
             {intl.formatMessage({ id: 'menu.problem_list' })}
           </Link>
@@ -78,7 +85,7 @@ const Index: React.FC = () => {
         {
           // Note: do not use <Access> of umi -- antd menu cannot regonize wrapped component.
           access.isRoot ? (
-            <Menu.Item key="domain_manage">
+            <Menu.Item key="domain_manage" icon={<SettingOutlined />}>
               <Link to={`/domain/${domainUrl}/settings/profile`}>
                 {intl.formatMessage({ id: 'menu.domain_manage' })}
               </Link>
