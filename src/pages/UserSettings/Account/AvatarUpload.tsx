@@ -59,7 +59,9 @@ const AvatarUpload: React.FC = () => {
   const initModal = () => {
     setModalVisible(true);
     setPreview(initialState?.user?.gravatar ?? '');
-    form.resetFields();
+    form.setFields([
+      { name: 'gravatar', value: initialState?.user?.gravatar ?? '' },
+    ]);
   };
 
   const submitPatch = async () => {
