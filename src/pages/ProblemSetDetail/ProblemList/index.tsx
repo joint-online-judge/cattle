@@ -1,11 +1,11 @@
 import React from 'react';
 import { List, Button, Empty, Space, Table } from 'antd';
-import { Link, useParams, useIntl } from 'umi';
-import { ProblemPreviewWithRecordState, RecordState } from '@/utils/service';
+import { history, Link, useParams, useIntl } from 'umi';
+import { ProblemPreviewWithLatestRecord, RecordState } from '@/utils/service';
 import { isArray, isNil } from 'lodash';
 
 interface IProps {
-  problems: ProblemPreviewWithRecordState[] | undefined;
+  problems: ProblemPreviewWithLatestRecord[] | undefined;
 }
 
 const Index: React.FC<IProps> = ({ problems }) => {
@@ -28,24 +28,18 @@ const Index: React.FC<IProps> = ({ problems }) => {
     />
   );
 
-  const getRecordState = (problem: ProblemPreviewWithRecordState) => {
-    if (isNil(problem.recordState)) {
-    }
-    return problem.recordState;
-  };
-
   const columns = [
     {
       title: intl.formatMessage({ id: 'PROBLEM.STATUS' }),
       dataIndex: 'recordState',
       width: 120,
-      render: (_: any, row: ProblemPreviewWithRecordState) =>
-        getRecordState(row),
+      render: (_: any, row: ProblemPreviewWithLatestRecord) =>
+        row.latestRecord?.state,
     },
     {
       title: intl.formatMessage({ id: 'PROBLEM' }),
       dataIndex: 'title',
-      render: (_: any, row: ProblemPreviewWithRecordState) => (
+      render: (_: any, row: ProblemPreviewWithLatestRecord) => (
         <Link
           to={`/domain/${domainUrl}/problem-set/${problemSetId}/p/${
             row.url ?? row.id
@@ -67,9 +61,16 @@ const Index: React.FC<IProps> = ({ problems }) => {
   ) : (
     <Empty description={<span>There are no problems</span>}>
       <Space>
-        <Button type="primary">Add Existed</Button>
-        <span>or</span>
-        <Button type="primary">Clone</Button>
+        <Button
+          type="primary"
+          onClick={() =>
+            history.push(
+              `/domain/${domainUrl}/problem-set/${problemSetId}/settings`,
+            )
+          }
+        >
+          Add or Clone
+        </Button>
       </Space>
     </Empty>
   );
