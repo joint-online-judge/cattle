@@ -19,10 +19,11 @@ import { history, useIntl } from 'umi';
 export interface IProps {
   initialValues?: Partial<ProblemSet>;
   domainUrl: string;
+  onUpdateSuccess?: () => void;
 }
 
 const UpsertProblemSetForm: React.FC<IProps> = (props) => {
-  const { domainUrl, initialValues } = props;
+  const { domainUrl, initialValues, onUpdateSuccess } = props;
   const intl = useIntl();
 
   const { run: createProblemSet, loading: creatingProblemSet } = useRequest(
@@ -51,6 +52,7 @@ const UpsertProblemSetForm: React.FC<IProps> = (props) => {
       onSuccess: (_res) => {
         // todo: add errCode
         message.success(intl.formatMessage({ id: 'msg.success.update' }));
+        onUpdateSuccess && onUpdateSuccess();
       },
     },
   );

@@ -28,7 +28,11 @@ const Index: React.FC<IRouteComponentProps> = ({ route }) => {
   const [beforeAvailable, setBeforeAvailable] = useState<boolean>(false);
   const [afterDue, setAfterDue] = useState<boolean>(false);
 
-  const { data: problemSet, loading } = useRequest(
+  const {
+    data: problemSet,
+    loading,
+    refresh: refreshProblemSet,
+  } = useRequest(
     async () => {
       const res = await Horse.problemSet.v1GetProblemSet(
         domainUrl,
@@ -151,7 +155,13 @@ const Index: React.FC<IRouteComponentProps> = ({ route }) => {
         <ViewDetail problemSet={problemSet} loading={loading} />
       </PageContent>
       <PageContent menuKey="edit" shadowCard={false}>
-        <EditDetail problemSet={problemSet} loading={loading} />
+        <EditDetail
+          problemSet={problemSet}
+          loading={loading}
+          onUpdateSuccess={() => {
+            refreshProblemSet();
+          }}
+        />
       </PageContent>
     </SideMenuPage>
   );
