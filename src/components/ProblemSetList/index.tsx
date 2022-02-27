@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { List, message, Typography, Skeleton, Progress, Badge } from 'antd';
+import { List, message, Skeleton, Badge } from 'antd';
 import { Link } from 'umi';
 import { useRequest } from 'ahooks';
 import mm from 'moment';
@@ -8,8 +8,6 @@ import Horse from '@/utils/service';
 interface IProps {
   domainId: string;
 }
-
-const { Title } = Typography;
 
 const Index: React.FC<IProps> = ({ domainId }) => {
   const {

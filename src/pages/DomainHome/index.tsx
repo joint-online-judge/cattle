@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { Button } from 'antd';
 import { Access, history, useAccess, useIntl, useModel, useParams } from 'umi';
 import { PlusOutlined } from '@ant-design/icons';
-import ProblemSetList from './ProblemSetList';
+import ProblemSetList from '@/components/ProblemSetList';
 import ShadowCard from '@/components/ShadowCard';
 
 const Index: React.FC = () => {
@@ -35,7 +35,6 @@ const Index: React.FC = () => {
     >
       <ProblemSetList domainId={domainUrl} />
     </ShadowCard>
-
   );
 };
 
