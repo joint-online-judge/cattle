@@ -5,6 +5,7 @@ import {
   ErrorCode,
   DomainPermission,
 } from '@/utils/service';
+import './i18n';
 
 export interface InitialState {
   accessToken: string | undefined;

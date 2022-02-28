@@ -1,4 +1,5 @@
 import React, { useState, useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   Row,
   Col,
@@ -29,9 +30,10 @@ const useQuery = () => {
 type OperationType = 'login' | 'register';
 
 const Index: React.FC = () => {
-  const [opType, setOpType] = useState<OperationType>('login');
   const query = useQuery();
   const { refresh } = useModel('@@initialState');
+  const [opType, setOpType] = useState<OperationType>('login');
+  const { t } = useTranslation();
 
   const { data: oauths, loading: discovering } = useRequest(async () => {
     const res = await Horse.auth.v1ListOauth2();
@@ -45,20 +47,20 @@ const Index: React.FC = () => {
       manual: true,
       onSuccess: (res) => {
         if (res?.data?.errorCode === ErrorCode.Success) {
-          message.success('register success');
+          message.success(t('Login.msg.registerSuccess'));
           refresh().then(() => {
             history.replace(query.get('from') ?? '/');
           });
         } else if (res?.data?.errorCode === ErrorCode.UserRegisterError) {
-          message.error('incomplete info');
+          message.error(t('Login.msg.incompleteInfo'));
         } else if (res?.data?.errorCode === ErrorCode.IntegrityError) {
-          message.error('username/email already used');
+          message.error(t('Login.msg.usernameEmailUsed'));
         } else {
-          message.error('register failed');
+          message.error(t('Login.msg.registerFailed'));
         }
       },
       onError: () => {
-        message.error('register failed');
+        message.error(t('Login.msg.registerFailed'));
       },
     },
   );
@@ -77,18 +79,18 @@ const Index: React.FC = () => {
       manual: true,
       onSuccess: (res) => {
         if (res?.data?.errorCode === ErrorCode.Success) {
-          message.success('login success');
+          message.success(t('Login.msg.loginSuccess'));
           refresh().then(() => {
             history.replace(query.get('from') ?? '/');
           });
         } else if (res?.data?.errorCode === ErrorCode.UsernamePasswordError) {
-          message.error('wrong username or password');
+          message.error(t('Login.msg.wrongUsernamePassword'));
         } else {
-          message.error('login failed');
+          message.error(t('Login.msg.loginFailed'));
         }
       },
       onError: () => {
-        message.error('login failed');
+        message.error(t('Login.msg.loginFailed'));
       },
     },
   );
@@ -105,10 +107,10 @@ const Index: React.FC = () => {
       manual: true,
       onSuccess: (res) => {
         if (res.data.data?.redirectUrl) {
-          message.loading('Redirecting...', 10);
+          message.loading(t('Login.msg.redirecting'), 10);
           window.location.href = res.data.data?.redirectUrl;
         } else {
-          message.error('failed to intialize oauth');
+          message.error(t('Login.msg.oauthFailed'));
         }
       },
       onError: (err) => {
@@ -136,14 +138,14 @@ const Index: React.FC = () => {
             loading={oauthLogining}
             onClick={async () => oauthLogin(o.oauthName)}
           >
-            Sign in with {o.displayName}
+            {t('Login.signInWith', { name: o.displayName })}
           </Button>
         );
       });
 
       return (
         <>
-          <Divider>Third Party Auth</Divider>
+          <Divider>{t('Login.thirdPartyAuth')}</Divider>
           {buttons}
         </>
       );
@@ -158,8 +160,8 @@ const Index: React.FC = () => {
         <div className={style.loginLogoWrap}>
           <img src={Logo} alt="logo" className={style.loginLogo} />
         </div>
-        <h1 className={style.loginTitle}>Sign in to JOJ</h1>
-        <h2 className={style.loginSubtitle}>New generation of Online Judge</h2>
+        <h1 className={style.loginTitle}>{t('Login.signInToJOJ')}</h1>
+        <h2 className={style.loginSubtitle}>{t('Login.newGeneration')}</h2>
         <Form
           layout="vertical"
           onFinish={(values) => {
@@ -177,36 +179,34 @@ const Index: React.FC = () => {
               setOpType(activeKey as OperationType);
             }}
           >
-            <Tabs.TabPane key={'login'} tab={'登录'} />
-            <Tabs.TabPane key={'register'} tab={'注册'} />
+            <Tabs.TabPane key={'login'} tab={t('Login.login')} />
+            <Tabs.TabPane key={'register'} tab={t('Login.register')} />
           </Tabs>
           {opType === 'login' && (
             <>
               <Form.Item
                 name="username"
-                label="Username"
+                label={t('Login.username')}
                 rules={[
                   {
                     required: true,
-                    message: '请输入用户名!',
+                    message: t('Login.valid.username'),
                   },
                 ]}
               >
-                <Input placeholder={'用户名'} />
+                <Input placeholder={t('Login.username')} />
               </Form.Item>
               <Form.Item
                 name="password"
-                label="Password"
-                rules={[
-                  { required: true, message: 'Please input your Password!' },
-                ]}
+                label={t('Login.password')}
+                rules={[{ required: true, message: t('Login.valid.password') }]}
               >
-                <Input.Password placeholder={'密码'} />
+                <Input.Password placeholder={t('Login.password')} />
               </Form.Item>
               <Row justify="end" style={{ marginBottom: '12px' }}>
                 <Col>
                   <a style={{ float: 'right' }} href="">
-                    Forgot password
+                    {t('Login.forgotPassword')}
                   </a>
                 </Col>
               </Row>
@@ -217,7 +217,7 @@ const Index: React.FC = () => {
                   loading={loading}
                   block
                 >
-                  Sign in
+                  {t('Login.signIn')}
                 </Button>
               </Form.Item>
             </>
@@ -226,34 +226,32 @@ const Index: React.FC = () => {
             <>
               <Form.Item
                 name="username"
-                label="Username"
+                label={t('Login.username')}
                 rules={[
                   {
                     required: true,
-                    message: '请输入用户名!',
+                    message: t('Login.valid.username'),
                   },
                 ]}
               >
-                <Input placeholder={'用户名: admin or user'} />
+                <Input placeholder={t('Login.username')} />
               </Form.Item>
               <Form.Item
                 name="password"
-                label="Password"
-                rules={[
-                  { required: true, message: 'Please input your Password!' },
-                ]}
+                label={t('Login.password')}
+                rules={[{ required: true, message: t('Login.valid.password') }]}
               >
-                <Input.Password placeholder={'密码'} />
+                <Input.Password placeholder={t('Login.password')} />
               </Form.Item>
               <Form.Item
                 name="confirm"
-                label="Confirm Password"
+                label={t('Login.confirmPassword')}
                 dependencies={['password']}
                 hasFeedback
                 rules={[
                   {
                     required: true,
-                    message: 'Please confirm your password!',
+                    message: t('Login.valid.confirmPassword'),
                   },
                   ({ getFieldValue }) => ({
                     async validator(_, value) {
@@ -262,22 +260,20 @@ const Index: React.FC = () => {
                       }
 
                       return Promise.reject(
-                        new Error(
-                          'The two passwords that you entered do not match!',
-                        ),
+                        new Error(t('Login.passwordNotMatch')),
                       );
                     },
                   }),
                 ]}
               >
-                <Input.Password />
+                <Input.Password placeholder={t('Login.typePasswordAgain')} />
               </Form.Item>
               <Form.Item
                 name="email"
-                label="Email"
+                label={t('Login.email')}
                 rules={[{ required: true }, { type: 'email' }]}
               >
-                <Input />
+                <Input placeholder={t('Login.email')} />
               </Form.Item>
               <Form.Item>
                 <Button
@@ -286,7 +282,7 @@ const Index: React.FC = () => {
                   loading={loading}
                   block
                 >
-                  Register now
+                  {t('Login.registerNow')}
                 </Button>
               </Form.Item>
             </>

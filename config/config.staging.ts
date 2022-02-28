@@ -7,7 +7,6 @@ export default defineConfig({
       // url of backend dev server
       target: 'http://nichujie.xyz/',
       changeOrigin: true,
-      // 'pathRewrite': { '^/api': '' },
     },
   },
 });

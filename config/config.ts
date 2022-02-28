@@ -11,8 +11,6 @@ export default defineConfig({
   dva: {
     hmr: true,
   },
-  define: {},
-  // publicPath: './',
   locale: {
     default: 'en-US',
     title: false,
