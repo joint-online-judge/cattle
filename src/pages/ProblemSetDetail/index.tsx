@@ -19,7 +19,7 @@ import EditDetail from './EditDetail';
 import style from './style.less';
 import ViewDetail from './ViewDetail';
 
-const Index: React.FC<IRouteComponentProps> = ({ route }) => {
+const Index: React.FC<IRouteComponentProps> = ({ route, children }) => {
   const intl = useIntl();
   const { setHeader } = useModel('pageHeader');
   const { domain } = useModel('domain');
@@ -98,7 +98,6 @@ const Index: React.FC<IRouteComponentProps> = ({ route }) => {
     <SideMenuPage
       route={route}
       shadowCard={false}
-      matchMode="children"
       defaultTab="detail"
       menu={
         <Menu mode="inline">
@@ -151,7 +150,8 @@ const Index: React.FC<IRouteComponentProps> = ({ route }) => {
         </ShadowCard>
       }
     >
-      <PageContent menuKey="detail" shadowCard={false}>
+      {children}
+      {/* <PageContent menuKey="detail" shadowCard={false}>
         <ViewDetail problemSet={problemSet} loading={loading} />
       </PageContent>
       <PageContent menuKey="edit" shadowCard={false}>
@@ -162,7 +162,7 @@ const Index: React.FC<IRouteComponentProps> = ({ route }) => {
             refreshProblemSet();
           }}
         />
-      </PageContent>
+      </PageContent> */}
     </SideMenuPage>
   );
 };

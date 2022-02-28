@@ -30,33 +30,29 @@ const Index: React.FC = () => {
   };
   const [current, setCurrent] = useState(matchMenuKey());
 
-  const domainInfo = useMemo(
-    () => {
-      if (loading) {
-        return (
-          <Skeleton paragraph={{ rows: 1 }} active />
-        );
-      }
+  const domainInfo = useMemo(() => {
+    if (loading) {
+      return <Skeleton paragraph={{ rows: 1 }} active />;
+    }
 
-      if (domain) {
-        return (
-          <Row justify="start" className="mt-10 mb-6" align="middle">
-            <Col>
-              <Gravatar gravatar={domain?.gravatar} size={60} />
-            </Col>
-            <Col>
-              <Link to={`/domain/${domain.url}`}>
-                <h1
-                  className={`text-3xl text-black font-semibold ml-8`}>
-                  {domain.name}
-                </h1>
-              </Link>
-            </Col>
-          </Row>
-        );
-      }
-      return null;
-    }, [domain, domainUrl, loading]);
+    if (domain) {
+      return (
+        <Row justify="start" className="mt-10 mb-6" align="middle">
+          <Col>
+            <Gravatar gravatar={domain?.gravatar} size={60} />
+          </Col>
+          <Col>
+            <Link to={`/domain/${domain.url}`}>
+              <h1 className={`text-4xl text-black font-medium ml-8`}>
+                {domain.name}
+              </h1>
+            </Link>
+          </Col>
+        </Row>
+      );
+    }
+    return null;
+  }, [domain, domainUrl, loading]);
 
   const domainMenu = (
     <Menu
@@ -97,11 +93,9 @@ const Index: React.FC = () => {
   );
 
   return (
-    <ShadowCard
-      bodyStyle={{ paddingTop: 0, paddingBottom: 0 }}
-    >
+    <ShadowCard bodyStyle={{ paddingTop: 0, paddingBottom: 0 }}>
       <Row
-        align="middle"
+        align="bottom"
         justify="center"
         className={style.domainHeaderContainer}
       >
@@ -112,7 +106,6 @@ const Index: React.FC = () => {
       </Row>
     </ShadowCard>
   );
-
 };
 
 export default Index;
