@@ -15,7 +15,7 @@ export default defineConfig({
   // publicPath: './',
   locale: {
     default: 'en-US',
-    title: true,
+    title: false,
     antd: true,
     baseNavigator: false,
   },

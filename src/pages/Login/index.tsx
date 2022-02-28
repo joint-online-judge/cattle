@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import {
   Row,
   Col,
@@ -13,7 +13,6 @@ import {
 import { useLocation, useModel, history } from 'umi';
 import { useRequest } from 'ahooks';
 import { isArray, pick } from 'lodash';
-import style from './style.less';
 import Horse, {
   UserCreate,
   OAuth2PasswordRequestForm,
@@ -21,7 +20,7 @@ import Horse, {
 } from '@/utils/service';
 import { DOMAIN_HOST } from '@/constants';
 import Logo from '@/assets/logo.svg';
-import { useCallback } from 'react';
+import style from './style.less';
 
 const useQuery = () => {
   return new URLSearchParams(useLocation().search);
@@ -34,17 +33,10 @@ const Index: React.FC = () => {
   const query = useQuery();
   const { refresh } = useModel('@@initialState');
 
-  const { data: oauths, loading: discovering } = useRequest(
-    async () => {
-      const res = await Horse.auth.v1ListOauth2();
-      return res.data?.data?.results ?? [];
-    },
-    {
-      onError: (res) => {
-        console.error(res);
-      },
-    },
-  );
+  const { data: oauths, loading: discovering } = useRequest(async () => {
+    const res = await Horse.auth.v1ListOauth2();
+    return res.data?.data?.results ?? [];
+  });
 
   const { run: register, loading: registering } = useRequest(
     async (registerInfo: UserCreate) =>
@@ -133,20 +125,14 @@ const Index: React.FC = () => {
     }
 
     if (isArray(oauths) && oauths.length > 0) {
-      return oauths.map((o) => {
+      const buttons = oauths.map((o) => {
         return (
           <Button
             key={o.oauthName}
             className="mb-4"
             type="default"
             block
-            // icon={
-            //   <img
-            //     src={require('@/assets/jaccount.png')}
-            //     alt="jaccount"
-            //     className={style.oauthImg}
-            //   />
-            // }
+            icon={<img src={o.icon} className={style.oauthImg} />}
             loading={oauthLogining}
             onClick={async () => oauthLogin(o.oauthName)}
           >
@@ -154,9 +140,16 @@ const Index: React.FC = () => {
           </Button>
         );
       });
+
+      return (
+        <>
+          <Divider>Third Party Auth</Divider>
+          {buttons}
+        </>
+      );
     }
 
-    return <h1>No OAuth Support</h1>;
+    return null;
   }, [discovering, oauths, loading]);
 
   return (
@@ -299,7 +292,6 @@ const Index: React.FC = () => {
             </>
           )}
         </Form>
-        <Divider plain>Third Party Auth</Divider>
         <Spin spinning={discovering}>{renderOAuthButtons()}</Spin>
       </Col>
     </Row>
