@@ -70,7 +70,12 @@ const Index: React.FC<IProps> = ({ domainId }) => {
       <List
         itemLayout="horizontal"
         size="large"
+        loading={loading}
         dataSource={problemSets ?? []}
+        pagination={{
+          position: 'bottom',
+          pageSize: 5,
+        }}
         renderItem={(item) => (
           <List.Item
             actions={[getStatusBadge(item.unlockAt, item.dueAt, item.lockAt)]}

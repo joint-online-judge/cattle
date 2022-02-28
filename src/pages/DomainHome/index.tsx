@@ -4,6 +4,7 @@ import { Access, history, useAccess, useIntl, useModel, useParams } from 'umi';
 import { PlusOutlined } from '@ant-design/icons';
 import ProblemSetList from '@/components/ProblemSetList';
 import ShadowCard from '@/components/ShadowCard';
+import './style.less';
 
 const Index: React.FC = () => {
   const intl = useIntl();
@@ -17,6 +18,7 @@ const Index: React.FC = () => {
 
   return (
     <ShadowCard
+      className="domainHomeProblemSetCard"
       title={intl.formatMessage({ id: 'PROBLEM_SET.PROBLEM_SET' })}
       extra={
         <Access accessible={access.canCreateProblemSet}>
