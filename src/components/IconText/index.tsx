@@ -9,13 +9,9 @@ interface IProps extends React.HTMLProps<HTMLSpanElement> {
 const Index: React.FC<IProps> = ({ text, icon, ...rest }) => {
   return (
     <Row align="middle" gutter={8}>
+      <Col>{React.cloneElement(icon, { ...rest })}</Col>
       <Col>
-        {React.cloneElement(icon, { ...rest })}
-      </Col>
-      <Col>
-        <span {...rest}>
-          {text}
-        </span>
+        <span {...rest}>{text}</span>
       </Col>
     </Row>
   );

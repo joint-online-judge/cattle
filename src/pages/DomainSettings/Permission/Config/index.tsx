@@ -3,11 +3,6 @@ import { useParams, useIntl } from 'umi';
 import { useRequest } from 'ahooks';
 import { message, Checkbox, Form } from 'antd';
 import { EditableProTable, ProColumns } from '@ant-design/pro-table';
-import Horse, {
-  DomainPermission,
-  DomainRoleEdit,
-  ErrorCode,
-} from '@/utils/service';
 import {
   isArray,
   toPairs,
@@ -17,6 +12,11 @@ import {
   groupBy,
   merge,
 } from 'lodash';
+import Horse, {
+  DomainPermission,
+  DomainRoleEdit,
+  ErrorCode,
+} from '@/utils/service';
 import LoadFailResult from '@/components/LoadFailResult';
 import ShadowCard from '@/components/ShadowCard';
 
@@ -74,6 +74,7 @@ const Index: React.FC = () => {
         } else {
           message.error('update failed');
         }
+
         refetch();
       },
       onError: () => {
@@ -83,9 +84,9 @@ const Index: React.FC = () => {
     },
   );
 
-  const columns: ProColumns<DataSourceType>[] = useMemo(() => {
+  const columns: Array<ProColumns<DataSourceType>> = useMemo(() => {
     if (isArray(roles)) {
-      const roleCols: ProColumns<DataSourceType>[] = roles.map((role) => ({
+      const roleCols: Array<ProColumns<DataSourceType>> = roles.map((role) => ({
         title: role.role,
         width: 60,
         dataIndex: role.role,
@@ -97,7 +98,7 @@ const Index: React.FC = () => {
           return (
             <Checkbox
               onChange={(domEvent) => {
-                // @ts-ignore
+                // @ts-expect-error
                 const row = e.entity as Record<string, string>;
                 const role = e.dataIndex as string;
                 const originDomainRole = roles.find((r) => r.role === role);
@@ -130,12 +131,12 @@ const Index: React.FC = () => {
   }, [roles, intl]);
 
   const categories = useMemo(() => {
-    if (!isArray(roles) || roles.length == 0) return [];
+    if (!isArray(roles) || roles.length === 0) return [];
     return uniq(flatten(roles.map((r) => Object.keys(r.permission))));
   }, [roles]);
 
   const dataSource: DataSourceType[] = useMemo(() => {
-    if (!isArray(roles) || roles.length == 0) return [];
+    if (!isArray(roles) || roles.length === 0) return [];
 
     const permissionGroup = groupBy(
       flatten(

@@ -15,12 +15,12 @@ import {
 } from 'antd';
 import { ProFormInstance } from '@ant-design/pro-form';
 import { PlusOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons';
+import { isArray } from 'lodash';
+import CreateInvitationModal from './CreateInvitationModal';
 import ShadowCard from '@/components/ShadowCard';
 import CopyablePre from '@/components/CopyablePre';
 import Horse, { DomainInvitation, ErrorCode } from '@/utils/service';
-import CreateInvitationModal from './CreateInvitationModal';
 import { DOMAIN_HOST } from '@/constants';
-import { isArray } from 'lodash';
 
 const { Panel } = Collapse;
 const { Paragraph } = Typography;
@@ -64,6 +64,7 @@ const Index: React.FC = () => {
         } else {
           message.error('delete invitation failed');
         }
+
         refresh();
       },
       onError: () => {

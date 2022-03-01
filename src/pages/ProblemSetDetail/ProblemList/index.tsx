@@ -1,8 +1,8 @@
 import React from 'react';
 import { List, Button, Empty, Space, Table } from 'antd';
 import { history, Link, useParams, useIntl } from 'umi';
-import { ProblemPreviewWithLatestRecord, RecordState } from '@/utils/service';
 import { isArray, isNil } from 'lodash';
+import { ProblemPreviewWithLatestRecord, RecordState } from '@/utils/service';
 
 interface IProps {
   problems: ProblemPreviewWithLatestRecord[] | undefined;
@@ -63,11 +63,11 @@ const Index: React.FC<IProps> = ({ problems }) => {
       <Space>
         <Button
           type="primary"
-          onClick={() =>
+          onClick={() => {
             history.push(
               `/domain/${domainUrl}/problem-set/${problemSetId}/settings`,
-            )
-          }
+            );
+          }}
         >
           Add or Clone
         </Button>

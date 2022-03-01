@@ -3,10 +3,10 @@ import { useParams, useIntl } from 'umi';
 import { useRequest } from 'ahooks';
 import { message, Button, Popconfirm } from 'antd';
 import ProTable, { ProColumns } from '@ant-design/pro-table';
+import AddRoleModal from './AddRoleModal';
 import { Horse, ErrorCode, DomainRole } from '@/utils/service';
 import LoadFailResult from '@/components/LoadFailResult';
 import ShadowCard from '@/components/ShadowCard';
-import AddRoleModal from './AddRoleModal';
 
 const Index: React.FC = () => {
   const intl = useIntl();
@@ -39,15 +39,29 @@ const Index: React.FC = () => {
     {
       manual: true,
       onSuccess: (res) => {
-        if (res?.errorCode === ErrorCode.Success) {
-          refetch();
-          message.success('delete success');
-        } else if (res?.errorCode === ErrorCode.DomainRoleReadOnlyError) {
-          message.error('this role is read-only');
-        } else if (res?.errorCode === ErrorCode.DomainRoleUsedError) {
-          message.error('users with this role exist');
-        } else {
-          message.error('delete failed');
+        switch (res?.errorCode) {
+          case ErrorCode.Success: {
+            refetch();
+            message.success('delete success');
+
+            break;
+          }
+
+          case ErrorCode.DomainRoleReadOnlyError: {
+            message.error('this role is read-only');
+
+            break;
+          }
+
+          case ErrorCode.DomainRoleUsedError: {
+            message.error('users with this role exist');
+
+            break;
+          }
+
+          default: {
+            message.error('delete failed');
+          }
         }
       },
       onError: () => {
@@ -56,7 +70,7 @@ const Index: React.FC = () => {
     },
   );
 
-  const columns: ProColumns<DomainRole>[] = [
+  const columns: Array<ProColumns<DomainRole>> = [
     {
       title: '角色',
       dataIndex: 'role',
@@ -69,7 +83,7 @@ const Index: React.FC = () => {
       render: (role) => [
         <Popconfirm
           title="Are you sure to delete this role?"
-          onConfirm={() => deleteRole(role?.toString())}
+          onConfirm={async () => deleteRole(role?.toString())}
           okText="Yes"
           cancelText="No"
         >

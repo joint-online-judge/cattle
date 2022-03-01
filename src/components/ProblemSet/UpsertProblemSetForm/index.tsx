@@ -1,10 +1,3 @@
-import MarkdownEditor from '@/components/MarkdownEditor';
-import {
-  Horse,
-  ProblemSet,
-  ProblemSetCreate,
-  ProblemSetEdit,
-} from '@/utils/service';
 import ProForm, {
   ProFormDateTimePicker,
   ProFormSwitch,
@@ -15,6 +8,13 @@ import { Col, Form, message, Row } from 'antd';
 import mm from 'moment';
 import React from 'react';
 import { history, useIntl } from 'umi';
+import {
+  Horse,
+  ProblemSet,
+  ProblemSetCreate,
+  ProblemSetEdit,
+} from '@/utils/service';
+import MarkdownEditor from '@/components/MarkdownEditor';
 
 export interface IProps {
   initialValues?: Partial<ProblemSet>;

@@ -13,7 +13,7 @@ import Horse, {
 
 interface IProps {
   fetchingProblems: boolean;
-  fetchProblems: (params: ProTablePagination) => Promise<ProblemList>;
+  fetchProblems: (parameters: ProTablePagination) => Promise<ProblemList>;
   problemIdList: string[];
   onAddSuccess: () => void;
 }
@@ -52,7 +52,7 @@ const Index: React.FC<IProps> = ({
     },
   );
 
-  const columns: ProColumns<Problem>[] = [
+  const columns: Array<ProColumns<Problem>> = [
     {
       title: '标题',
       width: 300,
@@ -84,7 +84,7 @@ const Index: React.FC<IProps> = ({
           type="link"
           disabled={problemIdList.includes(record.id)}
           key="add"
-          onClick={() =>
+          onClick={async () =>
             addProblem({
               problem: record.id,
             })
@@ -103,8 +103,8 @@ const Index: React.FC<IProps> = ({
       actionRef={ref}
       cardProps={false}
       columns={columns}
-      request={async (params, _sorter, _filter) => {
-        const data = await fetchProblems(params);
+      request={async (parameters, _sorter, _filter) => {
+        const data = await fetchProblems(parameters);
         return Promise.resolve({
           data: data.results,
           total: data.count,

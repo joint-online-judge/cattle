@@ -1,6 +1,6 @@
 ﻿import { IRoute } from 'umi';
 
-const routes: Array<IRoute> = [
+const routes: IRoute[] = [
   {
     path: '/login',
     component: '@/pages/Login',
@@ -204,15 +204,15 @@ const routes: Array<IRoute> = [
   { component: '@/pages/NotFound' },
 ];
 
-const recursiveInjectWrapper = (routes: Array<IRoute>, wrapper: string) => {
+const recursiveInjectWrapper = (routes: IRoute[], wrapper: string) => {
   for (const route of routes) {
-    if (route.wrappers instanceof Array) {
+    if (Array.isArray(route.wrappers)) {
       route.wrappers.push(wrapper);
     } else {
       route.wrappers = [wrapper];
     }
 
-    if (route.routes instanceof Array)
+    if (Array.isArray(route.routes))
       recursiveInjectWrapper(route.routes, wrapper);
   }
 };

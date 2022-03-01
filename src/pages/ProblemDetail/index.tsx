@@ -9,13 +9,13 @@ import {
   ReadOutlined,
   EditOutlined,
 } from '@ant-design/icons';
+import Detail from './Detail';
+import Submit from './Submit';
+import Edit from './Edit';
 import { Horse } from '@/utils/service';
 import SideMenuPage, { PageContent } from '@/components/SideMenuPage';
 import ShadowCard from '@/components/ShadowCard';
 import Gravatar from '@/components/Gravatar';
-import Detail from './Detail';
-import Submit from './Submit';
-import Edit from './Edit';
 
 const Index: React.FC<IRouteComponentProps> = ({ route }) => {
   const intl = useIntl();
@@ -42,7 +42,7 @@ const Index: React.FC<IRouteComponentProps> = ({ route }) => {
       return res.data.data;
     },
     {
-      ready: !!problemResp?.data.data?.ownerId,
+      ready: Boolean(problemResp?.data.data?.ownerId),
       onError: () => {
         message.error('get owner failed');
       },

@@ -3,6 +3,7 @@ import { defineConfig } from 'umi';
 import routes from './routes';
 
 export default defineConfig({
+  title: 'Joint Online Judge',
   hash: true,
   nodeModulesTransform: {
     type: 'none',

@@ -1,8 +1,8 @@
+import React from 'react';
+import { useParams } from 'umi';
 import { UpsertProblemSetForm } from '@/components/ProblemSet';
 import ShadowCard from '@/components/ShadowCard';
 import { ProblemSetDetail } from '@/utils/service';
-import React from 'react';
-import { useParams } from 'umi';
 
 interface IProps {
   problemSet: ProblemSetDetail | undefined;

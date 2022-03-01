@@ -3,12 +3,12 @@ import { useParams, useModel } from 'umi';
 import { message, Row, Col } from 'antd';
 import { useRequest } from 'ahooks';
 import ProCard from '@ant-design/pro-card';
+import DraggableProblemTable from './DraggableProblemTable';
+import AddExistProblem from './AddExistProblem';
 import Horse from '@/utils/service';
 import { transPagination } from '@/utils';
 import { VERTICAL_GUTTER } from '@/constants';
 import ShadowCard from '@/components/ShadowCard';
-import DraggableProblemTable from './DraggableProblemTable';
-import AddExistProblem from './AddExistProblem';
 
 const Index: React.FC = () => {
   const [tab, setTab] = useState('tab1');
@@ -41,9 +41,9 @@ const Index: React.FC = () => {
     refresh: refreshProblems,
     loading: fetchingProblems,
   } = useRequest(
-    async (params: ProTablePagination) => {
+    async (parameters: ProTablePagination) => {
       const res = await Horse.problem.v1ListProblems(domainUrl, {
-        ...transPagination(params),
+        ...transPagination(parameters),
         ordering: '-created_at',
       });
       return res.data.data ?? { count: 0, results: [] };
@@ -98,7 +98,7 @@ const Index: React.FC = () => {
                   refreshProblemSet();
                   refreshProblems();
                 }}
-                onUpdateFinish={() => refreshProblemSet()}
+                onUpdateFinish={async () => refreshProblemSet()}
               />
             </ProCard>
             <ProCard

@@ -2,13 +2,13 @@ import React, { useMemo, useState, useCallback } from 'react';
 import { generatePath } from 'react-router';
 import { useLocation, history, Location, useParams, IRoute } from 'umi';
 import { Row, Col, MenuProps } from 'antd';
+import { isArray } from 'lodash';
 import PageContent, { PageContentProps } from './PageContent';
 import SettingsSideBar, {
   SettingsMenuItem,
 } from '@/components/Settings/SettingsSideBar';
 import ShadowCard from '@/components/ShadowCard';
 import { VERTICAL_GUTTER } from '@/constants';
-import { isArray } from 'lodash';
 
 interface IProps {
   menuItems?: SettingsMenuItem[];
@@ -34,7 +34,7 @@ const Index: React.FC<IProps> = ({
   shadowCard = true,
 }) => {
   const location: Location = useLocation();
-  const params = useParams<{ tab?: string; subTab?: string }>();
+  const parameters = useParams<{ tab?: string; subTab?: string }>();
 
   const [key, setKey] = useState<string>(
     (() => {
@@ -48,7 +48,7 @@ const Index: React.FC<IProps> = ({
         return firstValidChild?.props?.menuKey ?? '';
       }
 
-      return params.subTab ?? params.tab ?? defaultTab;
+      return parameters.subTab ?? parameters.tab ?? defaultTab;
     })(),
   );
 
@@ -69,9 +69,10 @@ const Index: React.FC<IProps> = ({
               menuItemProps: child.props.menuItemProps,
             };
           }
+
           return undefined;
         },
-      ).filter((o) => !!o);
+      ).filter((o) => Boolean(o));
     }
 
     // else if matchMode === 'route'
@@ -87,7 +88,7 @@ const Index: React.FC<IProps> = ({
             };
           }
         })
-        .filter((o) => !!o) || [];
+        .filter((o) => Boolean(o)) || [];
 
     return items as SettingsMenuItem[];
   }, [children, menuItems, matchMode]);
@@ -105,7 +106,7 @@ const Index: React.FC<IProps> = ({
       } else if (route && route.path) {
         history.push(
           generatePath(route.path, {
-            ...params,
+            ...parameters,
             tab: newTab,
             subTab: newSubTab,
           }),
@@ -120,20 +121,21 @@ const Index: React.FC<IProps> = ({
       if (isArray(children))
         return children.find((o) => o.props.menuKey === key) ?? null;
       return children;
-    } else {
-      if (isArray(children)) {
-        return (
-          <Row gutter={VERTICAL_GUTTER}>
-            {children.map((c, index) => (
-              <Col span={24} key={index}>
-                {shadowCard ? <ShadowCard>{c}</ShadowCard> : c}
-              </Col>
-            ))}
-          </Row>
-        );
-      }
-      return shadowCard ? <ShadowCard>{children}</ShadowCard> : children;
     }
+
+    if (isArray(children)) {
+      return (
+        <Row gutter={VERTICAL_GUTTER}>
+          {children.map((c, index) => (
+            <Col span={24} key={index}>
+              {shadowCard ? <ShadowCard>{c}</ShadowCard> : c}
+            </Col>
+          ))}
+        </Row>
+      );
+    }
+
+    return shadowCard ? <ShadowCard>{children}</ShadowCard> : children;
   }, [children]);
 
   return (

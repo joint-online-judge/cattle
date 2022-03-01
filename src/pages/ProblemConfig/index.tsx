@@ -12,7 +12,7 @@ import { Horse, Problem, FileUpload, ErrorCode } from '@/utils/service';
 import ShadowCard from '@/components/ShadowCard';
 
 interface FormValues {
-  file: Array<UploadFile>;
+  file: UploadFile[];
 }
 
 const Index: React.FC = () => {

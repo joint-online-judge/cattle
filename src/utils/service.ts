@@ -1,13 +1,10 @@
-import axios, { AxiosResponse, AxiosError } from 'axios';
+import { AxiosResponse, AxiosError } from 'axios';
 import { notification } from 'antd';
 import { throttle } from 'lodash';
 import { Api } from '@/client';
 
-// @ts-ignore
-import qs from 'qs';
-
 export const Horse = new Api({
-  timeout: 10000,
+  timeout: 10_000,
   // transformRequest: (data, headers) => {
   //   // Refer: https://github.com/axios/axios#using-applicationx-www-form-urlencoded-format
   //   if (
@@ -80,6 +77,7 @@ Horse.instance.interceptors.response.use(
     } else {
       throttleRequestError(); // Sending Error: caused by code
     }
+
     return Promise.reject(error);
   },
 );

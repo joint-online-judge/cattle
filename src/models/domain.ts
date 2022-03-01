@@ -51,15 +51,15 @@ export default function DomainModel() {
           role: perm.data.data?.role,
           permission: perm.data.data?.permission,
         };
-      } else {
-        setDomainUrl(undefined);
-        return undefined;
       }
+
+      setDomainUrl(undefined);
+      return undefined;
     },
     {
       manual: true,
       onSuccess: (res) => {
-        // @ts-ignore
+        // @ts-expect-error
         setInitialState({
           ...initialState,
           domainPermission: {
@@ -68,8 +68,8 @@ export default function DomainModel() {
           },
         }); // For access.ts to get permissions
       },
-      onError: (err) => {
-        if ((err as AxiosError)?.response?.status === 403) {
+      onError: (error) => {
+        if ((error as AxiosError)?.response?.status === 403) {
           setErrorCode(403);
         }
       },

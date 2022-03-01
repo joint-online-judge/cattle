@@ -6,6 +6,7 @@ import {
   ModalFormProps,
   ProFormInstance,
 } from '@ant-design/pro-form';
+import { useRequest } from 'ahooks';
 import {
   Horse,
   DomainUserAdd,
@@ -13,7 +14,6 @@ import {
   UserWithDomainRole,
   ErrorCode,
 } from '@/utils/service';
-import { useRequest } from 'ahooks';
 import DomainRoleSelect from '@/components/DomainRoleSelect';
 import UserSearchInput from '@/components/DomainCandidateSearchInput';
 import Gravatar from '@/components/Gravatar';
@@ -45,13 +45,27 @@ const Index: React.FC<IProps> = ({
     {
       manual: true,
       onSuccess: (res) => {
-        if (res.errorCode === ErrorCode.UserAlreadyInDomainBadRequestError) {
-          message.error('user already in domain');
-        } else if (res.errorCode === ErrorCode.UserNotFoundError) {
-          message.error('user not found');
-        } else if (res.errorCode === ErrorCode.Success) {
-          message.success('add user success');
+        switch (res.errorCode) {
+          case ErrorCode.UserAlreadyInDomainBadRequestError: {
+            message.error('user already in domain');
+
+            break;
+          }
+
+          case ErrorCode.UserNotFoundError: {
+            message.error('user not found');
+
+            break;
+          }
+
+          case ErrorCode.Success: {
+            message.success('add user success');
+
+            break;
+          }
+          // No default
         }
+
         onSuccess();
       },
       onError: () => {
@@ -79,6 +93,7 @@ const Index: React.FC<IProps> = ({
         } else if (res.errorCode === ErrorCode.Success) {
           message.success('update user success');
         }
+
         onSuccess();
       },
       onError: () => {
@@ -102,8 +117,9 @@ const Index: React.FC<IProps> = ({
       width={520}
       isKeyPressSubmit
       onFinish={async (values) => {
-        if (editingUser) await updateUser(editingUser.id, values);
-        else await addUser(values);
+        await (editingUser
+          ? updateUser(editingUser.id, values)
+          : addUser(values));
         return true;
       }}
       visible={visible}

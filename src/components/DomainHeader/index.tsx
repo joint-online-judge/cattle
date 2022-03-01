@@ -7,11 +7,11 @@ import {
   HomeOutlined,
   SettingOutlined,
 } from '@ant-design/icons';
+import { matchPath } from 'react-router';
+import style from './style.less';
 import { MAIN_CONTENT_GRID } from '@/constants';
 import ShadowCard from '@/components/ShadowCard';
 import Gravatar from '@/components/Gravatar';
-import style from './style.less';
-import { matchPath } from 'react-router';
 
 const Index: React.FC = () => {
   const { domain, loading, domainUrl } = useModel('domain');
@@ -28,6 +28,7 @@ const Index: React.FC = () => {
 
     return 'home';
   };
+
   const [current, setCurrent] = useState(matchMenuKey());
 
   const domainInfo = useMemo(() => {
@@ -51,6 +52,7 @@ const Index: React.FC = () => {
         </Row>
       );
     }
+
     return null;
   }, [domain, domainUrl, loading]);
 

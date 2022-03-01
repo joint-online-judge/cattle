@@ -54,6 +54,7 @@ export async function getInitialState(): Promise<InitialState> {
       const decoded: JWTAccessToken = jwt_decode(res.data?.data?.accessToken);
       return { user: decoded, accessToken: res.data?.data?.accessToken };
     }
+
     return { user: undefined, accessToken: undefined };
   } catch {
     return { user: undefined, accessToken: undefined };

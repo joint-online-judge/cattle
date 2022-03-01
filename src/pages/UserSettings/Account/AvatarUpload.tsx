@@ -1,11 +1,11 @@
 import { Button, Col, Form, Input, message, Modal, Row } from 'antd';
 import React, { ChangeEvent, useMemo, useState } from 'react';
+import { useModel } from 'umi';
 import { debounce } from 'lodash';
 import { EditOutlined } from '@ant-design/icons';
+import { useRequest } from 'ahooks';
 import Gravatar from '@/components/Gravatar';
 import { VERTICAL_GUTTER } from '@/constants';
-import { useModel } from '@@/plugin-model/useModel';
-import { useRequest } from 'ahooks';
 import Horse, { ErrorCode } from '@/utils/service';
 
 const AvatarUpload: React.FC = () => {
@@ -13,15 +13,14 @@ const AvatarUpload: React.FC = () => {
   const [preview, setPreview] = useState(initialState?.user?.gravatar ?? '');
   const [modalVisible, setModalVisible] = useState(false);
   const [okDisabled, setOkDisabled] = useState(false);
-  const [form] = Form.useForm();
+  const [form] = Form.useForm<{ gravatar: string }>();
 
   const { run: updateGravatar, loading } = useRequest(
-    async (gravatar: string) =>
-      Horse.user.v1UpdateCurrentUser({ gravatar }),
+    async (gravatar: string) => Horse.user.v1UpdateCurrentUser({ gravatar }),
     {
       manual: true,
       onSuccess: async (res) => {
-        if (res.data.errorCode == ErrorCode.Success) {
+        if (res.data.errorCode === ErrorCode.Success) {
           message.success('change gravatar success');
           await Horse.auth.v1Refresh({ responseType: 'json' });
           await refresh();
@@ -32,28 +31,34 @@ const AvatarUpload: React.FC = () => {
       onError: async () => {
         message.error('change gravatar fails');
       },
-    });
+    },
+  );
 
   const debouncedSetPreview = debounce((value: string) => {
     setPreview(value);
   }, 500);
 
-  const previewGravatar = useMemo(() => (
-    <Gravatar gravatar={preview} size={100} />
-  ), [preview]);
+  const previewGravatar = useMemo(
+    () => <Gravatar gravatar={preview} size={100} />,
+    [preview],
+  );
 
   const gravatarOnChange = (e: ChangeEvent<HTMLInputElement>) => {
-    form.validateFields().then(() => {
-      debouncedSetPreview(e.target.value);
-      setOkDisabled(false);
-    }, () => {
-      if (preview) {
-        setPreview('');
-      }
-      if (!okDisabled) {
-        setOkDisabled(true);
-      }
-    });
+    form.validateFields().then(
+      () => {
+        debouncedSetPreview(e.target.value);
+        setOkDisabled(false);
+      },
+      () => {
+        if (preview) {
+          setPreview('');
+        }
+
+        if (!okDisabled) {
+          setOkDisabled(true);
+        }
+      },
+    );
   };
 
   const initModal = () => {
@@ -78,10 +83,7 @@ const AvatarUpload: React.FC = () => {
             <Gravatar gravatar={initialState?.user?.gravatar} size={150} />
           </Row>
         </Col>
-        <Button
-          icon={<EditOutlined />}
-          onClick={initModal}
-        >
+        <Button icon={<EditOutlined />} onClick={initModal}>
           Change Gravatar
         </Button>
       </Row>
@@ -104,17 +106,12 @@ const AvatarUpload: React.FC = () => {
           <Form.Item
             name="gravatar"
             label="Gravatar Email"
-            rules={[
-              { required: true },
-              { type: 'email' },
-            ]}
+            rules={[{ required: true }, { type: 'email' }]}
           >
             <Input onChange={gravatarOnChange} />
           </Form.Item>
 
-          <Row justify="center">
-            {previewGravatar}
-          </Row>
+          <Row justify="center">{previewGravatar}</Row>
         </Form>
       </Modal>
     </>

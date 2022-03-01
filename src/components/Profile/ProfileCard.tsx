@@ -1,11 +1,11 @@
 import React from 'react';
-import { VERTICAL_GUTTER } from '@/constants';
 import { Button, Col, Row, Tooltip } from 'antd';
 import { history, Link } from 'umi';
-import Gravatar from '@/components/Gravatar';
-import IconText from '@/components/IconText';
 import { EditOutlined, MailOutlined, ProfileOutlined } from '@ant-design/icons';
 import { useModel } from '@@/plugin-model/useModel';
+import Gravatar from '@/components/Gravatar';
+import IconText from '@/components/IconText';
+import { VERTICAL_GUTTER } from '@/constants';
 
 const Index = () => {
   const { initialState } = useModel('@@initialState');
@@ -15,10 +15,7 @@ const Index = () => {
         <Row justify="center">
           <Tooltip title="Change your avatar" placement="bottom">
             <Link to="/settings/account">
-              <Gravatar
-                gravatar={initialState?.user?.gravatar}
-                size={200}
-              />
+              <Gravatar gravatar={initialState?.user?.gravatar} size={200} />
             </Link>
           </Tooltip>
         </Row>
@@ -28,8 +25,7 @@ const Index = () => {
         <Row align="middle">
           <Col span={24}>
             <span className="font-semibold text-2xl">
-              {initialState?.user?.realName
-              || initialState?.user?.username}
+              {initialState?.user?.realName ?? initialState?.user?.username}
             </span>
           </Col>
           <Col span={24}>
@@ -60,15 +56,17 @@ const Index = () => {
         />
       </Col>
 
-      {initialState?.user?.studentId
-      && <Col span={24}>
-        <IconText
-          icon={<ProfileOutlined />}
-          text={initialState?.user?.studentId}
-          className="text-sm"
-        />
-      </Col>}
+      {initialState?.user?.studentId && (
+        <Col span={24}>
+          <IconText
+            icon={<ProfileOutlined />}
+            text={initialState?.user?.studentId}
+            className="text-sm"
+          />
+        </Col>
+      )}
     </Row>
   );
 };
+
 export default Index;

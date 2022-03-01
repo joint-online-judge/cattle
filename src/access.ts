@@ -1,12 +1,12 @@
-import { InitialState } from './app';
 import { mapValues } from 'lodash';
+import { InitialState } from './app';
 
 function permissions(initialState: InitialState) {
   const { user, domainPermission } = initialState ?? {};
 
   const perms = {
     // Site Permissions
-    authenticated: !!(user && user.sub && user.category === 'user'),
+    authenticated: Boolean(user?.sub && user?.category === 'user'),
     isRoot: user?.role === 'root',
     accepted: true,
     denied: false,

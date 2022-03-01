@@ -64,6 +64,7 @@ module.exports = {
     'src/layouts/**/*.{ts,tsx}',
     'src/pages/**/*.{ts,tsx}',
     'src/components/**/*.{ts,tsx}',
+    'src/wrappers/**/*.{ts,tsx}',
   ],
   // An array of globs that describe where to look for source files
   // relative to the location of the configuration file

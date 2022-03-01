@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useModel, useParams } from 'umi';
+import { useModel, useParams, useLocation } from 'umi';
 import { Result } from 'antd';
 import { ErrorCode } from '@/utils/service';
 import MainLayout from '@/layouts/MainLayout';
@@ -7,45 +7,57 @@ import DomainHeader from '@/components/DomainHeader';
 
 const Index: React.FC = ({ children }) => {
   const { domainUrl } = useParams<{ domainUrl: string }>();
-  const {
-    fetchDomain,
-    errorCode,
-    domain,
-    loading: domainLoading,
-  } = useModel('domain');
+  const { fetchDomain, errorCode, loading: domainLoading } = useModel('domain');
 
   useEffect(() => {
     fetchDomain(domainUrl);
     return () => {
-      fetchDomain(null);
+      fetchDomain(null); // clear the current model
     };
-  }, [domainUrl]);
+  }, []);
 
   if (!domainLoading && errorCode) {
-    let errTitle = 'Unknown Error';
-    let errMsg = 'Failed to load domain info.';
+    let errorTitle = 'Unknown Error';
+    let errorMessage = 'Failed to load domain info.';
 
     // TODO: error msg i18n & image
-    if (errorCode === ErrorCode.DomainNotFoundError) {
-      errTitle = 'Domain Not Found';
-      errMsg = 'Please check your URL.';
-    } else if (errorCode === ErrorCode.DomainUserNotFoundError) {
-      errTitle = 'User Not Found in Domain';
-      errMsg = 'You are not a member of this domain.';
-    } else if (errorCode === ErrorCode.DomainRoleNotFoundError) {
-      errTitle = 'Domain Role Not Found';
-      errMsg = 'Please contact the domain administrator.';
-    } else if (errorCode === 403) {
-      errTitle = 'No Permission';
-      errMsg = 'You are not a member of this domain.';
+    switch (errorCode) {
+      case ErrorCode.DomainNotFoundError: {
+        errorTitle = 'Domain Not Found';
+        errorMessage = 'Please check your URL.';
+
+        break;
+      }
+
+      case ErrorCode.DomainUserNotFoundError: {
+        errorTitle = 'User Not Found in Domain';
+        errorMessage = 'You are not a member of this domain.';
+
+        break;
+      }
+
+      case ErrorCode.DomainRoleNotFoundError: {
+        errorTitle = 'Domain Role Not Found';
+        errorMessage = 'Please contact the domain administrator.';
+
+        break;
+      }
+
+      case 403: {
+        errorTitle = 'No Permission';
+        errorMessage = 'You are not a member of this domain.';
+
+        break;
+      }
+      // No default
     }
 
     return (
       <Result
         className="mt-16"
         status="404"
-        title={errTitle}
-        subTitle={errMsg}
+        title={errorTitle}
+        subTitle={errorMessage}
       />
     );
   }

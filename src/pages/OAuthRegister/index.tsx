@@ -108,7 +108,7 @@ const Index: React.FC = () => {
           >
             <Input
               placeholder={intl.formatMessage({ id: 'form.input_placeholder' })}
-              disabled={!!initialState?.user?.email}
+              disabled={Boolean(initialState?.user?.email)}
             />
           </Form.Item>
           <Form.Item name="password" label="Password">

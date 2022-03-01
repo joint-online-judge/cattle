@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import { Spin, Result, message } from 'antd';
 import { useRequest, Redirect, useModel, history } from 'umi';
 import { Horse } from '@/utils/service';
-import { DOMAIN_HOST } from '@/constants';
 
 const Index: React.FC = () => {
   const { initialState, refresh } = useModel('@@initialState');
@@ -22,9 +21,9 @@ const Index: React.FC = () => {
             console.log(error);
             // TODO: message user
           });
-      } else {
-        return Promise.resolve({});
       }
+
+      return Promise.resolve({});
     },
     {
       manual: true,

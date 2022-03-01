@@ -12,7 +12,12 @@ const Index: React.FC<IRouteComponentProps> = (props) => {
         title="403"
         subTitle="Sorry, you are not authorized to access this page."
         extra={
-          <Button type="primary" onClick={() => history.goBack()}>
+          <Button
+            type="primary"
+            onClick={() => {
+              history.goBack();
+            }}
+          >
             Gp Back
           </Button>
         }

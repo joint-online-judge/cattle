@@ -10,10 +10,10 @@ import {
   Progress,
   Menu,
 } from 'antd';
+import ProblemList from '../ProblemList';
 import { ProblemSetDetail } from '@/utils/service';
 import { VERTICAL_GUTTER } from '@/constants';
 
-import ProblemList from '../ProblemList';
 import ShadowCard from '@/components/ShadowCard';
 import MarkdownRender from '@/components/MarkdownRender';
 

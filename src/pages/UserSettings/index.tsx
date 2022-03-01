@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo } from 'react';
 import { IRouteComponentProps } from 'umi';
-import SideMenuPage from '@/components/SideMenuPage';
 import { useModel } from '@@/plugin-model/useModel';
+import SideMenuPage from '@/components/SideMenuPage';
 
 const Index: React.FC<IRouteComponentProps> = ({ children, route }) => {
   const { setHeader } = useModel('pageHeader');
@@ -21,10 +21,7 @@ const Index: React.FC<IRouteComponentProps> = ({ children, route }) => {
     });
   }, []);
   return (
-    <SideMenuPage
-      route={route}
-      shadowCard={false}
-    >
+    <SideMenuPage route={route} shadowCard={false}>
       {children}
     </SideMenuPage>
   );

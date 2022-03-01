@@ -14,6 +14,7 @@ import {
 import { useLocation, useModel, history } from 'umi';
 import { useRequest } from 'ahooks';
 import { isArray, pick } from 'lodash';
+import style from './style.less';
 import Horse, {
   UserCreate,
   OAuth2PasswordRequestForm,
@@ -21,7 +22,6 @@ import Horse, {
 } from '@/utils/service';
 import { DOMAIN_HOST } from '@/constants';
 import Logo from '@/assets/logo.svg';
-import style from './style.less';
 
 const useQuery = () => {
   return new URLSearchParams(useLocation().search);
@@ -46,17 +46,31 @@ const Index: React.FC = () => {
     {
       manual: true,
       onSuccess: (res) => {
-        if (res?.data?.errorCode === ErrorCode.Success) {
-          message.success(t('Login.msg.registerSuccess'));
-          refresh().then(() => {
-            history.replace(query.get('from') ?? '/');
-          });
-        } else if (res?.data?.errorCode === ErrorCode.UserRegisterError) {
-          message.error(t('Login.msg.incompleteInfo'));
-        } else if (res?.data?.errorCode === ErrorCode.IntegrityError) {
-          message.error(t('Login.msg.usernameEmailUsed'));
-        } else {
-          message.error(t('Login.msg.registerFailed'));
+        switch (res?.data?.errorCode) {
+          case ErrorCode.Success: {
+            message.success(t('Login.msg.registerSuccess'));
+            refresh().then(() => {
+              history.replace(query.get('from') ?? '/');
+            });
+
+            break;
+          }
+
+          case ErrorCode.UserRegisterError: {
+            message.error(t('Login.msg.incompleteInfo'));
+
+            break;
+          }
+
+          case ErrorCode.IntegrityError: {
+            message.error(t('Login.msg.usernameEmailUsed'));
+
+            break;
+          }
+
+          default: {
+            message.error(t('Login.msg.registerFailed'));
+          }
         }
       },
       onError: () => {
@@ -68,12 +82,13 @@ const Index: React.FC = () => {
   const { run: simpleLogin, loading: simpleLogining } = useRequest(
     async (values: OAuth2PasswordRequestForm) => {
       // https://github.com/axios/axios/blob/master/dist/axios.js#L1283
-      const params = new URLSearchParams();
+      const parameters = new URLSearchParams();
       for (const [key, value] of Object.entries(values)) {
-        params.append(key, value);
+        parameters.append(key, value);
       }
+
       // @Chujie: pass URLSearchParams to axios; otherwise data will be stringified directly.
-      return Horse.auth.v1Login({ responseType: 'json' }, params as any);
+      return Horse.auth.v1Login({ responseType: 'json' }, parameters as any);
     },
     {
       manual: true,
@@ -113,8 +128,8 @@ const Index: React.FC = () => {
           message.error(t('Login.msg.oauthFailed'));
         }
       },
-      onError: (err) => {
-        console.error(err);
+      onError: (error) => {
+        console.error(error);
       },
     },
   );

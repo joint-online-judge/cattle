@@ -40,7 +40,7 @@ const Index: React.FC<IProps> = (props) => {
       <Option
         label={`${u.username} (${u.realName})`}
         value={u.id}
-        disabled={!!u.domainRole}
+        disabled={Boolean(u.domainRole)}
       >
         <Row wrap={false} gutter={12} align="middle">
           <Col flex="none">

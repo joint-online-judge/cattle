@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import { Table, Select, Row, Col, Form, Button, Upload, message } from 'antd';
 import { useIntl, useParams } from 'umi';
 import { useRequest } from 'ahooks';

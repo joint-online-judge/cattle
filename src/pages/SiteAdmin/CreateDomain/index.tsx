@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { Col, Row } from 'antd';
-import { useIntl, useModel } from 'umi';
+import { useModel } from 'umi';
 import UpsertDomainForm from '@/components/Domain/UpsertDomainForm';
 
 const Index: React.FC = () => {

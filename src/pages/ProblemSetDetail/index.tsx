@@ -1,6 +1,3 @@
-import ShadowCard from '@/components/ShadowCard';
-import SideMenuPage, { PageContent } from '@/components/SideMenuPage';
-import { Horse } from '@/utils/service';
 import {
   CodeOutlined,
   EditOutlined,
@@ -18,6 +15,9 @@ import BeforeAvailable from './BeforeAvailable';
 import EditDetail from './EditDetail';
 import style from './style.less';
 import ViewDetail from './ViewDetail';
+import { Horse } from '@/utils/service';
+import SideMenuPage, { PageContent } from '@/components/SideMenuPage';
+import ShadowCard from '@/components/ShadowCard';
 
 const Index: React.FC<IRouteComponentProps> = ({ route, children }) => {
   const intl = useIntl();
@@ -63,6 +63,7 @@ const Index: React.FC<IRouteComponentProps> = ({ route, children }) => {
     ) {
       return Math.ceil(problemSet.numAccept / problemSet.numSubmit);
     }
+
     return 0;
   }, [problemSet]);
 

@@ -1,7 +1,6 @@
 import React from 'react';
 import { Button, Form, PageHeader } from 'antd';
 import { useIntl } from 'umi';
-import style from './style.less';
 
 // const options = {
 //   i18nLang: [

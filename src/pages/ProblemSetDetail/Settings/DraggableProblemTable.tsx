@@ -88,7 +88,7 @@ const Index: React.FC<IProps> = ({
     },
   );
 
-  const columns: ProColumns<ProblemPreviewWithRecordState>[] = [
+  const columns: Array<ProColumns<ProblemPreviewWithRecordState>> = [
     {
       title: '排序',
       dataIndex: 'sort',
@@ -124,7 +124,7 @@ const Index: React.FC<IProps> = ({
         <Button
           type="link"
           key="remove"
-          onClick={() => removeProblem(record.id)}
+          onClick={async () => removeProblem(record.id)}
         >
           移除
         </Button>,
@@ -147,7 +147,7 @@ const Index: React.FC<IProps> = ({
         [...dataSource],
         oldIndex,
         newIndex,
-      ).filter((el) => !!el);
+      ).filter((element) => Boolean(element));
       setDataSource([...newData]);
       if (dataSource[oldIndex]?.id) {
         updateProblem(dataSource[oldIndex].id, { position: newIndex });

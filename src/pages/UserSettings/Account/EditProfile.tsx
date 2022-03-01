@@ -8,32 +8,20 @@ const Index: React.FC = () => {
   const { initialState } = useModel('@@initialState');
   return (
     <Card
-      title={
-        <span className="text-2xl font-semibold">
-          Basic Information
-        </span>
-      }
+      title={<span className="text-2xl font-semibold">Basic Information</span>}
     >
       <Row gutter={VERTICAL_GUTTER}>
         <Col span={12}>
-          <Form
-            layout="vertical"
-            initialValues={initialState?.user}
-          >
+          <Form layout="vertical" initialValues={initialState?.user}>
             <Form.Item
               name="realName"
               label="Real Name"
-              rules={[
-                { required: true },
-              ]}
+              rules={[{ required: true }]}
             >
               <Input />
             </Form.Item>
             <Form.Item>
-              <Button
-                type="primary"
-                htmlType="submit"
-              >
+              <Button type="primary" htmlType="submit">
                 Update
               </Button>
             </Form.Item>

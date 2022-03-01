@@ -9,6 +9,7 @@ i18n
     lng: 'en-US',
     fallbackLng: 'en-US',
     supportedLngs: ['en-US', 'zh-CN'],
+    load: 'currentOnly',
     debug: process.env.NODE_ENV === 'development',
     interpolation: {
       escapeValue: false,

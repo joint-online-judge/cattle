@@ -1,14 +1,15 @@
 import React, { useEffect } from 'react';
-import { useModel } from 'umi';
+import { matchPath } from 'react-router';
+import { useLocation } from 'umi';
 import { BackTop, Layout, message } from 'antd';
+import style from './style.less';
 import Footer from '@/components/Footer';
 import Header from '@/components/Header';
 import ErrorBoundary from '@/components/ErrorBoundary';
 import MainLayout from '@/layouts/MainLayout';
-import style from './style.less';
 
 const Index: React.FC = ({ children }) => {
-  const { domainUrl } = useModel('domain');
+  const location = useLocation();
 
   useEffect(() => {
     // @Chujie: default message will display and overlap with the Header
@@ -18,7 +19,8 @@ const Index: React.FC = ({ children }) => {
   }, []);
 
   const renderMain = () => {
-    if (domainUrl) return children;
+    if (matchPath(location.pathname, { path: '/domain/:domainUrl' }))
+      return children;
 
     return <MainLayout>{children}</MainLayout>;
   };

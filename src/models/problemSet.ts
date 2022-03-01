@@ -35,10 +35,10 @@ export default function DomainModel() {
           problemSetId,
         );
         return res.data.data;
-      } else {
-        setProblemSetId(undefined);
-        return undefined;
       }
+
+      setProblemSetId(undefined);
+      return undefined;
     },
     {
       manual: true,
