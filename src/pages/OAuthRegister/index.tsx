@@ -8,9 +8,7 @@ import style from './style.less';
 import { Horse, UserCreate, ErrorCode } from '@/utils/service';
 import Logo from '@/assets/logo.svg';
 
-const useQuery = () => {
-  return new URLSearchParams(useLocation().search);
-};
+const useQuery = () => new URLSearchParams(useLocation().search);
 
 const oauthLogoMap: Record<string, string> = {
   jaccount: 'http://pic.gerenjianli.com/xiaohui2046/b59.jpg',

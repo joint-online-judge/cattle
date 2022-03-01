@@ -26,12 +26,14 @@ const Index: React.FC<IProps> = (props) => {
     },
   );
 
-  const options = React.useMemo(() => {
-    return (data ?? []).map((role) => ({
-      label: role.role,
-      value: role.role,
-    }));
-  }, [data]);
+  const options = React.useMemo(
+    () =>
+      (data ?? []).map((role) => ({
+        label: role.role,
+        value: role.role,
+      })),
+    [data],
+  );
 
   return (
     <Select

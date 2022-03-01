@@ -16,7 +16,10 @@ const Index: React.FC<IProps> = ({ domainId }) => {
     loading,
   } = useRequest(
     async () => {
-      if (!domainId) return [];
+      if (!domainId) {
+        return [];
+      }
+
       const res = await Horse.problemSet.v1ListProblemSets(domainId, {
         ordering: '-created_at',
       });
@@ -44,10 +47,6 @@ const Index: React.FC<IProps> = ({ domainId }) => {
 
     if (unlockAt && now < unlockAt) {
       return <Badge status="default" text="Not Started" />;
-    }
-
-    if (lockAt && now > lockAt) {
-      return <Badge status="error" text="Ended" />;
     }
 
     if (lockAt && now > lockAt) {

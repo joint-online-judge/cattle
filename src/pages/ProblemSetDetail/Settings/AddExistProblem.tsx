@@ -44,7 +44,9 @@ const Index: React.FC<IProps> = ({
         if (res.errorCode === ErrorCode.Success) {
           message.success('add problem success');
           onAddSuccess();
-        } else message.error('add problem failed');
+        } else {
+          message.error('add problem failed');
+        }
       },
       onError: () => {
         message.error('add problem failed');

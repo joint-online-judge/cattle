@@ -20,7 +20,7 @@ const Index: React.FC = () => {
     {
       manual: true,
       onSuccess: (res) => {
-        // todo: errCode
+        // Todo: errCode
         console.log(res);
       },
     },
@@ -28,12 +28,14 @@ const Index: React.FC = () => {
 
   const { data: problemResp, run: getProblem } = useRequest(
     async (problem: string) => {
-      if (domainUrl) return Horse.problem.v1GetProblem(domainUrl, problem);
+      if (domainUrl) {
+        return Horse.problem.v1GetProblem(domainUrl, problem);
+      }
     },
     {
       manual: true,
       onSuccess: (res) => {
-        // todo: errCode
+        // Todo: errCode
         console.info('get problem success');
         getOwner(res?.data?.data?.ownerId ?? '');
       },

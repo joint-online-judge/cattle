@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useModel, useParams, useLocation } from 'umi';
+import { useModel, useParams } from 'umi';
 import { Result } from 'antd';
 import { ErrorCode } from '@/utils/service';
 import MainLayout from '@/layouts/MainLayout';
@@ -12,13 +12,13 @@ const Index: React.FC = ({ children }) => {
   useEffect(() => {
     fetchDomain(domainUrl);
     return () => {
-      fetchDomain(null); // clear the current model
+      fetchDomain(null); // Clear the current model
     };
   }, []);
 
   if (!domainLoading && errorCode) {
-    let errorTitle = 'Unknown Error';
-    let errorMessage = 'Failed to load domain info.';
+    let errorTitle: string;
+    let errorMessage: string;
 
     // TODO: error msg i18n & image
     switch (errorCode) {
@@ -49,7 +49,11 @@ const Index: React.FC = ({ children }) => {
 
         break;
       }
-      // No default
+
+      default: {
+        errorTitle = 'Unknown Error';
+        errorMessage = 'Failed to load domain info.';
+      }
     }
 
     return (

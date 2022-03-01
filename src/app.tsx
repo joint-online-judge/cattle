@@ -1,22 +1,22 @@
 import jwt_decode from 'jwt-decode';
+import './i18n';
 import {
   Horse,
   JWTAccessToken,
   ErrorCode,
   DomainPermission,
 } from '@/utils/service';
-import './i18n';
 
 export interface InitialState {
   accessToken: string | undefined;
-  user: JWTAccessToken | undefined; // actually a JWT not a User
+  user: JWTAccessToken | undefined; // Actually a JWT not a User
   domainPermission?: {
     role: string | undefined;
     permission: DomainPermission | undefined;
   };
 }
 
-// will be run before render each route
+// Will be run before render each route
 // export function render(oldRender: any) {
 //   // TODO: app-level auth
 //   // fetch('/api/auth').then(auth => {

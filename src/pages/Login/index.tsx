@@ -23,9 +23,7 @@ import Horse, {
 import { DOMAIN_HOST } from '@/constants';
 import Logo from '@/assets/logo.svg';
 
-const useQuery = () => {
-  return new URLSearchParams(useLocation().search);
-};
+const useQuery = () => new URLSearchParams(useLocation().search);
 
 type OperationType = 'login' | 'register';
 
@@ -142,21 +140,19 @@ const Index: React.FC = () => {
     }
 
     if (isArray(oauths) && oauths.length > 0) {
-      const buttons = oauths.map((o) => {
-        return (
-          <Button
-            key={o.oauthName}
-            className="mb-4"
-            type="default"
-            block
-            icon={<img src={o.icon} className={style.oauthImg} />}
-            loading={oauthLogining}
-            onClick={async () => oauthLogin(o.oauthName)}
-          >
-            {t('Login.signInWith', { name: o.displayName })}
-          </Button>
-        );
-      });
+      const buttons = oauths.map((o) => (
+        <Button
+          key={o.oauthName}
+          className="mb-4"
+          type="default"
+          block
+          icon={<img src={o.icon} className={style.oauthImg} />}
+          loading={oauthLogining}
+          onClick={async () => oauthLogin(o.oauthName)}
+        >
+          {t('Login.signInWith', { name: o.displayName })}
+        </Button>
+      ));
 
       return (
         <>

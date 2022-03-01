@@ -14,13 +14,14 @@ const Index: React.FC = ({ children }) => {
   useEffect(() => {
     // @Chujie: default message will display and overlap with the Header
     message.config({
-      top: 72, // header height 64 + default top 8
+      top: 72, // Header height 64 + default top 8
     });
   }, []);
 
   const renderMain = () => {
-    if (matchPath(location.pathname, { path: '/domain/:domainUrl' }))
+    if (matchPath(location.pathname, { path: '/domain/:domainUrl' })) {
       return children;
+    }
 
     return <MainLayout>{children}</MainLayout>;
   };

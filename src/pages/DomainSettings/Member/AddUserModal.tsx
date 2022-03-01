@@ -46,24 +46,24 @@ const Index: React.FC<IProps> = ({
       manual: true,
       onSuccess: (res) => {
         switch (res.errorCode) {
+          case ErrorCode.Success: {
+            message.success('add user success');
+            break;
+          }
+
           case ErrorCode.UserAlreadyInDomainBadRequestError: {
             message.error('user already in domain');
-
             break;
           }
 
           case ErrorCode.UserNotFoundError: {
             message.error('user not found');
-
             break;
           }
 
-          case ErrorCode.Success: {
-            message.success('add user success');
-
-            break;
+          default: {
+            message.error('add domain user failed');
           }
-          // No default
         }
 
         onSuccess();
@@ -86,15 +86,30 @@ const Index: React.FC<IProps> = ({
     {
       manual: true,
       onSuccess: (res) => {
-        if (res.errorCode === ErrorCode.UserAlreadyInDomainBadRequestError) {
-          message.error('user already in domain');
-        } else if (ErrorCode.UserNotFoundError) {
-          message.error('user not found');
-        } else if (res.errorCode === ErrorCode.Success) {
-          message.success('update user success');
-        }
+        switch (res.errorCode) {
+          case ErrorCode.Success: {
+            message.success('update user success');
+            onSuccess();
 
-        onSuccess();
+            break;
+          }
+
+          case ErrorCode.UserAlreadyInDomainBadRequestError: {
+            message.error('user already in domain');
+
+            break;
+          }
+
+          case ErrorCode.UserNotFoundError: {
+            message.error('user not found');
+
+            break;
+          }
+
+          default: {
+            message.error('add domain user failed');
+          }
+        }
       },
       onError: () => {
         message.error('add domain user failed');
@@ -106,10 +121,10 @@ const Index: React.FC<IProps> = ({
     if (editingUser) {
       formRef?.current?.setFieldsValue({
         user: editingUser.id,
-        role: editingUser.domainRole as any,
+        role: editingUser.domainRole,
       });
     }
-  }, [editingUser]);
+  }, [editingUser, formRef]);
 
   return (
     <ModalForm<DomainUserAdd>
@@ -145,6 +160,9 @@ const Index: React.FC<IProps> = ({
               <Col flex="auto">
                 <Row>
                   <Col span={24}>
+                    <span>{editingUser.username}</span>
+                  </Col>
+                  {/* <Col span={24}>
                     <span>
                       {editingUser.realName
                         ? `${editingUser.username} (${editingUser.realName})`
@@ -156,7 +174,7 @@ const Index: React.FC<IProps> = ({
                       {(editingUser.studentId ?? '') +
                         (editingUser.email ? ` - ${editingUser.email}` : '')}
                     </span>
-                  </Col>
+                  </Col> */}
                 </Row>
               </Col>
             </Row>

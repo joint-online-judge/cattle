@@ -5,8 +5,8 @@ import ShadowCard from '@/components/ShadowCard';
 
 interface IProps {
   children: React.ReactNode | React.ReactNode[];
-  extra: React.ReactNode | React.ReactNode[]; // extra component on the side
-  position?: 'left' | 'right'; // on left or right side extra component will be placed
+  extra: React.ReactNode | React.ReactNode[]; // Extra component on the side
+  position?: 'left' | 'right'; // On left or right side extra component will be placed
 }
 
 const Index: React.FC<IProps> = ({ children, extra, position }) => {

@@ -5,55 +5,26 @@ import {
   SettingOutlined,
   TrophyOutlined,
 } from '@ant-design/icons';
-import { useRequest } from 'ahooks';
-import { Menu, message, Progress } from 'antd';
+import { Menu, Progress } from 'antd';
 import mm from 'moment';
 import React, { useEffect, useMemo, useState } from 'react';
 import { IRouteComponentProps, useIntl, useModel, useParams } from 'umi';
 import AfterDue from './AfterDue';
 import BeforeAvailable from './BeforeAvailable';
-import EditDetail from './EditDetail';
 import style from './style.less';
-import ViewDetail from './ViewDetail';
-import { Horse } from '@/utils/service';
-import SideMenuPage, { PageContent } from '@/components/SideMenuPage';
+import SideMenuPage from '@/components/SideMenuPage';
 import ShadowCard from '@/components/ShadowCard';
 
 const Index: React.FC<IRouteComponentProps> = ({ route, children }) => {
   const intl = useIntl();
   const { setHeader } = useModel('pageHeader');
   const { domain } = useModel('domain');
+  const { problemSet, fetchProblemSet, loading } = useModel('problemSet');
   const { domainUrl, problemSetId } =
     useParams<{ domainUrl: string; problemSetId: string }>();
-  const [beforeAvailable, setBeforeAvailable] = useState<boolean>(false);
-  const [afterDue, setAfterDue] = useState<boolean>(false);
-
-  const {
-    data: problemSet,
-    loading,
-    refresh: refreshProblemSet,
-  } = useRequest(
-    async () => {
-      const res = await Horse.problemSet.v1GetProblemSet(
-        domainUrl,
-        problemSetId,
-      );
-      // if (res.data.errorCode === ErrorCode.ProblemSetAfterDueError) {
-      //   setAfterDue(true);
-      // } else if (
-      //   res.data.errorCode === ErrorCode.ProblemSetBeforeAvailableError
-      // ) {
-      //   setBeforeAvailable(true);
-      // }
-
-      return res.data.data;
-    },
-    {
-      onError: () => {
-        message.error('failed to problem set info');
-      },
-    },
-  );
+  const [status, setStatus] = useState<
+    'NOT_STARTED' | 'LOCKED' | 'OVERDUE' | 'ONGOING'
+  >('ONGOING');
 
   const acRate: number = useMemo(() => {
     if (
@@ -91,11 +62,55 @@ const Index: React.FC<IRouteComponentProps> = ({ route, children }) => {
     });
   }, [breads]);
 
-  return afterDue ? (
-    <AfterDue />
-  ) : beforeAvailable ? (
-    <BeforeAvailable />
-  ) : (
+  useEffect(() => {
+    fetchProblemSet(domainUrl, problemSetId);
+    return () => {
+      fetchProblemSet(null, null);
+    };
+  }, [domainUrl, problemSetId]);
+
+  useEffect(() => {
+    const now = mm();
+    if (problemSet?.unlockAt) {
+      const unlockTime = mm(problemSet?.unlockAt);
+      if (now.isBefore(unlockTime)) {
+        setStatus('NOT_STARTED');
+        return;
+      }
+    }
+
+    if (problemSet?.lockAt) {
+      const lockTime = mm(problemSet?.lockAt);
+      if (now.isAfter(lockTime)) {
+        setStatus('LOCKED');
+        return;
+      }
+    }
+
+    if (problemSet?.dueAt) {
+      const dueTime = mm(problemSet?.dueAt);
+      if (now.isAfter(dueTime)) {
+        setStatus('OVERDUE');
+        return;
+      }
+    }
+
+    setStatus('ONGOING');
+  }, [problemSet]);
+
+  if (status === 'NOT_STARTED') {
+    return <BeforeAvailable />;
+  }
+
+  if (status === 'LOCKED') {
+    return <AfterDue />;
+  }
+
+  if (status === 'OVERDUE') {
+    return <AfterDue />;
+  }
+
+  return (
     <SideMenuPage
       route={route}
       shadowCard={false}
@@ -152,18 +167,6 @@ const Index: React.FC<IRouteComponentProps> = ({ route, children }) => {
       }
     >
       {children}
-      {/* <PageContent menuKey="detail" shadowCard={false}>
-        <ViewDetail problemSet={problemSet} loading={loading} />
-      </PageContent>
-      <PageContent menuKey="edit" shadowCard={false}>
-        <EditDetail
-          problemSet={problemSet}
-          loading={loading}
-          onUpdateSuccess={() => {
-            refreshProblemSet();
-          }}
-        />
-      </PageContent> */}
     </SideMenuPage>
   );
 };

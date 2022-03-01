@@ -5,7 +5,7 @@ import { Api } from '@/client';
 
 export const Horse = new Api({
   timeout: 10_000,
-  // transformRequest: (data, headers) => {
+  // TransformRequest: (data, headers) => {
   //   // Refer: https://github.com/axios/axios#using-applicationx-www-form-urlencoded-format
   //   if (
   //     headers &&
@@ -25,7 +25,7 @@ const throttleWarn = throttle(() => {
     message: 'Permission Denied',
     description: "You don't have the permssion of certain resources.",
   });
-}, 4500); // default duration of notification
+}, 4500); // Default duration of notification
 
 const throttleServerError = throttle(() => {
   notification.error({
@@ -58,9 +58,7 @@ const throttleRequestError = throttle(() => {
 }, 4500);
 
 Horse.instance.interceptors.response.use(
-  (response: AxiosResponse) => {
-    return response;
-  },
+  (response: AxiosResponse) => response,
   async (error: AxiosError) => {
     if (error.response) {
       if (error.response.status === 403) {

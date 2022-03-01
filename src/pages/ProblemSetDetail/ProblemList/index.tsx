@@ -1,8 +1,8 @@
 import React from 'react';
-import { List, Button, Empty, Space, Table } from 'antd';
+import { Button, Empty, Space, Table } from 'antd';
 import { history, Link, useParams, useIntl } from 'umi';
-import { isArray, isNil } from 'lodash';
-import { ProblemPreviewWithLatestRecord, RecordState } from '@/utils/service';
+import { isArray } from 'lodash';
+import { ProblemPreviewWithLatestRecord } from '@/utils/service';
 
 interface IProps {
   problems: ProblemPreviewWithLatestRecord[] | undefined;
@@ -13,20 +13,20 @@ const Index: React.FC<IProps> = ({ problems }) => {
   const { domainUrl, problemSetId } =
     useParams<{ problemSetId: string; domainUrl: string }>();
 
-  const a = (
-    <List
-      itemLayout="horizontal"
-      size="large"
-      dataSource={problems ?? []}
-      renderItem={(item) => (
-        <List.Item>
-          <Link to={`/domain/${domainUrl}/problem/${item.id ?? ''}`}>
-            <strong>{item.title}</strong>
-          </Link>
-        </List.Item>
-      )}
-    />
-  );
+  // const a = (
+  //   <List
+  //     itemLayout="horizontal"
+  //     size="large"
+  //     dataSource={problems ?? []}
+  //     renderItem={(item) => (
+  //       <List.Item>
+  //         <Link to={`/domain/${domainUrl}/problem/${item.id ?? ''}`}>
+  //           <strong>{item.title}</strong>
+  //         </Link>
+  //       </List.Item>
+  //     )}
+  //   />
+  // );
 
   const columns = [
     {

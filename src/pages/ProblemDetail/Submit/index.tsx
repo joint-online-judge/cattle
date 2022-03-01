@@ -8,7 +8,6 @@ import {
   Problem,
   ProblemSolutionSubmit,
   RecordCodeType,
-  ErrorCode,
   Horse,
 } from '@/utils/service';
 import ShadowCard from '@/components/ShadowCard';
@@ -17,7 +16,7 @@ interface IProps {
   problem: Problem | undefined;
 }
 
-const Index: React.FC<IProps> = (props) => {
+const Index: React.FC<IProps> = () => {
   const intl = useIntl();
   const { domainUrl, problemId, problemSetId } = useParams<{
     domainUrl: string;
@@ -25,19 +24,15 @@ const Index: React.FC<IProps> = (props) => {
     problemSetId?: string;
   }>();
 
-  const { data: recordResp } = useRequest(
+  const { data } = useRequest(
     async () => {
       const res = await Horse.record.v1ListRecordsInDomain(domainUrl, {
         problem: problemId,
         problemSet: problemSetId,
       });
-      return res.data;
+      return res.data?.data?.results;
     },
     {
-      onSuccess: (res) => {
-        if (res.errorCode !== ErrorCode.Success)
-          message.error('fetch submissions failed');
-      },
       onError: () => {
         message.error('fetch submissions failed');
       },
@@ -67,22 +62,11 @@ const Index: React.FC<IProps> = (props) => {
     },
   ];
 
-  const dataSource = [
-    {
-      id: '1',
-      status: 'ac',
-      memory_kb: '1kb',
-      time_ms: '1ms',
-      submit_at: '2019',
-    },
-  ];
-
   const onFinish = (values: ProblemSolutionSubmit) => {
-    console.log(values);
     Horse.problem.v1SubmitSolutionToProblem(domainUrl, problemId, values);
   };
 
-  // const languageOptions = useMemo(() => {
+  // Const languageOptions = useMemo(() => {
   //   return isArray(problem?.languages)
   //     ? problem?.languages.map((lang) => (
   //       <Select.Option value={lang} key={lang}>
@@ -104,7 +88,7 @@ const Index: React.FC<IProps> = (props) => {
           <Table
             rowKey="id"
             columns={columns}
-            dataSource={dataSource}
+            dataSource={data}
             pagination={false}
           />
         </ShadowCard>
@@ -154,9 +138,7 @@ const Index: React.FC<IProps> = (props) => {
                 </Form.Item>
                 <Form.Item
                   label={intl.formatMessage({ id: 'PROBLEM.UPLOAD_FILE' })}
-                  getValueFromEvent={({ file }) => {
-                    return file;
-                  }}
+                  getValueFromEvent={({ file }: { file: File }) => file}
                   name="file"
                   rules={[
                     {

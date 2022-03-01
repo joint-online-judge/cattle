@@ -31,8 +31,9 @@ const Index: React.FC = () => {
     },
     {
       onSuccess: (res) => {
-        if (res.errorCode !== ErrorCode.Success)
+        if (res.errorCode !== ErrorCode.Success) {
           message.error('get problem failed');
+        }
       },
       onError: () => {
         message.error('get problem failed');
@@ -69,7 +70,9 @@ const Index: React.FC = () => {
     {
       manual: true,
       onSuccess: (res) => {
-        if (res.errorCode !== ErrorCode.Success) message.error('upload failed');
+        if (res.errorCode !== ErrorCode.Success) {
+          message.error('upload failed');
+        }
       },
       onError: () => {
         message.error('upload failed');
@@ -89,7 +92,9 @@ const Index: React.FC = () => {
     {
       manual: true,
       onSuccess: (res) => {
-        if (res.errorCode !== ErrorCode.Success) message.error('commit failed');
+        if (res.errorCode !== ErrorCode.Success) {
+          message.error('commit failed');
+        }
       },
       onError: () => {
         message.error('commit failed');

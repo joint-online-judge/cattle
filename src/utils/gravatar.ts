@@ -4,7 +4,9 @@ export const gravatarImageUrl = (
   mail: string | undefined,
   size?: number | undefined,
 ): string => {
-  if (typeof mail !== 'string') return 'https://sdn.geekzu.org/avatar';
+  if (typeof mail !== 'string') {
+    return 'https://sdn.geekzu.org/avatar';
+  }
 
   const trimMail = mail.trim().toLowerCase();
   const hash = md5(trimMail);

@@ -1,29 +1,15 @@
 import React from 'react';
-import { useIntl } from 'umi';
-import {
-  message,
-  Typography,
-  Spin,
-  Button,
-  Row,
-  Col,
-  Progress,
-  Menu,
-} from 'antd';
+import { useIntl, useModel } from 'umi';
+import { Typography, Spin, Row, Col } from 'antd';
 import ProblemList from '../ProblemList';
-import { ProblemSetDetail } from '@/utils/service';
 import { VERTICAL_GUTTER } from '@/constants';
 
 import ShadowCard from '@/components/ShadowCard';
 import MarkdownRender from '@/components/MarkdownRender';
 
-interface IProps {
-  problemSet: ProblemSetDetail | undefined;
-  loading: boolean;
-}
-
-const Index: React.FC<IProps> = ({ problemSet, loading }) => {
+const Index: React.FC = () => {
   const intl = useIntl();
+  const { problemSet, loading } = useModel('problemSet');
 
   return (
     <Row gutter={VERTICAL_GUTTER}>

@@ -13,8 +13,8 @@
     "prettier": "prettier --write '**/*.{js,jsx,tsx,ts,less,md,json}'",
     "test": "umi-test",
     "test:coverage": "umi-test --coverage",
-    "lint": "xo",
-    "lint:fix": "xo --fix",
+    "lint": "xo src/**/*",
+    "lint:fix": "xo --fix src/**/*",
     "i18n": "i18next --config i18next-parser.config.js"
   },
   "gitHooks": {

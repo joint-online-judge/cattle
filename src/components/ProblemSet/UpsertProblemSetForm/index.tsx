@@ -1,13 +1,12 @@
+import React from 'react';
+import { history, useIntl } from 'umi';
+import { Col, Form, message, Row } from 'antd';
 import ProForm, {
   ProFormDateTimePicker,
   ProFormSwitch,
   ProFormText,
 } from '@ant-design/pro-form';
 import { useRequest } from 'ahooks';
-import { Col, Form, message, Row } from 'antd';
-import mm from 'moment';
-import React from 'react';
-import { history, useIntl } from 'umi';
 import {
   Horse,
   ProblemSet,
@@ -26,7 +25,7 @@ const UpsertProblemSetForm: React.FC<IProps> = (props) => {
   const { domainUrl, initialValues, onUpdateSuccess } = props;
   const intl = useIntl();
 
-  const { run: createProblemSet, loading: creatingProblemSet } = useRequest(
+  const { run: createProblemSet } = useRequest(
     async (problemSet: ProblemSetCreate) =>
       Horse.problemSet.v1CreateProblemSet(domainUrl, problemSet),
     {
@@ -44,28 +43,28 @@ const UpsertProblemSetForm: React.FC<IProps> = (props) => {
     },
   );
 
-  const { run: updateProblemSet, loading: updatingProblemSet } = useRequest(
+  const { run: updateProblemSet } = useRequest(
     async (id: string, problemSet: ProblemSetEdit) =>
       Horse.problemSet.v1UpdateProblemSet(domainUrl, id, problemSet),
     {
       manual: true,
       onSuccess: (_res) => {
-        // todo: add errCode
+        // Todo: add errCode
         message.success(intl.formatMessage({ id: 'msg.success.update' }));
-        onUpdateSuccess && onUpdateSuccess();
+        onUpdateSuccess?.();
       },
     },
   );
 
   const onFinish = async (values: ProblemSetCreate | ProblemSetEdit) => {
-    console.log(values);
-    console.log(mm(values.unlockAt));
-    initialValues?.id
-      ? await updateProblemSet(
-          initialValues?.id,
-          filterChanged(values, initialValues),
-        )
-      : await createProblemSet(values as ProblemSetCreate);
+    if (initialValues?.id) {
+      await updateProblemSet(
+        initialValues?.id,
+        filterChanged(values, initialValues),
+      );
+    } else {
+      await createProblemSet(values as ProblemSetCreate);
+    }
   };
 
   function filterChanged(

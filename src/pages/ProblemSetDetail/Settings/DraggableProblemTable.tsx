@@ -55,7 +55,9 @@ const Index: React.FC<IProps> = ({
         if (res.errorCode === ErrorCode.Success) {
           message.success('delete problem success');
           onDeleteSuccess();
-        } else message.error('delete problem failed');
+        } else {
+          message.error('delete problem failed');
+        }
       },
       onError: () => {
         message.error('delete problem failed');
@@ -78,12 +80,15 @@ const Index: React.FC<IProps> = ({
       onSuccess: (res) => {
         if (res.errorCode === ErrorCode.Success) {
           message.success('update problem success');
-        } else message.error('update problem failed');
-        onUpdateFinish(); // if update error, still need to sync with remote data
+        } else {
+          message.error('update problem failed');
+        }
+
+        onUpdateFinish(); // If update error, still need to sync with remote data
       },
       onError: () => {
         message.error('update problem failed');
-        onUpdateFinish(); // if update error, still need to sync with remote data
+        onUpdateFinish(); // If update error, still need to sync with remote data
       },
     },
   );

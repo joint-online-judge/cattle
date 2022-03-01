@@ -38,7 +38,7 @@ const Index: React.FC = () => {
         switch (res.errorCode) {
           case ErrorCode.Success: {
             message.success('join success');
-            history.push(`/domain/${domain?.url ?? domain?.id}`);
+            history.push(`/domain/${domain?.url ?? domain?.id ?? ''}`);
 
             break;
           }
@@ -102,9 +102,9 @@ const Index: React.FC = () => {
       <ShadowCard>
         <Row justify="center" className="py-12">
           <Col xxl={10} xl={10} lg={10} md={14} sm={18} xs={22}>
-            <h1 className="text-3xl">{`Join ${domain?.name}`}</h1>
+            <h1 className="text-3xl">{`Join ${domain?.name ?? ''}`}</h1>
             <p className="mb-6">
-              Fill in the invitation code to join {`${domain?.name}`}
+              Fill in the invitation code to join {domain?.name ?? ''}
             </p>
             <ProForm<FormValues>
               layout="vertical"

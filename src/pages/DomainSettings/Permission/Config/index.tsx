@@ -94,27 +94,28 @@ const Index: React.FC = () => {
         formItemProps: {
           valuePropName: 'checked',
         },
-        renderFormItem: (e) => {
-          return (
-            <Checkbox
-              onChange={(domEvent) => {
-                // @ts-expect-error
-                const row = e.entity as Record<string, string>;
-                const role = e.dataIndex as string;
-                const originDomainRole = roles.find((r) => r.role === role);
+        renderFormItem: (e) => (
+          <Checkbox
+            onChange={(domEvent) => {
+              // @ts-expect-error incomplete typings
+              const row = e.entity as Record<string, string>;
+              const role = e.dataIndex as string;
+              const originDomainRole = roles.find((r) => r.role === role);
 
-                if (originDomainRole === undefined) return;
-                updateRole(role, {
-                  permission: merge(originDomainRole.permission, {
-                    [activekey]: {
-                      [row.permission]: domEvent.target.checked,
-                    },
-                  }),
-                });
-              }}
-            />
-          );
-        },
+              if (originDomainRole === undefined) {
+                return;
+              }
+
+              updateRole(role, {
+                permission: merge(originDomainRole.permission, {
+                  [activekey]: {
+                    [row.permission]: domEvent.target.checked,
+                  },
+                }),
+              });
+            }}
+          />
+        ),
       }));
 
       roleCols.unshift({
@@ -128,15 +129,20 @@ const Index: React.FC = () => {
     }
 
     return [];
-  }, [roles, intl]);
+  }, [roles, intl, activekey, updateRole]);
 
   const categories = useMemo(() => {
-    if (!isArray(roles) || roles.length === 0) return [];
+    if (!isArray(roles) || roles.length === 0) {
+      return [];
+    }
+
     return uniq(flatten(roles.map((r) => Object.keys(r.permission))));
   }, [roles]);
 
   const dataSource: DataSourceType[] = useMemo(() => {
-    if (!isArray(roles) || roles.length === 0) return [];
+    if (!isArray(roles) || roles.length === 0) {
+      return [];
+    }
 
     const permissionGroup = groupBy(
       flatten(

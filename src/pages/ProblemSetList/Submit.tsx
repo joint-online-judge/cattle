@@ -49,19 +49,21 @@ const Index: React.FC<IProps> = (props) => {
 
   const onFinish = (values: any) => {
     Horse.problem.v1SubmitSolutionToProblem(problem?.id ?? '', values);
-    // submitProblem(problem?.id || '', values);
+    // SubmitProblem(problem?.id || '', values);
     console.log(values);
   };
 
-  const languageOptions = useMemo(() => {
-    return isArray(problem?.languages)
-      ? problem?.languages.map((lang) => (
-          <Select.Option value={lang} key={lang}>
-            {lang}
-          </Select.Option>
-        ))
-      : null;
-  }, [problem]);
+  const languageOptions = useMemo(
+    () =>
+      isArray(problem?.languages)
+        ? problem?.languages.map((lang) => (
+            <Select.Option value={lang} key={lang}>
+              {lang}
+            </Select.Option>
+          ))
+        : null,
+    [problem],
+  );
 
   return (
     <>
@@ -100,9 +102,7 @@ const Index: React.FC<IProps> = (props) => {
               </Form.Item>
               <Form.Item
                 label={intl.formatMessage({ id: 'PROBLEM.UPLOAD_FILE' })}
-                getValueFromEvent={({ file }) => {
-                  return file;
-                }}
+                getValueFromEvent={({ file }) => file}
                 name="file"
                 rules={[
                   {

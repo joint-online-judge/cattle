@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useParams, useIntl } from 'umi';
+import { useParams } from 'umi';
 import { useRequest } from 'ahooks';
 import { message, Button, Popconfirm } from 'antd';
 import ProTable, { ProColumns } from '@ant-design/pro-table';
@@ -9,7 +9,6 @@ import LoadFailResult from '@/components/LoadFailResult';
 import ShadowCard from '@/components/ShadowCard';
 
 const Index: React.FC = () => {
-  const intl = useIntl();
   const { domainUrl } = useParams<{ domainUrl: string }>();
   const [loadFailed, setLoadFailed] = useState<boolean>(false);
 
@@ -32,7 +31,10 @@ const Index: React.FC = () => {
 
   const { run: deleteRole, loading: deleting } = useRequest(
     async (role?: string) => {
-      if (typeof role !== 'string') return;
+      if (typeof role !== 'string') {
+        return;
+      }
+
       const response = await Horse.domain.v1DeleteDomainRole(domainUrl, role);
       return response.data;
     },
@@ -86,10 +88,9 @@ const Index: React.FC = () => {
           onConfirm={async () => deleteRole(role?.toString())}
           okText="Yes"
           cancelText="No"
+          key="delete"
         >
-          <Button key="delete" type="link">
-            Delete
-          </Button>
+          <Button type="link">Delete</Button>
         </Popconfirm>,
       ],
     },
@@ -113,6 +114,7 @@ const Index: React.FC = () => {
           dataSource={roles ?? []}
           toolBarRender={() => [
             <AddRoleModal
+              key="add"
               domainUrl={domainUrl}
               roles={roles}
               onSuccess={refetch}

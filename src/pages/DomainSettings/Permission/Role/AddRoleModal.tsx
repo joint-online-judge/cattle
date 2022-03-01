@@ -73,12 +73,14 @@ const Index: React.FC<IProps> = ({ domainUrl, onSuccess, roles }) => {
     return true;
   };
 
-  const options = useMemo(() => {
-    return (roles ?? []).map((role) => ({
-      label: role.role,
-      value: role.role,
-    }));
-  }, [roles]);
+  const options = useMemo(
+    () =>
+      (roles ?? []).map((role) => ({
+        label: role.role,
+        value: role.role,
+      })),
+    [roles],
+  );
 
   return (
     <ModalForm<RoleFormValue>

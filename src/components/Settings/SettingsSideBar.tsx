@@ -5,8 +5,8 @@ import ShadowCard from '@/components/ShadowCard';
 
 export interface SettingsMenuItem {
   menuKey: string;
-  i18nKey?: string; // use menuKey as default
-  text?: string; // use i18n(i18nKey) as default
+  i18nKey?: string; // Use menuKey as default
+  text?: string; // Use i18n(i18nKey) as default
   path?: string;
   node?: React.ReactNode;
   menuItemProps?: MenuItemProps;

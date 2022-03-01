@@ -28,7 +28,10 @@
     "unicorn/prevent-abbreviations": "off",
     "import/no-extraneous-dependencies": "off",
     "import/extensions": "off",
+    "import/no-unassigned-import": "off",
+    "import/no-named-as-default-member": "off",
     "@typescript-eslint/no-floating-promises": "off",
+    "node/prefer-global/process": ["error", "always"],
     "@typescript-eslint/no-unused-vars": [
       "error",
       {

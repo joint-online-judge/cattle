@@ -37,8 +37,10 @@ const Index: React.FC = () => {
     async () => {
       const response = await Horse.domain.v1ListDomainInvitations(domainUrl);
       // @chujie: there won't be many invitations. It's ok to sort at frontend.
-      if (isArray(response.data?.data?.results))
+      if (isArray(response.data?.data?.results)) {
         return response.data?.data?.results.reverse();
+      }
+
       return [];
     },
     {

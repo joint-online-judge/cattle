@@ -24,7 +24,7 @@ const Index: React.FC = () => {
     });
   }, []);
 
-  /* todo: add helper */
+  /* Todo: add helper */
   /* todo: add onChange on URL/ID field to ensure unique field */
   return (
     <Row>

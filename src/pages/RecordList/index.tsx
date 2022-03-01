@@ -11,7 +11,7 @@ import {
 } from 'antd';
 import { Horse, Domain } from '@/utils/service';
 import ShadowCard from '@/components/ShadowCard';
-// import {
+// Import {
 //   CreateDomain,
 // } from 'app/components';
 // import { DomainHomeContainer } from './DomainHomeContainer';
@@ -71,10 +71,10 @@ const Index: React.FC = () => {
       fixed: 'right',
       render: (text, record) => (
         <Space split={<Divider type="vertical" />}>
-          <Link to={`/domain/${record.url}`}>
+          <Link to={`/domain/${record.url ?? ''}`}>
             {intl.formatMessage({ id: 'VISIT' })}
           </Link>
-          <Link to={`/domain/${record.url}/settings`}>
+          <Link to={`/domain/${record.url ?? ''}/settings`}>
             {intl.formatMessage({ id: 'MANAGE' })}
           </Link>
         </Space>

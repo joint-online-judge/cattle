@@ -18,8 +18,13 @@ const Index: React.FC<IProps> = (props) => {
 
   const { data, run, loading } = useRequest(
     async (query: string) => {
-      if (typeof query !== 'string') return [];
-      if (query.length < 2) return [];
+      if (typeof query !== 'string') {
+        return [];
+      }
+
+      if (query.length < 2) {
+        return [];
+      }
 
       const response = await Horse.domain.v1SearchDomainCandidates(domainUrl, {
         query,
@@ -35,8 +40,8 @@ const Index: React.FC<IProps> = (props) => {
     },
   );
 
-  const renderOptions = (userList: UserWithDomainRole[] | undefined) => {
-    return (userList ?? []).map((u) => (
+  const renderOptions = (userList: UserWithDomainRole[] | undefined) =>
+    (userList ?? []).map((u) => (
       <Option
         label={`${u.username} (${u.realName})`}
         value={u.id}
@@ -74,7 +79,6 @@ const Index: React.FC<IProps> = (props) => {
         </Row>
       </Option>
     ));
-  };
 
   return (
     <Select<string>

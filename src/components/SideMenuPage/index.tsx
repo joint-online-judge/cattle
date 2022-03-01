@@ -13,11 +13,11 @@ import { VERTICAL_GUTTER } from '@/constants';
 interface IProps {
   menuItems?: SettingsMenuItem[];
   menu?: React.ReactElement<MenuProps>;
-  extra?: React.ReactElement | React.ReactNode; // extra component below SideBar
+  extra?: React.ReactElement | React.ReactNode; // Extra component below SideBar
   defaultTab?: string;
   route?: IRoute;
-  routerMode?: 'param' | 'query'; // use query string or parameters
-  matchMode?: 'route' | 'children'; // use nested router or matching children directly
+  routerMode?: 'param' | 'query'; // Use query string or parameters
+  matchMode?: 'route' | 'children'; // Use nested router or matching children directly
   shadowCard?: boolean;
   children: React.ReactElement | Array<React.ReactElement<PageContentProps>>;
 }
@@ -39,10 +39,13 @@ const Index: React.FC<IProps> = ({
   const [key, setKey] = useState<string>(
     (() => {
       if (routerMode === 'query' && isArray(children)) {
-        if (location.query?.tab && typeof location.query?.tab === 'string')
+        if (location.query?.tab && typeof location.query?.tab === 'string') {
           return location.query?.tab;
+        }
 
-        if (defaultTab) return defaultTab;
+        if (defaultTab) {
+          return defaultTab;
+        }
 
         const firstValidChild = children.find((o) => o.props.menuKey);
         return firstValidChild?.props?.menuKey ?? '';
@@ -53,7 +56,9 @@ const Index: React.FC<IProps> = ({
   );
 
   const finalMenuItems = useMemo<SettingsMenuItem[]>(() => {
-    if (menuItems) return menuItems;
+    if (menuItems) {
+      return menuItems;
+    }
 
     if (matchMode === 'children') {
       return React.Children.map(
@@ -75,7 +80,7 @@ const Index: React.FC<IProps> = ({
       ).filter((o) => Boolean(o));
     }
 
-    // else if matchMode === 'route'
+    // Else if matchMode === 'route'
     const items =
       route?.routes
         ?.map((r) => {
@@ -118,8 +123,10 @@ const Index: React.FC<IProps> = ({
 
   const mainContent = useMemo(() => {
     if (matchMode === 'children') {
-      if (isArray(children))
+      if (isArray(children)) {
         return children.find((o) => o.props.menuKey === key) ?? null;
+      }
+
       return children;
     }
 

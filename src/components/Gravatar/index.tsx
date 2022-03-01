@@ -5,7 +5,7 @@ import { gravatarImageUrl } from '@/utils';
 
 export interface GravatarProps extends AvatarProps {
   src?: string;
-  gravatar?: string; // if gravatar is set, use gravatar regardless of src
+  gravatar?: string; // If gravatar is set, use gravatar regardless of src
 }
 
 const Index: React.FC<GravatarProps> = (props) => {

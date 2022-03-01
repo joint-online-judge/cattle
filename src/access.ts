@@ -17,7 +17,7 @@ function permissions(initialState: InitialState) {
   };
 
   if (user?.role === 'root') {
-    // root shall have all permission
+    // Root shall have all permission
     return mapValues(perms, () => true);
   }
 
