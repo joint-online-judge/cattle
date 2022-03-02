@@ -29,14 +29,12 @@ const Index: React.FC<IProps> = (props) => {
       const response = await Horse.domain.v1SearchDomainCandidates(domainUrl, {
         query,
       });
-      return response.data.data?.results || [];
+      return response.data.data?.results ?? [];
     },
     {
       manual: true,
       debounceInterval: 500,
       refreshDeps: [domainUrl],
-      onSuccess: () => {},
-      onError: () => {},
     },
   );
 

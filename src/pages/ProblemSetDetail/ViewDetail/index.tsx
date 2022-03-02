@@ -16,6 +16,7 @@ const Index: React.FC = () => {
       {problemSet?.content ? (
         <Col span={24}>
           <ShadowCard
+            loading={loading}
             title={intl.formatMessage({ id: 'PROBLEM_SET.INTRODUCTION' })}
           >
             <Spin spinning={!problemSet}>

@@ -46,7 +46,6 @@ const routes: IRoute[] = [
         ],
       },
       {
-        exact: true,
         path: '/settings',
         redirect: '/settings/general',
       },
@@ -77,27 +76,22 @@ const routes: IRoute[] = [
               {
                 path: '/domain/:domainUrl/settings/profile',
                 component: '@/pages/DomainSettings/Profile',
-                menuKey: 'profile',
               },
               {
                 path: '/domain/:domainUrl/settings/invitation',
                 component: '@/pages/DomainSettings/Invitation',
-                menuKey: 'invitation',
               },
               {
                 path: '/domain/:domainUrl/settings/member',
                 component: '@/pages/DomainSettings/Member',
-                menuKey: 'member',
               },
               {
                 path: '/domain/:domainUrl/settings/permission/role',
                 component: '@/pages/DomainSettings/Permission/Role',
-                menuKey: 'permission',
               },
               {
                 path: '/domain/:domainUrl/settings/permission/config',
                 component: '@/pages/DomainSettings/Permission/Config',
-                menuKey: 'permission',
               },
               {
                 path: '/domain/:domainUrl/settings/permission',
@@ -152,17 +146,37 @@ const routes: IRoute[] = [
           },
 
           {
-            path: '/domain/:domainUrl/problem/:problemId/settings',
-            component: '@/pages/ProblemConfig',
-          },
-          {
             path: '/domain/:domainUrl/problem/:problemId/:tab?',
             component: '@/pages/ProblemDetail',
+            routes: [
+              {
+                path: '/domain/:domainUrl/problem/:problemId/detail',
+                component: '@/pages/ProblemDetail/Detail',
+              },
+              {
+                path: '/domain/:domainUrl/problem/:problemId/submit',
+                component: '@/pages/ProblemDetail/Submit',
+              },
+              {
+                path: '/domain/:domainUrl/problem/:problemId/edit',
+                component: '@/pages/ProblemDetail/Edit',
+              },
+              {
+                path: '/domain/:domainUrl/problem/:problemId/settings',
+                component: '@/pages/ProblemDetail/Settings',
+              },
+              {
+                path: '/domain/:domainUrl/problem/:problemId',
+                component: '@/pages/ProblemDetail/Detail',
+              },
+              { component: '@/pages/NotFound' },
+            ],
           },
           {
             path: '/domain/:domainUrl/problem',
             component: '@/pages/ProblemList',
           },
+
           {
             path: '/domain/:domainUrl',
             component: '@/pages/DomainHome',

@@ -11,14 +11,14 @@ import { MenuOutlined, EyeInvisibleOutlined } from '@ant-design/icons';
 import ProTable, { ProColumns } from '@ant-design/pro-table';
 import { arrayMoveImmutable } from '@ant-design/pro-utils';
 import Horse, {
-  ProblemPreviewWithRecordState,
+  ProblemPreviewWithLatestRecord,
   ProblemSetUpdateProblem,
   ErrorCode,
 } from '@/utils/service';
 import './style.less';
 
 interface IProps {
-  problems: ProblemPreviewWithRecordState[];
+  problems: ProblemPreviewWithLatestRecord[];
   loading: boolean;
   onUpdateFinish: () => void;
   onDeleteSuccess: () => void;
@@ -38,7 +38,7 @@ const Index: React.FC<IProps> = ({
   const { domainUrl, problemSetId } =
     useParams<{ domainUrl: string; problemSetId: string }>();
   const [dataSource, setDataSource] =
-    useState<ProblemPreviewWithRecordState[]>(problems);
+    useState<ProblemPreviewWithLatestRecord[]>(problems);
 
   const { run: removeProblem, loading: removing } = useRequest(
     async (problemId: string) => {
@@ -93,7 +93,7 @@ const Index: React.FC<IProps> = ({
     },
   );
 
-  const columns: Array<ProColumns<ProblemPreviewWithRecordState>> = [
+  const columns: Array<ProColumns<ProblemPreviewWithLatestRecord>> = [
     {
       title: '排序',
       dataIndex: 'sort',
@@ -183,7 +183,7 @@ const Index: React.FC<IProps> = ({
   }, [problems]);
 
   return (
-    <ProTable<ProblemPreviewWithRecordState>
+    <ProTable<ProblemPreviewWithLatestRecord>
       columns={columns}
       dataSource={dataSource}
       rowKey="id"

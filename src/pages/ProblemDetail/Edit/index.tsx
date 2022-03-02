@@ -1,23 +1,21 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useParams } from 'umi';
-import { Problem } from '@/client';
+import ProblemContext from '../context';
 import { UpsertProblemForm } from '@/components/Problem/UpsertProblemForm';
+import ShadowCard from '@/components/ShadowCard';
 
-interface ProblemHomeProps {
-  problem: Problem | undefined;
-  onUpdateSuccess: (problem: Problem) => void;
-}
-
-const Index: React.FC<ProblemHomeProps> = (props) => {
-  const { problem, onUpdateSuccess } = props;
+const Index: React.FC = () => {
   const { domainUrl } = useParams<{ domainUrl: string }>();
+  const problemContext = useContext(ProblemContext);
 
   return (
-    <UpsertProblemForm
-      domainUrl={domainUrl}
-      initialValues={problem}
-      onUpdateSuccess={onUpdateSuccess}
-    />
+    <ShadowCard>
+      <UpsertProblemForm
+        domainUrl={domainUrl}
+        initialValues={problemContext?.problem}
+        onUpdateSuccess={problemContext?.refresh}
+      />
+    </ShadowCard>
   );
 };
 
