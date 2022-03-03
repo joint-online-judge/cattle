@@ -6,8 +6,14 @@ jobs:
   lint:
     runs-on: ubuntu-20.04
     steps:
-      - name: Lint with xo.js
-        uses: stoe/xo-action@v1.0.1
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      - name: Use Node.js 14
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+          cache: yarn
+      - run: yarn lint
   build:
     runs-on: ubuntu-20.04
     steps:
