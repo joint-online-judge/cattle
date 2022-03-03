@@ -79,7 +79,7 @@ const Index: React.FC<IRouteComponentProps> = ({ route, children }) => {
       routes: breads,
       title: problemResp?.data?.title,
     });
-  }, [breads, problemResp]);
+  }, [breads, setHeader, problemResp]);
 
   return (
     <ProblemContext.Provider
@@ -134,26 +134,6 @@ const Index: React.FC<IRouteComponentProps> = ({ route, children }) => {
           </ShadowCard>
         }
       >
-        {/* <PageContent menuKey="detail" i18nKey="PROBLEM.SUBMIT_CODE">
-          <Detail problem={problemResp?.data?.data} />
-        </PageContent>
-        <PageContent
-          menuKey="submit"
-          i18nKey="PROBLEM.SUBMIT_CODE"
-          shadowCard={false}
-        >
-          <Submit problem={problemResp?.data?.data} />
-        </PageContent>
-        <PageContent
-          menuKey="edit"
-          i18nKey="PROBLEM.EDIT"
-          cardProps={{ title: intl.formatMessage({ id: 'PROBLEM.EDIT' }) }}
-        >
-          <Edit
-            problem={problemResp?.data?.data}
-            onUpdateSuccess={refreshProblem}
-          />
-        </PageContent> */}
         {children}
       </SideMenuPage>
     </ProblemContext.Provider>

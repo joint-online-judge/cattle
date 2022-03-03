@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { List, message, Skeleton, Badge } from 'antd';
 import { Link } from 'umi';
 import { useRequest } from 'ahooks';
@@ -6,27 +6,23 @@ import mm from 'moment';
 import Horse from '@/utils/service';
 
 interface IProps {
-  domainId: string;
+  domainUrl: string;
 }
 
-const Index: React.FC<IProps> = ({ domainId }) => {
-  const {
-    data: problemSets,
-    run,
-    loading,
-  } = useRequest(
+const Index: React.FC<IProps> = ({ domainUrl }) => {
+  const { data: problemSets, loading } = useRequest(
     async () => {
-      if (!domainId) {
+      if (!domainUrl) {
         return [];
       }
 
-      const res = await Horse.problemSet.v1ListProblemSets(domainId, {
+      const res = await Horse.problemSet.v1ListProblemSets(domainUrl, {
         ordering: '-created_at',
       });
       return res?.data?.data?.results ?? [];
     },
     {
-      manual: true,
+      refreshDeps: [domainUrl],
       onError: () => {
         message.error('failed to fetch problem sets');
       },
@@ -60,10 +56,6 @@ const Index: React.FC<IProps> = ({ domainId }) => {
     return <Badge status="processing" text="Ongoing" />;
   };
 
-  useEffect(() => {
-    run();
-  }, [domainId]);
-
   return (
     <>
       <List
@@ -82,7 +74,7 @@ const Index: React.FC<IProps> = ({ domainId }) => {
             <Skeleton title={false} loading={loading} active>
               <List.Item.Meta
                 title={
-                  <Link to={`/domain/${domainId}/problem-set/${item.id}`}>
+                  <Link to={`/domain/${domainUrl}/problem-set/${item.id}`}>
                     <h2 className="text-2xl font-light">{item.title}</h2>
                   </Link>
                 }

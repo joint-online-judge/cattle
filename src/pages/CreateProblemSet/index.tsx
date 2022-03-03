@@ -18,7 +18,7 @@ const Index: React.FC = () => {
         path: 'create-problem-set',
       },
     ],
-    [domain],
+    [domainUrl, domain?.name],
   );
 
   useEffect(() => {
@@ -26,7 +26,7 @@ const Index: React.FC = () => {
       routes: breads,
       titleI18nKey: 'PROBLEM_SET.CREATE.TITLE',
     });
-  }, [breads]);
+  }, [breads, setHeader]);
 
   return (
     <SidePage extra={<h1>Side</h1>}>

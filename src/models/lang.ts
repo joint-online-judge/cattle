@@ -9,13 +9,10 @@ export default function LangModel() {
   const [currentLang, setCurrentLang] = useState<string>(getLocale());
   const allLang = getAllLocales(); // No plural because of spell checking
 
-  const switchLang = useCallback(
-    (lang: string) => {
-      setCurrentLang(lang);
-      setLocale(lang, false);
-    },
-    [allLang],
-  );
+  const switchLang = useCallback((lang: string) => {
+    setCurrentLang(lang);
+    setLocale(lang, false);
+  }, []);
 
   return {
     allLang,

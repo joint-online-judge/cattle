@@ -14,7 +14,7 @@ const Index: React.FC = ({ children }) => {
     return () => {
       fetchDomain(null); // Clear the current model
     };
-  }, []);
+  }, [domainUrl, fetchDomain]);
 
   if (!domainLoading && errorCode) {
     let errorTitle: string;

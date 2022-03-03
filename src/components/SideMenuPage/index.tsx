@@ -4,21 +4,18 @@ import { useLocation, history, Location, useParams, IRoute } from 'umi';
 import { Row, Col, MenuProps } from 'antd';
 import { isArray } from 'lodash';
 import PageContent, { PageContentProps } from './PageContent';
-import SettingsSideBar, {
-  SettingsMenuItem,
-} from '@/components/Settings/SettingsSideBar';
+import SettingsSideBar from '@/components/Settings/SettingsSideBar';
 import ShadowCard from '@/components/ShadowCard';
 import { VERTICAL_GUTTER } from '@/constants';
 
 interface IProps {
-  menuItems?: SettingsMenuItem[];
-  menu?: React.ReactElement<MenuProps>;
+  menu?: React.ReactElement<MenuProps>; // The side menu component (will override all other options)
   extra?: React.ReactElement | React.ReactNode; // Extra component below SideBar
-  defaultTab?: string;
-  route?: IRoute;
-  routerMode?: 'param' | 'query'; // Use query string or parameters
+  defaultTab?: string; // Default tab of menu
+  route?: IRoute; // Route match object from parent components (in props of a layout component)
+  routerMode?: 'param' | 'query'; // Use query string or route parameters
   matchMode?: 'route' | 'children'; // Use nested router or matching children directly
-  shadowCard?: boolean;
+  shadowCard?: boolean; // Whether to wrap the children with ShadowCard automatically
   children: React.ReactElement | Array<React.ReactElement<PageContentProps>>;
 }
 
@@ -27,7 +24,6 @@ const Index: React.FC<IProps> = ({
   extra,
   route,
   defaultTab = '',
-  menuItems,
   menu,
   routerMode = 'param',
   matchMode = 'route',
@@ -38,6 +34,14 @@ const Index: React.FC<IProps> = ({
 
   const [key, setKey] = useState<string>(
     (() => {
+      /**
+       * Init the menu key.
+       * If routerMode is 'query', the key should be loaded from the url query string.
+       * @example /domain/test/settings?tab=profile --> tab='profile'
+       * Note: 'query' mode won't support subTab.
+       * If routerMode is 'param', the key should be loaded from the url parameter.
+       * @example /domain/test/settings/permission/config --> tab='permission', subTab='config'
+       */
       if (routerMode === 'query' && isArray(children)) {
         if (location.query?.tab && typeof location.query?.tab === 'string') {
           return location.query?.tab;
@@ -55,49 +59,11 @@ const Index: React.FC<IProps> = ({
     })(),
   );
 
-  const finalMenuItems = useMemo<SettingsMenuItem[]>(() => {
-    if (menuItems) {
-      return menuItems;
-    }
-
-    if (matchMode === 'children') {
-      return React.Children.map(
-        children,
-        (child: React.ReactElement<PageContentProps>) => {
-          if (typeof child === 'object' && child?.props?.menuKey) {
-            return {
-              menuKey: child.props.menuKey,
-              i18nKey: child.props.i18nKey,
-              text: child.props.text,
-              path: child.props.path,
-              node: child.props.node,
-              menuItemProps: child.props.menuItemProps,
-            };
-          }
-
-          return undefined;
-        },
-      ).filter((o) => Boolean(o));
-    }
-
-    // Else if matchMode === 'route'
-    const items =
-      route?.routes
-        ?.map((r) => {
-          if (r.unaccessible !== true && r.menuKey) {
-            return {
-              menuKey: r.menuKey,
-              i18nKey: r.i18nKey,
-              text: r.text,
-              path: r.path,
-            };
-          }
-        })
-        .filter((o) => Boolean(o)) || [];
-
-    return items as SettingsMenuItem[];
-  }, [children, menuItems, matchMode]);
-
+  /**
+   * Menu click event: click the menu items will change the url.
+   * @example /domain/test/settings?tab=profile --> /domain/test/settings?tab=member
+   * @example /domain/test/settings/profile --> /domain/test/settings/member
+   */
   const menuOnClick: MenuProps['onClick'] = useCallback(
     (event: { key: string; keyPath: string[] }) => {
       const [newTab, newSubTab] = event.keyPath.reverse();
@@ -108,7 +74,7 @@ const Index: React.FC<IProps> = ({
           pathname: location.pathname,
           query: { tab: newTab, subTab: newSubTab },
         });
-      } else if (route && route.path) {
+      } else if (route?.path) {
         history.push(
           generatePath(route.path, {
             ...parameters,
@@ -118,7 +84,7 @@ const Index: React.FC<IProps> = ({
         );
       }
     },
-    [routerMode, history, location, route],
+    [routerMode, location, route, parameters],
   );
 
   const mainContent = useMemo(() => {
@@ -143,34 +109,28 @@ const Index: React.FC<IProps> = ({
     }
 
     return shadowCard ? <ShadowCard>{children}</ShadowCard> : children;
-  }, [children]);
+  }, [children, matchMode, key, shadowCard]);
 
   return (
-    <>
-      <Row
-        gutter={[
-          { xs: 16, sm: 16, lg: 24, xl: 24, xxl: 24 },
-          VERTICAL_GUTTER[1],
-        ]}
-      >
-        <Col xs={24} sm={24} md={8} lg={7} xl={7} xxl={6}>
-          <Row gutter={VERTICAL_GUTTER}>
-            <Col span={24}>
-              <SettingsSideBar
-                menu={menu}
-                items={finalMenuItems}
-                selectedKeys={[key]}
-                onClick={menuOnClick}
-              />
-            </Col>
-            <Col span={24}>{extra}</Col>
-          </Row>
-        </Col>
-        <Col xs={24} sm={24} md={16} lg={17} xl={17} xxl={18}>
-          {mainContent}
-        </Col>
-      </Row>
-    </>
+    <Row
+      gutter={[{ xs: 16, sm: 16, lg: 24, xl: 24, xxl: 24 }, VERTICAL_GUTTER[1]]}
+    >
+      <Col xs={24} sm={24} md={8} lg={7} xl={7} xxl={6}>
+        <Row gutter={VERTICAL_GUTTER}>
+          <Col span={24}>
+            <SettingsSideBar
+              menu={menu}
+              selectedKeys={[key]}
+              onClick={menuOnClick}
+            />
+          </Col>
+          <Col span={24}>{extra}</Col>
+        </Row>
+      </Col>
+      <Col xs={24} sm={24} md={16} lg={17} xl={17} xxl={18}>
+        {mainContent}
+      </Col>
+    </Row>
   );
 };
 

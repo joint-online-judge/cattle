@@ -37,7 +37,7 @@ const Index: React.FC<IRouteComponentProps> = ({ children, route }) => {
       routes: breads,
       titleI18nKey: 'SETTINGS.DOMAIN',
     });
-  }, [breads]);
+  }, [breads, setHeader]);
 
   return (
     <>

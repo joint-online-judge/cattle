@@ -8,7 +8,8 @@ const Index: React.FC = () => {
   // Todo: replace with user profile
   useEffect(() => {
     removeHeader();
-  }, []);
+  }, [removeHeader]);
+
   return (
     <SidePage position="left" extra={<ProfileCard />}>
       test

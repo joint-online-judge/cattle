@@ -15,8 +15,7 @@ import { useIntl } from 'umi';
 const Index: React.FC = () => {
   const [form] = Form.useForm();
   const intl = useIntl();
-  const onFinish = (values: any) => {
-    console.log(values);
+  const onFinish = (_values: any) => {
     // Settings.updateDisplaySettings(values);
   };
 

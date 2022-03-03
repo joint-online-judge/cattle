@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
   Row,
@@ -126,15 +126,15 @@ const Index: React.FC = () => {
           message.error(t('Login.msg.oauthFailed'));
         }
       },
-      onError: (error) => {
-        console.error(error);
+      onError: () => {
+        message.error(t('Login.msg.oauthFailed'));
       },
     },
   );
 
   const loading = registering || simpleLogining || oauthLogining;
 
-  const renderOAuthButtons = useCallback(() => {
+  const oauthButtons = useMemo(() => {
     if (discovering) {
       return null;
     }
@@ -163,7 +163,7 @@ const Index: React.FC = () => {
     }
 
     return null;
-  }, [discovering, oauths, loading]);
+  }, [discovering, oauths, oauthLogining, oauthLogin, t]);
 
   return (
     <Row justify="center" style={{ height: '100vh' }}>
@@ -299,7 +299,7 @@ const Index: React.FC = () => {
             </>
           )}
         </Form>
-        <Spin spinning={discovering}>{renderOAuthButtons()}</Spin>
+        <Spin spinning={discovering}>{oauthButtons}</Spin>
       </Col>
     </Row>
   );

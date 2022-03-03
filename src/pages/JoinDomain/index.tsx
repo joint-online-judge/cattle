@@ -77,7 +77,7 @@ const Index: React.FC = () => {
         path: 'join',
       },
     ],
-    [domain],
+    [domainUrl, domain],
   );
 
   useEffect(() => {
@@ -85,13 +85,13 @@ const Index: React.FC = () => {
       routes: breads,
       titleI18nKey: 'domain.invitation.join',
     });
-  }, [breads]);
+  }, [breads, setHeader]);
 
   useEffect(() => {
     if (location.query?.code && typeof location.query?.code === 'string') {
       joinDomain(location.query?.code);
     }
-  }, [location]);
+  }, [location, joinDomain]);
 
   const onFinish = async (values: FormValues) => {
     await joinDomain(values.code);

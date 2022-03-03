@@ -1,10 +1,9 @@
 import React, { useMemo, useEffect } from 'react';
-import { useIntl, useParams, useModel } from 'umi';
+import { useParams, useModel } from 'umi';
 import { UpsertProblemForm } from '@/components/Problem';
 import SidePage from '@/components/SidePage';
 
 const Index: React.FC = () => {
-  const intl = useIntl();
   const { domain } = useModel('domain');
   const { domainUrl } = useParams<{ domainUrl: string }>();
   const { setHeader } = useModel('pageHeader');
@@ -19,7 +18,7 @@ const Index: React.FC = () => {
         path: 'create-problem',
       },
     ],
-    [domain],
+    [domainUrl, domain?.name],
   );
 
   useEffect(() => {
@@ -27,9 +26,7 @@ const Index: React.FC = () => {
       routes: breads,
       titleI18nKey: 'PROBLEM.CREATE.TITLE',
     });
-  }, [breads]);
-
-  intl.formatMessage({ id: 'PROBLEM.CREATE.TITLE' });
+  }, [breads, setHeader]);
 
   return (
     <SidePage extra={<h1>Side</h1>}>

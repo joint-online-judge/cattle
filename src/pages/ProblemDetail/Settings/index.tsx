@@ -25,18 +25,16 @@ const Index: React.FC = () => {
   const problemContext = useContext(ProblemContext);
 
   const { run: downloadConfig } = useRequest(
-    async () => {
-      const res = await Horse.problemConfig.v1DownloadProblemConfigArchive(
+    async () =>
+      Horse.problemConfig.v1DownloadProblemConfigArchive(
         domainUrl,
         problemId,
         'latest',
-      );
-      return res.data.data;
-    },
+      ),
     {
       manual: true,
-      onError: (res) => {
-        console.log('get problem fail', res);
+      onError: () => {
+        message.error('download failed');
       },
     },
   );
@@ -100,7 +98,7 @@ const Index: React.FC = () => {
         breadcrumbName: problemContext?.problem?.title,
       },
     ],
-    [domainUrl, domain, problemContext],
+    [domainUrl, domain, problemContext?.problem],
   );
 
   useEffect(() => {
@@ -108,7 +106,7 @@ const Index: React.FC = () => {
       routes: breads,
       titleI18nKey: 'PROBLEM.SETTINGS',
     });
-  }, [breads]);
+  }, [breads, setHeader]);
 
   const onFinish = async (values: FormValues) => {
     if (values?.file[0]?.originFileObj) {

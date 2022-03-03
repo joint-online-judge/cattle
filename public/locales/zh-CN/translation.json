@@ -1,4 +1,8 @@
 {
+  "CopyablePre": {
+    "copySuccess": "",
+    "copyFailed": ""
+  },
   "Login": {
     "msg": {
       "registerSuccess": "注册成功",
@@ -31,6 +35,13 @@
     "typePasswordAgain": "请再次输入密码",
     "email": "邮箱",
     "registerNow": "注册"
+  },
+  "Logout": {
+    "msg": {
+      "logoutSuccess": "",
+      "logoutFailed": "",
+      "loggingOut": ""
+    }
   },
   "USER": {
     "PROFILE": "我的资料",

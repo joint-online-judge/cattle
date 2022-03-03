@@ -66,7 +66,7 @@ const Index: React.FC = () => {
         isNil,
       ),
     );
-  }, [initialState]);
+  }, [initialState, form]);
 
   return (
     <Row justify="center" style={{ height: '100vh' }}>

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import { Route } from 'antd/es/breadcrumb/Breadcrumb';
 
 type BasicHeader = {
@@ -19,15 +19,15 @@ export default function PageHeaderModel() {
   const [header, setHeaderValue] = useState<BasicHeader>({});
   const [headerVisible, setHeaderVisible] = useState<boolean>(false);
 
-  const removeHeader = () => {
+  const removeHeader = useCallback(() => {
     setHeaderValue({});
     setHeaderVisible(false);
-  };
+  }, []);
 
-  const setHeader = (h: BasicHeader) => {
+  const setHeader = useCallback((h: BasicHeader) => {
     setHeaderValue(h);
     setHeaderVisible(true);
-  };
+  }, []);
 
   return {
     header,

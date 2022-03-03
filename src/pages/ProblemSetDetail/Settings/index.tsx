@@ -71,7 +71,7 @@ const Index: React.FC = () => {
         path: 'settings',
       },
     ],
-    [domain, problemSet],
+    [domainUrl, domain?.name, problemSetId, problemSet?.title],
   );
 
   useEffect(() => {
@@ -79,7 +79,7 @@ const Index: React.FC = () => {
       routes: breads,
       titleI18nKey: 'problem_set.side_menu.settings',
     });
-  }, [breads]);
+  }, [breads, setHeader]);
 
   return (
     <Row gutter={VERTICAL_GUTTER}>

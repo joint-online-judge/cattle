@@ -102,7 +102,7 @@ const Index: React.FC = () => {
         </>
       </Menu>
     );
-  }, [domainUrl]);
+  }, [domainUrl, current, access.isRoot, intl]);
 
   return (
     <ShadowCard bodyStyle={{ paddingTop: 0, paddingBottom: 0 }}>

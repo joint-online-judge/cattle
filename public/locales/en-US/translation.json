@@ -1,4 +1,8 @@
 {
+  "CopyablePre": {
+    "copySuccess": "",
+    "copyFailed": ""
+  },
   "Login": {
     "msg": {
       "registerSuccess": "Register success",
@@ -31,6 +35,13 @@
     "typePasswordAgain": "Please type your password again",
     "email": "Email",
     "registerNow": "Register Now"
+  },
+  "Logout": {
+    "msg": {
+      "logoutSuccess": "",
+      "logoutFailed": "",
+      "loggingOut": ""
+    }
   },
   "USER": {
     "PROFILE": "Profile",

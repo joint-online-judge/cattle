@@ -100,7 +100,7 @@ const Index: React.FC<IProps> = ({
     if (editingInvitation) {
       formRef?.current?.setFieldsValue(editingInvitation);
     }
-  }, [editingInvitation]);
+  }, [editingInvitation, formRef]);
 
   return (
     <ModalForm<DomainInvitation>

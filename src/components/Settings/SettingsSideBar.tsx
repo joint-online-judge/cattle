@@ -13,7 +13,7 @@ export interface SettingsMenuItem {
 }
 
 export interface SettingsSideBarProps extends MenuProps {
-  items: SettingsMenuItem[];
+  items?: SettingsMenuItem[];
   menu?: React.ReactElement<MenuProps>;
 }
 
@@ -21,15 +21,11 @@ const Index: React.FC<SettingsSideBarProps> = (props) => {
   const intl = useIntl();
   const { items, menu, ...otherProps } = props;
 
-  return (
-    <ShadowCard
-      bodyStyle={{ padding: 0 }}
-      style={{ overflow: 'hidden' }}
-      className="settings-side-bar"
-    >
-      {menu ? (
-        React.cloneElement<MenuProps>(menu, { ...otherProps })
-      ) : (
+  const renderMenu = () => {
+    if (menu) return React.cloneElement<MenuProps>(menu, { ...otherProps });
+
+    if (items) {
+      return (
         <Menu mode="inline" {...otherProps}>
           {items.map((item) => (
             <Fragment key={`${item.menuKey}-fragment`}>
@@ -42,7 +38,19 @@ const Index: React.FC<SettingsSideBarProps> = (props) => {
             </Fragment>
           ))}
         </Menu>
-      )}
+      );
+    }
+
+    return null;
+  };
+
+  return (
+    <ShadowCard
+      bodyStyle={{ padding: 0 }}
+      style={{ overflow: 'hidden' }}
+      className="settings-side-bar"
+    >
+      {renderMenu()}
     </ShadowCard>
   );
 };

@@ -41,6 +41,7 @@ const Index: React.FC<IProps> = (props) => {
   const renderOptions = (userList: UserWithDomainRole[] | undefined) =>
     (userList ?? []).map((u) => (
       <Option
+        key={u.id}
         label={`${u.username} (${u.realName})`}
         value={u.id}
         disabled={Boolean(u.domainRole)}

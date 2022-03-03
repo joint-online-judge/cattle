@@ -89,7 +89,7 @@ const Index: React.FC = () => {
       routes: breads,
       titleI18nKey: 'problem.problems',
     });
-  }, [breads]);
+  }, [breads, setHeader]);
 
   return (
     <ShadowCard

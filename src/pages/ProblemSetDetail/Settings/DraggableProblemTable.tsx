@@ -24,6 +24,7 @@ interface IProps {
   onDeleteSuccess: () => void;
 }
 
+// eslint-disable-next-line new-cap
 const DragHandle = SortableHandle(() => (
   <MenuOutlined style={{ cursor: 'grab', color: '#999' }} />
 ));
@@ -108,7 +109,9 @@ const Index: React.FC<IProps> = ({
       render: (_, record) => (
         <Space>
           <Link
-            to={`/domain/${domain?.url}/problem/${record.url ?? record.id}`}
+            to={`/domain/${domain?.url ?? ''}/problem/${
+              record.url ?? record.id
+            }`}
           >
             {record.title}
           </Link>
@@ -137,7 +140,9 @@ const Index: React.FC<IProps> = ({
     },
   ];
 
+  // eslint-disable-next-line new-cap
   const SortableItem = SortableElement((props: any) => <tr {...props} />);
+  // eslint-disable-next-line new-cap
   const SortContainer = SortableContainer((props: any) => <tbody {...props} />);
 
   const onSortEnd = ({
@@ -171,11 +176,8 @@ const Index: React.FC<IProps> = ({
   );
 
   const DraggableBodyRow = (props: any) => {
-    const { className, style, ...restProps } = props;
-    const index = dataSource.findIndex(
-      (x) => x.id === restProps['data-row-key'],
-    );
-    return <SortableItem index={index} {...restProps} />;
+    const index = dataSource.findIndex((x) => x.id === props['data-row-key']);
+    return <SortableItem index={index} {...props} />;
   };
 
   useEffect(() => {

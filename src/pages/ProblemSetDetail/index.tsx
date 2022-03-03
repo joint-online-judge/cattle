@@ -52,7 +52,7 @@ const Index: React.FC<IRouteComponentProps> = ({ route, children }) => {
         path: problemSetId,
       },
     ],
-    [domain, problemSet],
+    [domainUrl, domain?.name, problemSetId],
   );
 
   useEffect(() => {
@@ -60,14 +60,14 @@ const Index: React.FC<IRouteComponentProps> = ({ route, children }) => {
       routes: breads,
       title: problemSet?.title,
     });
-  }, [breads]);
+  }, [breads, setHeader, problemSet?.title]);
 
   useEffect(() => {
     fetchProblemSet(domainUrl, problemSetId);
     return () => {
       fetchProblemSet(null, null);
     };
-  }, [domainUrl, problemSetId]);
+  }, [domainUrl, problemSetId, fetchProblemSet]);
 
   useEffect(() => {
     const now = mm();

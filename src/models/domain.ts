@@ -58,14 +58,14 @@ export default function DomainModel() {
     {
       manual: true,
       onSuccess: (res) => {
-        // @ts-expect-error
-        setInitialState({
-          ...initialState,
-          domainPermission: {
-            role: res?.role,
-            permission: res?.permission,
-          },
-        }); // For access.ts to get permissions
+        setInitialState(
+          Object.assign({}, initialState, {
+            domainPermission: {
+              role: res?.role,
+              permission: res?.permission,
+            },
+          }),
+        ); // For access.ts to get permissions
       },
       onError: (error) => {
         if ((error as AxiosError)?.response?.status === 403) {

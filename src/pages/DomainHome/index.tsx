@@ -14,7 +14,7 @@ const Index: React.FC = () => {
 
   useEffect(() => {
     removeHeader();
-  }, []);
+  }, [removeHeader]);
 
   return (
     <ShadowCard
@@ -35,7 +35,7 @@ const Index: React.FC = () => {
       }
       bodyStyle={{ padding: 0 }}
     >
-      <ProblemSetList domainId={domainUrl} />
+      <ProblemSetList domainUrl={domainUrl} />
     </ShadowCard>
   );
 };

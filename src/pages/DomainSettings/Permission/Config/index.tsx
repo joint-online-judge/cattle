@@ -144,7 +144,11 @@ const Index: React.FC = () => {
       return [];
     }
 
-    const permissionGroup = groupBy(
+    // FIXME: maybe simpler implementation for better readability?
+    const permissionGroup: Record<
+      string,
+      Array<{ permName: string; roleValue: [string, boolean] }>
+    > = groupBy(
       flatten(
         roles
           .map((r) => ({
