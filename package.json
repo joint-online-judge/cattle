@@ -1,13 +1,14 @@
 {
   "private": true,
   "scripts": {
-    "gen:api": "swagger-typescript-api --axios --module-name-first-tag -p http://localhost:34765/api/v1/openapi.json -o ./src/client -n index.ts",
+    "gen:api": "swagger-typescript-api --axios --module-name-first-tag -p ./openapi/openapi.json -o ./src/client -n index.ts",
+    "gen:api-dev": "swagger-typescript-api --axios --module-name-first-tag -p http://localhost:34765/api/v1/openapi.json -o ./src/client -n index.ts",
     "gen:api-staging": "swagger-typescript-api --axios --module-name-first-tag -p http://nichujie.xyz/api/v1/openapi.json -o ./src/client -n index.ts",
-    "prestart": "npm run gen:api",
+    "prestart": "npm run gen:api-dev",
     "prestart:staging": "npm run gen:api-staging",
     "start": "cross-env MOCK=none UMI_ENV=dev HOST=127.0.0.1 umi dev",
     "start:staging": "cross-env MOCK=none UMI_ENV=staging umi dev",
-    "prebuild": "npm run gen:api-staging",
+    "prebuild": "npm run gen:api",
     "build": "cross-env UMI_ENV=prod umi build",
     "postinstall": "umi generate tmp",
     "prettier": "prettier --write '**/*.{js,jsx,tsx,ts,less,md,json}'",
