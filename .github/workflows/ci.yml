@@ -13,6 +13,7 @@ jobs:
         with:
           node-version: '14'
           cache: yarn
+      - run: yarn install
       - run: yarn lint
   build:
     runs-on: ubuntu-20.04
