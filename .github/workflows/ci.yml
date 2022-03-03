@@ -1,8 +1,13 @@
 name: CI/CD
 
-on: [ push ]
+on: [ push, pull_request ]
 
 jobs:
+  lint:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Lint with xo.js
+        uses: stoe/xo-action@v1.0.1
   build:
     runs-on: ubuntu-20.04
     steps:
