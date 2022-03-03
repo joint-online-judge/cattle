@@ -1,9 +1,9 @@
-name: CI/CD
+name: Build Test
 
-on: [ push ]
+on: [ pull_request ]
 
 jobs:
-  lint:
+  build:
     runs-on: ubuntu-20.04
     steps:
       - name: Checkout repository
@@ -18,5 +18,4 @@ jobs:
         run: |
           git submodule update --init --recursive
           git submodule update --recursive --remote
-      - run: yarn gen:api
-      - run: yarn lint
+      - run: yarn build
