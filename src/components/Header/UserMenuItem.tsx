@@ -44,55 +44,61 @@ export const Index: React.FC<IProps> = ({ mini = false }) => {
         </Link>
       </Menu.Item>
       <Menu.Divider key="divider-3" />
-      {access.isRoot
-        ? <>
+      {access.isRoot ? (
+        <>
           <Menu.Item key="menu.admin" icon={<ApartmentOutlined />}>
             <Link to="/admin">{intl.formatMessage({ id: 'menu.admin' })}</Link>
           </Menu.Item>
           <Menu.Divider key="divider-5" />
         </>
-        : null}
+      ) : null}
       <Menu.Item key="USER.LOG_OUT" icon={<LogoutOutlined />} danger>
         <Link to={'/logout'}>{intl.formatMessage({ id: 'USER.LOG_OUT' })}</Link>
       </Menu.Item>
     </Menu>
   );
 
-  return initialState?.user ? (
-    <>
-      <Dropdown
-        trigger={['click']}
-        overlay={subMenu}
-        placement="bottomRight"
-        arrow
-      >
-        <Row align="middle" gutter={8}>
-          <Col>
-            <Gravatar gravatar={initialState?.user?.gravatar} size={40} />
-          </Col>
-          {mini ? null :
+  if (initialState?.user) {
+    return (
+      <>
+        <Dropdown
+          trigger={['click']}
+          overlay={subMenu}
+          placement="bottomRight"
+          arrow
+        >
+          <Row align="middle" gutter={8}>
             <Col>
-                <span className="text-base">
-                  {initialState?.user.realName || initialState?.user.username}
-                </span>
+              <Gravatar gravatar={initialState?.user?.gravatar} size={40} />
             </Col>
-          }
-        </Row>
-      </Dropdown>
-      <Modal
-        title={intl.formatMessage({ id: 'SETTINGS.SWITCH_LANG' })}
-        visible={modalVisible}
-        onOk={() => {
-          setModalVisible(false);
-        }}
-        onCancel={() => {
-          setModalVisible(false);
-        }}
-      >
-        <LangSelect style={{ width: '50%' }} />
-      </Modal>
-    </>
-  ) : (
+            {mini ? null : (
+              <Col>
+                <span className="text-base">
+                  {initialState?.user?.realName?.length
+                    ? initialState?.user?.realName
+                    : initialState?.user.username}
+                </span>
+              </Col>
+            )}
+          </Row>
+        </Dropdown>
+        <Modal
+          title={intl.formatMessage({ id: 'SETTINGS.SWITCH_LANG' })}
+          visible={modalVisible}
+          onOk={() => {
+            setModalVisible(false);
+          }}
+          onCancel={() => {
+            setModalVisible(false);
+          }}
+        >
+          <LangSelect style={{ width: '50%' }} />
+        </Modal>
+      </>
+    );
+  }
+
+  return (
     <Link to={`/login?from=${location.pathname}`}>
       {intl.formatMessage({ id: 'USER.LOGIN.JACCOUNT_LOG_IN' })}
     </Link>

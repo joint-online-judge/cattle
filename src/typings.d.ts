@@ -1,9 +1,9 @@
 interface ProTablePagination {
-    pageSize?: number;
-    current?: number;
+	pageSize?: number;
+	current?: number;
 }
 
 interface HorsePagination {
-    offset?: number;
-    limit?: number
+	offset?: number;
+	limit?: number;
 }

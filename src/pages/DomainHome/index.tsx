@@ -2,8 +2,9 @@ import React, { useEffect } from 'react';
 import { Button } from 'antd';
 import { Access, history, useAccess, useIntl, useModel, useParams } from 'umi';
 import { PlusOutlined } from '@ant-design/icons';
-import ProblemSetList from './ProblemSetList';
+import ProblemSetList from '@/components/ProblemSetList';
 import ShadowCard from '@/components/ShadowCard';
+import './style.less';
 
 const Index: React.FC = () => {
   const intl = useIntl();
@@ -13,10 +14,11 @@ const Index: React.FC = () => {
 
   useEffect(() => {
     removeHeader();
-  }, []);
+  }, [removeHeader]);
 
   return (
     <ShadowCard
+      className="domainHomeProblemSetCard"
       title={intl.formatMessage({ id: 'PROBLEM_SET.PROBLEM_SET' })}
       extra={
         <Access accessible={access.canCreateProblemSet}>
@@ -33,9 +35,8 @@ const Index: React.FC = () => {
       }
       bodyStyle={{ padding: 0 }}
     >
-      <ProblemSetList domainId={domainUrl} />
+      <ProblemSetList domainUrl={domainUrl} />
     </ShadowCard>
-
   );
 };
 

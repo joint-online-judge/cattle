@@ -1,0 +1,210 @@
+{
+  "CopyablePre": {
+    "copySuccess": "",
+    "copyFailed": ""
+  },
+  "Login": {
+    "msg": {
+      "registerSuccess": "Register success",
+      "incompleteInfo": "Incomplete info",
+      "usernameEmailUsed": "Username or email alread registered",
+      "registerFailed": "Register failed",
+      "loginSuccess": "Login success",
+      "wrongUsernamePassword": "Wrong username or password",
+      "loginFailed": "Login failed",
+      "redirecting": "Redirecting...",
+      "oauthFailed": "OAuth failed"
+    },
+    "signInWith": "Sign in with {{name}}",
+    "thirdPartyAuth": "Third Party Auth",
+    "signInToJOJ": "Sign in to JOJ",
+    "newGeneration": "New generation of Online Judge",
+    "login": "Login",
+    "register": "Register",
+    "username": "Username",
+    "valid": {
+      "username": "Please input username",
+      "password": "Please input password",
+      "confirmPassword": "Please confirm password"
+    },
+    "password": "Password",
+    "forgotPassword": "Forgot password",
+    "signIn": "Sign In",
+    "confirmPassword": "Confirm Password",
+    "passwordNotMatch": "The two passwords that you entered do not match",
+    "typePasswordAgain": "Please type your password again",
+    "email": "Email",
+    "registerNow": "Register Now"
+  },
+  "Logout": {
+    "msg": {
+      "logoutSuccess": "",
+      "logoutFailed": "",
+      "loggingOut": ""
+    }
+  },
+  "USER": {
+    "PROFILE": "Profile",
+    "LOGIN": {
+      "JACCOUNT_LOG_IN": "jAccount Login",
+      "REDIRECTING": "Redirecting to the login page..."
+    },
+    "LOG_OUT": "Log out"
+  },
+  "DOMAIN": {
+    "DOMAINS": "Domains",
+    "SETTINGS": "Settings",
+    "NEW_DOMAIN": "New Domain",
+    "LEAVE": "Leave",
+    "CREATE_A_NEW_DOMAIN": "Create a new domain",
+    "CREATE": {
+      "NAME": "Name",
+      "URL": "Url (ID)",
+      "GRAVATAR": "Gravatar Email",
+      "BULLETIN": "Bulletin"
+    },
+    "HOME": {
+      "ASSIGNMENTS": "Assignments",
+      "PROBLEMS": "Problems",
+      "MEMBERS": "Members",
+      "SETTINGS": "Settings"
+    }
+  },
+  "domain": {
+    "create": {
+      "tag": "Tag"
+    },
+    "invitation": {
+      "join": "Join Domain",
+      "code": "Invitation Code"
+    }
+  },
+  "problem": {
+    "problems": "Problems"
+  },
+  "PROBLEM": {
+    "CREATE": {
+      "TITLE": "Create Problem",
+      "FORM": {
+        "CONTENT": "Description",
+        "HIDDEN": "Hidden",
+        "URL": "Problem URL"
+      }
+    },
+    "LANGUAGES": "Languages",
+    "SUBMIT": "Submit",
+    "STATUS": "Status",
+    "PROBLEM_GROUP": "Problem Group",
+    "OWNER": "Created By",
+    "HOME": "View Problem",
+    "SUBMIT_CODE": "Submit Code",
+    "EDIT": "Edit Problem",
+    "SETTINGS": "Judge Settings",
+    "RECENT_RECORD": "Recent Records",
+    "UPLOAD_FILE": "Upload Code File",
+    "UPLOAD_HELP_CLICK": "Upload File",
+    "UPLOAD_HELP_DRAG": "Or drag your file to this area",
+    "MEMORY_KB": "Peak Memory",
+    "TIME_MS": "Total Time",
+    "SUBMIT_AT": "Submit At"
+  },
+  "PROBLEM_SET": {
+    "PROBLEM_SET": "Problem Set",
+    "INTRODUCTION": "Introduction",
+    "CREATE": {
+      "FORM": {
+        "CONTENT": "Description",
+        "HIDDEN": "Hidden",
+        "SCOREBOARD_HIDDEN": "Hide Scoreboard",
+        "UNLOCK_AT": "Unlock Time",
+        "DUE_AT": "Due Time",
+        "LOCK_AT": "Lock Time",
+        "URL": "Problem Set URL"
+      },
+      "TITLE": "Create Problem Set"
+    }
+  },
+  "problem_set": {
+    "side_menu": {
+      "detail": "View Detail",
+      "scoreboard": "Scoreboard",
+      "system_test": "Judge and Export",
+      "edit": "Edit Basic Info",
+      "settings": "Problem Settings"
+    }
+  },
+  "SETTINGS": {
+    "SETTINGS": "Settings",
+    "GENERAL_SETTINGS": "General",
+    "ACCOUNT_SETTINGS": "Account",
+    "SECURITY_SETTINGS": "Security",
+    "I18N_LANG": "Language",
+    "TIMEZONE": "Timezone",
+    "SWITCH_LANG": "Language",
+    "UPDATE_SETTINGS": "Update Settings",
+    "DISPLAY_SETTINGS": "Display Settings",
+    "DOMAIN": "Settings"
+  },
+  "settings": {
+    "domain": {
+      "permission": {
+        "config": "Permission Control",
+        "role": "Role Management"
+      }
+    }
+  },
+  "admin": {
+    "menu": {
+      "domain": "Domain Manage"
+    }
+  },
+  "FOOTER": {
+    "ABOUT": "About",
+    "API": "API",
+    "DOCS": "Docs",
+    "ISSUE": "Issue",
+    "CONTACT": "Contact"
+  },
+  "zh-CN": "简体中文",
+  "en-US": "English",
+  "form": {
+    "input_placeholder": "Please enter",
+    "select_placeholder": "Please select",
+    "domain_candidate_search": {
+      "placeholder": "search by username/email/student ID/real name"
+    },
+    "domain_role_select": {
+      "placeholder": "please select a role",
+      "error_placeholder": "load options failed"
+    }
+  },
+  "msg": {
+    "success": {
+      "fetch": "fetch successfully",
+      "create": "create successfully",
+      "update": "update successfully",
+      "delete": "delete successfully",
+      "fetch_item": "fetch {data} successfully",
+      "create_item": "create {data} successfully",
+      "update_item": "update {data} successfully",
+      "delete_item": "delete {data} successfully"
+    },
+    "error": {
+      "fetch": "fetch failed",
+      "create": "create failed",
+      "update": "update failed",
+      "delete": "delete failed",
+      "fetch_item": "failed to fetch {data}",
+      "create_item": "failed to create {data}",
+      "update_item": "failed to update {data}",
+      "delete_item": "failed to delete {data}"
+    }
+  },
+  "menu": {
+    "domain": "Domains",
+    "admin": "Site Manage",
+    "domain_manage": "Domain Manage",
+    "problem_list": "Problems",
+    "problem_set": "Problem Sets"
+  }
+}

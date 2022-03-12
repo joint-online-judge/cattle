@@ -1,14 +1,11 @@
-import axios, { AxiosResponse, AxiosError } from 'axios';
+import { AxiosResponse, AxiosError } from 'axios';
 import { notification } from 'antd';
 import { throttle } from 'lodash';
 import { Api } from '@/client';
 
-// @ts-ignore
-import qs from 'qs';
-
 export const Horse = new Api({
-  timeout: 10000,
-  // transformRequest: (data, headers) => {
+  timeout: 10_000,
+  // TransformRequest: (data, headers) => {
   //   // Refer: https://github.com/axios/axios#using-applicationx-www-form-urlencoded-format
   //   if (
   //     headers &&
@@ -28,7 +25,7 @@ const throttleWarn = throttle(() => {
     message: 'Permission Denied',
     description: "You don't have the permssion of certain resources.",
   });
-}, 4500); // default duration of notification
+}, 4500); // Default duration of notification
 
 const throttleServerError = throttle(() => {
   notification.error({
@@ -61,9 +58,7 @@ const throttleRequestError = throttle(() => {
 }, 4500);
 
 Horse.instance.interceptors.response.use(
-  (response: AxiosResponse) => {
-    return response;
-  },
+  (response: AxiosResponse) => response,
   async (error: AxiosError) => {
     if (error.response) {
       if (error.response.status === 403) {
@@ -80,6 +75,7 @@ Horse.instance.interceptors.response.use(
     } else {
       throttleRequestError(); // Sending Error: caused by code
     }
+
     return Promise.reject(error);
   },
 );

@@ -9,13 +9,13 @@ import {
   ProFormSelect,
   ProFormText,
 } from '@ant-design/pro-form';
+import { useRequest } from 'ahooks';
 import {
   Horse,
   DomainRoleCreate,
   ErrorCode,
   DomainRole,
 } from '@/utils/service';
-import { useRequest } from 'ahooks';
 
 interface IProps extends ModalFormProps {
   domainUrl: string;
@@ -45,6 +45,7 @@ const Index: React.FC<IProps> = ({ domainUrl, onSuccess, roles }) => {
         } else {
           message.success('add user success');
         }
+
         onSuccess();
       },
       onError: () => {
@@ -72,12 +73,14 @@ const Index: React.FC<IProps> = ({ domainUrl, onSuccess, roles }) => {
     return true;
   };
 
-  const options = useMemo(() => {
-    return (roles || []).map((role) => ({
-      label: role.role,
-      value: role.role,
-    }));
-  }, [roles]);
+  const options = useMemo(
+    () =>
+      (roles ?? []).map((role) => ({
+        label: role.role,
+        value: role.role,
+      })),
+    [roles],
+  );
 
   return (
     <ModalForm<RoleFormValue>

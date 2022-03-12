@@ -3,11 +3,6 @@ import { useParams, useIntl } from 'umi';
 import { useRequest } from 'ahooks';
 import { message, Checkbox, Form } from 'antd';
 import { EditableProTable, ProColumns } from '@ant-design/pro-table';
-import Horse, {
-  DomainPermission,
-  DomainRoleEdit,
-  ErrorCode,
-} from '@/utils/service';
 import {
   isArray,
   toPairs,
@@ -17,6 +12,11 @@ import {
   groupBy,
   merge,
 } from 'lodash';
+import Horse, {
+  DomainPermission,
+  DomainRoleEdit,
+  ErrorCode,
+} from '@/utils/service';
 import LoadFailResult from '@/components/LoadFailResult';
 import ShadowCard from '@/components/ShadowCard';
 
@@ -74,6 +74,7 @@ const Index: React.FC = () => {
         } else {
           message.error('update failed');
         }
+
         refetch();
       },
       onError: () => {
@@ -83,9 +84,9 @@ const Index: React.FC = () => {
     },
   );
 
-  const columns: ProColumns<DataSourceType>[] = useMemo(() => {
+  const columns: Array<ProColumns<DataSourceType>> = useMemo(() => {
     if (isArray(roles)) {
-      const roleCols: ProColumns<DataSourceType>[] = roles.map((role) => ({
+      const roleCols: Array<ProColumns<DataSourceType>> = roles.map((role) => ({
         title: role.role,
         width: 60,
         dataIndex: role.role,
@@ -93,27 +94,28 @@ const Index: React.FC = () => {
         formItemProps: {
           valuePropName: 'checked',
         },
-        renderFormItem: (e) => {
-          return (
-            <Checkbox
-              onChange={(domEvent) => {
-                // @ts-ignore
-                const row = e.entity as Record<string, string>;
-                const role = e.dataIndex as string;
-                const originDomainRole = roles.find((r) => r.role === role);
+        renderFormItem: (e) => (
+          <Checkbox
+            onChange={(domEvent) => {
+              // @ts-expect-error incomplete typings
+              const row = e.entity as Record<string, string>;
+              const role = e.dataIndex as string;
+              const originDomainRole = roles.find((r) => r.role === role);
 
-                if (originDomainRole === undefined) return;
-                updateRole(role, {
-                  permission: merge(originDomainRole.permission, {
-                    [activekey]: {
-                      [row.permission]: domEvent.target.checked,
-                    },
-                  }),
-                });
-              }}
-            />
-          );
-        },
+              if (originDomainRole === undefined) {
+                return;
+              }
+
+              updateRole(role, {
+                permission: merge(originDomainRole.permission, {
+                  [activekey]: {
+                    [row.permission]: domEvent.target.checked,
+                  },
+                }),
+              });
+            }}
+          />
+        ),
       }));
 
       roleCols.unshift({
@@ -127,17 +129,26 @@ const Index: React.FC = () => {
     }
 
     return [];
-  }, [roles, intl]);
+  }, [roles, intl, activekey, updateRole]);
 
   const categories = useMemo(() => {
-    if (!isArray(roles) || roles.length == 0) return [];
+    if (!isArray(roles) || roles.length === 0) {
+      return [];
+    }
+
     return uniq(flatten(roles.map((r) => Object.keys(r.permission))));
   }, [roles]);
 
   const dataSource: DataSourceType[] = useMemo(() => {
-    if (!isArray(roles) || roles.length == 0) return [];
+    if (!isArray(roles) || roles.length === 0) {
+      return [];
+    }
 
-    const permissionGroup = groupBy(
+    // FIXME: maybe simpler implementation for better readability?
+    const permissionGroup: Record<
+      string,
+      Array<{ permName: string; roleValue: [string, boolean] }>
+    > = groupBy(
       flatten(
         roles
           .map((r) => ({

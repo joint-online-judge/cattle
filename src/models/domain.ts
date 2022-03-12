@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { AxiosError } from 'axios';
 import { useModel } from 'umi';
 import { useRequest } from 'ahooks';
-import { message } from 'antd';
 import Horse, { ErrorCode } from '@/utils/service';
 
 /**
@@ -38,12 +37,12 @@ export default function DomainModel() {
           'me',
         );
 
-        if (perm.data.errorCode !== ErrorCode.Success) {
-          // Note: possible that user is root but not in the domain
-          setErrorCode(perm.data.errorCode);
-        } else {
+        if (perm.data.errorCode === ErrorCode.Success) {
           // All requests succeeded
           setErrorCode(undefined);
+        } else {
+          // Note: possible that user is root but not in the domain
+          setErrorCode(perm.data.errorCode);
         }
 
         return {
@@ -51,25 +50,25 @@ export default function DomainModel() {
           role: perm.data.data?.role,
           permission: perm.data.data?.permission,
         };
-      } else {
-        setDomainUrl(undefined);
-        return undefined;
       }
+
+      setDomainUrl(undefined);
+      return undefined;
     },
     {
       manual: true,
       onSuccess: (res) => {
-        // @ts-ignore
-        setInitialState({
-          ...initialState,
-          domainPermission: {
-            role: res?.role,
-            permission: res?.permission,
-          },
-        }); // For access.ts to get permissions
+        setInitialState(
+          Object.assign({}, initialState, {
+            domainPermission: {
+              role: res?.role,
+              permission: res?.permission,
+            },
+          }),
+        ); // For access.ts to get permissions
       },
-      onError: (err) => {
-        if ((err as AxiosError)?.response?.status === 403) {
+      onError: (error) => {
+        if ((error as AxiosError)?.response?.status === 403) {
           setErrorCode(403);
         }
       },

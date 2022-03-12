@@ -27,12 +27,10 @@ export interface IProps {
 export const UpsertProblemForm: React.FC<IProps> = (props) => {
   const { domainUrl, initialValues, onCreateSuccess, onUpdateSuccess } = props;
   const intl = useIntl();
-  const languageOptions = SUPPORT_PROGRAMMING_LANGUAGE.map((lang) => {
-    return {
-      label: lang,
-      value: lang,
-    };
-  });
+  const languageOptions = SUPPORT_PROGRAMMING_LANGUAGE.map((lang) => ({
+    label: lang,
+    value: lang,
+  }));
 
   const { run: createProblem } = useRequest(
     async (problem: ProblemCreate) =>
@@ -44,7 +42,7 @@ export const UpsertProblemForm: React.FC<IProps> = (props) => {
           message.error('problem url not unique');
         } else if (res?.data?.data?.id) {
           message.success(intl.formatMessage({ id: 'msg.success.create' }));
-          onCreateSuccess && onCreateSuccess(res.data.data);
+          if (onCreateSuccess) onCreateSuccess(res.data.data);
           history.push(
             `/domain/${domainUrl}/problem/${
               res.data.data.url ?? res.data.data.id
@@ -65,7 +63,7 @@ export const UpsertProblemForm: React.FC<IProps> = (props) => {
           message.error('problem url not unique');
         } else if (res.data.data) {
           message.success(intl.formatMessage({ id: 'msg.success.update' }));
-          onUpdateSuccess && onUpdateSuccess(res.data.data);
+          if (onUpdateSuccess) onUpdateSuccess(res.data.data);
           history.push(
             `/domain/${domainUrl}/problem/${
               res.data.data?.url ?? res.data.data?.id
@@ -77,9 +75,9 @@ export const UpsertProblemForm: React.FC<IProps> = (props) => {
   );
 
   const onFinish = async (values: Partial<Problem>) => {
-    initialValues?.id
-      ? await updateProblem(initialValues?.id, values)
-      : await createProblem(values as ProblemCreate);
+    await (initialValues?.id
+      ? updateProblem(initialValues.id, values)
+      : createProblem(values as ProblemCreate));
   };
 
   return (

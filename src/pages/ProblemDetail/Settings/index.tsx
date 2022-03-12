@@ -1,63 +1,45 @@
-import React, { useRef, useMemo, useEffect } from 'react';
-import { Tooltip, Space, Button, message } from 'antd';
+import React, { useRef, useMemo, useEffect, useContext } from 'react';
+import { Button, message } from 'antd';
 import { UploadFile } from 'antd/lib/upload/interface';
-import { useIntl, useParams, useModel, useAccess, Link, history } from 'umi';
+import { useIntl, useParams, useModel } from 'umi';
 import { useRequest } from 'ahooks';
 import ProForm, {
   ProFormInstance,
   ProFormUploadButton,
 } from '@ant-design/pro-form';
-import { EyeInvisibleOutlined } from '@ant-design/icons';
-import { Horse, Problem, FileUpload, ErrorCode } from '@/utils/service';
+import ProblemContext from '../context';
+import Horse, { FileUpload, ErrorCode } from '@/utils/service';
 import ShadowCard from '@/components/ShadowCard';
 
 interface FormValues {
-  file: Array<UploadFile>;
+  file: UploadFile[];
 }
 
 const Index: React.FC = () => {
   const intl = useIntl();
-  const access = useAccess();
   const { domain } = useModel('domain');
   const { setHeader } = useModel('pageHeader');
   const { domainUrl, problemId } =
     useParams<{ domainUrl: string; problemId: string }>();
   const formRef = useRef<ProFormInstance<FormValues>>();
+  const problemContext = useContext(ProblemContext);
 
-  const { data: problemResp, refresh: refreshProblem } = useRequest(
-    async () => {
-      const res = await Horse.problem.v1GetProblem(domainUrl, problemId);
-      return res.data;
-    },
-    {
-      onSuccess: (res) => {
-        if (res.errorCode !== ErrorCode.Success)
-          message.error('get problem failed');
-      },
-      onError: () => {
-        message.error('get problem failed');
-      },
-    },
-  );
-
-  const { run: downloadConfig, loading: downloading } = useRequest(
-    async () => {
-      const res = await Horse.problemConfig.v1DownloadProblemConfigArchive(
+  const { run: downloadConfig } = useRequest(
+    async () =>
+      Horse.problemConfig.v1DownloadProblemConfigArchive(
         domainUrl,
         problemId,
         'latest',
-      );
-      return res.data.data;
-    },
+      ),
     {
       manual: true,
-      onError: (res) => {
-        console.log('get problem fail', res);
+      onError: () => {
+        message.error('download failed');
       },
     },
   );
 
-  const { run: uploadConfig, loading: uploading } = useRequest(
+  const { run: uploadConfig } = useRequest(
     async (values: FileUpload) => {
       const res = await Horse.problemConfig.v1UpdateProblemConfigByArchive(
         problemId,
@@ -69,7 +51,9 @@ const Index: React.FC = () => {
     {
       manual: true,
       onSuccess: (res) => {
-        if (res.errorCode !== ErrorCode.Success) message.error('upload failed');
+        if (res.errorCode !== ErrorCode.Success) {
+          message.error('upload failed');
+        }
       },
       onError: () => {
         message.error('upload failed');
@@ -77,7 +61,7 @@ const Index: React.FC = () => {
     },
   );
 
-  const { run: commit, loading: commiting } = useRequest(
+  const { run: commit } = useRequest(
     async () => {
       const res = await Horse.problemConfig.v1CommitProblemConfig(
         problemId,
@@ -89,7 +73,9 @@ const Index: React.FC = () => {
     {
       manual: true,
       onSuccess: (res) => {
-        if (res.errorCode !== ErrorCode.Success) message.error('commit failed');
+        if (res.errorCode !== ErrorCode.Success) {
+          message.error('commit failed');
+        }
       },
       onError: () => {
         message.error('commit failed');
@@ -108,11 +94,11 @@ const Index: React.FC = () => {
         breadcrumbI18nKey: 'problem.problems',
       },
       {
-        path: problemResp?.data?.title ?? 'null',
-        breadcrumbName: problemResp?.data?.title,
+        path: problemContext?.problem?.title ?? 'null',
+        breadcrumbName: problemContext?.problem?.title,
       },
     ],
-    [domainUrl, domain, problemResp],
+    [domainUrl, domain, problemContext?.problem],
   );
 
   useEffect(() => {
@@ -120,7 +106,7 @@ const Index: React.FC = () => {
       routes: breads,
       titleI18nKey: 'PROBLEM.SETTINGS',
     });
-  }, [breads]);
+  }, [breads, setHeader]);
 
   const onFinish = async (values: FormValues) => {
     if (values?.file[0]?.originFileObj) {

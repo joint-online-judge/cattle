@@ -7,11 +7,11 @@ import {
   LockOutlined,
   TeamOutlined,
 } from '@ant-design/icons';
+import style from './style.css';
 import { gravatarImageUrl } from '@/utils';
 import SideMenuPage from '@/components/SideMenuPage';
 import ShadowCard from '@/components/ShadowCard';
 import MarkdownRender from '@/components/MarkdownRender';
-import style from './style.css';
 
 const Index: React.FC<IRouteComponentProps> = ({ children, route }) => {
   const intl = useIntl();
@@ -37,7 +37,7 @@ const Index: React.FC<IRouteComponentProps> = ({ children, route }) => {
       routes: breads,
       titleI18nKey: 'SETTINGS.DOMAIN',
     });
-  }, [breads]);
+  }, [breads, setHeader]);
 
   return (
     <>

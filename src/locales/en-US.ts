@@ -1,5 +1,5 @@
 export default {
-  // lower-case noun
+  // Lower-case noun
   domain: 'domain',
   // Simple Noun
   DOMAIN: 'Domain',

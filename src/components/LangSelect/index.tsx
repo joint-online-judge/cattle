@@ -16,12 +16,14 @@ const Index: React.FC<IProps> = (props) => {
   const { currentLang, switchLang, allLang } = useModel('lang');
   const intl = useIntl();
 
-  const options = React.useMemo(() => {
-    return (allLang || []).map((lang) => ({
-      label: `${intl.formatMessage({ id: lang })} (${lang})`,
-      value: lang,
-    }));
-  }, [allLang, intl]);
+  const options = React.useMemo(
+    () =>
+      (allLang || []).map((lang) => ({
+        label: `${intl.formatMessage({ id: lang })} (${lang})`,
+        value: lang,
+      })),
+    [allLang, intl],
+  );
 
   const onValueChange = (value: string, options: any) => {
     if (onChange) {

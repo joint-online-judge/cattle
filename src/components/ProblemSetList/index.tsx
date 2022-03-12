@@ -1,31 +1,28 @@
-import React, { useEffect } from 'react';
-import { List, message, Typography, Skeleton, Progress, Badge } from 'antd';
+import React from 'react';
+import { List, message, Skeleton, Badge } from 'antd';
 import { Link } from 'umi';
 import { useRequest } from 'ahooks';
 import mm from 'moment';
 import Horse from '@/utils/service';
 
 interface IProps {
-  domainId: string;
+  domainUrl: string;
 }
 
-const { Title } = Typography;
-
-const Index: React.FC<IProps> = ({ domainId }) => {
-  const {
-    data: problemSets,
-    run,
-    loading,
-  } = useRequest(
+const Index: React.FC<IProps> = ({ domainUrl }) => {
+  const { data: problemSets, loading } = useRequest(
     async () => {
-      if (!domainId) return [];
-      const res = await Horse.problemSet.v1ListProblemSets(domainId, {
+      if (!domainUrl) {
+        return [];
+      }
+
+      const res = await Horse.problemSet.v1ListProblemSets(domainUrl, {
         ordering: '-created_at',
       });
       return res?.data?.data?.results ?? [];
     },
     {
-      manual: true,
+      refreshDeps: [domainUrl],
       onError: () => {
         message.error('failed to fetch problem sets');
       },
@@ -52,10 +49,6 @@ const Index: React.FC<IProps> = ({ domainId }) => {
       return <Badge status="error" text="Ended" />;
     }
 
-    if (lockAt && now > lockAt) {
-      return <Badge status="error" text="Ended" />;
-    }
-
     if (dueAt && now > dueAt) {
       return <Badge status="warning" text="Overdue" />;
     }
@@ -63,16 +56,17 @@ const Index: React.FC<IProps> = ({ domainId }) => {
     return <Badge status="processing" text="Ongoing" />;
   };
 
-  useEffect(() => {
-    run();
-  }, [domainId]);
-
   return (
     <>
       <List
         itemLayout="horizontal"
         size="large"
+        loading={loading}
         dataSource={problemSets ?? []}
+        pagination={{
+          position: 'bottom',
+          pageSize: 5,
+        }}
         renderItem={(item) => (
           <List.Item
             actions={[getStatusBadge(item.unlockAt, item.dueAt, item.lockAt)]}
@@ -80,7 +74,7 @@ const Index: React.FC<IProps> = ({ domainId }) => {
             <Skeleton title={false} loading={loading} active>
               <List.Item.Meta
                 title={
-                  <Link to={`/domain/${domainId}/problem-set/${item.id}`}>
+                  <Link to={`/domain/${domainUrl}/problem-set/${item.id}`}>
                     <h2 className="text-2xl font-light">{item.title}</h2>
                   </Link>
                 }

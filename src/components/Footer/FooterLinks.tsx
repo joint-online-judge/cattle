@@ -42,19 +42,17 @@ const Index: React.FC = () => {
   return (
     <Row>
       <Space split={<Divider type="vertical" />} wrap={true} size="small">
-        {items.map((item) => {
-          return (
-            <div key={`${item.name}${item.path}`}>
-              {item.external ? (
-                <a href={item.path}>{intl.formatMessage({ id: item.name })}</a>
-              ) : (
-                <Link to={item.path}>
-                  {intl.formatMessage({ id: item.name })}
-                </Link>
-              )}
-            </div>
-          );
-        })}
+        {items.map((item) => (
+          <div key={`${item.name}${item.path}`}>
+            {item.external ? (
+              <a href={item.path}>{intl.formatMessage({ id: item.name })}</a>
+            ) : (
+              <Link to={item.path}>
+                {intl.formatMessage({ id: item.name })}
+              </Link>
+            )}
+          </div>
+        ))}
         <Typography.Link
           href="https://github.com/joint-online-judge"
           target="_blank"

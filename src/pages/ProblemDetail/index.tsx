@@ -9,40 +9,48 @@ import {
   ReadOutlined,
   EditOutlined,
 } from '@ant-design/icons';
-import { Horse } from '@/utils/service';
-import SideMenuPage, { PageContent } from '@/components/SideMenuPage';
+import ProblemContext from './context';
+import Horse, { ErrorCode } from '@/utils/service';
+import SideMenuPage from '@/components/SideMenuPage';
 import ShadowCard from '@/components/ShadowCard';
 import Gravatar from '@/components/Gravatar';
-import Detail from './Detail';
-import Submit from './Submit';
-import Edit from './Edit';
 
-const Index: React.FC<IRouteComponentProps> = ({ route }) => {
+const Index: React.FC<IRouteComponentProps> = ({ route, children }) => {
   const intl = useIntl();
   const { domain } = useModel('domain');
   const { setHeader } = useModel('pageHeader');
   const { domainUrl, problemId } =
     useParams<{ domainUrl: string; problemId: string }>();
 
-  const { data: problemResp, refresh: refreshProblem } = useRequest(
-    async () => Horse.problem.v1GetProblem(domainUrl, problemId),
+  const {
+    data: problemResp,
+    refresh,
+    loading: fetchingProblem,
+  } = useRequest(
+    async () => {
+      const res = await Horse.problem.v1GetProblem(domainUrl, problemId);
+      return res.data;
+    },
     {
       refreshDeps: [domainUrl, problemId],
-      onError: (res) => {
-        console.log('get problem fail', res);
+      onSuccess: (res) => {
+        if (res.errorCode !== ErrorCode.Success) {
+          message.error('get problem fail');
+        }
+      },
+      onError: () => {
+        message.error('get problem fail');
       },
     },
   );
 
   const { data: owner } = useRequest(
     async () => {
-      const res = await Horse.user.v1GetUser(
-        problemResp?.data.data?.ownerId ?? '',
-      );
+      const res = await Horse.user.v1GetUser(problemResp?.data?.ownerId ?? '');
       return res.data.data;
     },
     {
-      ready: !!problemResp?.data.data?.ownerId,
+      ready: Boolean(problemResp?.data?.ownerId),
       onError: () => {
         message.error('get owner failed');
       },
@@ -69,17 +77,22 @@ const Index: React.FC<IRouteComponentProps> = ({ route }) => {
   useEffect(() => {
     setHeader({
       routes: breads,
-      title: problemResp?.data.data?.title,
+      title: problemResp?.data?.title,
     });
-  }, [breads, problemResp]);
+  }, [breads, setHeader, problemResp]);
 
   return (
-    <>
+    <ProblemContext.Provider
+      value={{
+        problem: problemResp?.data,
+        loading: fetchingProblem,
+        refresh,
+      }}
+    >
       <SideMenuPage
         defaultTab="detail"
         route={route}
-        routerMode="param"
-        matchMode="children"
+        shadowCard={false}
         menu={
           <Menu mode="inline">
             <Menu.Item key="detail" icon={<ReadOutlined />}>
@@ -121,28 +134,9 @@ const Index: React.FC<IRouteComponentProps> = ({ route }) => {
           </ShadowCard>
         }
       >
-        <PageContent menuKey="detail" i18nKey="PROBLEM.SUBMIT_CODE">
-          <Detail problem={problemResp?.data?.data} />
-        </PageContent>
-        <PageContent
-          menuKey="submit"
-          i18nKey="PROBLEM.SUBMIT_CODE"
-          shadowCard={false}
-        >
-          <Submit problem={problemResp?.data?.data} />
-        </PageContent>
-        <PageContent
-          menuKey="edit"
-          i18nKey="PROBLEM.EDIT"
-          cardProps={{ title: intl.formatMessage({ id: 'PROBLEM.EDIT' }) }}
-        >
-          <Edit
-            problem={problemResp?.data?.data}
-            onUpdateSuccess={refreshProblem}
-          />
-        </PageContent>
+        {children}
       </SideMenuPage>
-    </>
+    </ProblemContext.Provider>
   );
 };
 

@@ -1,7 +1,7 @@
 import React from 'react';
+import { Col, Row } from 'antd';
 import ChangePassword from './ChangePassword';
 import EditProfile from './EditProfile';
-import { Col, Row } from 'antd';
 import { VERTICAL_GUTTER } from '@/constants';
 
 const Index: React.FC = () => (

@@ -1,0 +1,210 @@
+{
+  "CopyablePre": {
+    "copySuccess": "",
+    "copyFailed": ""
+  },
+  "Login": {
+    "msg": {
+      "registerSuccess": "注册成功",
+      "incompleteInfo": "信息不完整",
+      "usernameEmailUsed": "用户名或邮箱已被注册",
+      "registerFailed": "注册失败",
+      "loginSuccess": "登录成功",
+      "wrongUsernamePassword": "用户名或密码错误",
+      "loginFailed": "登录失败",
+      "redirecting": "加载中...",
+      "oauthFailed": "OAuth登录失败"
+    },
+    "signInWith": "通过 {{name}} 登录",
+    "thirdPartyAuth": "第三方认证",
+    "signInToJOJ": "登录到JOJ",
+    "newGeneration": "新一代在线评测",
+    "login": "登录",
+    "register": "注册",
+    "username": "用户名",
+    "valid": {
+      "username": "请输入用户名",
+      "password": "请输入密码",
+      "confirmPassword": "请确认密码"
+    },
+    "password": "密码",
+    "forgotPassword": "忘记密码",
+    "signIn": "登录",
+    "confirmPassword": "确认密码",
+    "passwordNotMatch": "两次输入的密码不匹配",
+    "typePasswordAgain": "请再次输入密码",
+    "email": "邮箱",
+    "registerNow": "注册"
+  },
+  "Logout": {
+    "msg": {
+      "logoutSuccess": "",
+      "logoutFailed": "",
+      "loggingOut": ""
+    }
+  },
+  "USER": {
+    "PROFILE": "我的资料",
+    "LOGIN": {
+      "JACCOUNT_LOG_IN": "jAccount 登录",
+      "REDIRECTING": "正在跳转到登录界面..."
+    },
+    "LOG_OUT": "登出"
+  },
+  "DOMAIN": {
+    "DOMAINS": "我的域",
+    "SETTINGS": "设置",
+    "NEW_DOMAIN": "新建域",
+    "LEAVE": "退出",
+    "CREATE_A_NEW_DOMAIN": "创建域",
+    "CREATE": {
+      "NAME": "名字",
+      "URL": "域网址 (ID)",
+      "GRAVATAR": "Gravatar 邮箱",
+      "BULLETIN": "公告"
+    },
+    "HOME": {
+      "ASSIGNMENTS": "作业",
+      "PROBLEMS": "题目",
+      "MEMBERS": "成员",
+      "SETTINGS": "设置"
+    }
+  },
+  "domain": {
+    "create": {
+      "tag": "标签"
+    },
+    "invitation": {
+      "join": "加入域",
+      "code": "邀请码"
+    }
+  },
+  "problem": {
+    "problems": "题库"
+  },
+  "PROBLEM": {
+    "CREATE": {
+      "TITLE": "创建问题",
+      "FORM": {
+        "CONTENT": "描述",
+        "HIDDEN": "隐藏",
+        "URL": "问题URL"
+      }
+    },
+    "LANGUAGES": "编程语言",
+    "SUBMIT": "提交",
+    "STATUS": "提交状态",
+    "PROBLEM_GROUP": "问题组",
+    "OWNER": "出题人",
+    "HOME": "查看题目",
+    "SUBMIT_CODE": "提交代码",
+    "EDIT": "编辑题面",
+    "SETTINGS": "评测配置",
+    "RECENT_RECORD": "最近提交记录",
+    "UPLOAD_FILE": "上传代码文件",
+    "UPLOAD_HELP_CLICK": "上传文件",
+    "UPLOAD_HELP_DRAG": "或者拖拽文件至此处",
+    "MEMORY_KB": "峰值内存",
+    "TIME_MS": "总耗时",
+    "SUBMIT_AT": "递交时间"
+  },
+  "PROBLEM_SET": {
+    "PROBLEM_SET": "问题集",
+    "INTRODUCTION": "介绍",
+    "CREATE": {
+      "FORM": {
+        "CONTENT": "描述",
+        "HIDDEN": "隐藏",
+        "SCOREBOARD_HIDDEN": "隐藏排行榜",
+        "UNLOCK_AT": "开始提交时间",
+        "DUE_AT": "结束时间",
+        "LOCK_AT": "截止提交时间",
+        "URL": "问题集URL"
+      },
+      "TITLE": "创建问题集"
+    }
+  },
+  "problem_set": {
+    "side_menu": {
+      "detail": "问题集详情",
+      "scoreboard": "成绩榜",
+      "system_test": "评测与导出",
+      "edit": "编辑信息",
+      "settings": "问题配置"
+    }
+  },
+  "SETTINGS": {
+    "SETTINGS": "偏好设置",
+    "GENERAL_SETTINGS": "通用设置",
+    "ACCOUNT_SETTINGS": "账户设置",
+    "SECURITY_SETTINGS": "安全设置",
+    "I18N_LANG": "语言",
+    "TIMEZONE": "时区",
+    "SWITCH_LANG": "切换语言",
+    "UPDATE_SETTINGS": "更新设置",
+    "DISPLAY_SETTINGS": "显示设置",
+    "DOMAIN": "域设置"
+  },
+  "settings": {
+    "domain": {
+      "permission": {
+        "config": "权限控制",
+        "role": "角色管理"
+      }
+    }
+  },
+  "admin": {
+    "menu": {
+      "domain": "域管理"
+    }
+  },
+  "FOOTER": {
+    "ABOUT": "关于",
+    "API": "API",
+    "DOCS": "文档",
+    "ISSUE": "Bug反馈",
+    "CONTACT": "联系我们"
+  },
+  "zh-CN": "简体中文",
+  "en-US": "English",
+  "form": {
+    "input_placeholder": "请输入",
+    "select_placeholder": "请选择",
+    "domain_candidate_search": {
+      "placeholder": "按用户名/邮箱/学号/真名搜索"
+    },
+    "domain_role_select": {
+      "placeholder": "请选择一个角色",
+      "error_placeholder": "加载选项失败"
+    }
+  },
+  "msg": {
+    "success": {
+      "fetch": "获取成功",
+      "create": "创建成功",
+      "update": "更新成功",
+      "delete": "删除成功",
+      "fetch_item": "获取{data}成功",
+      "create_item": "创建{data}成功",
+      "update_item": "更新{data}成功",
+      "delete_item": "删除{data}成功"
+    },
+    "error": {
+      "fetch": "获取失败",
+      "create": "创建失败",
+      "update": "更新失败",
+      "delete": "删除失败",
+      "fetch_item": "获取{data}失败",
+      "create_item": "创建{data}失败",
+      "update_item": "更新{data}失败",
+      "delete_item": "删除{data}失败"
+    }
+  },
+  "menu": {
+    "domain": "我的域",
+    "admin": "全站管理",
+    "domain_manage": "域管理",
+    "problem_list": "题库",
+    "problem_set": "问题集"
+  }
+}

@@ -1,9 +1,8 @@
 import React from 'react';
 import { Button, Form, PageHeader } from 'antd';
 import { useIntl } from 'umi';
-import style from './style.less';
 
-// const options = {
+// Const options = {
 //   i18nLang: [
 //     ...Object.keys(SUPPORT_LANGUAGES),
 //   ],
@@ -16,9 +15,8 @@ import style from './style.less';
 const Index: React.FC = () => {
   const [form] = Form.useForm();
   const intl = useIntl();
-  const onFinish = (values: any) => {
-    console.log(values);
-    // settings.updateDisplaySettings(values);
+  const onFinish = (_values: any) => {
+    // Settings.updateDisplaySettings(values);
   };
 
   return (
@@ -29,7 +27,7 @@ const Index: React.FC = () => {
       <Form
         form={form}
         name="general-settings"
-        // initialValues={settings.settings.displaySettings}
+        // InitialValues={settings.settings.displaySettings}
         layout="vertical"
         onFinish={onFinish}
       >

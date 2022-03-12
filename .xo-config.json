@@ -3,8 +3,13 @@
   "prettier": true,
   "ignores": [
     "dist",
+    "node_modules",
     "openapi",
     "locales",
+    "client",
+    ".umi",
+    ".umi-production",
+    ".umi-test",
     "**/*.d.ts",
     "tailwind.config.js",
     "config/config*.ts"
@@ -16,13 +21,17 @@
   },
   "extends": ["plugin:react/recommended", "plugin:react-hooks/recommended"],
   "rules": {
+    "no-console": "warn",
     "no-warning-comments": "off",
     "capitalized-comments": "off",
     "unicorn/filename-case": "off",
+    "unicorn/prevent-abbreviations": "off",
     "import/no-extraneous-dependencies": "off",
     "import/extensions": "off",
-    "unicorn/prevent-abbreviations": "off",
+    "import/no-unassigned-import": "off",
+    "import/no-named-as-default-member": "off",
     "@typescript-eslint/no-floating-promises": "off",
+    "node/prefer-global/process": ["error", "always"],
     "@typescript-eslint/no-unused-vars": [
       "error",
       {

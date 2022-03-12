@@ -8,6 +8,7 @@ import {
   ProFormInstance,
   ProFormText,
 } from '@ant-design/pro-form';
+import { useRequest } from 'ahooks';
 import {
   Horse,
   DomainInvitation,
@@ -15,7 +16,6 @@ import {
   DomainInvitationEdit,
   ErrorCode,
 } from '@/utils/service';
-import { useRequest } from 'ahooks';
 import DomainRoleSelect from '@/components/DomainRoleSelect';
 
 interface IProps extends ModalFormProps {
@@ -57,6 +57,7 @@ const Index: React.FC<IProps> = ({
         } else {
           message.error('create invitation failed');
         }
+
         onSuccess();
       },
       onError: () => {
@@ -86,6 +87,7 @@ const Index: React.FC<IProps> = ({
         } else {
           message.error('update invitation failed');
         }
+
         onSuccess();
       },
       onError: () => {
@@ -98,7 +100,7 @@ const Index: React.FC<IProps> = ({
     if (editingInvitation) {
       formRef?.current?.setFieldsValue(editingInvitation);
     }
-  }, [editingInvitation]);
+  }, [editingInvitation, formRef]);
 
   return (
     <ModalForm<DomainInvitation>
@@ -106,9 +108,9 @@ const Index: React.FC<IProps> = ({
       width={520}
       isKeyPressSubmit
       onFinish={async (values) => {
-        if (editingInvitation)
-          await updateInvitation(editingInvitation.id, values);
-        else await createInvitation(values);
+        await (editingInvitation
+          ? updateInvitation(editingInvitation.id, values)
+          : createInvitation(values));
         return true;
       }}
       visible={visible}

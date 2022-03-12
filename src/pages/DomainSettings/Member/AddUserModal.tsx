@@ -6,6 +6,7 @@ import {
   ModalFormProps,
   ProFormInstance,
 } from '@ant-design/pro-form';
+import { useRequest } from 'ahooks';
 import {
   Horse,
   DomainUserAdd,
@@ -13,7 +14,6 @@ import {
   UserWithDomainRole,
   ErrorCode,
 } from '@/utils/service';
-import { useRequest } from 'ahooks';
 import DomainRoleSelect from '@/components/DomainRoleSelect';
 import UserSearchInput from '@/components/DomainCandidateSearchInput';
 import Gravatar from '@/components/Gravatar';
@@ -45,13 +45,27 @@ const Index: React.FC<IProps> = ({
     {
       manual: true,
       onSuccess: (res) => {
-        if (res.errorCode === ErrorCode.UserAlreadyInDomainBadRequestError) {
-          message.error('user already in domain');
-        } else if (res.errorCode === ErrorCode.UserNotFoundError) {
-          message.error('user not found');
-        } else if (res.errorCode === ErrorCode.Success) {
-          message.success('add user success');
+        switch (res.errorCode) {
+          case ErrorCode.Success: {
+            message.success('add user success');
+            break;
+          }
+
+          case ErrorCode.UserAlreadyInDomainBadRequestError: {
+            message.error('user already in domain');
+            break;
+          }
+
+          case ErrorCode.UserNotFoundError: {
+            message.error('user not found');
+            break;
+          }
+
+          default: {
+            message.error('add domain user failed');
+          }
         }
+
         onSuccess();
       },
       onError: () => {
@@ -72,14 +86,30 @@ const Index: React.FC<IProps> = ({
     {
       manual: true,
       onSuccess: (res) => {
-        if (res.errorCode === ErrorCode.UserAlreadyInDomainBadRequestError) {
-          message.error('user already in domain');
-        } else if (ErrorCode.UserNotFoundError) {
-          message.error('user not found');
-        } else if (res.errorCode === ErrorCode.Success) {
-          message.success('update user success');
+        switch (res.errorCode) {
+          case ErrorCode.Success: {
+            message.success('update user success');
+            onSuccess();
+
+            break;
+          }
+
+          case ErrorCode.UserAlreadyInDomainBadRequestError: {
+            message.error('user already in domain');
+
+            break;
+          }
+
+          case ErrorCode.UserNotFoundError: {
+            message.error('user not found');
+
+            break;
+          }
+
+          default: {
+            message.error('add domain user failed');
+          }
         }
-        onSuccess();
       },
       onError: () => {
         message.error('add domain user failed');
@@ -91,10 +121,10 @@ const Index: React.FC<IProps> = ({
     if (editingUser) {
       formRef?.current?.setFieldsValue({
         user: editingUser.id,
-        role: editingUser.domainRole as any,
+        role: editingUser.domainRole,
       });
     }
-  }, [editingUser]);
+  }, [editingUser, formRef]);
 
   return (
     <ModalForm<DomainUserAdd>
@@ -102,8 +132,9 @@ const Index: React.FC<IProps> = ({
       width={520}
       isKeyPressSubmit
       onFinish={async (values) => {
-        if (editingUser) await updateUser(editingUser.id, values);
-        else await addUser(values);
+        await (editingUser
+          ? updateUser(editingUser.id, values)
+          : addUser(values));
         return true;
       }}
       visible={visible}
@@ -129,6 +160,9 @@ const Index: React.FC<IProps> = ({
               <Col flex="auto">
                 <Row>
                   <Col span={24}>
+                    <span>{editingUser.username}</span>
+                  </Col>
+                  {/* <Col span={24}>
                     <span>
                       {editingUser.realName
                         ? `${editingUser.username} (${editingUser.realName})`
@@ -140,7 +174,7 @@ const Index: React.FC<IProps> = ({
                       {(editingUser.studentId ?? '') +
                         (editingUser.email ? ` - ${editingUser.email}` : '')}
                     </span>
-                  </Col>
+                  </Col> */}
                 </Row>
               </Col>
             </Row>

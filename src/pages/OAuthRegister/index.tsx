@@ -8,9 +8,7 @@ import style from './style.less';
 import { Horse, UserCreate, ErrorCode } from '@/utils/service';
 import Logo from '@/assets/logo.svg';
 
-const useQuery = () => {
-  return new URLSearchParams(useLocation().search);
-};
+const useQuery = () => new URLSearchParams(useLocation().search);
 
 const oauthLogoMap: Record<string, string> = {
   jaccount: 'http://pic.gerenjianli.com/xiaohui2046/b59.jpg',
@@ -68,7 +66,7 @@ const Index: React.FC = () => {
         isNil,
       ),
     );
-  }, [initialState]);
+  }, [initialState, form]);
 
   return (
     <Row justify="center" style={{ height: '100vh' }}>
@@ -108,7 +106,7 @@ const Index: React.FC = () => {
           >
             <Input
               placeholder={intl.formatMessage({ id: 'form.input_placeholder' })}
-              disabled={!!initialState?.user?.email}
+              disabled={Boolean(initialState?.user?.email)}
             />
           </Form.Item>
           <Form.Item name="password" label="Password">

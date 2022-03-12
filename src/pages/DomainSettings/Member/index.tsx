@@ -5,9 +5,9 @@ import { UserAddOutlined } from '@ant-design/icons';
 import ProTable, { ProColumns, ActionType } from '@ant-design/pro-table';
 import type { ProFormInstance } from '@ant-design/pro-form';
 import { useRequest } from 'ahooks';
+import AddUserModal from './AddUserModal';
 import { Horse, UserWithDomainRole, DomainUserAdd } from '@/utils/service';
 import { transPagination } from '@/utils';
-import AddUserModal from './AddUserModal';
 import Gravatar from '@/components/Gravatar';
 import ShadowCard from '@/components/ShadowCard';
 
@@ -21,10 +21,10 @@ const Index: React.FC = () => {
   const modalFormRef = useRef<ProFormInstance<DomainUserAdd>>();
 
   const { run: fetchDomainUsers, loading: fetching } = useRequest(
-    async (params: ProTablePagination) => {
+    async (parameters: ProTablePagination) => {
       const response = await Horse.domain.v1ListDomainUsers(
         domainUrl,
-        transPagination(params),
+        transPagination(parameters),
       );
       return response.data.data ?? { count: 0, results: [] };
     },
@@ -53,7 +53,7 @@ const Index: React.FC = () => {
     },
   );
 
-  const columns: ProColumns<UserWithDomainRole>[] = [
+  const columns: Array<ProColumns<UserWithDomainRole>> = [
     {
       title: '学号',
       width: 140,
@@ -99,7 +99,7 @@ const Index: React.FC = () => {
         <Popconfirm
           key="remove"
           title="Are you sure to remove this user?"
-          onConfirm={() => removeUser(record.id)}
+          onConfirm={async () => removeUser(record.id)}
         >
           <a type="link">删除</a>
         </Popconfirm>,
@@ -115,8 +115,8 @@ const Index: React.FC = () => {
         actionRef={tableRef}
         cardProps={false}
         columns={columns}
-        request={async (params, _sorter, _filter) => {
-          const data = await fetchDomainUsers(params);
+        request={async (parameters, _sorter, _filter) => {
+          const data = await fetchDomainUsers(parameters);
           return Promise.resolve({
             data: data.results,
             total: data.count,

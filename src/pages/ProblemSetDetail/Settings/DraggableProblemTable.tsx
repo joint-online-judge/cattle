@@ -11,19 +11,20 @@ import { MenuOutlined, EyeInvisibleOutlined } from '@ant-design/icons';
 import ProTable, { ProColumns } from '@ant-design/pro-table';
 import { arrayMoveImmutable } from '@ant-design/pro-utils';
 import Horse, {
-  ProblemPreviewWithRecordState,
+  ProblemPreviewWithLatestRecord,
   ProblemSetUpdateProblem,
   ErrorCode,
 } from '@/utils/service';
 import './style.less';
 
 interface IProps {
-  problems: ProblemPreviewWithRecordState[];
+  problems: ProblemPreviewWithLatestRecord[];
   loading: boolean;
   onUpdateFinish: () => void;
   onDeleteSuccess: () => void;
 }
 
+// eslint-disable-next-line new-cap
 const DragHandle = SortableHandle(() => (
   <MenuOutlined style={{ cursor: 'grab', color: '#999' }} />
 ));
@@ -38,7 +39,7 @@ const Index: React.FC<IProps> = ({
   const { domainUrl, problemSetId } =
     useParams<{ domainUrl: string; problemSetId: string }>();
   const [dataSource, setDataSource] =
-    useState<ProblemPreviewWithRecordState[]>(problems);
+    useState<ProblemPreviewWithLatestRecord[]>(problems);
 
   const { run: removeProblem, loading: removing } = useRequest(
     async (problemId: string) => {
@@ -55,7 +56,9 @@ const Index: React.FC<IProps> = ({
         if (res.errorCode === ErrorCode.Success) {
           message.success('delete problem success');
           onDeleteSuccess();
-        } else message.error('delete problem failed');
+        } else {
+          message.error('delete problem failed');
+        }
       },
       onError: () => {
         message.error('delete problem failed');
@@ -78,17 +81,20 @@ const Index: React.FC<IProps> = ({
       onSuccess: (res) => {
         if (res.errorCode === ErrorCode.Success) {
           message.success('update problem success');
-        } else message.error('update problem failed');
-        onUpdateFinish(); // if update error, still need to sync with remote data
+        } else {
+          message.error('update problem failed');
+        }
+
+        onUpdateFinish(); // If update error, still need to sync with remote data
       },
       onError: () => {
         message.error('update problem failed');
-        onUpdateFinish(); // if update error, still need to sync with remote data
+        onUpdateFinish(); // If update error, still need to sync with remote data
       },
     },
   );
 
-  const columns: ProColumns<ProblemPreviewWithRecordState>[] = [
+  const columns: Array<ProColumns<ProblemPreviewWithLatestRecord>> = [
     {
       title: '排序',
       dataIndex: 'sort',
@@ -103,7 +109,9 @@ const Index: React.FC<IProps> = ({
       render: (_, record) => (
         <Space>
           <Link
-            to={`/domain/${domain?.url}/problem/${record.url ?? record.id}`}
+            to={`/domain/${domain?.url ?? ''}/problem/${
+              record.url ?? record.id
+            }`}
           >
             {record.title}
           </Link>
@@ -124,7 +132,7 @@ const Index: React.FC<IProps> = ({
         <Button
           type="link"
           key="remove"
-          onClick={() => removeProblem(record.id)}
+          onClick={async () => removeProblem(record.id)}
         >
           移除
         </Button>,
@@ -132,7 +140,9 @@ const Index: React.FC<IProps> = ({
     },
   ];
 
+  // eslint-disable-next-line new-cap
   const SortableItem = SortableElement((props: any) => <tr {...props} />);
+  // eslint-disable-next-line new-cap
   const SortContainer = SortableContainer((props: any) => <tbody {...props} />);
 
   const onSortEnd = ({
@@ -147,7 +157,7 @@ const Index: React.FC<IProps> = ({
         [...dataSource],
         oldIndex,
         newIndex,
-      ).filter((el) => !!el);
+      ).filter((element) => Boolean(element));
       setDataSource([...newData]);
       if (dataSource[oldIndex]?.id) {
         updateProblem(dataSource[oldIndex].id, { position: newIndex });
@@ -166,11 +176,8 @@ const Index: React.FC<IProps> = ({
   );
 
   const DraggableBodyRow = (props: any) => {
-    const { className, style, ...restProps } = props;
-    const index = dataSource.findIndex(
-      (x) => x.id === restProps['data-row-key'],
-    );
-    return <SortableItem index={index} {...restProps} />;
+    const index = dataSource.findIndex((x) => x.id === props['data-row-key']);
+    return <SortableItem index={index} {...props} />;
   };
 
   useEffect(() => {
@@ -178,7 +185,7 @@ const Index: React.FC<IProps> = ({
   }, [problems]);
 
   return (
-    <ProTable<ProblemPreviewWithRecordState>
+    <ProTable<ProblemPreviewWithLatestRecord>
       columns={columns}
       dataSource={dataSource}
       rowKey="id"

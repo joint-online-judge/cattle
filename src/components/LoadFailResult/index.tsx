@@ -1,13 +1,7 @@
 import React from 'react';
-import { Result, Button, Typography } from 'antd';
-import { CloseCircleOutlined } from '@ant-design/icons';
-import { useIntl } from 'umi';
-
-const { Paragraph, Text } = Typography;
+import { Result } from 'antd';
 
 const Index: React.FC = () => {
-  const intl = useIntl();
-
   return (
     <Result
       status="error"

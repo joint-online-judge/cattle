@@ -16,7 +16,7 @@ const Index: React.FC<IProps> = (props) => {
   const { data, loading } = useRequest(
     async () => {
       const response = await Horse.domain.v1ListDomainRoles(domainUrl);
-      return response.data.data?.results || [];
+      return response.data.data?.results ?? [];
     },
     {
       refreshDeps: [domainUrl],
@@ -26,12 +26,14 @@ const Index: React.FC<IProps> = (props) => {
     },
   );
 
-  const options = React.useMemo(() => {
-    return (data || []).map((role) => ({
-      label: role.role,
-      value: role.role,
-    }));
-  }, [data]);
+  const options = React.useMemo(
+    () =>
+      (data ?? []).map((role) => ({
+        label: role.role,
+        value: role.role,
+      })),
+    [data],
+  );
 
   return (
     <Select

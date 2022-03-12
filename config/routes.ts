@@ -1,6 +1,6 @@
 ﻿import { IRoute } from 'umi';
 
-const routes: Array<IRoute> = [
+const routes: IRoute[] = [
   {
     path: '/login',
     component: '@/pages/Login',
@@ -13,135 +13,13 @@ const routes: Array<IRoute> = [
   },
   { path: '/logout', component: '@/pages/Logout' },
 
-  // @chujie: this route tree should be separated.
-  // Otherwise, 'domainUrl' cannot be matched in the layout component.
-  {
-    path: '/domain/:domainUrl',
-    component: '@/layouts/index',
-    wrappers: ['@/wrappers/Auth'],
-    routes: [
-      {
-        path: '/domain/:domainUrl/create-problem-set',
-        component: '@/pages/CreateProblemSet',
-      },
-      {
-        path: '/domain/:domainUrl/create-problem',
-        component: '@/pages/CreateProblem',
-      },
-      {
-        path: '/domain/:domainUrl/join',
-        component: '@/pages/JoinDomain',
-      },
-
-      {
-        path: '/domain/:domainUrl/settings/:tab/:subTab?',
-        component: '@/pages/DomainSettings',
-        routes: [
-          {
-            path: '/domain/:domainUrl/settings/profile',
-            component: '@/pages/DomainSettings/Profile',
-            menuKey: 'profile',
-          },
-          {
-            path: '/domain/:domainUrl/settings/invitation',
-            component: '@/pages/DomainSettings/Invitation',
-            menuKey: 'invitation',
-          },
-          {
-            path: '/domain/:domainUrl/settings/member',
-            component: '@/pages/DomainSettings/Member',
-            menuKey: 'member',
-          },
-          {
-            path: '/domain/:domainUrl/settings/permission/role',
-            component: '@/pages/DomainSettings/Permission/Role',
-            menuKey: 'permission',
-          },
-          {
-            path: '/domain/:domainUrl/settings/permission/config',
-            component: '@/pages/DomainSettings/Permission/Config',
-            menuKey: 'permission',
-          },
-          {
-            path: '/domain/:domainUrl/settings/permission',
-            redirect: '/domain/:domainUrl/settings/permission/config',
-          },
-          { component: '@/pages/NotFound' },
-        ],
-      },
-      {
-        path: '/domain/:domainUrl/settings',
-        redirect: '/domain/:domainUrl/settings/profile',
-      },
-
-      {
-        path: '/domain/:domainUrl/problem-set/:problemSetId/scoreboard',
-        component: '@/pages/ProblemSetDetail/Scoreboard',
-      },
-      {
-        path: '/domain/:domainUrl/problem-set/:problemSetId/system-test',
-        component: '@/pages/ProblemSetDetail/SystemTest',
-      },
-      {
-        path: '/domain/:domainUrl/problem-set/:problemSetId/settings',
-        component: '@/pages/ProblemSetDetail/Settings',
-      },
-      {
-        path: '/domain/:domainUrl/problem-set/:problemSetId/p/:problemId',
-        component: '@/pages/ProblemDetail',
-      },
-      {
-        path: '/domain/:domainUrl/problem-set/:problemSetId/:tab?',
-        component: '@/pages/ProblemSetDetail',
-        wrappers: ['@/wrappers/Auth'],
-        routes: [
-          {
-            path: '/domain/:domainUrl/problem-set/:problemSetId/edit',
-            component: '@/pages/ProblemSetDetail',
-          },
-          {
-            path: '/domain/:domainUrl/problem-set/:problemSetId',
-            component: '@/pages/ProblemSetDetail',
-          },
-          { component: '@/pages/NotFound' },
-        ],
-      },
-      {
-        path: '/domain/:domainUrl/problem-set',
-        component: '@/pages/ProblemSetList',
-        wrappers: ['@/wrappers/Auth'],
-      },
-
-      {
-        path: '/domain/:domainUrl/problem/:problemId/settings',
-        component: '@/pages/ProblemConfig',
-        wrappers: ['@/wrappers/Auth'],
-      },
-      {
-        path: '/domain/:domainUrl/problem/:problemId/:tab?',
-        component: '@/pages/ProblemDetail',
-        wrappers: ['@/wrappers/Auth'],
-      },
-      {
-        path: '/domain/:domainUrl/problem',
-        component: '@/pages/ProblemList',
-        wrappers: ['@/wrappers/Auth'],
-      },
-      {
-        path: '/domain/:domainUrl',
-        component: '@/pages/DomainHome',
-        wrappers: ['@/wrappers/Auth'],
-      },
-      { component: '@/pages/NotFound' },
-    ],
-  },
-
   {
     path: '/',
     component: '@/layouts/index',
     wrappers: ['@/wrappers/Auth'],
     routes: [
       { exact: true, path: '/', component: '@/pages/DomainList' },
+
       {
         exact: true,
         path: '/settings/:tab',
@@ -168,12 +46,146 @@ const routes: Array<IRoute> = [
         ],
       },
       {
-        exact: true,
         path: '/settings',
         redirect: '/settings/general',
       },
+
+      {
+        exact: false,
+        path: '/domain/:domainUrl',
+        component: '@/layouts/DomainLayout',
+        wrappers: ['@/wrappers/Auth'],
+        routes: [
+          {
+            path: '/domain/:domainUrl/create-problem-set',
+            component: '@/pages/CreateProblemSet',
+          },
+          {
+            path: '/domain/:domainUrl/create-problem',
+            component: '@/pages/CreateProblem',
+          },
+          {
+            path: '/domain/:domainUrl/join',
+            component: '@/pages/JoinDomain',
+          },
+
+          {
+            path: '/domain/:domainUrl/settings/:tab/:subTab?',
+            component: '@/pages/DomainSettings',
+            routes: [
+              {
+                path: '/domain/:domainUrl/settings/profile',
+                component: '@/pages/DomainSettings/Profile',
+              },
+              {
+                path: '/domain/:domainUrl/settings/invitation',
+                component: '@/pages/DomainSettings/Invitation',
+              },
+              {
+                path: '/domain/:domainUrl/settings/member',
+                component: '@/pages/DomainSettings/Member',
+              },
+              {
+                path: '/domain/:domainUrl/settings/permission/role',
+                component: '@/pages/DomainSettings/Permission/Role',
+              },
+              {
+                path: '/domain/:domainUrl/settings/permission/config',
+                component: '@/pages/DomainSettings/Permission/Config',
+              },
+              {
+                path: '/domain/:domainUrl/settings/permission',
+                redirect: '/domain/:domainUrl/settings/permission/config',
+              },
+              { component: '@/pages/NotFound' },
+            ],
+          },
+          {
+            path: '/domain/:domainUrl/settings',
+            redirect: '/domain/:domainUrl/settings/profile',
+          },
+
+          {
+            path: '/domain/:domainUrl/problem-set/:problemSetId/p/:problemId',
+            component: '@/pages/ProblemDetail',
+          },
+          {
+            path: '/domain/:domainUrl/problem-set/:problemSetId/:tab?',
+            component: '@/pages/ProblemSetDetail',
+            routes: [
+              {
+                path: '/domain/:domainUrl/problem-set/:problemSetId/scoreboard',
+                component: '@/pages/ProblemSetDetail/Scoreboard',
+              },
+              {
+                path: '/domain/:domainUrl/problem-set/:problemSetId/system-test',
+                component: '@/pages/ProblemSetDetail/SystemTest',
+              },
+              {
+                path: '/domain/:domainUrl/problem-set/:problemSetId/settings',
+                component: '@/pages/ProblemSetDetail/Settings',
+              },
+              {
+                path: '/domain/:domainUrl/problem-set/:problemSetId/edit',
+                component: '@/pages/ProblemSetDetail/EditDetail',
+              },
+              {
+                path: '/domain/:domainUrl/problem-set/:problemSetId/detail',
+                component: '@/pages/ProblemSetDetail/ViewDetail',
+              },
+              {
+                path: '/domain/:domainUrl/problem-set/:problemSetId',
+                component: '@/pages/ProblemSetDetail/ViewDetail',
+              },
+              { component: '@/pages/NotFound' },
+            ],
+          },
+          {
+            path: '/domain/:domainUrl/problem-set',
+            component: '@/pages/ProblemSetList',
+          },
+
+          {
+            path: '/domain/:domainUrl/problem/:problemId/:tab?',
+            component: '@/pages/ProblemDetail',
+            routes: [
+              {
+                path: '/domain/:domainUrl/problem/:problemId/detail',
+                component: '@/pages/ProblemDetail/Detail',
+              },
+              {
+                path: '/domain/:domainUrl/problem/:problemId/submit',
+                component: '@/pages/ProblemDetail/Submit',
+              },
+              {
+                path: '/domain/:domainUrl/problem/:problemId/edit',
+                component: '@/pages/ProblemDetail/Edit',
+              },
+              {
+                path: '/domain/:domainUrl/problem/:problemId/settings',
+                component: '@/pages/ProblemDetail/Settings',
+              },
+              {
+                path: '/domain/:domainUrl/problem/:problemId',
+                component: '@/pages/ProblemDetail/Detail',
+              },
+              { component: '@/pages/NotFound' },
+            ],
+          },
+          {
+            path: '/domain/:domainUrl/problem',
+            component: '@/pages/ProblemList',
+          },
+
+          {
+            path: '/domain/:domainUrl',
+            component: '@/pages/DomainHome',
+          },
+          { component: '@/pages/NotFound' },
+        ],
+      },
       { exact: true, path: '/domain', component: '@/pages/DomainList' },
-      { exact: true, path: '/admin', redirect: '/admin/domain' },
+
       {
         path: '/user/:username',
         component: '@/pages/Profile',
@@ -192,6 +204,7 @@ const routes: Array<IRoute> = [
           },
         ],
       },
+      { exact: true, path: '/admin', redirect: '/admin/domain' },
 
       {
         path: '/records',
@@ -205,15 +218,15 @@ const routes: Array<IRoute> = [
   { component: '@/pages/NotFound' },
 ];
 
-const recursiveInjectWrapper = (routes: Array<IRoute>, wrapper: string) => {
+const recursiveInjectWrapper = (routes: IRoute[], wrapper: string) => {
   for (const route of routes) {
-    if (route.wrappers instanceof Array) {
+    if (Array.isArray(route.wrappers)) {
       route.wrappers.push(wrapper);
     } else {
       route.wrappers = [wrapper];
     }
 
-    if (route.routes instanceof Array)
+    if (Array.isArray(route.routes))
       recursiveInjectWrapper(route.routes, wrapper);
   }
 };

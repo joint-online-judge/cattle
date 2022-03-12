@@ -25,10 +25,10 @@ const Index: React.FC = () => {
   const ref = useRef<ActionType>();
 
   const { run: fetchProblems, loading: fetching } = useRequest(
-    async (params: ProTablePagination) => {
+    async (parameters: ProTablePagination) => {
       const res = await Horse.problem.v1ListProblems(
         domainUrl,
-        transPagination(params),
+        transPagination(parameters),
       );
       return res.data.data ?? { count: 0, results: [] };
     },
@@ -37,7 +37,7 @@ const Index: React.FC = () => {
     },
   );
 
-  const columns: ProColumns<Problem>[] = [
+  const columns: Array<ProColumns<Problem>> = [
     {
       title: '标题',
       width: 200,
@@ -89,7 +89,7 @@ const Index: React.FC = () => {
       routes: breads,
       titleI18nKey: 'problem.problems',
     });
-  }, [breads]);
+  }, [breads, setHeader]);
 
   return (
     <ShadowCard
@@ -113,8 +113,8 @@ const Index: React.FC = () => {
         actionRef={ref}
         cardProps={false}
         columns={columns}
-        request={async (params, _sorter, _filter) => {
-          const data = await fetchProblems(params);
+        request={async (parameters, _sorter, _filter) => {
+          const data = await fetchProblems(parameters);
           return Promise.resolve({
             data: data.results,
             total: data.count,

@@ -1,5 +1,5 @@
 export default {
-  // lower-case noun
+  // Lower-case noun
   domain: '域',
   // 简单名词
   DOMAIN: '域',

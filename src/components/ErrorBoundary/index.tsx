@@ -2,17 +2,18 @@ import React from 'react';
 import { Result } from 'antd';
 
 class ErrorBoundary extends React.Component<any, { hasError: boolean }> {
+  static getDerivedStateFromError(_error: Error) {
+    return { hasError: true };
+  }
+
   constructor(props: any) {
     super(props);
     this.state = { hasError: false };
   }
 
-  static getDerivedStateFromError(error: Error) {
-    return { hasError: true };
-  }
-
-  componentDidCatch(error: Error) {
-    console.error(error);
+  componentDidCatch(_error: Error) {
+    // TODO: error reporting
+    // console.error(error);
   }
 
   render() {

@@ -23,29 +23,30 @@ const Index: React.FC<IProps> = (props) => {
   const intl = useIntl();
   const formRef = useRef<ProFormInstance<DomainCreate | DomainEdit>>();
 
-  const { run: createDomain, loading: creatingDomain } = useRequest(
+  const { run: createDomain } = useRequest(
     async (domain: DomainCreate) => Horse.domain.v1CreateDomain(domain),
     {
       manual: true,
       onSuccess: (res) => {
         if (res.data.errorCode === ErrorCode.Success) {
+          message.success('create success');
+          onCreateSuccess?.(res.data.data);
           if (res?.data?.data?.url) {
             history.push(`/domain/${res?.data?.data?.url}`);
           }
-
-          message.success('create success');
-          onCreateSuccess?.(res.data.data);
         } else if (res.data.errorCode === ErrorCode.InvalidUrlError) {
           message.error('domain url already exists');
         } else {
           message.error('create failed');
         }
       },
-      onError: () => {},
+      onError: () => {
+        message.error('create failed');
+      },
     },
   );
 
-  const { run: updateDomain, loading: updatingDomain } = useRequest(
+  const { run: updateDomain } = useRequest(
     async (url: string, domain: DomainEdit) =>
       Horse.domain.v1UpdateDomain(url, domain),
     {
@@ -65,9 +66,9 @@ const Index: React.FC<IProps> = (props) => {
   );
 
   const onFinish = async (values: DomainCreate | DomainEdit) => {
-    initialValues?.url
-      ? await updateDomain(initialValues.url, values)
-      : createDomain(values as DomainCreate);
+    await (initialValues?.url
+      ? updateDomain(initialValues.url, values)
+      : createDomain(values as DomainCreate));
   };
 
   useEffect(() => {

@@ -5,15 +5,15 @@ import ShadowCard from '@/components/ShadowCard';
 
 export interface SettingsMenuItem {
   menuKey: string;
-  i18nKey?: string; // use menuKey as default
-  text?: string; // use i18n(i18nKey) as default
+  i18nKey?: string; // Use menuKey as default
+  text?: string; // Use i18n(i18nKey) as default
   path?: string;
   node?: React.ReactNode;
   menuItemProps?: MenuItemProps;
 }
 
 export interface SettingsSideBarProps extends MenuProps {
-  items: SettingsMenuItem[];
+  items?: SettingsMenuItem[];
   menu?: React.ReactElement<MenuProps>;
 }
 
@@ -21,15 +21,11 @@ const Index: React.FC<SettingsSideBarProps> = (props) => {
   const intl = useIntl();
   const { items, menu, ...otherProps } = props;
 
-  return (
-    <ShadowCard
-      bodyStyle={{ padding: 0 }}
-      style={{ overflow: 'hidden' }}
-      className="settings-side-bar"
-    >
-      {menu ? (
-        React.cloneElement<MenuProps>(menu, { ...otherProps })
-      ) : (
+  const renderMenu = () => {
+    if (menu) return React.cloneElement<MenuProps>(menu, { ...otherProps });
+
+    if (items) {
+      return (
         <Menu mode="inline" {...otherProps}>
           {items.map((item) => (
             <Fragment key={`${item.menuKey}-fragment`}>
@@ -42,7 +38,19 @@ const Index: React.FC<SettingsSideBarProps> = (props) => {
             </Fragment>
           ))}
         </Menu>
-      )}
+      );
+    }
+
+    return null;
+  };
+
+  return (
+    <ShadowCard
+      bodyStyle={{ padding: 0 }}
+      style={{ overflow: 'hidden' }}
+      className="settings-side-bar"
+    >
+      {renderMenu()}
     </ShadowCard>
   );
 };

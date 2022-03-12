@@ -1,22 +1,22 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Empty } from 'antd';
-import { ProblemDetailWithLatestRecord } from '@/client';
+import ProblemContext from '../context';
+import ShadowCard from '@/components/ShadowCard';
 import MarkdownRender from '@/components/MarkdownRender';
 
-interface ProblemHomeProps {
-  problem: ProblemDetailWithLatestRecord | undefined;
-}
+const Index: React.FC = () => {
+  const problemContext = useContext(ProblemContext);
 
-const Index: React.FC<ProblemHomeProps> = (props) => {
-  const { problem } = props;
   return (
-    <>
-      {problem?.content ? (
-        <MarkdownRender>{problem.content || 'No Description'}</MarkdownRender>
+    <ShadowCard title={'Problem Description'}>
+      {problemContext?.problem?.content ? (
+        <MarkdownRender>
+          {problemContext?.problem?.content || 'No Description'}
+        </MarkdownRender>
       ) : (
         <Empty description={<span>No description for this problem!</span>} />
       )}
-    </>
+    </ShadowCard>
   );
 };
 

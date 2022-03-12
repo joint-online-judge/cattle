@@ -35,20 +35,30 @@ const Index: React.FC = () => {
     {
       manual: true,
       onSuccess: (res) => {
-        if (res.errorCode === ErrorCode.Success) {
-          message.success('join success');
-          history.push(`/domain/${domain?.url ?? domain?.id}`);
-        } else if (
-          res.errorCode === ErrorCode.DomainInvitationBadRequestError
-        ) {
-          // TODO: improve error info
-          message.error('wrong invitation code/link expired');
-        } else if (
-          res.errorCode === ErrorCode.UserAlreadyInDomainBadRequestError
-        ) {
-          message.error('you are already in domain');
-        } else {
-          message.error('join failed');
+        switch (res.errorCode) {
+          case ErrorCode.Success: {
+            message.success('join success');
+            history.push(`/domain/${domain?.url ?? domain?.id ?? ''}`);
+
+            break;
+          }
+
+          case ErrorCode.DomainInvitationBadRequestError: {
+            // TODO: improve error info
+            message.error('wrong invitation code/link expired');
+
+            break;
+          }
+
+          case ErrorCode.UserAlreadyInDomainBadRequestError: {
+            message.error('you are already in domain');
+
+            break;
+          }
+
+          default: {
+            message.error('join failed');
+          }
         }
       },
       onError: () => {
@@ -67,7 +77,7 @@ const Index: React.FC = () => {
         path: 'join',
       },
     ],
-    [domain],
+    [domainUrl, domain],
   );
 
   useEffect(() => {
@@ -75,13 +85,13 @@ const Index: React.FC = () => {
       routes: breads,
       titleI18nKey: 'domain.invitation.join',
     });
-  }, [breads]);
+  }, [breads, setHeader]);
 
   useEffect(() => {
     if (location.query?.code && typeof location.query?.code === 'string') {
       joinDomain(location.query?.code);
     }
-  }, [location]);
+  }, [location, joinDomain]);
 
   const onFinish = async (values: FormValues) => {
     await joinDomain(values.code);
@@ -92,9 +102,9 @@ const Index: React.FC = () => {
       <ShadowCard>
         <Row justify="center" className="py-12">
           <Col xxl={10} xl={10} lg={10} md={14} sm={18} xs={22}>
-            <h1 className="text-3xl">{`Join ${domain?.name}`}</h1>
+            <h1 className="text-3xl">{`Join ${domain?.name ?? ''}`}</h1>
             <p className="mb-6">
-              Fill in the invitation code to join {`${domain?.name}`}
+              Fill in the invitation code to join {domain?.name ?? ''}
             </p>
             <ProForm<FormValues>
               layout="vertical"
