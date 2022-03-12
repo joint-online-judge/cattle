@@ -16,17 +16,18 @@
     "test:coverage": "umi-test --coverage",
     "lint": "xo src/",
     "lint:fix": "xo --fix src/",
-    "i18n": "i18next --config i18next-parser.config.js"
+    "i18n": "i18next --config i18next-parser.config.js",
+    "prepare": "husky install"
   },
   "gitHooks": {
     "pre-commit": "lint-staged"
   },
   "lint-staged": {
     "*.{js,jsx,less,md,json}": [
-      "prettier --write"
+      "xo --fix"
     ],
     "*.ts?(x)": [
-      "prettier --parser=typescript --write"
+      "xo --fix"
     ]
   },
   "dependencies": {
@@ -69,6 +70,7 @@
     "ahooks": "^2.10.2",
     "eslint-plugin-react": "^7.26.1",
     "eslint-plugin-react-hooks": "^4.2.1-alpha-255221c86-20211103",
+    "husky": "^7.0.4",
     "i18next-parser": "^5.4.0",
     "lint-staged": "^10.0.7",
     "prettier": "^2.2.0",
