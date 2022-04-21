@@ -1,4 +1,4 @@
-import App from 'App'
+import App from 'app'
 import { AccessContextProvider } from 'models/access'
 import { AuthContextProvider } from 'models/auth'
 import { DomainContextProvider } from 'models/domain'
