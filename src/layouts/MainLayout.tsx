@@ -1,21 +1,21 @@
-import React from 'react';
-import { useModel } from 'umi';
-import MainContentLayout from './MainContentLayout';
-import PageHeaderLayout from './PageHeaderLayout';
-import style from './style.less';
+import { usePageHeader } from 'models'
+import type React from 'react'
+import MainContentLayout from './MainContentLayout'
+import PageHeaderLayout from './PageHeaderLayout'
+import style from './style.module.less'
 
 const Index: React.FC = ({ children }) => {
-  const { headerVisible } = useModel('pageHeader');
+	const { headerVisible } = usePageHeader()
 
-  return (
-    <MainContentLayout
-      className={
-        headerVisible ? style.pageContentWithHeader : style.pageContentNoHeader
-      }
-    >
-      <PageHeaderLayout>{children}</PageHeaderLayout>
-    </MainContentLayout>
-  );
-};
+	return (
+		<MainContentLayout
+			className={
+				headerVisible ? style.pageContentWithHeader : style.pageContentNoHeader
+			}
+		>
+			<PageHeaderLayout>{children}</PageHeaderLayout>
+		</MainContentLayout>
+	)
+}
 
-export default Index;
+export default Index

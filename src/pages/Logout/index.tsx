@@ -1,46 +1,50 @@
-import React, { useEffect } from 'react';
-import { useTranslation } from 'react-i18next';
-import { Spin, Result, message } from 'antd';
-import { useRequest, Redirect, useModel, history } from 'umi';
-import { Horse } from '@/utils/service';
+import { useRequest } from 'ahooks'
+import { message, Result, Spin } from 'antd'
+import { useAuth, usePageHeader } from 'models'
+import type React from 'react'
+import { useEffect } from 'react'
+import { useTranslation } from 'react-i18next'
+import { Navigate, useNavigate } from 'react-router-dom'
+import Horse from 'utils/service'
 
 const Index: React.FC = () => {
-  const { initialState, refresh } = useModel('@@initialState');
-  const { removeHeader } = useModel('pageHeader');
-  const { t } = useTranslation();
+	const { t } = useTranslation()
+	const navigate = useNavigate()
+	const { removeHeader } = usePageHeader()
+	const { refreshAsync, user, accessToken } = useAuth()
 
-  useRequest(
-    async () => {
-      if (initialState?.accessToken) {
-        return Horse.auth.v1Logout({
-          responseType: 'json',
-        });
-      }
+	useRequest(
+		async () => {
+			if (accessToken) {
+				return Horse.auth.v1Logout({
+					responseType: 'json'
+				})
+			}
 
-      return Promise.resolve({});
-    },
-    {
-      onSuccess: () => {
-        message.success(t('Logout.msg.logoutSuccess'));
-        refresh().then(() => {
-          history.replace('/login');
-        });
-      },
-      onError: () => {
-        message.error(t('Logout.msg.logoutFailed'));
-      },
-    },
-  );
+			return {}
+		},
+		{
+			onSuccess: () => {
+				message.success(t('Logout.msg.logoutSuccess'))
+				refreshAsync?.().then(() => {
+					navigate('/login', { replace: true })
+				})
+			},
+			onError: () => {
+				message.error(t('Logout.msg.logoutFailed'))
+			}
+		}
+	)
 
-  useEffect(() => {
-    removeHeader();
-  }, [removeHeader]);
+	useEffect(() => {
+		removeHeader()
+	}, [removeHeader])
 
-  return initialState?.user ? (
-    <Result icon={<Spin size="large" />} title={t('Logout.msg.loggingOut')} />
-  ) : (
-    <Redirect to="/login" />
-  );
-};
+	return user ? (
+		<Result icon={<Spin size='large' />} title={t('Logout.msg.loggingOut')} />
+	) : (
+		<Navigate to='/login' replace />
+	)
+}
 
-export default Index;
+export default Index

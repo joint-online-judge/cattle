@@ -1,22 +1,23 @@
-import React from 'react';
-import { Card, CardProps } from 'antd';
-import { merge } from 'lodash';
+import type { CardProps } from 'antd'
+import { Card } from 'antd'
+import { merge } from 'lodash-es'
+import type React from 'react'
 
-const Index: React.FC<CardProps> = (props) => {
-  const { children, ...otherProps } = props;
+const Index: React.FC<CardProps> = props => {
+	const { children, ...otherProps } = props
 
-  return (
-    <Card
-      bordered={false}
-      {...merge(otherProps, {
-        className: otherProps.className
-          ? `shadow-md ${otherProps.className}`
-          : 'shadow-md',
-      })}
-    >
-      {children}
-    </Card>
-  );
-};
+	return (
+		<Card
+			bordered={false}
+			{...merge(otherProps, {
+				className: otherProps.className
+					? `shadow-md ${otherProps.className}`
+					: 'shadow-md'
+			})}
+		>
+			{children}
+		</Card>
+	)
+}
 
-export default Index;
+export default Index

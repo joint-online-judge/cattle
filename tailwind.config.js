@@ -1,11 +1,13 @@
+const defaultConfig = require('tailwindcss/defaultConfig')
+const formsPlugin = require('@tailwindcss/forms')
+
 module.exports = {
-  purge: ['./src/**/*.{js,jsx,ts,tsx}', './public/index.html'],
-  darkMode: false, // or 'media' or 'class'
-  theme: {
-    extend: {},
-  },
-  variants: {
-    extend: {},
-  },
-  plugins: [],
-};
+	content: ['index.html', 'src/**/*.tsx'],
+	theme: {
+		fontFamily: {
+			sans: ['Inter', ...defaultConfig.theme.fontFamily.sans]
+		}
+	},
+	experimental: { optimizeUniversalDefaults: true },
+	plugins: [formsPlugin]
+}

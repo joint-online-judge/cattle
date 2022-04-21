@@ -1,62 +1,39 @@
-import jwt_decode from 'jwt-decode';
-import './i18n';
-import {
-  Horse,
-  JWTAccessToken,
-  ErrorCode,
-  DomainPermission,
-} from '@/utils/service';
+import LoadingOrError from 'components/LoadingOrError'
+import { AccessContextProvider } from 'models/access'
+import { AuthContextProvider } from 'models/auth'
+import { DomainContextProvider } from 'models/domain'
+import { LangContextProvider } from 'models/lang'
+import { PageHeaderContextProvider } from 'models/pageHeader'
+import { ProblemSetContextProvider } from 'models/problemSet'
+import type { ReactElement } from 'react'
+import { Suspense } from 'react'
+import { BrowserRouter, useRoutes } from 'react-router-dom'
+import './i18n'
+import './index.less'
+import routes from './routes'
 
-export interface InitialState {
-  accessToken: string | undefined;
-  user: JWTAccessToken | undefined; // Actually a JWT not a User
-  domainPermission?: {
-    role: string | undefined;
-    permission: DomainPermission | undefined;
-  };
+function Routes(): ReactElement {
+	const routesComponent = useRoutes(routes)
+
+	return <Suspense fallback={<LoadingOrError />}>{routesComponent}</Suspense>
 }
 
-// Will be run before render each route
-// export function render(oldRender: any) {
-//   // TODO: app-level auth
-//   // fetch('/api/auth').then(auth => {
-//   if (true) {
-//     oldRender();
-//   } else {
-//     history.push('/login');
-//     oldRender();
-//   }
-//   // });
-// }
-
-// export function onRouteChange({ location, routes, action, matchedRoutes }: any) {
-//   // TODO: page-level auth
-//   // if (matchedRoutes.length) {
-//   //   document.title = matchedRoutes[matchedRoutes.length - 1].route.title || '';
-//   // }
-// }
-
-// modify root element
-// export function rootContainer(container: any) {
-//   return container;
-//   // return React.createElement(ThemeProvider, null, container);
-// }
-
-export async function getInitialState(): Promise<InitialState> {
-  try {
-    const res = await Horse.auth.v1GetToken({
-      responseType: 'json',
-    });
-    if (
-      res.data.errorCode === ErrorCode.Success &&
-      res.data?.data?.accessToken
-    ) {
-      const decoded: JWTAccessToken = jwt_decode(res.data?.data?.accessToken);
-      return { user: decoded, accessToken: res.data?.data?.accessToken };
-    }
-
-    return { user: undefined, accessToken: undefined };
-  } catch {
-    return { user: undefined, accessToken: undefined };
-  }
+export default function App(): ReactElement {
+	return (
+		<LangContextProvider>
+			<AuthContextProvider>
+				<DomainContextProvider>
+					<AccessContextProvider>
+						<PageHeaderContextProvider>
+							<ProblemSetContextProvider>
+								<BrowserRouter>
+									<Routes />
+								</BrowserRouter>
+							</ProblemSetContextProvider>
+						</PageHeaderContextProvider>
+					</AccessContextProvider>
+				</DomainContextProvider>
+			</AuthContextProvider>
+		</LangContextProvider>
+	)
 }

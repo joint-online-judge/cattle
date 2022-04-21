@@ -1,14 +1,13 @@
-.domainContainer {
-  margin: 0 auto;
-  width: 100%;
-  height: 100%
+.domain-container {
+	margin: 0 auto;
+	width: 100%;
+	height: 100%;
 }
 
-.domainHome {
-  margin: auto;
+.domain-home {
+	margin: auto;
 }
 
-.domainHomeHeaderWrapper {
-  border-bottom: #eaecef 1px solid;
+.domain-home-header-wrapper {
+	border-bottom: #eaecef 1px solid;
 }
-

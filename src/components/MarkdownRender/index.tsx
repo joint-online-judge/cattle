@@ -1,15 +1,12 @@
-import React from 'react';
-import { dynamic } from 'umi';
+import type React from 'react'
+import { lazy, Suspense } from 'react'
 
-// Don't know the exact type. Just to suppress warning.
-const AsyncMarkdownRender: React.FC = dynamic({
-  async loader() {
-    // 这里的注释 webpackChunkName 可以指导 webpack 将该组件 HugeA 以这个名字单独拆出去
-    const { default: MR } = await import(
-      /* webpackChunkName: "external_markdown_render" */ './MarkdownRenderer'
-    );
-    return MR;
-  },
-}) as React.FC;
+const MarkdownRenderer = lazy(async () => import('./MarkdownRenderer'))
 
-export default AsyncMarkdownRender;
+const AsyncMarkdownRender: React.FC<{ children: string }> = ({ children }) => (
+	<Suspense fallback={<div>Loading...</div>}>
+		<MarkdownRenderer>{children}</MarkdownRenderer>
+	</Suspense>
+)
+
+export default AsyncMarkdownRender

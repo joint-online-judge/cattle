@@ -1,41 +1,50 @@
-import React, { useMemo, useEffect } from 'react';
-import { useParams, useModel } from 'umi';
-import { UpsertProblemForm } from '@/components/Problem';
-import SidePage from '@/components/SidePage';
+import { UpsertProblemForm } from 'components/Problem'
+import SidePage from 'components/SidePage'
+import { useDomain, usePageHeader } from 'models'
+import type React from 'react'
+import { useEffect, useMemo } from 'react'
+import { useTranslation } from 'react-i18next'
+import { useParams } from 'react-router-dom'
+import { NoDomainUrlError } from 'utils/exception'
 
 const Index: React.FC = () => {
-  const { domain } = useModel('domain');
-  const { domainUrl } = useParams<{ domainUrl: string }>();
-  const { setHeader } = useModel('pageHeader');
+	const { t } = useTranslation()
+	const { domainUrl } = useParams<{ domainUrl: string }>()
+	const { domain } = useDomain()
+	const { setHeader } = usePageHeader()
 
-  const breads = useMemo(
-    () => [
-      {
-        path: `domain/${domainUrl}`,
-        breadcrumbName: domain?.name ?? 'unknown',
-      },
-      {
-        path: 'create-problem',
-      },
-    ],
-    [domainUrl, domain?.name],
-  );
+	if (!domainUrl) {
+		throw new NoDomainUrlError()
+	}
 
-  useEffect(() => {
-    setHeader({
-      routes: breads,
-      titleI18nKey: 'PROBLEM.CREATE.TITLE',
-    });
-  }, [breads, setHeader]);
+	const breads = useMemo(
+		() => [
+			{
+				path: `domain/${domainUrl}`,
+				breadcrumbName: domain?.name ?? 'unknown'
+			},
+			{
+				path: 'create-problem'
+			}
+		],
+		[domainUrl, domain?.name]
+	)
 
-  return (
-    <SidePage extra={<h1>Side</h1>}>
-      <UpsertProblemForm
-        domainUrl={domainUrl}
-        initialValues={{ hidden: true }}
-      />
-    </SidePage>
-  );
-};
+	useEffect(() => {
+		setHeader({
+			routes: breads,
+			title: t('CreateProblem.title')
+		})
+	}, [breads, setHeader, t])
 
-export default Index;
+	return (
+		<SidePage extra={<h1>Side</h1>}>
+			<UpsertProblemForm
+				domainUrl={domainUrl}
+				initialValues={{ hidden: true }}
+			/>
+		</SidePage>
+	)
+}
+
+export default Index

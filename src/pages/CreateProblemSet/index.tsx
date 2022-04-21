@@ -1,44 +1,53 @@
-import React, { useEffect, useMemo } from 'react';
-import { useParams, useModel } from 'umi';
-import SidePage from '@/components/SidePage';
-import { UpsertProblemSetForm } from '@/components/ProblemSet';
+import { UpsertProblemSetForm } from 'components/ProblemSet'
+import SidePage from 'components/SidePage'
+import { useDomain, usePageHeader } from 'models'
+import type React from 'react'
+import { useEffect, useMemo } from 'react'
+import { useTranslation } from 'react-i18next'
+import { useParams } from 'react-router-dom'
 
 const Index: React.FC = () => {
-  const { domainUrl } = useParams<{ domainUrl: string }>();
-  const { domain } = useModel('domain');
-  const { setHeader } = useModel('pageHeader');
+	const { domainUrl } = useParams<{ domainUrl: string }>()
+	const { domain } = useDomain()
+	const { setHeader } = usePageHeader()
+	const { t } = useTranslation()
 
-  const breads = useMemo(
-    () => [
-      {
-        path: `domain/${domainUrl}`,
-        breadcrumbName: domain?.name ?? 'unknown',
-      },
-      {
-        path: 'create-problem-set',
-      },
-    ],
-    [domainUrl, domain?.name],
-  );
+	if (!domainUrl) {
+		// Shall be unreachable under normal conditions
+		throw new Error('No domainUrl found')
+	}
 
-  useEffect(() => {
-    setHeader({
-      routes: breads,
-      titleI18nKey: 'PROBLEM_SET.CREATE.TITLE',
-    });
-  }, [breads, setHeader]);
+	const breads = useMemo(
+		() => [
+			{
+				path: `domain/${domainUrl}`,
+				breadcrumbName: domain?.name ?? ''
+			},
+			{
+				path: 'create-problem-set'
+			}
+		],
+		[domainUrl, domain?.name]
+	)
 
-  return (
-    <SidePage extra={<h1>Side</h1>}>
-      <UpsertProblemSetForm
-        domainUrl={domainUrl}
-        initialValues={{
-          hidden: true,
-          scoreboardHidden: true,
-        }}
-      />
-    </SidePage>
-  );
-};
+	useEffect(() => {
+		setHeader({
+			routes: breads,
+			title: t('CreateProblemSet.title')
+		})
+	}, [breads, setHeader, t])
 
-export default Index;
+	return (
+		<SidePage extra={<h1>Side</h1>}>
+			<UpsertProblemSetForm
+				domainUrl={domainUrl}
+				initialValues={{
+					hidden: true,
+					scoreboardHidden: true
+				}}
+			/>
+		</SidePage>
+	)
+}
+
+export default Index

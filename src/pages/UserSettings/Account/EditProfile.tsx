@@ -1,39 +1,40 @@
-import { Button, Card, Col, Form, Input, Row } from 'antd';
-import React from 'react';
-import { useModel } from 'umi';
-import AvatarUpload from './AvatarUpload';
-import { VERTICAL_GUTTER } from '@/constants';
+import { Button, Card, Col, Form, Input, Row } from 'antd'
+import { useAuth } from 'models'
+import type React from 'react'
+import { VERTICAL_GUTTER } from 'utils/constants'
+import AvatarUpload from './AvatarUpload'
 
 const Index: React.FC = () => {
-  const { initialState } = useModel('@@initialState');
-  return (
-    <Card
-      title={<span className="text-2xl font-semibold">Basic Information</span>}
-    >
-      <Row gutter={VERTICAL_GUTTER}>
-        <Col span={12}>
-          <Form layout="vertical" initialValues={initialState?.user}>
-            <Form.Item
-              name="realName"
-              label="Real Name"
-              rules={[{ required: true }]}
-            >
-              <Input />
-            </Form.Item>
-            <Form.Item>
-              <Button type="primary" htmlType="submit">
-                Update
-              </Button>
-            </Form.Item>
-          </Form>
-        </Col>
+	const { user } = useAuth()
 
-        <Col span={12}>
-          <AvatarUpload />
-        </Col>
-      </Row>
-    </Card>
-  );
-};
+	return (
+		<Card
+			title={<span className='text-2xl font-semibold'>Basic Information</span>}
+		>
+			<Row gutter={VERTICAL_GUTTER}>
+				<Col span={12}>
+					<Form layout='vertical' initialValues={user}>
+						<Form.Item
+							name='realName'
+							label='Real Name'
+							rules={[{ required: true }]}
+						>
+							<Input />
+						</Form.Item>
+						<Form.Item>
+							<Button type='primary' htmlType='submit'>
+								Update
+							</Button>
+						</Form.Item>
+					</Form>
+				</Col>
 
-export default Index;
+				<Col span={12}>
+					<AvatarUpload />
+				</Col>
+			</Row>
+		</Card>
+	)
+}
+
+export default Index

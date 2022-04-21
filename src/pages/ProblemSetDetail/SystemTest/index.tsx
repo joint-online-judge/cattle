@@ -1,11 +1,5 @@
-import React from 'react';
+import type React from 'react'
 
-interface IProps {
-  refresh: () => void;
-}
+const Index: React.FC = () => <h1>System Test</h1>
 
-const Index: React.FC<IProps> = () => {
-  return <h1>Invitation</h1>;
-};
-
-export default Index;
+export default Index

@@ -1,143 +1,151 @@
-import React, { useEffect, useMemo } from 'react';
-import { message, Descriptions, Menu } from 'antd';
-import { useIntl, useParams, IRouteComponentProps, useModel } from 'umi';
-import { useRequest } from 'ahooks';
 import {
-  CheckOutlined,
-  SettingOutlined,
-  CodeOutlined,
-  ReadOutlined,
-  EditOutlined,
-} from '@ant-design/icons';
-import ProblemContext from './context';
-import Horse, { ErrorCode } from '@/utils/service';
-import SideMenuPage from '@/components/SideMenuPage';
-import ShadowCard from '@/components/ShadowCard';
-import Gravatar from '@/components/Gravatar';
+	CheckOutlined,
+	CodeOutlined,
+	EditOutlined,
+	ReadOutlined,
+	SettingOutlined
+} from '@ant-design/icons'
+import { useRequest } from 'ahooks'
+import { Descriptions, Menu, message } from 'antd'
+import Gravatar from 'components/Gravatar'
+import ShadowCard from 'components/ShadowCard'
+import SideMenuPage from 'components/SideMenuPage'
+import { useDomain, usePageHeader } from 'models'
+import type React from 'react'
+import { useEffect, useMemo } from 'react'
+import { useTranslation } from 'react-i18next'
+import { Outlet, useParams } from 'react-router-dom'
+import { NoDomainUrlError, NoProblemIdError } from 'utils/exception'
+import Horse, { ErrorCode } from 'utils/service'
+import { ProblemContext } from './context'
 
-const Index: React.FC<IRouteComponentProps> = ({ route, children }) => {
-  const intl = useIntl();
-  const { domain } = useModel('domain');
-  const { setHeader } = useModel('pageHeader');
-  const { domainUrl, problemId } =
-    useParams<{ domainUrl: string; problemId: string }>();
+const Index: React.FC = () => {
+	const { t } = useTranslation()
+	const { domain } = useDomain()
+	const { setHeader } = usePageHeader()
+	const { domainUrl, problemId } =
+		useParams<{ domainUrl: string; problemId: string }>()
 
-  const {
-    data: problemResp,
-    refresh,
-    loading: fetchingProblem,
-  } = useRequest(
-    async () => {
-      const res = await Horse.problem.v1GetProblem(domainUrl, problemId);
-      return res.data;
-    },
-    {
-      refreshDeps: [domainUrl, problemId],
-      onSuccess: (res) => {
-        if (res.errorCode !== ErrorCode.Success) {
-          message.error('get problem fail');
-        }
-      },
-      onError: () => {
-        message.error('get problem fail');
-      },
-    },
-  );
+	if (!domainUrl) {
+		throw new NoDomainUrlError()
+	}
 
-  const { data: owner } = useRequest(
-    async () => {
-      const res = await Horse.user.v1GetUser(problemResp?.data?.ownerId ?? '');
-      return res.data.data;
-    },
-    {
-      ready: Boolean(problemResp?.data?.ownerId),
-      onError: () => {
-        message.error('get owner failed');
-      },
-    },
-  );
+	if (!problemId) {
+		throw new NoProblemIdError()
+	}
 
-  const breads = useMemo(
-    () => [
-      {
-        path: `domain/${domainUrl}`,
-        breadcrumbName: domain?.name ?? 'unknown',
-      },
-      {
-        path: 'problem',
-        breadcrumbI18nKey: 'problem.problems',
-      },
-      {
-        path: 'null',
-      },
-    ],
-    [domainUrl, domain],
-  );
+	const {
+		data: problemResp,
+		refresh,
+		loading: fetchingProblem
+	} = useRequest(
+		async () => {
+			const res = await Horse.problem.v1GetProblem(domainUrl, problemId)
+			return res.data
+		},
+		{
+			refreshDeps: [domainUrl, problemId],
+			onSuccess: res => {
+				if (res.errorCode !== ErrorCode.Success) {
+					message.error('get problem fail')
+				}
+			},
+			onError: () => {
+				message.error('get problem fail')
+			}
+		}
+	)
 
-  useEffect(() => {
-    setHeader({
-      routes: breads,
-      title: problemResp?.data?.title,
-    });
-  }, [breads, setHeader, problemResp]);
+	const { data: owner } = useRequest(
+		async () => {
+			const res = await Horse.user.v1GetUser(problemResp?.data?.ownerId ?? '')
+			return res.data.data
+		},
+		{
+			ready: Boolean(problemResp?.data?.ownerId),
+			onError: () => {
+				message.error('get owner failed')
+			}
+		}
+	)
 
-  return (
-    <ProblemContext.Provider
-      value={{
-        problem: problemResp?.data,
-        loading: fetchingProblem,
-        refresh,
-      }}
-    >
-      <SideMenuPage
-        defaultTab="detail"
-        route={route}
-        shadowCard={false}
-        menu={
-          <Menu mode="inline">
-            <Menu.Item key="detail" icon={<ReadOutlined />}>
-              {intl.formatMessage({ id: 'PROBLEM.HOME' })}
-            </Menu.Item>
-            <Menu.Item key="submit" icon={<CodeOutlined />}>
-              {intl.formatMessage({ id: 'PROBLEM.SUBMIT_CODE' })}
-            </Menu.Item>
-            <Menu.Divider />
-            <Menu.Item key="edit" icon={<EditOutlined />}>
-              {intl.formatMessage({ id: 'PROBLEM.EDIT' })}
-            </Menu.Item>
-            <Menu.Item key="settings" icon={<SettingOutlined />}>
-              {intl.formatMessage({ id: 'PROBLEM.SETTINGS' })}
-            </Menu.Item>
-          </Menu>
-        }
-        extra={
-          <ShadowCard>
-            <Descriptions column={1}>
-              <Descriptions.Item
-                label={intl.formatMessage({ id: 'PROBLEM.STATUS' })}
-              >
-                {/* todo: make status component */}
-                <CheckOutlined /> Accepted
-              </Descriptions.Item>
-              <Descriptions.Item
-                label={intl.formatMessage({ id: 'PROBLEM.PROBLEM_GROUP' })}
-              >
-                不知道
-              </Descriptions.Item>
-              <Descriptions.Item
-                label={intl.formatMessage({ id: 'PROBLEM.OWNER' })}
-              >
-                <Gravatar size={20} gravatar={owner?.gravatar} />
-                {owner?.realName ?? owner?.username}
-              </Descriptions.Item>
-            </Descriptions>
-          </ShadowCard>
-        }
-      >
-        {children}
-      </SideMenuPage>
-    </ProblemContext.Provider>
-  );
-};
+	const breads = useMemo(
+		() => [
+			{
+				path: `domain/${domainUrl}`,
+				breadcrumbName: domain?.name ?? 'unknown'
+			},
+			{
+				path: 'problem',
+				breadcrumbI18nKey: 'problem.problems'
+			},
+			{
+				path: 'null'
+			}
+		],
+		[domainUrl, domain]
+	)
 
-export default Index;
+	useEffect(() => {
+		setHeader({
+			routes: breads,
+			title: problemResp?.data?.title
+		})
+	}, [breads, setHeader, problemResp])
+
+	const problemContextValue = useMemo(
+		() => ({
+			problem: problemResp?.data,
+			loading: fetchingProblem,
+			refresh
+		}),
+		[problemResp?.data, fetchingProblem, refresh]
+	)
+
+	return (
+		<ProblemContext.Provider value={problemContextValue}>
+			<SideMenuPage
+				defaultTab='detail'
+				shadowCard={false}
+				menu={
+					<Menu mode='inline'>
+						<Menu.Item key='detail' icon={<ReadOutlined />}>
+							{t('PROBLEM.HOME')}
+						</Menu.Item>
+						<Menu.Item key='submit' icon={<CodeOutlined />}>
+							{t('PROBLEM.SUBMIT_CODE')}
+						</Menu.Item>
+						<Menu.Divider />
+						<Menu.Item key='edit' icon={<EditOutlined />}>
+							{t('PROBLEM.EDIT')}
+						</Menu.Item>
+						<Menu.Item key='settings' icon={<SettingOutlined />}>
+							{t('PROBLEM.SETTINGS')}
+						</Menu.Item>
+					</Menu>
+				}
+				extra={
+					<ShadowCard>
+						<Descriptions column={1}>
+							<Descriptions.Item label={t('PROBLEM.STATUS')}>
+								{/* todo: make status component */}
+								<CheckOutlined /> Accepted
+							</Descriptions.Item>
+							<Descriptions.Item label={t('PROBLEM.PROBLEM_GROUP')}>
+								不知道
+							</Descriptions.Item>
+							<Descriptions.Item label={t('PROBLEM.OWNER')}>
+								<Gravatar size={20} gravatar={owner?.gravatar} />
+								{owner?.username}
+							</Descriptions.Item>
+						</Descriptions>
+					</ShadowCard>
+				}
+			>
+				<Outlet />
+			</SideMenuPage>
+		</ProblemContext.Provider>
+	)
+}
+
+export default Index
