@@ -5,8 +5,8 @@ import { BrowserRouter } from 'react-router-dom'
 export const DESKTOP_RESOLUTION_WIDTH = 1280
 export const DESKTOP_RESOLUTION_HEIGHT = 800
 
-export const MOBILE_RESOLUTION_WIDTH = 414
-export const MOBILE_RESOLUTION_HEIGHT = 896
+// export const MOBILE_RESOLUTION_WIDTH = 414
+// export const MOBILE_RESOLUTION_HEIGHT = 896
 
 export default function renderWithProviders(
 	ui: ReactElement,

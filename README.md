@@ -4,7 +4,7 @@ The new generation of JOJ Frontend. Bulit with [Vite](https://vitejs.dev/).
 
 ## Requirements
 
-- node.js >= 14
+- node.js >= 16
 - pnpm
 
 ## Before Start
