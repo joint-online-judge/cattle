@@ -32,18 +32,27 @@ if (
 	process.exit(-1)
 }
 
+let config
+if (env === envOpts.submodule) {
+	config = {
+		name: 'index.ts',
+		output: outputPath,
+		input: path.resolve(process.cwd(), 'openapi/openapi.json'),
+		httpClientType: 'axios',
+		moduleNameFirstTag: true
+	}
+} else {
+	config = {
+		name: 'index.ts',
+		output: outputPath,
+		url: urlMapping[env],
+		httpClientType: 'axios',
+		moduleNameFirstTag: true
+	}
+}
+
 console.log('Start to generate API client for ' + env)
-generateApi({
-	name: 'index.ts',
-	output: outputPath,
-	url: urlMapping[env],
-	input:
-		env === envOpts.submodule
-			? path.resolve(process.cwd(), 'openapi/openapi.json')
-			: undefined,
-	httpClientType: 'axios',
-	moduleNameFirstTag: true
-})
+generateApi(config)
 	.then(({ files }) => {
 		files.forEach(({ name }) => {
 			const generatedFilePath = path.resolve(outputPath, name)
