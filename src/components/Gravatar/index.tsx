@@ -1,23 +1,28 @@
-import React from 'react';
-import { Avatar, AvatarProps } from 'antd';
-import { UserOutlined } from '@ant-design/icons';
-import { gravatarImageUrl } from '@/utils';
+import { UserOutlined } from '@ant-design/icons'
+import type { AvatarProps } from 'antd'
+import { Avatar } from 'antd'
+import type React from 'react'
+import { gravatarImageUrl } from 'utils/gravatar'
 
 export interface GravatarProps extends AvatarProps {
-  src?: string;
-  gravatar?: string; // If gravatar is set, use gravatar regardless of src
+	src?: string
+	gravatar?: string // If gravatar is set, use gravatar regardless of src
 }
 
-const Index: React.FC<GravatarProps> = (props) => {
-  const { gravatar, src, ...otherProps } = props;
-  const imageUrl = gravatar ? gravatarImageUrl(gravatar, 300) : src;
+const Index: React.FC<GravatarProps> = props => {
+	const { gravatar, src, ...otherProps } = props
+	const imageUrl: string | undefined = gravatar
+		? gravatarImageUrl(gravatar, 300)
+		: src
 
-  const avatarSrc = {
-    src: imageUrl,
-    icon: <UserOutlined />,
-  };
+	return (
+		<Avatar
+			src={imageUrl}
+			icon={<UserOutlined />}
+			alt='avatar'
+			{...otherProps}
+		/>
+	)
+}
 
-  return <Avatar {...avatarSrc} alt={'avatar'} {...otherProps} />;
-};
-
-export default Index;
+export default Index

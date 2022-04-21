@@ -1,89 +1,54 @@
-# Cattle
+# Vitamin
 
-The new generation of JOJ Frontend. Powered by [Umi.js](https://umijs.org/).
+[![codecov](https://codecov.io/gh/wtchnm/Vitamin/branch/main/graph/badge.svg?token=H9BBAKGYI0)](https://codecov.io/gh/wtchnm/Vitamin) ![Test workflow](https://github.com/wtchnm/Vitamin/actions/workflows/test.yml/badge.svg) ![CodeQL workflow](https://github.com/wtchnm/Vitamin/actions/workflows/codeql-analysis.yml/badge.svg) [![Total alerts](https://img.shields.io/lgtm/alerts/g/wtchnm/Vitamin.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/wtchnm/Vitamin/alerts/) [![Language grade: JavaScript](https://img.shields.io/lgtm/grade/javascript/g/wtchnm/Vitamin.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/wtchnm/Vitamin/context:javascript) [![Vitamin](https://img.shields.io/endpoint?url=https://dashboard.cypress.io/badge/simple/etow1b&style=flat&logo=cypress)](https://dashboard.cypress.io/projects/etow1b/runs) [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg)](https://github.com/prettier/prettier) [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/) [![license](https://img.shields.io/badge/license-MIT-green.svg)](https://github.com/wtchnm/Vitamin/blob/main/LICENSE)
 
-## Requirements
+Opinionated Vite starter template.
 
-* node.js >= 10.13
-* yarn
+## Features
 
-## Before Start
+- [Vite](https://vitejs.dev) with [React](https://reactjs.org), [TypeScript](https://www.typescriptlang.org) and [absolute imports](https://github.com/aleclarson/vite-tsconfig-paths).
+- [Tailwind CSS v3](https://tailwindcss.com) with a [basic reset for form styles](https://github.com/tailwindlabs/tailwindcss-forms) and a [Prettier plugin](https://github.com/tailwindlabs/prettier-plugin-tailwindcss) that automatically sorts classes.
+- Use [ESLint](https://eslint.org), [stylelint](https://stylelint.io) and [Prettier](https://prettier.io) on VSCode and before you commit with [Husky](https://github.com/typicode/husky) and [lint-staged](https://github.com/okonet/lint-staged).
+- [PWA](https://github.com/antfu/vite-plugin-pwa) with [17/17 Lighthouse score](https://web.dev/pwa-checklist/).
+- Write unit and integration tests with [Vitest](https://vitest.dev/) and [Testing Library](https://testing-library.com/).
+- Write e2e tests with [Cypress](https://www.cypress.io).
+- GitHub Actions for automatic [dependency updates](https://renovatebot.com/), [CodeQL Analysis](https://securitylab.github.com/tools/codeql), running tests and code coverage with [Codecov](https://about.codecov.io/).
+- Deploy to [Vercel](vercel.com) with pre-configured [SPA fallback](https://vercel.com/docs/configuration#routes/advanced/spa-fallback).
 
-This frontend project uses submodule to synchronize OpenAPI interfaces with the backend.
+## Getting started
 
-Run the following commands in the project directory.
-```bash
-git submodule init
-git submodule update
+Use this repository as a [GitHub template](https://github.com/wtchnm/Vitamin/generate) or use [degit](https://github.com/Rich-Harris/degit) to clone to your machine with an empty git history:
+
 ```
-This will pull the `openapi.json` into directory `openapi`.
-
-If the backend updated `openapi.json`, you need to pull the latest version by:
-
-```bash
-cd openapi
-git checkout xxx # If you want a different branch
-git pull
+npx degit wtchnm/Vitamin#main my-app
 ```
 
-## Getting Started
+Then, install the dependencies:
 
-Please install `yarn` first. This project uses `yarn` as package manager. You can modify your registry to boost downloading or install `tyarn` if you are in China following this [page](https://umijs.org/zh-CN/docs/getting-started).  
-
-Install dependencies,
-
-```bash
-$ yarn
+```
+pnpm install
 ```
 
-### Local Development
+### Before you start coding
 
-Start the dev server,
+- [ ] If you don't plan to use GitHub Actions, delete the `.github` directory.
+- [ ] Clean up the `cypress/integration/index.spec.ts` file.
+- [ ] Change the `favicon.png`, `apple-touch-icon.png`, `android-chrome-192x192.png` and `android-chrome-512x512.png`. [favicon.io](https://favicon.io) is a cool tool for generating these assets.
+- [ ] In the `src` folder, remove the `__tests__`, `api` and `components` folder and the `types.ts` file.
+- [ ] If you don't plan to use `react-query`, remove the query client logic in the `main.tsx` file.
+- [ ] Change the title, description and theme color in the `index.html` and `vite.config.ts`. The [Inter](https://rsms.me/inter/) font is included, so remove it if you want.
+- [ ] Modify or delete the `LICENSE` file.
+- [ ] Change the `name` field in package.json.
 
-```bash
-$ yarn start
-```
+## Scripts
 
-Then the frontend will run on 127.0.0.1:8000 by default. If you want to develop in a completely offline environment,
-you then need to start the backend server: [horse](https://github.com/joint-online-judge/horse). 
-
-You may also need to start the [judger](https://github.com/joint-online-judge/tiger) on your computer (which is not recommended) in order to have complete function of JOJ.
-
-> Note: Please always use 127.0.0.1:8000 instead of localhost:8000, because there will be some issue related to same-site cookie policies.
-
-### Staging
-
-Run the frontend locally, while connecting to the backend deployed on a staging server.
-
-```bash
-$ yarn start:staging
-```
-
-> Staging is a type of environment that lies between development (local) and production (online). Deploying the backend service
-> on 
-
-We need some extra setup to overcome the same-origin policy. Install [whistle](https://github.com/avwo/whistle)
-to proxy the local frontend to the staging domain:
-* Install [whistle](https://github.com/avwo/whistle)
-* Install [SwitchyOmega](https://chrome.google.com/webstore/detail/proxy-switchyomega/padekgcemlokbadohgkifijomclgjgif) if you are using chrome. (For other browsers please refer to docs). And in settings of SwitchyOmega, have such config:
-![omega](https://github.com/joint-online-judge/cattle/blob/master/img/omega.png?raw=true)
-* Start whistle and type in a single proxy rule:
-```
-nichujie.xyz 127.0.0.1:8000
-```
-Then you should have your `127.0.0.1:8000` proxied to `nichujie.xyz`.
-
-Now you can visit `nichujie.xyz` in your browser to access your **local frontend server**. After you save your code locally, the webpage shall reload automatically. 
-
-### Production Staging
-
-TODO: In the future, we may setup a staging development environment which runs frontend locally, while connecting to 
-online (production) backend service.
-
-### Build for Production
-
-To build and deploy,
-
-```bash
-$ yarn build
-```
+- `pnpm dev` - start a development server with hot reload.
+- `pnpm build` - build for production. The generated files will be on the `dist` folder.
+- `pnpm preview` - locally preview the production build.
+- `pnpm test` - run unit and integration tests related to changed files based on git.
+- `pnpm test:ci` - run all unit and integration tests in CI mode.
+- `pnpm test:e2e` - run all e2e tests with the Cypress Test Runner.
+- `pnpm test:e2e:headless` - run all e2e tests headlessly.
+- `pnpm format` - format all files with Prettier.
+- `pnpm lint` - runs TypeScript, ESLint and Stylelint.
+- `pnpm validate` - runs `lint`, `test:ci` and `test:e2e:ci`.

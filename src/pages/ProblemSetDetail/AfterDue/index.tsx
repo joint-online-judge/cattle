@@ -1,12 +1,12 @@
-import React from 'react';
-import { Row, Col, Typography } from 'antd';
+import type React from 'react'
+import { Row, Col, Typography } from 'antd'
 
 const Index: React.FC = () => (
-  <Row justify={'center'} align="middle" style={{ marginTop: 200 }}>
-    <Col>
-      <Typography.Title>ProblemSet has expired!</Typography.Title>
-    </Col>
-  </Row>
-);
+	<Row justify='center' align='middle' style={{ marginTop: 200 }}>
+		<Col>
+			<Typography.Title>ProblemSet has expired!</Typography.Title>
+		</Col>
+	</Row>
+)
 
-export default Index;
+export default Index

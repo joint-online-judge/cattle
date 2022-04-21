@@ -1,17 +1,18 @@
-import React from 'react';
-import {
-  ProblemDetailWithLatestRecord,
-  ProblemDetailWithLatestRecordResp,
-} from '@/utils/service';
+import React, { useContext } from 'react'
+import type { ProblemDetailWithLatestRecord } from 'utils/service'
 
 interface IProblemContextValue {
-  problem: ProblemDetailWithLatestRecord | undefined;
-  loading: boolean;
-  refresh: () => Promise<ProblemDetailWithLatestRecordResp>;
+	problem?: ProblemDetailWithLatestRecord
+	loading: boolean
+	refresh: () => void
 }
 
-const ProblemContext = React.createContext<IProblemContextValue | undefined>(
-  undefined,
-);
+const ProblemContext = React.createContext<IProblemContextValue>({
+	loading: false,
+	refresh: () => {}
+})
 
-export default ProblemContext;
+const useProblem = (): IProblemContextValue =>
+	useContext<IProblemContextValue>(ProblemContext)
+
+export { ProblemContext, useProblem }

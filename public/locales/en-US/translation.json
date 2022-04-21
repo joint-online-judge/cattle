@@ -1,210 +1,132 @@
 {
-  "CopyablePre": {
-    "copySuccess": "",
-    "copyFailed": ""
-  },
-  "Login": {
-    "msg": {
-      "registerSuccess": "Register success",
-      "incompleteInfo": "Incomplete info",
-      "usernameEmailUsed": "Username or email alread registered",
-      "registerFailed": "Register failed",
-      "loginSuccess": "Login success",
-      "wrongUsernamePassword": "Wrong username or password",
-      "loginFailed": "Login failed",
-      "redirecting": "Redirecting...",
-      "oauthFailed": "OAuth failed"
-    },
-    "signInWith": "Sign in with {{name}}",
-    "thirdPartyAuth": "Third Party Auth",
-    "signInToJOJ": "Sign in to JOJ",
-    "newGeneration": "New generation of Online Judge",
-    "login": "Login",
-    "register": "Register",
-    "username": "Username",
-    "valid": {
-      "username": "Please input username",
-      "password": "Please input password",
-      "confirmPassword": "Please confirm password"
-    },
-    "password": "Password",
-    "forgotPassword": "Forgot password",
-    "signIn": "Sign In",
-    "confirmPassword": "Confirm Password",
-    "passwordNotMatch": "The two passwords that you entered do not match",
-    "typePasswordAgain": "Please type your password again",
-    "email": "Email",
-    "registerNow": "Register Now"
-  },
-  "Logout": {
-    "msg": {
-      "logoutSuccess": "",
-      "logoutFailed": "",
-      "loggingOut": ""
-    }
-  },
-  "USER": {
-    "PROFILE": "Profile",
-    "LOGIN": {
-      "JACCOUNT_LOG_IN": "jAccount Login",
-      "REDIRECTING": "Redirecting to the login page..."
-    },
-    "LOG_OUT": "Log out"
-  },
-  "DOMAIN": {
-    "DOMAINS": "Domains",
-    "SETTINGS": "Settings",
-    "NEW_DOMAIN": "New Domain",
-    "LEAVE": "Leave",
-    "CREATE_A_NEW_DOMAIN": "Create a new domain",
-    "CREATE": {
-      "NAME": "Name",
-      "URL": "Url (ID)",
-      "GRAVATAR": "Gravatar Email",
-      "BULLETIN": "Bulletin"
-    },
-    "HOME": {
-      "ASSIGNMENTS": "Assignments",
-      "PROBLEMS": "Problems",
-      "MEMBERS": "Members",
-      "SETTINGS": "Settings"
-    }
-  },
-  "domain": {
-    "create": {
-      "tag": "Tag"
-    },
-    "invitation": {
-      "join": "Join Domain",
-      "code": "Invitation Code"
-    }
-  },
-  "problem": {
-    "problems": "Problems"
-  },
-  "PROBLEM": {
-    "CREATE": {
-      "TITLE": "Create Problem",
-      "FORM": {
-        "CONTENT": "Description",
-        "HIDDEN": "Hidden",
-        "URL": "Problem URL"
-      }
-    },
-    "LANGUAGES": "Languages",
-    "SUBMIT": "Submit",
-    "STATUS": "Status",
-    "PROBLEM_GROUP": "Problem Group",
-    "OWNER": "Created By",
-    "HOME": "View Problem",
-    "SUBMIT_CODE": "Submit Code",
-    "EDIT": "Edit Problem",
-    "SETTINGS": "Judge Settings",
-    "RECENT_RECORD": "Recent Records",
-    "UPLOAD_FILE": "Upload Code File",
-    "UPLOAD_HELP_CLICK": "Upload File",
-    "UPLOAD_HELP_DRAG": "Or drag your file to this area",
-    "MEMORY_KB": "Peak Memory",
-    "TIME_MS": "Total Time",
-    "SUBMIT_AT": "Submit At"
-  },
-  "PROBLEM_SET": {
-    "PROBLEM_SET": "Problem Set",
-    "INTRODUCTION": "Introduction",
-    "CREATE": {
-      "FORM": {
-        "CONTENT": "Description",
-        "HIDDEN": "Hidden",
-        "SCOREBOARD_HIDDEN": "Hide Scoreboard",
-        "UNLOCK_AT": "Unlock Time",
-        "DUE_AT": "Due Time",
-        "LOCK_AT": "Lock Time",
-        "URL": "Problem Set URL"
-      },
-      "TITLE": "Create Problem Set"
-    }
-  },
-  "problem_set": {
-    "side_menu": {
-      "detail": "View Detail",
-      "scoreboard": "Scoreboard",
-      "system_test": "Judge and Export",
-      "edit": "Edit Basic Info",
-      "settings": "Problem Settings"
-    }
-  },
-  "SETTINGS": {
-    "SETTINGS": "Settings",
-    "GENERAL_SETTINGS": "General",
-    "ACCOUNT_SETTINGS": "Account",
-    "SECURITY_SETTINGS": "Security",
-    "I18N_LANG": "Language",
-    "TIMEZONE": "Timezone",
-    "SWITCH_LANG": "Language",
-    "UPDATE_SETTINGS": "Update Settings",
-    "DISPLAY_SETTINGS": "Display Settings",
-    "DOMAIN": "Settings"
-  },
-  "settings": {
-    "domain": {
-      "permission": {
-        "config": "Permission Control",
-        "role": "Role Management"
-      }
-    }
-  },
-  "admin": {
-    "menu": {
-      "domain": "Domain Manage"
-    }
-  },
-  "FOOTER": {
-    "ABOUT": "About",
-    "API": "API",
-    "DOCS": "Docs",
-    "ISSUE": "Issue",
-    "CONTACT": "Contact"
-  },
-  "zh-CN": "简体中文",
-  "en-US": "English",
-  "form": {
-    "input_placeholder": "Please enter",
-    "select_placeholder": "Please select",
-    "domain_candidate_search": {
-      "placeholder": "search by username/email/student ID/real name"
-    },
-    "domain_role_select": {
-      "placeholder": "please select a role",
-      "error_placeholder": "load options failed"
-    }
-  },
-  "msg": {
-    "success": {
-      "fetch": "fetch successfully",
-      "create": "create successfully",
-      "update": "update successfully",
-      "delete": "delete successfully",
-      "fetch_item": "fetch {data} successfully",
-      "create_item": "create {data} successfully",
-      "update_item": "update {data} successfully",
-      "delete_item": "delete {data} successfully"
-    },
-    "error": {
-      "fetch": "fetch failed",
-      "create": "create failed",
-      "update": "update failed",
-      "delete": "delete failed",
-      "fetch_item": "failed to fetch {data}",
-      "create_item": "failed to create {data}",
-      "update_item": "failed to update {data}",
-      "delete_item": "failed to delete {data}"
-    }
-  },
-  "menu": {
-    "domain": "Domains",
-    "admin": "Site Manage",
-    "domain_manage": "Domain Manage",
-    "problem_list": "Problems",
-    "problem_set": "Problem Sets"
-  }
+	"CopyablePre": {
+		"copySuccess": "CopyablePre.copySuccess",
+		"copyFailed": "CopyablePre.copyFailed"
+	},
+	"UpsertDomainForm": {
+		"name": "UpsertDomainForm.name",
+		"url": "UpsertDomainForm.url",
+		"gravatar": "UpsertDomainForm.gravatar",
+		"tag": "UpsertDomainForm.tag",
+		"bulletin": "UpsertDomainForm.bulletin"
+	},
+	"DomainCandidateSearchInput": {
+		"placeholder": "DomainCandidateSearchInput.placeholder"
+	},
+	"DomainHeader": {
+		"menu": {
+			"overview": "DomainHeader.menu.overview",
+			"problemSet": "DomainHeader.menu.problemSet",
+			"problem": "DomainHeader.menu.problem",
+			"domainManage": "DomainHeader.menu.domainManage"
+		}
+	},
+	"DomainRoleSelect": {
+		"errorPlaceholder": "DomainRoleSelect.errorPlaceholder",
+		"placeholder": "DomainRoleSelect.placeholder"
+	},
+	"Footer": {
+		"about": "Footer.about",
+		"api": "Footer.api",
+		"docs": "Footer.docs",
+		"issue": "Footer.issue",
+		"contact": "Footer.contact"
+	},
+	"UserMenuItem": {
+		"menu": {
+			"profile": "UserMenuItem.menu.profile",
+			"switchLang": "UserMenuItem.menu.switchLang",
+			"settings": "UserMenuItem.menu.settings",
+			"admin": "UserMenuItem.menu.admin",
+			"logout": "UserMenuItem.menu.logout",
+			"login": "UserMenuItem.menu.login"
+		}
+	},
+	"msg": {
+		"errorMsg": {
+			"problemUrlNotUnique": "msg.errorMsg.problemUrlNotUnique"
+		},
+		"success": {
+			"fetchItem": "msg.success.fetchItem",
+			"fetch": "msg.success.fetch",
+			"createItem": "msg.success.createItem",
+			"create": "msg.success.create",
+			"updateItem": "msg.success.updateItem",
+			"update": "msg.success.update",
+			"deleteItem": "msg.success.deleteItem",
+			"delete": "msg.success.delete"
+		},
+		"error": {
+			"fetchItem": "msg.error.fetchItem",
+			"fetch": "msg.error.fetch",
+			"createItem": "msg.error.createItem",
+			"create": "msg.error.create",
+			"updateItem": "msg.error.updateItem",
+			"update": "msg.error.update",
+			"deleteItem": "msg.error.deleteItem",
+			"delete": "msg.error.delete"
+		}
+	},
+	"UpsertProblemForm": {
+		"title": "UpsertProblemForm.title",
+		"hidden": "UpsertProblemForm.hidden",
+		"url": "UpsertProblemForm.url",
+		"languages": "UpsertProblemForm.languages",
+		"content": "UpsertProblemForm.content"
+	},
+	"UpsertProblemSetForm": {
+		"title": "UpsertProblemSetForm.title",
+		"url": "UpsertProblemSetForm.url",
+		"unlockAt": "UpsertProblemSetForm.unlockAt",
+		"dueAt": "UpsertProblemSetForm.dueAt",
+		"lockAt": "UpsertProblemSetForm.lockAt",
+		"hidden": "UpsertProblemSetForm.hidden",
+		"scoreboardHidden": "UpsertProblemSetForm.scoreboardHidden",
+		"content": "UpsertProblemSetForm.content"
+	},
+	"Login": {
+		"msg": {
+			"registerSuccess": "Login.msg.registerSuccess",
+			"incompleteInfo": "Login.msg.incompleteInfo",
+			"usernameEmailUsed": "Login.msg.usernameEmailUsed",
+			"registerFailed": "Login.msg.registerFailed",
+			"loginSuccess": "Login.msg.loginSuccess",
+			"wrongUsernamePassword": "Login.msg.wrongUsernamePassword",
+			"loginFailed": "Login.msg.loginFailed",
+			"redirecting": "Login.msg.redirecting",
+			"oauthFailed": "Login.msg.oauthFailed"
+		},
+		"signInWith": "Login.signInWith",
+		"thirdPartyAuth": "Login.thirdPartyAuth",
+		"signInToJOJ": "Login.signInToJOJ",
+		"newGeneration": "Login.newGeneration",
+		"login": "Login.login",
+		"register": "Login.register",
+		"username": "Login.username",
+		"valid": {
+			"username": "Login.valid.username",
+			"password": "Login.valid.password",
+			"confirmPassword": "Login.valid.confirmPassword"
+		},
+		"password": "Login.password",
+		"forgotPassword": "Login.forgotPassword",
+		"signIn": "Login.signIn",
+		"confirmPassword": "Login.confirmPassword",
+		"passwordNotMatch": "Login.passwordNotMatch",
+		"typePasswordAgain": "Login.typePasswordAgain",
+		"email": "Login.email",
+		"registerNow": "Login.registerNow"
+	},
+	"Logout": {
+		"msg": {
+			"logoutSuccess": "Logout.msg.logoutSuccess",
+			"logoutFailed": "Logout.msg.logoutFailed",
+			"loggingOut": "Logout.msg.loggingOut"
+		}
+	},
+	"form": {
+		"placeholder": {
+			"input": "form.placeholder.input"
+		}
+	}
 }

@@ -1,130 +1,126 @@
-import React, { useRef, useEffect } from 'react';
-import { Form, message } from 'antd';
-import { history, useIntl } from 'umi';
-import ProForm, { ProFormInstance, ProFormText } from '@ant-design/pro-form';
-import { useRequest } from 'ahooks';
-import {
-  Horse,
-  Domain,
-  DomainCreate,
-  DomainEdit,
-  ErrorCode,
-} from '@/utils/service';
-import MarkdownEditor from '@/components/MarkdownEditor';
+import type { ProFormInstance } from '@ant-design/pro-form'
+import ProForm, { ProFormText } from '@ant-design/pro-form'
+import { useRequest } from 'ahooks'
+import { Form } from 'antd'
+import MarkdownEditor from 'components/MarkdownEditor'
+import { useMessage } from 'hooks'
+import type React from 'react'
+import { useEffect, useRef } from 'react'
+import { useTranslation } from 'react-i18next'
+import { useNavigate } from 'react-router-dom'
+import type { Domain, DomainCreate, DomainEdit } from 'utils/service'
+import { ErrorCode, Horse } from 'utils/service'
 
-export interface IProps {
-  initialValues?: Partial<Domain>;
-  onUpdateSuccess?: (domain?: Domain) => void;
-  onCreateSuccess?: (domain?: Domain) => void;
+interface IProperties {
+	initialValues?: Partial<Domain>
+	onUpdateSuccess?: (domain?: Domain) => void
+	onCreateSuccess?: (domain?: Domain) => void
 }
 
-const Index: React.FC<IProps> = (props) => {
-  const { initialValues, onUpdateSuccess, onCreateSuccess } = props;
-  const intl = useIntl();
-  const formRef = useRef<ProFormInstance<DomainCreate | DomainEdit>>();
+const Index: React.FC<IProperties> = props => {
+	const { initialValues, onUpdateSuccess, onCreateSuccess } = props
+	const { t } = useTranslation()
+	const navigate = useNavigate()
+	const msg = useMessage()
 
-  const { run: createDomain } = useRequest(
-    async (domain: DomainCreate) => Horse.domain.v1CreateDomain(domain),
-    {
-      manual: true,
-      onSuccess: (res) => {
-        if (res.data.errorCode === ErrorCode.Success) {
-          message.success('create success');
-          onCreateSuccess?.(res.data.data);
-          if (res?.data?.data?.url) {
-            history.push(`/domain/${res?.data?.data?.url}`);
-          }
-        } else if (res.data.errorCode === ErrorCode.InvalidUrlError) {
-          message.error('domain url already exists');
-        } else {
-          message.error('create failed');
-        }
-      },
-      onError: () => {
-        message.error('create failed');
-      },
-    },
-  );
+	const formReference = useRef<ProFormInstance<DomainCreate | DomainEdit>>()
 
-  const { run: updateDomain } = useRequest(
-    async (url: string, domain: DomainEdit) =>
-      Horse.domain.v1UpdateDomain(url, domain),
-    {
-      manual: true,
-      onSuccess: (res) => {
-        if (res.data.errorCode === ErrorCode.Success) {
-          message.success('update domain success');
-          onUpdateSuccess?.(res.data.data);
-        } else {
-          message.error('update domain failed');
-        }
-      },
-      onError: () => {
-        message.error('update domain failed');
-      },
-    },
-  );
+	const { run: createDomain } = useRequest(
+		async (domain: DomainCreate) => Horse.domain.v1CreateDomain(domain),
+		{
+			manual: true,
+			onSuccess: response => {
+				if (response.data.errorCode === ErrorCode.Success) {
+					msg.success.create()
+					onCreateSuccess?.(response.data.data)
+					if (response.data.data?.url) {
+						navigate(`/domain/${response.data.data.url}`)
+					}
+				} else if (response.data.errorCode === ErrorCode.InvalidUrlError) {
+					msg.errorCode(ErrorCode.InvalidUrlError)
+				} else {
+					msg.error.create()
+				}
+			},
+			onError: () => {
+				msg.error.create()
+			}
+		}
+	)
 
-  const onFinish = async (values: DomainCreate | DomainEdit) => {
-    await (initialValues?.url
-      ? updateDomain(initialValues.url, values)
-      : createDomain(values as DomainCreate));
-  };
+	const { run: updateDomain } = useRequest(
+		async (url: string, domain: DomainEdit) =>
+			Horse.domain.v1UpdateDomain(url, domain),
+		{
+			manual: true,
+			onSuccess: response => {
+				if (response.data.errorCode === ErrorCode.Success) {
+					msg.success.update()
+					onUpdateSuccess?.(response.data.data)
+				} else {
+					msg.errorCode(response.data.errorCode)
+				}
+			},
+			onError: () => {
+				msg.error.update()
+			}
+		}
+	)
 
-  useEffect(() => {
-    formRef?.current?.setFieldsValue(initialValues ?? {});
-  }, [formRef, initialValues]);
+	const onFinish = async (values: DomainCreate | DomainEdit): Promise<void> =>
+		initialValues?.url
+			? updateDomain(initialValues.url, values)
+			: createDomain(values as DomainCreate)
 
-  return (
-    <ProForm<DomainCreate | DomainEdit>
-      formRef={formRef}
-      layout="vertical"
-      onFinish={onFinish}
-      initialValues={initialValues}
-      dateFormatter="number"
-      omitNil
-    >
-      <ProFormText
-        width="lg"
-        name="name"
-        label={intl.formatMessage({ id: 'DOMAIN.CREATE.NAME' })}
-        rules={[
-          {
-            required: true,
-          },
-        ]}
-      />
+	useEffect(() => {
+		formReference.current?.setFieldsValue(initialValues ?? {})
+	}, [formReference, initialValues])
 
-      <ProFormText
-        width="lg"
-        name="url"
-        label={intl.formatMessage({ id: 'DOMAIN.CREATE.URL' })}
-        tooltip={'This will be displayed in the url of this domain.'}
-      />
+	return (
+		<ProForm<DomainCreate | DomainEdit>
+			formRef={formReference}
+			layout='vertical'
+			onFinish={onFinish}
+			initialValues={initialValues}
+			dateFormatter='number'
+			omitNil
+		>
+			<ProFormText
+				width='lg'
+				name='name'
+				label={t('UpsertDomainForm.name')}
+				rules={[
+					{
+						required: true
+					}
+				]}
+			/>
 
-      <ProFormText
-        width="lg"
-        name="gravatar"
-        label={intl.formatMessage({ id: 'DOMAIN.CREATE.GRAVATAR' })}
-      />
+			<ProFormText
+				width='lg'
+				name='url'
+				label={t('UpsertDomainForm.url')}
+				tooltip='This will be displayed in the url of this domain.'
+			/>
 
-      <ProFormText
-        width="lg"
-        name="tag"
-        label={intl.formatMessage({ id: 'domain.create.tag' })}
-        tooltip={
-          'This field categorizes domains into groups. Admins can clone problems or manage problem groups within one domain group.'
-        }
-      />
+			<ProFormText
+				width='lg'
+				name='gravatar'
+				label={t('UpsertDomainForm.gravatar')}
+			/>
 
-      <Form.Item
-        name="bulletin"
-        label={intl.formatMessage({ id: 'DOMAIN.CREATE.BULLETIN' })}
-      >
-        <MarkdownEditor />
-      </Form.Item>
-    </ProForm>
-  );
-};
+			<ProFormText
+				width='lg'
+				name='tag'
+				label={t('UpsertDomainForm.tag')}
+				tooltip='This field categorizes domains into groups. Admins can clone problems or manage problem groups within one domain group.'
+			/>
 
-export default Index;
+			<Form.Item name='bulletin' label={t('UpsertDomainForm.bulletin')}>
+				<MarkdownEditor />
+			</Form.Item>
+		</ProForm>
+	)
+}
+
+export default Index

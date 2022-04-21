@@ -1,132 +1,129 @@
-import React from 'react';
 import ProForm, {
-  ProFormText,
-  ProFormSelect,
-  ProFormSwitch,
-} from '@ant-design/pro-form';
-import { Form, message } from 'antd';
-import { useIntl, history } from 'umi';
-import { useRequest } from 'ahooks';
-import { SUPPORT_PROGRAMMING_LANGUAGE } from '@/constants';
-import {
-  Horse,
-  ProblemCreate,
-  Problem,
-  ProblemEdit,
-  ErrorCode,
-} from '@/utils/service';
-import MarkdownEditor from '@/components/MarkdownEditor';
+	ProFormSelect,
+	ProFormSwitch,
+	ProFormText
+} from '@ant-design/pro-form'
+import { useRequest } from 'ahooks'
+import { Form, message } from 'antd'
+import MarkdownEditor from 'components/MarkdownEditor'
+import { useMessage } from 'hooks'
+import type React from 'react'
+import { useTranslation } from 'react-i18next'
+import { useNavigate } from 'react-router-dom'
+import { SUPPORT_PROGRAMMING_LANGUAGE } from 'utils/constants'
+import type { Problem, ProblemCreate, ProblemEdit } from 'utils/service'
+import { ErrorCode, Horse } from 'utils/service'
 
 export interface IProps {
-  domainUrl: string;
-  initialValues?: Partial<Problem>;
-  onCreateSuccess?: (problem: Problem) => void;
-  onUpdateSuccess?: (problem: Problem) => void;
+	domainUrl: string
+	initialValues?: Partial<Problem>
+	onCreateSuccess?: (problem: Problem) => void
+	onUpdateSuccess?: (problem: Problem) => void
 }
 
-export const UpsertProblemForm: React.FC<IProps> = (props) => {
-  const { domainUrl, initialValues, onCreateSuccess, onUpdateSuccess } = props;
-  const intl = useIntl();
-  const languageOptions = SUPPORT_PROGRAMMING_LANGUAGE.map((lang) => ({
-    label: lang,
-    value: lang,
-  }));
+export const UpsertProblemForm: React.FC<IProps> = props => {
+	const { domainUrl, initialValues, onCreateSuccess, onUpdateSuccess } = props
+	const { t } = useTranslation()
+	const navigate = useNavigate()
+	const msg = useMessage()
 
-  const { run: createProblem } = useRequest(
-    async (problem: ProblemCreate) =>
-      Horse.problem.v1CreateProblem(domainUrl, problem),
-    {
-      manual: true,
-      onSuccess: (res) => {
-        if (res.data.errorCode === ErrorCode.IntegrityError) {
-          message.error('problem url not unique');
-        } else if (res?.data?.data?.id) {
-          message.success(intl.formatMessage({ id: 'msg.success.create' }));
-          if (onCreateSuccess) onCreateSuccess(res.data.data);
-          history.push(
-            `/domain/${domainUrl}/problem/${
-              res.data.data.url ?? res.data.data.id
-            }`,
-          );
-        }
-      },
-    },
-  );
+	const languageOptions = SUPPORT_PROGRAMMING_LANGUAGE.map(lang => ({
+		label: lang,
+		value: lang
+	}))
 
-  const { run: updateProblem } = useRequest(
-    async (id: string, problem: ProblemEdit) =>
-      Horse.problem.v1UpdateProblem(domainUrl, id, problem),
-    {
-      manual: true,
-      onSuccess: (res) => {
-        if (res.data.errorCode === ErrorCode.IntegrityError) {
-          message.error('problem url not unique');
-        } else if (res.data.data) {
-          message.success(intl.formatMessage({ id: 'msg.success.update' }));
-          if (onUpdateSuccess) onUpdateSuccess(res.data.data);
-          history.push(
-            `/domain/${domainUrl}/problem/${
-              res.data.data?.url ?? res.data.data?.id
-            }`,
-          );
-        }
-      },
-    },
-  );
+	const { run: createProblem } = useRequest(
+		async (problem: ProblemCreate) =>
+			Horse.problem.v1CreateProblem(domainUrl, problem),
+		{
+			manual: true,
+			onSuccess: res => {
+				if (res.data.errorCode === ErrorCode.IntegrityError) {
+					message.error(t('msg.errorMsg.problemUrlNotUnique'))
+				} else if (res.data.data?.id) {
+					msg.success.create()
+					if (onCreateSuccess) onCreateSuccess(res.data.data)
+					navigate(
+						`/domain/${domainUrl}/problem/${
+							res.data.data.url ?? res.data.data.id
+						}`
+					)
+				}
+			},
+			onError: () => {
+				msg.error.create()
+			}
+		}
+	)
 
-  const onFinish = async (values: Partial<Problem>) => {
-    await (initialValues?.id
-      ? updateProblem(initialValues.id, values)
-      : createProblem(values as ProblemCreate));
-  };
+	const { run: updateProblem } = useRequest(
+		async (id: string, problem: ProblemEdit) =>
+			Horse.problem.v1UpdateProblem(domainUrl, id, problem),
+		{
+			manual: true,
+			onSuccess: res => {
+				if (res.data.errorCode === ErrorCode.IntegrityError) {
+					message.error(t('msg.errorMsg.problemUrlNotUnique'))
+				} else if (res.data.data) {
+					msg.success.update()
+					if (onUpdateSuccess) onUpdateSuccess(res.data.data)
+				}
+			},
+			onError: () => {
+				msg.error.update()
+			}
+		}
+	)
 
-  return (
-    <ProForm<ProblemCreate | ProblemEdit>
-      layout="vertical"
-      onFinish={onFinish}
-      initialValues={initialValues}
-      dateFormatter="number"
-      omitNil
-    >
-      <ProForm.Group>
-        <ProFormText
-          width="lg"
-          name="title"
-          label={intl.formatMessage({ id: 'TITLE' })}
-          rules={[{ required: true }]}
-        />
-        <ProFormSwitch
-          name="hidden"
-          label={intl.formatMessage({ id: 'PROBLEM.CREATE.FORM.HIDDEN' })}
-          rules={[{ required: true }]}
-        />
-      </ProForm.Group>
+	const onFinish = async (values: Partial<Problem>): Promise<void> =>
+		initialValues?.id
+			? updateProblem(initialValues.id, values)
+			: createProblem(values as ProblemCreate)
 
-      <ProFormText
-        width="lg"
-        name="url"
-        label={intl.formatMessage({ id: 'PROBLEM.CREATE.FORM.URL' })}
-        tooltip={'The url of a problem must be unique within a domain.'}
-      />
+	return (
+		<ProForm<ProblemCreate | ProblemEdit>
+			layout='vertical'
+			onFinish={onFinish}
+			initialValues={initialValues}
+			dateFormatter='number'
+			omitNil
+		>
+			<ProForm.Group>
+				<ProFormText
+					width='lg'
+					name='title'
+					label={t('UpsertProblemForm.title')}
+					rules={[{ required: true }]}
+				/>
+				<ProFormSwitch
+					name='hidden'
+					label={t('UpsertProblemForm.hidden')}
+					rules={[{ required: true }]}
+				/>
+			</ProForm.Group>
 
-      <ProFormSelect
-        width="lg"
-        name="languages"
-        label={intl.formatMessage({ id: 'PROBLEM.LANGUAGES' })}
-        fieldProps={{
-          showArrow: true,
-          allowClear: true,
-          mode: 'multiple',
-          options: languageOptions,
-        }}
-      />
+			<ProFormText
+				width='lg'
+				name='url'
+				label={t('UpsertProblemForm.url')}
+				tooltip='The url of a problem must be unique within a domain.'
+			/>
 
-      <Form.Item
-        name="content"
-        label={intl.formatMessage({ id: 'PROBLEM.CREATE.FORM.CONTENT' })}
-      >
-        <MarkdownEditor />
-      </Form.Item>
-    </ProForm>
-  );
-};
+			<ProFormSelect
+				width='lg'
+				name='languages'
+				label={t('UpsertProblemForm.languages')}
+				fieldProps={{
+					showArrow: true,
+					allowClear: true,
+					mode: 'multiple',
+					options: languageOptions
+				}}
+			/>
+
+			<Form.Item name='content' label={t('UpsertProblemForm.content')}>
+				<MarkdownEditor />
+			</Form.Item>
+		</ProForm>
+	)
+}

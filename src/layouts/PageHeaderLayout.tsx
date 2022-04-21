@@ -1,16 +1,16 @@
-import React from 'react';
-import { useModel } from 'umi';
-import GlobalPageHeader from '@/components/GlobalPageHeader';
+import GlobalPageHeader from 'components/GlobalPageHeader'
+import { usePageHeader } from 'models'
+import type React from 'react'
 
 const Index: React.FC = ({ children }) => {
-  const { headerVisible } = useModel('pageHeader');
+	const { headerVisible } = usePageHeader()
 
-  return (
-    <>
-      {headerVisible ? <GlobalPageHeader /> : null}
-      {children}
-    </>
-  );
-};
+	return (
+		<>
+			{headerVisible ? <GlobalPageHeader /> : null}
+			{children}
+		</>
+	)
+}
 
-export default Index;
+export default Index

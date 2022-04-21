@@ -1,14 +1,14 @@
-import React from 'react';
+import type React from 'react'
 // import { useParams, useModel } from 'umi';
 // import { message } from 'antd';
 // import { useRequest } from 'ahooks';
-// import { Horse } from '@/utils/service';
+// import { Horse } from 'utils/service';
 
-const Index: React.FC = () => {
-  // const { domainUrl } = useParams<{ domainUrl: string }>();
-  // const { setHeader } = useModel('pageHeader');
+const Index: React.FC = () => (
+	// const { domainUrl } = useParams<{ domainUrl: string }>();
+	// const { setHeader } = usePageHeader();
 
-  return <h1>Scoreboard</h1>;
-};
+	<h1>Scoreboard</h1>
+)
 
-export default Index;
+export default Index

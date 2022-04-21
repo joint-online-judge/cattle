@@ -1,7 +1,5 @@
-import React from 'react';
+import type React from 'react'
 
-const Index: React.FC = () => {
-  return <h1>Problem Set List</h1>;
-};
+const Index: React.FC = () => <h1>TODO: Problem Set List</h1>
 
-export default Index;
+export default Index
