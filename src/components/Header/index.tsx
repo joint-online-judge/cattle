@@ -1,5 +1,5 @@
 import { MenuOutlined } from '@ant-design/icons'
-import { Button, Col, Menu, Row } from 'antd'
+import { Button, Col, Row } from 'antd'
 import Logo from 'assets/logo.svg'
 import type React from 'react'
 import { Link } from 'react-router-dom'
@@ -11,31 +11,24 @@ const Index: React.FC = () => (
 
 	<Row style={{ height: '100%' }} align='middle'>
 		<Col xs={0} sm={0} md={24} lg={24} xl={24} xxl={24}>
-			<Row align='middle' justify='space-between'>
-				<Col>
-					<Link to='/'>
-						<Row gutter={16} align='middle'>
-							<Col>
-								<img src={Logo} alt='logo' className={style.pageTitleLogo} />
-							</Col>
-							<Col>
-								<div className={style.textContainer}>
-									<span className='text-bold text-2xl text-black'>
-										Joint Online Judge
-									</span>
-								</div>
-							</Col>
-						</Row>
-					</Link>
-				</Col>
-				<Col>
-					<Menu mode='horizontal' className={style.menu} selectedKeys={[]}>
-						<Menu.Item key='user'>
-							<UserMenuItem />
-						</Menu.Item>
-					</Menu>
-				</Col>
-			</Row>
+			<div className='flex'>
+				<Link to='/'>
+					<Row gutter={16} align='middle'>
+						<Col>
+							<img src={Logo} alt='logo' className={style.pageTitleLogo} />
+						</Col>
+						<Col>
+							<div className={style.textContainer}>
+								<span className='text-bold text-2xl text-black'>
+									Joint Online Judge
+								</span>
+							</div>
+						</Col>
+					</Row>
+				</Link>
+				<div className='flex-1' />
+				<UserMenuItem />
+			</div>
 		</Col>
 
 		<Col xs={24} sm={24} md={0} lg={0} xl={0} xxl={0}>
@@ -52,7 +45,7 @@ const Index: React.FC = () => (
 					<img src={Logo} alt='logo' className={style.pageTitleLogo} />
 				</Col>
 				<Col>
-					<UserMenuItem mini />
+					<UserMenuItem />
 				</Col>
 			</Row>
 		</Col>

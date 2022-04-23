@@ -11,3 +11,4 @@ cypress/videos
 
 src/client
 openapi
+translation_old.json
