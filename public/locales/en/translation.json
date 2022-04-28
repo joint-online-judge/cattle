@@ -47,24 +47,24 @@
 			"problemUrlNotUnique": "msg.errorMsg.problemUrlNotUnique"
 		},
 		"success": {
-			"fetch": "fetch successfully",
-			"create": "create successfully",
-			"update": "update successfully",
-			"delete": "delete successfully",
 			"fetchItem": "fetch {data} successfully",
+			"fetch": "fetch successfully",
 			"createItem": "create {data} successfully",
+			"create": "create successfully",
 			"updateItem": "update {data} successfully",
-			"deleteItem": "delete {data} successfully"
+			"update": "update successfully",
+			"deleteItem": "delete {data} successfully",
+			"delete": "delete successfully"
 		},
 		"error": {
-			"fetch": "fetch failed",
-			"create": "create failed",
-			"update": "update failed",
-			"delete": "delete failed",
 			"fetchItem": "failed to fetch {data}",
+			"fetch": "fetch failed",
 			"createItem": "failed to create {data}",
+			"create": "create failed",
 			"updateItem": "failed to update {data}",
-			"deleteItem": "failed to delete {data}"
+			"update": "update failed",
+			"deleteItem": "failed to delete {data}",
+			"delete": "delete failed"
 		}
 	},
 	"UpsertProblemForm": {
@@ -317,8 +317,10 @@
 			"domain": "Domain Manage"
 		}
 	},
-	"zh-CN": "简体中文",
-	"en-US": "English",
+	"language": {
+		"zh-CN": "简体中文",
+		"en": "English"
+	},
 	"menu": {
 		"domain": "Domains",
 		"domain_manage": "Domain Manage",

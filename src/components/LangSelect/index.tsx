@@ -16,8 +16,10 @@ interface IProps extends SelectProps<string> {
  */
 const Index: React.FC<IProps> = props => {
 	const { value, onChange, changeOnSelect, ...otherProps } = props
-	const { currentLang, switchLang, allLang } = useLang()
-	const { t } = useTranslation()
+	const { t, i18n } = useTranslation()
+	const { switchLang } = useLang()
+	const currentLang = i18n.language
+	const allLang = i18n.languages
 
 	const options: DefaultOptionType[] = React.useMemo(
 		() =>

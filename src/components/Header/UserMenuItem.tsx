@@ -15,11 +15,7 @@ import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link, useLocation } from 'react-router-dom'
 
-interface IProps {
-	mini?: boolean
-}
-
-export const Index: React.FC<IProps> = () => {
+export const Index: React.FC = () => {
 	const [modalVisible, setModalVisible] = useState(false)
 	const auth = useAuth()
 	const { t } = useTranslation()
@@ -63,7 +59,7 @@ export const Index: React.FC<IProps> = () => {
 
 	if (auth.user) {
 		return (
-			<div className='user-menu-dropdown'>
+			<div>
 				<Dropdown
 					trigger={['click']}
 					overlay={subMenu}

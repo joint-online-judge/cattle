@@ -12,28 +12,29 @@ import './i18n'
 import './index.less'
 import routes from './routes'
 
-function Routes(): ReactElement {
+function Routes(): ReactElement | null {
 	const routesComponent = useRoutes(routes)
-
-	return <Suspense fallback={<LoadingOrError />}>{routesComponent}</Suspense>
+	return routesComponent
 }
 
 export default function App(): ReactElement {
 	return (
-		<LangContextProvider>
-			<AuthContextProvider>
-				<DomainContextProvider>
-					<AccessContextProvider>
-						<PageHeaderContextProvider>
-							<ProblemSetContextProvider>
-								<BrowserRouter>
-									<Routes />
-								</BrowserRouter>
-							</ProblemSetContextProvider>
-						</PageHeaderContextProvider>
-					</AccessContextProvider>
-				</DomainContextProvider>
-			</AuthContextProvider>
-		</LangContextProvider>
+		<Suspense fallback={<LoadingOrError />}>
+			<LangContextProvider>
+				<AuthContextProvider>
+					<DomainContextProvider>
+						<AccessContextProvider>
+							<PageHeaderContextProvider>
+								<ProblemSetContextProvider>
+									<BrowserRouter>
+										<Routes />
+									</BrowserRouter>
+								</ProblemSetContextProvider>
+							</PageHeaderContextProvider>
+						</AccessContextProvider>
+					</DomainContextProvider>
+				</AuthContextProvider>
+			</LangContextProvider>
+		</Suspense>
 	)
 }
