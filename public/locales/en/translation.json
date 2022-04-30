@@ -15,10 +15,10 @@
 	},
 	"DomainHeader": {
 		"menu": {
-			"overview": "DomainHeader.menu.overview",
-			"problemSet": "DomainHeader.menu.problemSet",
-			"problem": "DomainHeader.menu.problem",
-			"domainManage": "DomainHeader.menu.domainManage"
+			"overview": "Overview",
+			"problemSet": "Assignments",
+			"problem": "Problems",
+			"domainManage": "Manage"
 		}
 	},
 	"DomainRoleSelect": {
@@ -91,13 +91,13 @@
 		"title": "CreateProblemSet.title"
 	},
 	"DomainHome": {
-		"problemSet": "DomainHome.problemSet",
-		"createProblemSet": "DomainHome.createProblemSet"
+		"problemSet": "Assignments",
+		"createProblemSet": "Create Assignments"
 	},
 	"DomainList": {
-		"title": "DomainList.title",
-		"visit": "DomainList.visit",
-		"manage": "DomainList.manage"
+		"title": "Domains",
+		"visit": "Visit",
+		"manage": "Manage"
 	},
 	"domain": "domain",
 	"DomainSettings": {
@@ -326,5 +326,16 @@
 		"domain_manage": "Domain Manage",
 		"problem_list": "Problems",
 		"problem_set": "Problem Sets"
+	},
+	"ProblemSetList": {
+		"noDueDate": "No due date"
+	},
+	"problemSet": {
+		"status": {
+			"notStarted": "Unstarted",
+			"ended": "Ended",
+			"overdue": "Overdue",
+			"ongoing": "Ongoing"
+		}
 	}
 }

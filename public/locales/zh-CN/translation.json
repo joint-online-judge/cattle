@@ -15,10 +15,10 @@
 	},
 	"DomainHeader": {
 		"menu": {
-			"overview": "DomainHeader.menu.overview",
-			"problemSet": "DomainHeader.menu.problemSet",
-			"problem": "DomainHeader.menu.problem",
-			"domainManage": "DomainHeader.menu.domainManage"
+			"overview": "概要",
+			"problemSet": "作业",
+			"problem": "题库",
+			"domainManage": "管理"
 		}
 	},
 	"DomainRoleSelect": {
@@ -91,15 +91,15 @@
 		"title": "CreateProblemSet.title"
 	},
 	"DomainHome": {
-		"problemSet": "DomainHome.problemSet",
-		"createProblemSet": "DomainHome.createProblemSet"
+		"problemSet": "作业",
+		"createProblemSet": "创建作业"
 	},
 	"DomainList": {
-		"title": "DomainList.title",
-		"visit": "DomainList.visit",
-		"manage": "DomainList.manage"
+		"title": "我的域",
+		"visit": "查看",
+		"manage": "管理"
 	},
-	"domain": "domain",
+	"domain": "域",
 	"DomainSettings": {
 		"menu": {
 			"profile": "DomainSettings.menu.profile",
@@ -325,5 +325,16 @@
 		"domain_manage": "域管理",
 		"problem_list": "题库",
 		"problem_set": "问题集"
+	},
+	"ProblemSetList": {
+		"noDueDate": "无截止日期"
+	},
+	"problemSet": {
+		"status": {
+			"ended": "结束提交",
+			"notStarted": "未开始",
+			"overdue": "延期提交",
+			"ongoing": "进行中"
+		}
 	}
 }

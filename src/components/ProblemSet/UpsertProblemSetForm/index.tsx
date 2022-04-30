@@ -153,4 +153,4 @@ const UpsertProblemSetForm: React.FC<IProps> = props => {
 	)
 }
 
-export { UpsertProblemSetForm }
+export default UpsertProblemSetForm

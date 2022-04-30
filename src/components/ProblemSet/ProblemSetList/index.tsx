@@ -1,5 +1,7 @@
 import { useRequest } from 'ahooks'
-import { Badge, List, message, Skeleton } from 'antd'
+import { List, message, Skeleton } from 'antd'
+import { ProblemSetStatusBadge } from 'components/ProblemSet'
+import { t } from 'i18next'
 import mm from 'moment'
 import type React from 'react'
 import type { ReactNode } from 'react'
@@ -30,33 +32,6 @@ const Index: React.FC<IProps> = ({ domainUrl }) => {
 		}
 	)
 
-	const getStatusBadge = (
-		unlockAtString: string | undefined,
-		dueAtString: string | undefined,
-		lockAtString: string | undefined
-	): ReactNode => {
-		const now = Date.now()
-		const unlockAt = unlockAtString
-			? new Date(unlockAtString).getTime()
-			: undefined
-		const dueAt = dueAtString ? new Date(dueAtString).getTime() : undefined
-		const lockAt = lockAtString ? new Date(lockAtString).getTime() : undefined
-
-		if (unlockAt && now < unlockAt) {
-			return <Badge status='default' text='Not Started' />
-		}
-
-		if (lockAt && now > lockAt) {
-			return <Badge status='error' text='Ended' />
-		}
-
-		if (dueAt && now > dueAt) {
-			return <Badge status='warning' text='Overdue' />
-		}
-
-		return <Badge status='processing' text='Ongoing' />
-	}
-
 	return (
 		<List
 			itemLayout='horizontal'
@@ -69,7 +44,14 @@ const Index: React.FC<IProps> = ({ domainUrl }) => {
 			}}
 			renderItem={(item): ReactNode => (
 				<List.Item
-					actions={[getStatusBadge(item.unlockAt, item.dueAt, item.lockAt)]}
+					actions={[
+						<ProblemSetStatusBadge
+							unlockAt={item.unlockAt}
+							dueAt={item.dueAt}
+							lockAt={item.lockAt}
+							key='status'
+						/>
+					]}
 				>
 					<Skeleton title={false} loading={loading} active>
 						<List.Item.Meta
@@ -81,7 +63,7 @@ const Index: React.FC<IProps> = ({ domainUrl }) => {
 							description={
 								item.dueAt
 									? mm(item.dueAt).format('YYYY-MM-DD HH:mm')
-									: 'No Due Date'
+									: t('ProblemSetList.noDueDate')
 							}
 						/>
 					</Skeleton>

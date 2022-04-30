@@ -1,5 +1,6 @@
 import { useRequest } from 'ahooks'
 import { List, Skeleton } from 'antd'
+import Head from 'components/Head'
 import ShadowCard from 'components/ShadowCard'
 import { useMessage } from 'hooks'
 import { usePageHeader } from 'models'
@@ -34,39 +35,42 @@ const Index: React.FC = () => {
 	)
 
 	return (
-		<ShadowCard bodyStyle={{ padding: 0 }}>
-			<List
-				loading={loading}
-				itemLayout='horizontal'
-				dataSource={data}
-				size='large'
-				renderItem={(item): ReactNode => (
-					<List.Item
-						actions={[
-							<Link to={`/domain/${item.url ?? ''}`} key='visit'>
-								{t('DomainList.visit')}
-							</Link>,
-							<Link
-								to={`/domain/${item.url ?? ''}/settings/profile`}
-								key='manage'
-							>
-								{t('DomainList.manage')}
-							</Link>
-						]}
-					>
-						<Skeleton title={false} loading={loading} active>
-							<List.Item.Meta
-								title={
-									<Link to={`/domain/${item.url ?? ''}`} className='text-lg'>
-										{item.name}
-									</Link>
-								}
-							/>
-						</Skeleton>
-					</List.Item>
-				)}
-			/>
-		</ShadowCard>
+		<>
+			<Head title='Home' />
+			<ShadowCard bodyStyle={{ padding: 0 }}>
+				<List
+					loading={loading}
+					itemLayout='horizontal'
+					dataSource={data}
+					size='large'
+					renderItem={(item): ReactNode => (
+						<List.Item
+							actions={[
+								<Link to={`/domain/${item.url ?? ''}`} key='visit'>
+									{t('DomainList.visit')}
+								</Link>,
+								<Link
+									to={`/domain/${item.url ?? ''}/settings/profile`}
+									key='manage'
+								>
+									{t('DomainList.manage')}
+								</Link>
+							]}
+						>
+							<Skeleton title={false} loading={loading} active>
+								<List.Item.Meta
+									title={
+										<Link to={`/domain/${item.url ?? ''}`} className='text-lg'>
+											{item.name}
+										</Link>
+									}
+								/>
+							</Skeleton>
+						</List.Item>
+					)}
+				/>
+			</ShadowCard>
+		</>
 	)
 }
 

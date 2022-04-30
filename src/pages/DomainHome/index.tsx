@@ -1,8 +1,9 @@
 import { PlusOutlined } from '@ant-design/icons'
 import { Button } from 'antd'
-import ProblemSetList from 'components/ProblemSetList'
+import Head from 'components/Head'
+import { ProblemSetList } from 'components/ProblemSet'
 import ShadowCard from 'components/ShadowCard'
-import { useAccess, usePageHeader } from 'models'
+import { useAccess, useDomain, usePageHeader } from 'models'
 import type React from 'react'
 import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -15,6 +16,7 @@ const Index: React.FC = () => {
 	const navigate = useNavigate()
 	const { domainUrl } = useParams<{ domainUrl: string }>()
 	const { removeHeader } = usePageHeader()
+	const { domain } = useDomain()
 	const access = useAccess()
 
 	useEffect(() => {
@@ -26,26 +28,29 @@ const Index: React.FC = () => {
 	}
 
 	return (
-		<ShadowCard
-			className='domain-home-problem-set-card'
-			title={t('DomainHome.problemSet')}
-			extra={
-				access.canCreateProblemSet ? (
-					<Button
-						icon={<PlusOutlined />}
-						onClick={(): void => {
-							navigate(`/domain/${domainUrl}/create-problem-set`)
-						}}
-						type='primary'
-					>
-						{t('DomainHome.createProblemSet')}
-					</Button>
-				) : null
-			}
-			bodyStyle={{ padding: 0 }}
-		>
-			<ProblemSetList domainUrl={domainUrl} />
-		</ShadowCard>
+		<>
+			<Head title={domain?.name ?? 'Domain Home'} />
+			<ShadowCard
+				className='domain-home-problem-set-card'
+				title={t('DomainHome.problemSet')}
+				extra={
+					access.canCreateProblemSet ? (
+						<Button
+							icon={<PlusOutlined />}
+							onClick={(): void => {
+								navigate(`/domain/${domainUrl}/create-problem-set`)
+							}}
+							type='primary'
+						>
+							{t('DomainHome.createProblemSet')}
+						</Button>
+					) : null
+				}
+				bodyStyle={{ padding: 0 }}
+			>
+				<ProblemSetList domainUrl={domainUrl} />
+			</ShadowCard>
+		</>
 	)
 }
 
