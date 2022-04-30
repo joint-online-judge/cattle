@@ -20,6 +20,7 @@ const Index: React.FC<GravatarProps> = props => {
 			src={imageUrl}
 			icon={<UserOutlined />}
 			alt='avatar'
+			className='border border-solid border-slate-300'
 			{...otherProps}
 		/>
 	)
