@@ -4,10 +4,12 @@ import type { ReactElement } from 'react'
 interface Properties {
 	error?: Error
 	fullscreen?: boolean
+	height?: number // rem
 }
 export default function LoadingOrError({
 	error,
-	fullscreen = false
+	fullscreen = false,
+	height = 15
 }: Properties): ReactElement {
 	if (fullscreen) {
 		return (
@@ -27,7 +29,7 @@ export default function LoadingOrError({
 	return (
 		<div
 			className='flex h-full items-center justify-center'
-			style={{ minHeight: '15rem' }}
+			style={{ minHeight: `${height}rem` }}
 			data-testid='LoadingOrError'
 		>
 			{error ? <h1 className='text-xl'>{error.message}</h1> : <Spin />}

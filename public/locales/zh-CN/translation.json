@@ -75,20 +75,28 @@
 		"content": "UpsertProblemForm.content"
 	},
 	"UpsertProblemSetForm": {
-		"title": "UpsertProblemSetForm.title",
-		"url": "UpsertProblemSetForm.url",
-		"unlockAt": "UpsertProblemSetForm.unlockAt",
-		"dueAt": "UpsertProblemSetForm.dueAt",
-		"lockAt": "UpsertProblemSetForm.lockAt",
-		"hidden": "UpsertProblemSetForm.hidden",
-		"scoreboardHidden": "UpsertProblemSetForm.scoreboardHidden",
-		"content": "UpsertProblemSetForm.content"
+		"title": "标题",
+		"url": "URL",
+		"unlockAt": "开始提交时间",
+		"dueAt": "结束时间",
+		"lockAt": "截止提交时间",
+		"hidden": "隐藏",
+		"scoreboardHidden": "隐藏排行榜",
+		"content": "作业描述",
+		"tooltip": {
+			"url": "作业的URL必须在当前域内唯一",
+			"dueAt": "仍然允许提交，但会被标记为迟交",
+			"lockAt": "过期后不允许任何提交"
+		},
+		"placeholder": {
+			"url": "若不填，系统会自动生成"
+		}
 	},
 	"CreateProblem": {
 		"title": "CreateProblem.title"
 	},
 	"CreateProblemSet": {
-		"title": "CreateProblemSet.title"
+		"title": "创建作业"
 	},
 	"DomainHome": {
 		"problemSet": "作业",
@@ -222,8 +230,8 @@
 			"edit": "编辑信息",
 			"settings": "问题配置"
 		},
-		"problem": "ProblemSetDetail.problem",
-		"introduction": "ProblemSetDetail.introduction"
+		"problem": "题目列表",
+		"introduction": "作业描述"
 	},
 	"VISIT": "VISIT",
 	"MANAGE": "MANAGE",
