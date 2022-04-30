@@ -13,6 +13,7 @@ import type React from 'react'
 import { useEffect, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Outlet, useParams } from 'react-router-dom'
+import { NoDomainUrlError } from 'utils/exception'
 import { gravatarImageUrl } from 'utils/gravatar'
 import style from './style.module.css'
 
@@ -23,8 +24,7 @@ const Index: React.FC = () => {
 	const { setHeader } = usePageHeader()
 
 	if (!domainUrl) {
-		// Shall be unreachable under normal conditions
-		throw new Error('No domainUrl found')
+		throw new NoDomainUrlError()
 	}
 
 	const breads = useMemo(

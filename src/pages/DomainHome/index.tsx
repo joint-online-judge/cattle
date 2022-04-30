@@ -7,6 +7,7 @@ import type React from 'react'
 import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate, useParams } from 'react-router-dom'
+import { NoDomainUrlError } from 'utils/exception'
 import './style.less'
 
 const Index: React.FC = () => {
@@ -21,8 +22,7 @@ const Index: React.FC = () => {
 	}, [removeHeader])
 
 	if (!domainUrl) {
-		// Shall be unreachable under normal conditions
-		throw new Error('No domainUrl found')
+		throw new NoDomainUrlError()
 	}
 
 	return (

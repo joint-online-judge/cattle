@@ -12,6 +12,7 @@ import { useRef, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import type { ProTablePagination } from 'types'
 import { transPagination } from 'utils'
+import { NoDomainUrlError } from 'utils/exception'
 import type { DomainUserAdd, UserWithDomainRole } from 'utils/service'
 import { Horse } from 'utils/service'
 import AddUserModal from './AddUserModal'
@@ -26,8 +27,7 @@ const Index: React.FC = () => {
 	const modalFormRef = useRef<ProFormInstance<DomainUserAdd>>()
 
 	if (!domainUrl) {
-		// Shall be unreachable under normal conditions
-		throw new Error('No domainUrl found')
+		throw new NoDomainUrlError()
 	}
 
 	const { runAsync: fetchDomainUsers, loading: fetching } = useRequest(

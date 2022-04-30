@@ -11,6 +11,7 @@ import { useTranslation } from 'react-i18next'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import type { ProTablePagination } from 'types'
 import { transPagination } from 'utils'
+import { NoDomainUrlError } from 'utils/exception'
 import type { Problem } from 'utils/service'
 import { Horse } from 'utils/service'
 
@@ -24,8 +25,7 @@ const Index: React.FC = () => {
 	const navigate = useNavigate()
 
 	if (!domainUrl) {
-		// Shall be unreachable under normal conditions
-		throw new Error('No domainUrl found')
+		throw new NoDomainUrlError()
 	}
 
 	const { runAsync: fetchProblems, loading: fetching } = useRequest(

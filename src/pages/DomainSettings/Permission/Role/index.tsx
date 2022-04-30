@@ -8,6 +8,7 @@ import type React from 'react'
 import type { ReactNode } from 'react'
 import { useState } from 'react'
 import { useParams } from 'react-router-dom'
+import { NoDomainUrlError } from 'utils/exception'
 import type { DomainRole } from 'utils/service'
 import { ErrorCode, Horse } from 'utils/service'
 import AddRoleModal from './AddRoleModal'
@@ -17,8 +18,7 @@ const Index: React.FC = () => {
 	const [loadFailed, setLoadFailed] = useState<boolean>(false)
 
 	if (!domainUrl) {
-		// Shall be unreachable under normal conditions
-		throw new Error('No domainUrl found')
+		throw new NoDomainUrlError()
 	}
 
 	const {

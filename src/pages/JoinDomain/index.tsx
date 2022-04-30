@@ -8,6 +8,7 @@ import type React from 'react'
 import { useEffect, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom'
+import { NoDomainUrlError } from 'utils/exception'
 import Horse, { ErrorCode } from 'utils/service'
 
 interface FormValues {
@@ -23,8 +24,7 @@ const Index: React.FC = () => {
 	const { setHeader } = usePageHeader()
 
 	if (!domainUrl) {
-		// Shall be unreachable under normal conditions
-		throw new Error('No domainUrl found')
+		throw new NoDomainUrlError()
 	}
 
 	const { run: joinDomain, loading: joining } = useRequest(
