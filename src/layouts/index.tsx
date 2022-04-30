@@ -20,9 +20,7 @@ const Index: React.FC = () => {
 
 		return (
 			<MainLayout>
-				<Suspense fallback={<LoadingOrError />}>
-					<Outlet />
-				</Suspense>
+				<Outlet />
 			</MainLayout>
 		)
 	}, [match])
@@ -34,7 +32,9 @@ const Index: React.FC = () => {
 					<Header />
 				</Layout.Header>
 				<Layout.Content className={style.pageBody}>
-					<ErrorBoundary>{mainContent}</ErrorBoundary>
+					<Suspense fallback={<LoadingOrError />}>
+						<ErrorBoundary>{mainContent}</ErrorBoundary>
+					</Suspense>
 				</Layout.Content>
 				<Layout.Footer className={style.pageFooter}>
 					<Footer />

@@ -19,7 +19,7 @@ function Routes(): ReactElement | null {
 
 export default function App(): ReactElement {
 	return (
-		<Suspense fallback={<LoadingOrError />}>
+		<Suspense fallback={<LoadingOrError fullscreen />}>
 			<LangContextProvider>
 				<AuthContextProvider>
 					<DomainContextProvider>
