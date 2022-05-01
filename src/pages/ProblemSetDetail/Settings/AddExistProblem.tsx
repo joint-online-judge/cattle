@@ -1,8 +1,8 @@
-import { EyeInvisibleOutlined } from '@ant-design/icons'
 import type { ActionType, ProColumns, RequestData } from '@ant-design/pro-table'
 import ProTable from '@ant-design/pro-table'
 import { useRequest } from 'ahooks'
-import { Button, message, Space, Tooltip } from 'antd'
+import { Button, message, Space } from 'antd'
+import { HiddenFromUserIcon } from 'components/Icons'
 import { useDomain } from 'models'
 import type React from 'react'
 import { useRef } from 'react'
@@ -77,11 +77,7 @@ const Index: React.FC<IProps> = ({
 					>
 						{record.title}
 					</Link>
-					{record.hidden ? (
-						<Tooltip title='This problem is invisible to normal users.'>
-							<EyeInvisibleOutlined />
-						</Tooltip>
-					) : null}
+					{record.hidden ? <HiddenFromUserIcon /> : null}
 				</Space>
 			)
 		},

@@ -181,10 +181,9 @@
 	},
 	"form": {
 		"placeholder": {
-			"input": "form.placeholder.input"
+			"input": "请输入",
+			"select": "请选择"
 		},
-		"input_placeholder": "请输入",
-		"select_placeholder": "请选择",
 		"domain_candidate_search": {
 			"placeholder": "按用户名/邮箱/学号/真名搜索"
 		},
@@ -201,24 +200,9 @@
 		"STATUS": "提交状态",
 		"PROBLEM_GROUP": "问题组",
 		"OWNER": "出题人",
-		"UPLOAD_FILE": {
-			"MISSING": "PROBLEM.UPLOAD_FILE.MISSING"
-		},
 		"MEMORY_KB": "峰值内存",
 		"TIME_MS": "总耗时",
 		"SUBMIT_AT": "递交时间",
-		"RECENT_RECORD": "最近提交记录",
-		"SUBMIT": "提交",
-		"UPLOAD_HELP_CLICK": "上传文件",
-		"UPLOAD_HELP_DRAG": "或者拖拽文件至此处",
-		"CREATE": {
-			"TITLE": "创建问题",
-			"FORM": {
-				"CONTENT": "描述",
-				"HIDDEN": "隐藏",
-				"URL": "问题URL"
-			}
-		},
 		"LANGUAGES": "编程语言"
 	},
 	"CodeType": "CodeType",
@@ -343,6 +327,27 @@
 			"notStarted": "未开始",
 			"overdue": "延期提交",
 			"ongoing": "进行中"
+		}
+	},
+	"Icons": {
+		"hiddenFromUser": "普通用户不可见"
+	},
+	"ProblemList": {
+		"create": "创建问题",
+		"title": "标题",
+		"submission": "提交",
+		"acCount": "AC",
+		"status": "状态"
+	},
+	"ProblemDetail": {
+		"introduction": "题目描述",
+		"noDescription": "没有描述",
+		"Submit": {
+			"uploadFile": "文件",
+			"fileMissing": "未上传文件",
+			"uploadHelpDrag": "或者拖拽文件至此处",
+			"uploadHelpClick": "上传文件",
+			"submit": "提交"
 		}
 	}
 }

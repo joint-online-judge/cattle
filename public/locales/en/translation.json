@@ -181,10 +181,9 @@
 	},
 	"form": {
 		"placeholder": {
-			"input": "form.placeholder.input"
+			"input": "Please enter",
+			"select": "Please select"
 		},
-		"input_placeholder": "Please enter",
-		"select_placeholder": "Please select",
 		"domain_candidate_search": {
 			"placeholder": "search by username/email/student ID/real name"
 		},
@@ -201,24 +200,9 @@
 		"STATUS": "Status",
 		"PROBLEM_GROUP": "Problem Group",
 		"OWNER": "Created By",
-		"UPLOAD_FILE": {
-			"MISSING": "PROBLEM.UPLOAD_FILE.MISSING"
-		},
 		"MEMORY_KB": "Peak Memory",
 		"TIME_MS": "Total Time",
 		"SUBMIT_AT": "Submit At",
-		"RECENT_RECORD": "Recent Records",
-		"SUBMIT": "Submit",
-		"UPLOAD_HELP_CLICK": "Upload File",
-		"UPLOAD_HELP_DRAG": "Or drag your file to this area",
-		"CREATE": {
-			"TITLE": "Create Problem",
-			"FORM": {
-				"CONTENT": "Description",
-				"HIDDEN": "Hidden",
-				"URL": "Problem URL"
-			}
-		},
 		"LANGUAGES": "Languages"
 	},
 	"CodeType": "CodeType",
@@ -344,6 +328,27 @@
 			"ended": "Ended",
 			"overdue": "Overdue",
 			"ongoing": "Ongoing"
+		}
+	},
+	"Icons": {
+		"hiddenFromUser": "This problem is invisible to normal users."
+	},
+	"ProblemList": {
+		"create": "Create Problem",
+		"title": "Title",
+		"submission": "Submission",
+		"acCount": "AC",
+		"status": "Status"
+	},
+	"ProblemDetail": {
+		"introduction": "Description",
+		"noDescription": "No Description",
+		"Submit": {
+			"uploadFile": "File",
+			"fileMissing": "File missing",
+			"uploadHelpDrag": "Or drag your file to this area",
+			"uploadHelpClick": "Upload File",
+			"submit": "Submit"
 		}
 	}
 }

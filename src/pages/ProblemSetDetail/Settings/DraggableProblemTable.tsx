@@ -1,9 +1,10 @@
-import { EyeInvisibleOutlined, MenuOutlined } from '@ant-design/icons'
+import { MenuOutlined } from '@ant-design/icons'
 import type { ProColumns } from '@ant-design/pro-table'
 import ProTable from '@ant-design/pro-table'
 import { arrayMoveImmutable } from '@ant-design/pro-utils'
 import { useRequest } from 'ahooks'
-import { Button, message, Space, Tooltip } from 'antd'
+import { Button, message, Space } from 'antd'
+import { HiddenFromUserIcon } from 'components/Icons'
 import { useDomain } from 'models'
 import type React from 'react'
 import { useCallback, useEffect, useMemo, useState } from 'react'
@@ -124,11 +125,7 @@ const Index: React.FC<IProps> = ({
 						>
 							{record.title}
 						</Link>
-						{record.hidden ? (
-							<Tooltip title='This problem is invisible to normal users.'>
-								<EyeInvisibleOutlined />
-							</Tooltip>
-						) : null}
+						{record.hidden ? <HiddenFromUserIcon /> : null}
 					</Space>
 				)
 			},
