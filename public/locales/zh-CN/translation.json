@@ -4,11 +4,11 @@
 		"copyFailed": ""
 	},
 	"UpsertDomainForm": {
-		"name": "UpsertDomainForm.name",
-		"url": "UpsertDomainForm.url",
-		"gravatar": "UpsertDomainForm.gravatar",
-		"tag": "UpsertDomainForm.tag",
-		"bulletin": "UpsertDomainForm.bulletin"
+		"name": "名称",
+		"url": "URL",
+		"gravatar": "Gravatar邮箱",
+		"tag": "标签",
+		"bulletin": "公告"
 	},
 	"DomainCandidateSearchInput": {
 		"placeholder": "DomainCandidateSearchInput.placeholder"
@@ -44,7 +44,7 @@
 	},
 	"msg": {
 		"errorMsg": {
-			"problemUrlNotUnique": "msg.errorMsg.problemUrlNotUnique"
+			"problemUrlNotUnique": "URL已经存在"
 		},
 		"success": {
 			"fetchItem": "获取{data}成功",
@@ -68,11 +68,11 @@
 		}
 	},
 	"UpsertProblemForm": {
-		"title": "UpsertProblemForm.title",
-		"hidden": "UpsertProblemForm.hidden",
-		"url": "UpsertProblemForm.url",
-		"languages": "UpsertProblemForm.languages",
-		"content": "UpsertProblemForm.content"
+		"title": "标题",
+		"hidden": "隐藏",
+		"url": "URL",
+		"languages": "编程语言",
+		"content": "题目描述"
 	},
 	"UpsertProblemSetForm": {
 		"title": "标题",
@@ -110,13 +110,12 @@
 	"domain": "域",
 	"DomainSettings": {
 		"menu": {
-			"profile": "DomainSettings.menu.profile",
-			"invitation": "DomainSettings.menu.invitation",
-			"member": "DomainSettings.menu.member",
-			"permission": {
-				"config": "DomainSettings.menu.permission.config",
-				"role": "DomainSettings.menu.permission.role"
-			}
+			"profile": "基本资料",
+			"invitation": "成员邀请",
+			"member": "成员管理",
+			"permission": "权限管理",
+			"permissionConfig": "权限控制",
+			"permissionRole": "角色管理"
 		},
 		"permission": "DomainSettings.permission",
 		"roleName": "DomainSettings.roleName",

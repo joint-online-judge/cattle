@@ -102,16 +102,13 @@ const Index: React.FC = () => {
 							{t('DomainHeader.menu.problem')}
 						</Link>
 					</Menu.Item>
-					{
-						// Note: do not use <Access> of umi -- antd menu cannot regonize wrapped component.
-						access.isRoot ? (
-							<Menu.Item key='domain_manage' icon={<SettingOutlined />}>
-								<Link to={`/domain/${domainUrl}/settings`}>
-									{t('DomainHeader.menu.domainManage')}
-								</Link>
-							</Menu.Item>
-						) : undefined
-					}
+					{access.isRoot ? (
+						<Menu.Item key='domain_manage' icon={<SettingOutlined />}>
+							<Link to={`/domain/${domainUrl}/settings`}>
+								{t('DomainHeader.menu.domainManage')}
+							</Link>
+						</Menu.Item>
+					) : undefined}
 				</>
 			</Menu>
 		)

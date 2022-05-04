@@ -4,11 +4,11 @@
 		"copyFailed": ""
 	},
 	"UpsertDomainForm": {
-		"name": "UpsertDomainForm.name",
-		"url": "UpsertDomainForm.url",
-		"gravatar": "UpsertDomainForm.gravatar",
-		"tag": "UpsertDomainForm.tag",
-		"bulletin": "UpsertDomainForm.bulletin"
+		"name": "Name",
+		"url": "URL",
+		"gravatar": "Gravatar Email",
+		"tag": "Tag",
+		"bulletin": "Bulletin"
 	},
 	"DomainCandidateSearchInput": {
 		"placeholder": "DomainCandidateSearchInput.placeholder"
@@ -44,7 +44,7 @@
 	},
 	"msg": {
 		"errorMsg": {
-			"problemUrlNotUnique": "msg.errorMsg.problemUrlNotUnique"
+			"problemUrlNotUnique": "URL already exists"
 		},
 		"success": {
 			"fetchItem": "fetch {data} successfully",
@@ -68,11 +68,11 @@
 		}
 	},
 	"UpsertProblemForm": {
-		"title": "UpsertProblemForm.title",
-		"hidden": "UpsertProblemForm.hidden",
-		"url": "UpsertProblemForm.url",
-		"languages": "UpsertProblemForm.languages",
-		"content": "UpsertProblemForm.content"
+		"title": "Title",
+		"hidden": "Hidden",
+		"url": "URL",
+		"languages": "Languages",
+		"content": "Description"
 	},
 	"UpsertProblemSetForm": {
 		"title": "Title",
@@ -110,13 +110,12 @@
 	"domain": "domain",
 	"DomainSettings": {
 		"menu": {
-			"profile": "DomainSettings.menu.profile",
-			"invitation": "DomainSettings.menu.invitation",
-			"member": "DomainSettings.menu.member",
-			"permission": {
-				"config": "DomainSettings.menu.permission.config",
-				"role": "DomainSettings.menu.permission.role"
-			}
+			"profile": "Profile",
+			"invitation": "Invitation",
+			"member": "Members",
+			"permission": "Permission",
+			"permissionConfig": "Permission Control",
+			"permissionRole": "Role Management"
 		},
 		"permission": "DomainSettings.permission",
 		"roleName": "DomainSettings.roleName",

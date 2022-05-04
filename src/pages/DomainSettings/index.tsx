@@ -81,10 +81,10 @@ const Index: React.FC = () => {
 							title={t('DomainSettings.menu.permission')}
 						>
 							<Menu.Item key='config'>
-								{t('DomainSettings.menu.permission.config')}
+								{t('DomainSettings.menu.permissionConfig')}
 							</Menu.Item>
 							<Menu.Item key='role'>
-								{t('DomainSettings.menu.permission.role')}
+								{t('DomainSettings.menu.permissionRole')}
 							</Menu.Item>
 						</Menu.SubMenu>
 					</Menu>
