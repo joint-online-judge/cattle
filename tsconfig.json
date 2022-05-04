@@ -17,7 +17,6 @@
 			"vite/client",
 			"vitest/globals",
 			"vite-plugin-pwa/client",
-			"jest",
 			"@types/testing-library__jest-dom"
 		]
 	},
