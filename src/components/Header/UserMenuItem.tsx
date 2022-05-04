@@ -1,11 +1,12 @@
 import {
 	ApartmentOutlined,
+	DownOutlined,
 	LogoutOutlined,
 	SettingOutlined,
 	TranslationOutlined,
 	UserOutlined
 } from '@ant-design/icons'
-import { Col, Dropdown, Menu, Modal, Row } from 'antd'
+import { Dropdown, Menu, Modal, Space } from 'antd'
 import Gravatar from 'components/Gravatar'
 import LangSelect from 'components/LangSelect'
 import { useAccess, useAuth } from 'models'
@@ -14,11 +15,7 @@ import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link, useLocation } from 'react-router-dom'
 
-interface IProps {
-	mini?: boolean
-}
-
-export const Index: React.FC<IProps> = ({ mini = false }) => {
+export const Index: React.FC = () => {
 	const [modalVisible, setModalVisible] = useState(false)
 	const auth = useAuth()
 	const { t } = useTranslation()
@@ -62,27 +59,17 @@ export const Index: React.FC<IProps> = ({ mini = false }) => {
 
 	if (auth.user) {
 		return (
-			<>
+			<div>
 				<Dropdown
 					trigger={['click']}
 					overlay={subMenu}
 					placement='bottomRight'
 					arrow
 				>
-					<Row align='middle' gutter={8}>
-						<Col>
-							<Gravatar gravatar={auth.user.gravatar} size={40} />
-						</Col>
-						{mini ? null : (
-							<Col>
-								<span className='text-base'>
-									{auth.user.realName?.length
-										? auth.user.realName
-										: auth.user.username}
-								</span>
-							</Col>
-						)}
-					</Row>
+					<Space>
+						<Gravatar gravatar={auth.user.gravatar} size={32} />
+						<DownOutlined className='text-xs' />
+					</Space>
 				</Dropdown>
 				<Modal
 					title={t('UserMenuItem.menu.switchLang')}
@@ -96,7 +83,7 @@ export const Index: React.FC<IProps> = ({ mini = false }) => {
 				>
 					<LangSelect style={{ width: '50%' }} />
 				</Modal>
-			</>
+			</div>
 		)
 	}
 

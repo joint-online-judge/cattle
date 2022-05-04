@@ -29,5 +29,7 @@
 	"javascript.format.enable": false,
 	"stylelint.validate": ["css"],
 	"typescript.disableAutomaticTypeAcquisition": true,
-	"typescript.tsdk": "node_modules/typescript/lib"
+	"typescript.tsdk": "node_modules/typescript/lib",
+	"react-i18n-joj.i18nPaths": "public/locales",
+	"react-i18n-joj.sourceLocale": "en"
 }

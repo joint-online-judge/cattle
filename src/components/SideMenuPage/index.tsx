@@ -1,11 +1,12 @@
 import type { MenuProps } from 'antd'
 import { Col, Row } from 'antd'
+import LoadingOrError from 'components/LoadingOrError'
 import ShadowCard from 'components/ShadowCard'
 import SideMenuBar from 'components/SideMenuBar'
 import { isArray, last } from 'lodash-es'
 import type React from 'react'
 import type { ReactElement } from 'react'
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { Suspense, useCallback, useEffect, useMemo, useState } from 'react'
 import type { Location } from 'react-router-dom'
 import {
 	matchRoutes,
@@ -119,7 +120,7 @@ const Index: React.FC<IProps> = ({
 				</Row>
 			</Col>
 			<Col xs={24} sm={24} md={16} lg={17} xl={17} xxl={18}>
-				{mainContent}
+				<Suspense fallback={<LoadingOrError />}>{mainContent}</Suspense>
 			</Col>
 		</Row>
 	)

@@ -6,6 +6,7 @@ import {
 	TrophyOutlined
 } from '@ant-design/icons'
 import { Menu, Progress } from 'antd'
+import { getProblemSetStatus } from 'components/ProblemSet'
 import ShadowCard from 'components/ShadowCard'
 import SideMenuPage from 'components/SideMenuPage'
 import { useDomain, usePageHeader, useProblemSet } from 'models'
@@ -14,6 +15,7 @@ import type React from 'react'
 import { useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Outlet, useParams } from 'react-router-dom'
+import { ProblemSetStatus } from 'types'
 import { NoDomainUrlError, NoProblemSetIdError } from 'utils/exception'
 import AfterDue from './AfterDue'
 import BeforeAvailable from './BeforeAvailable'
@@ -25,9 +27,9 @@ const Index: React.FC = () => {
 	const { problemSet, fetchProblemSet, loading } = useProblemSet()
 	const { domainUrl, problemSetId } =
 		useParams<{ domainUrl: string; problemSetId: string }>()
-	const [status, setStatus] = useState<
-		'LOCKED' | 'NOT_STARTED' | 'ONGOING' | 'OVERDUE'
-	>('ONGOING')
+	const [status, setStatus] = useState<ProblemSetStatus>(
+		ProblemSetStatus.Ongoing
+	)
 
 	if (!domainUrl) {
 		throw new NoDomainUrlError()
@@ -81,45 +83,24 @@ const Index: React.FC = () => {
 	}, [domainUrl, problemSetId, fetchProblemSet])
 
 	useEffect(() => {
-		const now = mm()
-		if (problemSet?.unlockAt) {
-			const unlockTime = mm(problemSet.unlockAt)
-			if (now.isBefore(unlockTime)) {
-				setStatus('NOT_STARTED')
-				return
-			}
-		}
-
-		if (problemSet?.lockAt) {
-			const lockTime = mm(problemSet.lockAt)
-			if (now.isAfter(lockTime)) {
-				setStatus('LOCKED')
-				return
-			}
-		}
-
-		if (problemSet?.dueAt) {
-			const dueTime = mm(problemSet.dueAt)
-			if (now.isAfter(dueTime)) {
-				setStatus('OVERDUE')
-				return
-			}
-		}
-
-		setStatus('ONGOING')
+		setStatus(
+			getProblemSetStatus(
+				problemSet?.unlockAt,
+				problemSet?.dueAt,
+				problemSet?.lockAt
+			)
+		)
 	}, [problemSet])
 
-	if (status === 'NOT_STARTED') {
+	if (status === ProblemSetStatus.Unstarted) {
 		return <BeforeAvailable />
 	}
 
-	if (status === 'LOCKED') {
+	if (status === ProblemSetStatus.Locked) {
 		return <AfterDue />
 	}
 
-	if (status === 'OVERDUE') {
-		return <AfterDue />
-	}
+	// TODO: overdue warning
 
 	return (
 		<SideMenuPage

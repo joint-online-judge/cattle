@@ -2,16 +2,18 @@ import { BackTop, Layout } from 'antd'
 import ErrorBoundary from 'components/ErrorBoundary'
 import Footer from 'components/Footer'
 import Header from 'components/Header'
+import LoadingOrError from 'components/LoadingOrError'
 import MainLayout from 'layouts/MainLayout'
 import type React from 'react'
 import type { ReactNode } from 'react'
+import { Suspense, useMemo } from 'react'
 import { Outlet, useMatch } from 'react-router-dom'
 import style from './style.module.less'
 
 const Index: React.FC = () => {
 	const match = useMatch('/domain/:domainUrl/*')
 
-	const renderMain = (): ReactNode => {
+	const mainContent: ReactNode = useMemo(() => {
 		if (match) {
 			return <Outlet />
 		}
@@ -21,7 +23,7 @@ const Index: React.FC = () => {
 				<Outlet />
 			</MainLayout>
 		)
-	}
+	}, [match])
 
 	return (
 		<ErrorBoundary>
@@ -30,7 +32,9 @@ const Index: React.FC = () => {
 					<Header />
 				</Layout.Header>
 				<Layout.Content className={style.pageBody}>
-					<ErrorBoundary>{renderMain()}</ErrorBoundary>
+					<Suspense fallback={<LoadingOrError />}>
+						<ErrorBoundary>{mainContent}</ErrorBoundary>
+					</Suspense>
 				</Layout.Content>
 				<Layout.Footer className={style.pageFooter}>
 					<Footer />

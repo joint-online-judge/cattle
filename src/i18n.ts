@@ -6,11 +6,13 @@ i18n
 	.use(Backend)
 	.use(initReactI18next)
 	.init({
-		// lng: 'en-US',
-		fallbackLng: ['en-US', 'zh-CN'],
-		supportedLngs: ['en-US', 'zh-CN'],
+		lng: 'en',
+		supportedLngs: ['en', 'zh-CN'],
+		fallbackLng: ['en', 'zh-CN'],
 		load: 'currentOnly',
-		debug: process.env.NODE_ENV === 'development',
+		debug:
+			process.env.NODE_ENV === 'development' ||
+			process.env.NODE_ENV === 'staging',
 		interpolation: {
 			escapeValue: false
 		},

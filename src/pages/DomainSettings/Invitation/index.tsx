@@ -21,6 +21,7 @@ import type { ReactElement } from 'react'
 import { useRef, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { DOMAIN_HOST } from 'utils/constants'
+import { NoDomainUrlError } from 'utils/exception'
 import type { DomainInvitation } from 'utils/service'
 import Horse, { ErrorCode } from 'utils/service'
 import CreateInvitationModal from './CreateInvitationModal'
@@ -37,8 +38,7 @@ const Index: React.FC = () => {
 	const formRef = useRef<ProFormInstance<DomainInvitation>>()
 
 	if (!domainUrl) {
-		// Shall be unreachable under normal conditions
-		throw new Error('No domainUrl found')
+		throw new NoDomainUrlError()
 	}
 
 	const { data: invitations, refresh } = useRequest(

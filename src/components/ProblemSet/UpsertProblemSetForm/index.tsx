@@ -103,7 +103,8 @@ const UpsertProblemSetForm: React.FC<IProps> = props => {
 				width='lg'
 				name='url'
 				label={t('UpsertProblemSetForm.url')}
-				tooltip='The url of a problem set must be unique within a domain.'
+				placeholder={t('UpsertProblemSetForm.placeholder.url')}
+				tooltip={t('UpsertProblemSetForm.tooltip.url')}
 			/>
 
 			<ProForm.Group>
@@ -118,12 +119,14 @@ const UpsertProblemSetForm: React.FC<IProps> = props => {
 					name='dueAt'
 					label={t('UpsertProblemSetForm.dueAt')}
 					rules={[{ required: true }]}
+					tooltip={t('UpsertProblemSetForm.tooltip.dueAt')}
 				/>
 				<ProFormDateTimePicker
 					width='sm'
 					name='lockAt'
 					label={t('UpsertProblemSetForm.lockAt')}
 					rules={[{ required: true }]}
+					tooltip={t('UpsertProblemSetForm.tooltip.lockAt')}
 				/>
 			</ProForm.Group>
 
@@ -153,4 +156,4 @@ const UpsertProblemSetForm: React.FC<IProps> = props => {
 	)
 }
 
-export { UpsertProblemSetForm }
+export default UpsertProblemSetForm

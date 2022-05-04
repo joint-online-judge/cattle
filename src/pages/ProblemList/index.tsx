@@ -1,8 +1,9 @@
-import { EyeInvisibleOutlined, PlusOutlined } from '@ant-design/icons'
+import { PlusOutlined } from '@ant-design/icons'
 import type { ActionType, ProColumns } from '@ant-design/pro-table'
 import ProTable from '@ant-design/pro-table'
 import { useRequest } from 'ahooks'
-import { Button, Space, Tooltip } from 'antd'
+import { Button, Space } from 'antd'
+import { HiddenFromUserIcon } from 'components/Icons'
 import ShadowCard from 'components/ShadowCard'
 import { useAccess, useDomain, usePageHeader } from 'models'
 import type React from 'react'
@@ -11,7 +12,8 @@ import { useTranslation } from 'react-i18next'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import type { ProTablePagination } from 'types'
 import { transPagination } from 'utils'
-import type { Problem } from 'utils/service'
+import { NoDomainUrlError } from 'utils/exception'
+import type { ProblemWithLatestRecord } from 'utils/service'
 import { Horse } from 'utils/service'
 
 const Index: React.FC = () => {
@@ -24,8 +26,7 @@ const Index: React.FC = () => {
 	const navigate = useNavigate()
 
 	if (!domainUrl) {
-		// Shall be unreachable under normal conditions
-		throw new Error('No domainUrl found')
+		throw new NoDomainUrlError()
 	}
 
 	const { runAsync: fetchProblems, loading: fetching } = useRequest(
@@ -41,10 +42,16 @@ const Index: React.FC = () => {
 		}
 	)
 
-	const columns: ProColumns<Problem>[] = [
+	const columns: ProColumns<ProblemWithLatestRecord>[] = [
 		{
-			title: '标题',
-			width: 200,
+			title: t('ProblemList.status'),
+			width: 80,
+			dataIndex: 'latestRecord',
+			render: (_, record) =>
+				record.latestRecord ? record.latestRecord.state : '-'
+		},
+		{
+			title: t('ProblemList.title'),
 			dataIndex: 'title',
 			render: (_, record) => (
 				<Space>
@@ -55,22 +62,18 @@ const Index: React.FC = () => {
 					>
 						{record.title}
 					</Link>
-					{record.hidden ? (
-						<Tooltip title='This problem is invisible to normal users.'>
-							<EyeInvisibleOutlined />
-						</Tooltip>
-					) : null}
+					{record.hidden ? <HiddenFromUserIcon /> : null}
 				</Space>
 			)
 		},
 		{
-			title: '递交',
-			width: 120,
+			title: t('ProblemList.submission'),
+			width: 60,
 			dataIndex: 'numSubmit'
 		},
 		{
-			title: 'AC数量',
-			width: 120,
+			title: t('ProblemList.acCount'),
+			width: 60,
 			dataIndex: 'numAccept'
 		}
 	]
@@ -106,12 +109,12 @@ const Index: React.FC = () => {
 						}}
 						type='primary'
 					>
-						{t('PROBLEM.CREATE.TITLE')}
+						{t('ProblemList.create')}
 					</Button>
 				) : null
 			}
 		>
-			<ProTable<Problem>
+			<ProTable<ProblemWithLatestRecord>
 				scroll={{ x: 'max-content' }}
 				loading={fetching}
 				actionRef={ref}

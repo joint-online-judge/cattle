@@ -9,6 +9,7 @@ import { useParams } from 'react-router-dom'
 import type { ProTablePagination } from 'types'
 import { transPagination } from 'utils'
 import { VERTICAL_GUTTER } from 'utils/constants'
+import { NoDomainUrlError, NoProblemIdError } from 'utils/exception'
 import Horse from 'utils/service'
 import AddExistProblem from './AddExistProblem'
 import DraggableProblemTable from './DraggableProblemTable'
@@ -21,13 +22,11 @@ const Index: React.FC = () => {
 		useParams<{ domainUrl: string; problemSetId: string }>()
 
 	if (!domainUrl) {
-		// Shall be unreachable under normal conditions
-		throw new Error('No domainUrl found')
+		throw new NoDomainUrlError()
 	}
 
 	if (!problemSetId) {
-		// Shall be unreachable under normal conditions
-		throw new Error('No problemSetId found')
+		throw new NoProblemIdError()
 	}
 
 	const {

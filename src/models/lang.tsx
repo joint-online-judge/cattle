@@ -1,6 +1,11 @@
-import i18next from 'i18next'
+import { ConfigProvider } from 'antd'
+import type { Locale } from 'antd/lib/locale-provider'
+import enUS from 'antd/lib/locale/en_US'
+import zhCN from 'antd/lib/locale/zh_CN'
+import { isArray } from 'lodash-es'
 import type { FC } from 'react'
-import { createContext, useCallback, useMemo, useState } from 'react'
+import { createContext, useCallback, useEffect, useMemo, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 
 export interface LangContextValue {
 	allLang: readonly string[]
@@ -14,19 +19,54 @@ const LangContext = createContext<LangContextValue>({
 	switchLang: () => {}
 })
 
+const antdLangMap: Record<string, Locale | undefined> = {
+	en: enUS,
+	'zh-CN': zhCN
+}
+
+const localKey = 'LANG' // Store language preference in local storage
+
 const LangContextProvider: FC = ({ children }) => {
-	const [currentLang, setCurrentLang] = useState<string>(i18next.language)
-	const allLang = i18next.languages
+	const { i18n } = useTranslation()
+	const allLang = i18n.languages
+
+	const initCurrentLang = (): string => {
+		const defaultLang = localStorage.getItem(localKey)
+		if (defaultLang && isArray(allLang) && allLang.includes(defaultLang)) {
+			return defaultLang
+		}
+		return i18n.language
+	}
+
+	const initAntLang = (): Locale => {
+		const defaultLang = localStorage.getItem(localKey)
+		if (defaultLang && isArray(allLang) && allLang.includes(defaultLang)) {
+			const locale = antdLangMap[defaultLang]
+			return locale ?? enUS
+		}
+		return enUS
+	}
+
+	const [currentLang, setCurrentLang] = useState<string>(initCurrentLang())
+	const [antLocale, setAntLocale] = useState<Locale>(initAntLang())
 
 	const switchLang = useCallback(
 		(lang: string) => {
-			if (allLang.includes(lang)) {
+			if (isArray(allLang) && allLang.includes(lang)) {
 				setCurrentLang(lang)
-				i18next.changeLanguage(lang)
+				localStorage.setItem(localKey, lang)
 			}
 		},
 		[allLang]
 	)
+
+	useEffect(() => {
+		i18n.changeLanguage(currentLang)
+		const locale = antdLangMap[currentLang]
+		if (locale !== undefined) {
+			setAntLocale(locale)
+		}
+	}, [currentLang, i18n])
 
 	const value: LangContextValue = useMemo(
 		() => ({
@@ -37,7 +77,11 @@ const LangContextProvider: FC = ({ children }) => {
 		[allLang, currentLang, switchLang]
 	)
 
-	return <LangContext.Provider value={value}>{children}</LangContext.Provider>
+	return (
+		<LangContext.Provider value={value}>
+			<ConfigProvider locale={antLocale}>{children}</ConfigProvider>
+		</LangContext.Provider>
+	)
 }
 
 export { LangContext, LangContextProvider }

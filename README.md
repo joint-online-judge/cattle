@@ -108,6 +108,34 @@ To build and deploy, run:
 $ pnpm build
 ```
 
+## Commands
+
+### Generate API Client
+
+- `pnpm gen:api` - generate API client with local `openapi.json`.
+- `pnpm gen:api-dev` - generate API client with `openapi.json` fetched from local backend server.
+- `pnpm gen:api-staging` - generate API client with local `openapi.json` fetched from staging (remote) backend server.
+
+### Development
+
+- `pnpm dev` - run `pnpm gen:api-dev`, and start a dev server.
+- `pnpm dev:staging` - run `pnpm gen:api-staging`, and start a dev server.
+
+### Deploy
+
+- `pnpm build` - build for production. The generated files will be on the `dist` folder. (need to geneate API client first)
+- `pnpm preview` - locally preview the production build.
+
+### Testing & Linting
+
+- `pnpm test` - run unit and integration tests related to changed files based on git.
+- `pnpm test:ci` - run all unit and integration tests in CI mode.
+- `pnpm test:e2e` - run all e2e tests with the Cypress Test Runner.
+- `pnpm test:e2e:headless` - run all e2e tests headlessly.
+- `pnpm format` - format all files with Prettier.
+- `pnpm lint` - runs TypeScript, ESLint and Stylelint.
+- `pnpm validate` - runs `lint`, `test:ci` and `test:e2e:ci`.
+
 ## Documentation
 
 To learn more about this project, please refer to this [site](https://joint-online-judge.github.io/cattle/learning/).

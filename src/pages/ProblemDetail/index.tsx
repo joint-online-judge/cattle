@@ -1,12 +1,11 @@
 import {
-	CheckOutlined,
 	CodeOutlined,
 	EditOutlined,
 	ReadOutlined,
 	SettingOutlined
 } from '@ant-design/icons'
 import { useRequest } from 'ahooks'
-import { Descriptions, Menu, message } from 'antd'
+import { Menu, message, Space } from 'antd'
 import Gravatar from 'components/Gravatar'
 import ShadowCard from 'components/ShadowCard'
 import SideMenuPage from 'components/SideMenuPage'
@@ -56,7 +55,7 @@ const Index: React.FC = () => {
 		}
 	)
 
-	const { data: owner } = useRequest(
+	const { data: owner, loading: fetchingOwner } = useRequest(
 		async () => {
 			const res = await Horse.user.v1GetUser(problemResp?.data?.ownerId ?? '')
 			return res.data.data
@@ -125,20 +124,22 @@ const Index: React.FC = () => {
 					</Menu>
 				}
 				extra={
-					<ShadowCard>
-						<Descriptions column={1}>
-							<Descriptions.Item label={t('PROBLEM.STATUS')}>
-								{/* todo: make status component */}
-								<CheckOutlined /> Accepted
-							</Descriptions.Item>
-							<Descriptions.Item label={t('PROBLEM.PROBLEM_GROUP')}>
-								不知道
-							</Descriptions.Item>
-							<Descriptions.Item label={t('PROBLEM.OWNER')}>
-								<Gravatar size={20} gravatar={owner?.gravatar} />
-								{owner?.username}
-							</Descriptions.Item>
-						</Descriptions>
+					<ShadowCard loading={fetchingProblem || fetchingOwner}>
+						<dl className='m-0'>
+							<dt>{t('PROBLEM.STATUS')}</dt>
+							<dd>{problemResp?.data?.latestRecord?.state}</dd>
+							<dt>{t('PROBLEM.PROBLEM_GROUP')}</dt>
+							<dd>不知道</dd>
+							<dt>{t('PROBLEM.OWNER')}</dt>
+							<dd>
+								<Space>
+									<Gravatar size={20} gravatar={owner?.gravatar} />
+									<span>{owner?.username}</span>
+								</Space>
+							</dd>
+							<dt>Accept Rate</dt>
+							<dd>100%</dd>
+						</dl>
 					</ShadowCard>
 				}
 			>

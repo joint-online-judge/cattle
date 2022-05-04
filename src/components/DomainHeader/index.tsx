@@ -10,7 +10,7 @@ import ShadowCard from 'components/ShadowCard'
 import { useAccess, useDomain } from 'models'
 import type React from 'react'
 import type { ReactElement } from 'react'
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import type { Location } from 'react-router-dom'
 import { Link, matchPath, useLocation } from 'react-router-dom'
@@ -18,19 +18,23 @@ import { MAIN_CONTENT_GRID } from 'utils/constants'
 import style from './style.module.less'
 
 const matchMenuKey = (location: Location): string => {
-	if (matchPath('/domain/:domainUrl/settings', location.pathname)) {
+	if (matchPath('/domain/:domainUrl/settings/*', location.pathname)) {
 		return 'domain_manage'
 	}
 
-	if (matchPath('/domain/:domainUrl/problem', location.pathname)) {
+	if (matchPath('/domain/:domainUrl/problem-set/*', location.pathname)) {
+		return 'problem_set'
+	}
+
+	if (matchPath('/domain/:domainUrl/problem/*', location.pathname)) {
 		return 'problem_list'
 	}
 
-	if (matchPath('/domain', location.pathname)) {
-		return 'domain'
+	if (matchPath('/domain/:domainUrl', location.pathname)) {
+		return 'overview'
 	}
 
-	return 'home'
+	return 'overview'
 }
 
 const Index: React.FC = () => {
@@ -39,6 +43,10 @@ const Index: React.FC = () => {
 	const { domain, loading, domainUrl } = useDomain()
 	const { t } = useTranslation()
 	const access = useAccess()
+
+	useEffect(() => {
+		setCurrent(matchMenuKey(location))
+	}, [location])
 
 	const domainInfo: ReactElement | null = useMemo(() => {
 		if (loading) {
@@ -79,13 +87,13 @@ const Index: React.FC = () => {
 				}}
 			>
 				<>
-					<Menu.Item key='domain' icon={<HomeOutlined />}>
+					<Menu.Item key='overview' icon={<HomeOutlined />}>
 						<Link to={`/domain/${domainUrl}`}>
 							{t('DomainHeader.menu.overview')}
 						</Link>
 					</Menu.Item>
 					<Menu.Item key='problem_set' icon={<FormOutlined />}>
-						<Link to={`/domain/${domainUrl}`}>
+						<Link to={`/domain/${domainUrl}/problem-set`}>
 							{t('DomainHeader.menu.problemSet')}
 						</Link>
 					</Menu.Item>
@@ -94,16 +102,13 @@ const Index: React.FC = () => {
 							{t('DomainHeader.menu.problem')}
 						</Link>
 					</Menu.Item>
-					{
-						// Note: do not use <Access> of umi -- antd menu cannot regonize wrapped component.
-						access.isRoot ? (
-							<Menu.Item key='domain_manage' icon={<SettingOutlined />}>
-								<Link to={`/domain/${domainUrl}/settings/profile`}>
-									{t('DomainHeader.menu.domainManage')}
-								</Link>
-							</Menu.Item>
-						) : undefined
-					}
+					{access.isRoot ? (
+						<Menu.Item key='domain_manage' icon={<SettingOutlined />}>
+							<Link to={`/domain/${domainUrl}/settings`}>
+								{t('DomainHeader.menu.domainManage')}
+							</Link>
+						</Menu.Item>
+					) : undefined}
 				</>
 			</Menu>
 		)

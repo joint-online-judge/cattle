@@ -242,6 +242,10 @@ const children: RouteObject[] = [
 										]
 									}
 								]
+							},
+							{
+								path: 'record',
+								element: <RecordList />
 							}
 						]
 					}
@@ -268,10 +272,6 @@ const children: RouteObject[] = [
 						element: <SiteAdmin.CreateDomain />
 					}
 				]
-			},
-			{
-				path: 'records',
-				element: <RecordList />
 			}
 		]
 	},

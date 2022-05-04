@@ -1,5 +1,7 @@
+import LoadingOrError from 'components/LoadingOrError'
 import { usePageHeader } from 'models'
 import type React from 'react'
+import { Suspense } from 'react'
 import MainContentLayout from './MainContentLayout'
 import PageHeaderLayout from './PageHeaderLayout'
 import style from './style.module.less'
@@ -13,7 +15,9 @@ const Index: React.FC = ({ children }) => {
 				headerVisible ? style.pageContentWithHeader : style.pageContentNoHeader
 			}
 		>
-			<PageHeaderLayout>{children}</PageHeaderLayout>
+			<PageHeaderLayout>
+				<Suspense fallback={<LoadingOrError />}>{children}</Suspense>
+			</PageHeaderLayout>
 		</MainContentLayout>
 	)
 }
