@@ -1,3 +1,5 @@
+import 'jest-dom/extend-expect'
+
 export interface ProTablePagination {
 	pageSize?: number
 	current?: number
