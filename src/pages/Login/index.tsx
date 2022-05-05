@@ -211,14 +211,20 @@ const Index: React.FC = () => {
 									}
 								]}
 							>
-								<Input placeholder={t('Login.username')} />
+								<Input
+									placeholder={t('Login.username')}
+									data-test='login-username'
+								/>
 							</Form.Item>
 							<Form.Item
 								name='password'
 								label={t('Login.password')}
 								rules={[{ required: true, message: t('Login.valid.password') }]}
 							>
-								<Input.Password placeholder={t('Login.password')} />
+								<Input.Password
+									placeholder={t('Login.password')}
+									data-test='login-password'
+								/>
 							</Form.Item>
 							<Row justify='end' style={{ marginBottom: '12px' }}>
 								<Col>
@@ -232,6 +238,7 @@ const Index: React.FC = () => {
 									type='primary'
 									htmlType='submit'
 									loading={loading}
+									data-test='login-submit'
 									block
 								>
 									{t('Login.signIn')}
