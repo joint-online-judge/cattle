@@ -349,5 +349,15 @@
 			"uploadHelpClick": "Upload File",
 			"submit": "Submit"
 		}
+	},
+	"RecordList": {
+		"status": "Status",
+		"problem": "Problem",
+		"time": "Time",
+		"memory": "Memory",
+		"language": "Language",
+		"submitAt": "Submit At",
+		"problemSet": "Assignment",
+		"submitter": "Username"
 	}
 }

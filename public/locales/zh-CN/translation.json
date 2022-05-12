@@ -348,5 +348,15 @@
 			"uploadHelpClick": "上传文件",
 			"submit": "提交"
 		}
+	},
+	"RecordList": {
+		"status": "状态",
+		"problem": "题目",
+		"time": "时间",
+		"memory": "内存",
+		"language": "语言",
+		"submitAt": "提交时间",
+		"problemSet": "作业",
+		"submitter": "用户名"
 	}
 }
