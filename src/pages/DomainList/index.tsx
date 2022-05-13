@@ -3,24 +3,15 @@ import { List, Skeleton } from 'antd'
 import Head from 'components/Head'
 import ShadowCard from 'components/ShadowCard'
 import { useMessage } from 'hooks'
-import { usePageHeader } from 'models'
 import type React from 'react'
 import type { ReactNode } from 'react'
-import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 import { Horse } from 'utils/service'
 
 const Index: React.FC = () => {
 	const { t } = useTranslation()
-	const { setHeader } = usePageHeader()
 	const msg = useMessage()
-
-	useEffect(() => {
-		setHeader({
-			title: t('DomainList.title')
-		})
-	}, [setHeader, t])
 
 	const { data, loading } = useRequest(
 		async () => {

@@ -6,7 +6,6 @@ import type React from 'react'
 
 const Index: React.FC = () => (
 	// const { domainUrl } = useParams<{ domainUrl: string }>();
-	// const { setHeader } = usePageHeader();
 
 	<h1>Scoreboard</h1>
 )

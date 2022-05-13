@@ -3,9 +3,8 @@ import { Button } from 'antd'
 import Head from 'components/Head'
 import { ProblemSetList } from 'components/ProblemSet'
 import ShadowCard from 'components/ShadowCard'
-import { useAccess, useDomain, usePageHeader } from 'models'
+import { useAccess, useDomain } from 'models'
 import type React from 'react'
-import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate, useParams } from 'react-router-dom'
 import { NoDomainUrlError } from 'utils/exception'
@@ -15,13 +14,8 @@ const Index: React.FC = () => {
 	const { t } = useTranslation()
 	const navigate = useNavigate()
 	const { domainUrl } = useParams<{ domainUrl: string }>()
-	const { removeHeader } = usePageHeader()
 	const { domain } = useDomain()
 	const access = useAccess()
-
-	useEffect(() => {
-		removeHeader()
-	}, [removeHeader])
 
 	if (!domainUrl) {
 		throw new NoDomainUrlError()

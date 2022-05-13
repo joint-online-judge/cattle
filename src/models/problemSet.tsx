@@ -40,7 +40,7 @@ const ProblemSetContextProvider: FC = ({ children }) => {
 				typeof psId === 'string' &&
 				psId.length > 0
 			) {
-				setProblemSetId(problemSetId)
+				setProblemSetId(psId)
 				const res = await Horse.problemSet.v1GetProblemSet(domainUrl, psId)
 				return res.data.data
 			}

@@ -5,9 +5,9 @@ import { useRequest } from 'ahooks'
 import { Button, Space } from 'antd'
 import { HiddenFromUserIcon } from 'components/Icons'
 import ShadowCard from 'components/ShadowCard'
-import { useAccess, useDomain, usePageHeader } from 'models'
+import { useAccess, useDomain } from 'models'
 import type React from 'react'
-import { useEffect, useMemo, useRef } from 'react'
+import { useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import type { ProTablePagination } from 'types'
@@ -21,7 +21,6 @@ const Index: React.FC = () => {
 	const access = useAccess()
 	const { domainUrl } = useParams<{ domainUrl: string }>()
 	const { domain } = useDomain()
-	const { setHeader } = usePageHeader()
 	const ref = useRef<ActionType>()
 	const navigate = useNavigate()
 
@@ -77,26 +76,6 @@ const Index: React.FC = () => {
 			dataIndex: 'numAccept'
 		}
 	]
-
-	const breads = useMemo(
-		() => [
-			{
-				path: `domain/${domainUrl}`,
-				breadcrumbName: domain?.name ?? 'unknown'
-			},
-			{
-				path: 'problem'
-			}
-		],
-		[domainUrl, domain]
-	)
-
-	useEffect(() => {
-		setHeader({
-			routes: breads,
-			titleI18nKey: 'problem.problems'
-		})
-	}, [breads, setHeader])
 
 	return (
 		<ShadowCard
