@@ -92,18 +92,11 @@
 			"url": "若不填，系统会自动生成"
 		}
 	},
-	"CreateProblem": {
-		"title": "CreateProblem.title"
-	},
-	"CreateProblemSet": {
-		"title": "创建作业"
-	},
 	"DomainHome": {
 		"problemSet": "作业",
 		"createProblemSet": "创建作业"
 	},
 	"DomainList": {
-		"title": "我的域",
 		"visit": "查看",
 		"manage": "管理"
 	},
@@ -135,8 +128,8 @@
 		}
 	},
 	"JoinDomain": {
-		"join": "JoinDomain.join",
-		"code": "JoinDomain.code"
+		"join": "加入",
+		"code": "邀请码"
 	},
 	"Login": {
 		"msg": {
@@ -173,9 +166,9 @@
 	},
 	"Logout": {
 		"msg": {
-			"logoutSuccess": "",
-			"logoutFailed": "",
-			"loggingOut": ""
+			"logoutSuccess": "退出登录成功",
+			"logoutFailed": "退出登录失败",
+			"loggingOut": "退出中..."
 		}
 	},
 	"form": {
@@ -190,19 +183,6 @@
 			"placeholder": "请选择一个角色",
 			"error_placeholder": "加载选项失败"
 		}
-	},
-	"PROBLEM": {
-		"HOME": "查看题目",
-		"SUBMIT_CODE": "提交代码",
-		"EDIT": "编辑题面",
-		"SETTINGS": "评测配置",
-		"STATUS": "提交状态",
-		"PROBLEM_GROUP": "问题组",
-		"OWNER": "出题人",
-		"MEMORY_KB": "峰值内存",
-		"TIME_MS": "总耗时",
-		"SUBMIT_AT": "递交时间",
-		"LANGUAGES": "编程语言"
 	},
 	"CodeType": "CodeType",
 	"ProblemSetDetail": {
@@ -223,7 +203,6 @@
 		"SETTINGS": "设置",
 		"NEW_DOMAIN": "新建域",
 		"LEAVE": "退出",
-		"CREATE_A_NEW_DOMAIN": "创建域",
 		"CREATE": {
 			"NAME": "名字",
 			"URL": "域网址 (ID)",
@@ -254,9 +233,9 @@
 			"update": "UserSettings.General.update"
 		},
 		"menu": {
-			"general": "UserSettings.menu.general",
-			"account": "UserSettings.menu.account",
-			"domains": "UserSettings.menu.domains"
+			"general": "通用设置",
+			"account": "账户设置",
+			"domains": "域设置"
 		}
 	},
 	"USER": {
@@ -264,35 +243,6 @@
 			"JACCOUNT_LOG_IN": "jAccount 登录",
 			"REDIRECTING": "正在跳转到登录界面..."
 		}
-	},
-	"problem": {
-		"problems": "题库"
-	},
-	"PROBLEM_SET": {
-		"PROBLEM_SET": "问题集",
-		"INTRODUCTION": "介绍",
-		"CREATE": {
-			"FORM": {
-				"CONTENT": "描述",
-				"HIDDEN": "隐藏",
-				"SCOREBOARD_HIDDEN": "隐藏排行榜",
-				"UNLOCK_AT": "开始提交时间",
-				"DUE_AT": "结束时间",
-				"LOCK_AT": "截止提交时间",
-				"URL": "问题集URL"
-			},
-			"TITLE": "创建问题集"
-		}
-	},
-	"SETTINGS": {
-		"GENERAL_SETTINGS": "通用设置",
-		"ACCOUNT_SETTINGS": "账户设置",
-		"SECURITY_SETTINGS": "安全设置",
-		"I18N_LANG": "语言",
-		"TIMEZONE": "时区",
-		"UPDATE_SETTINGS": "更新设置",
-		"DISPLAY_SETTINGS": "显示设置",
-		"DOMAIN": "域设置"
 	},
 	"settings": {
 		"domain": {
@@ -347,6 +297,56 @@
 			"uploadHelpDrag": "或者拖拽文件至此处",
 			"uploadHelpClick": "上传文件",
 			"submit": "提交"
+		},
+		"menu": {
+			"detail": "查看题目",
+			"submit": "提交代码",
+			"edit": "编辑题面",
+			"settings": "评测配置"
+		},
+		"status": "提交状态",
+		"problemGroup": "问题组",
+		"owner": "出题人",
+		"Settings": {
+			"uploadFile": "文件"
 		}
+	},
+	"RecordList": {
+		"status": "状态",
+		"problem": "题目",
+		"time": "时间",
+		"memory": "内存",
+		"language": "语言",
+		"submitAt": "提交时间",
+		"problemSet": "作业",
+		"submitter": "用户名"
+	},
+	"PageHeader": {
+		"problem_detail": "$t(ProblemDetail.menu.detail)",
+		"problem": "题库",
+		"problem-set": "作业",
+		"settings_profile": "$t(DomainSettings.menu.profile)",
+		"settings_invitation": "$t(DomainSettings.menu.invitation)",
+		"settings_member": "$t(DomainSettings.menu.member)",
+		"settings_permission": "$t(DomainSettings.menu.permission)",
+		"settings_permission_config": "$t(DomainSettings.menu.permissionConfig)",
+		"settings_permission_role": "$t(DomainSettings.menu.permissionRole)",
+		"settings": "管理",
+		"create-problem": "创建题目",
+		"create-problem-set": "创建作业",
+		"join": "加入域",
+		"problem_submit": "$t(ProblemDetail.menu.submit)",
+		"problem_edit": "$t(ProblemDetail.menu.edit)",
+		"problem_settings": "$t(ProblemDetail.menu.settings)",
+		"problem-set_detail": "$t(ProblemSetDetail.menu.detail)",
+		"problem-set_scoreboard": "$t(ProblemSetDetail.menu.scoreboard)",
+		"problem-set_system-test": "$t(ProblemSetDetail.menu.systemTest)",
+		"problem-set_edit": "$t(ProblemSetDetail.menu.edit)",
+		"problem-set_settings": "$t(ProblemSetDetail.menu.settings)",
+		"preference_general": "$t(UserSettings.menu.general)",
+		"preference_account": "$t(UserSettings.menu.account)",
+		"preference_domains": "$t(UserSettings.menu.domains)",
+		"preference": "偏好设置",
+		"record": "评测队列"
 	}
 }

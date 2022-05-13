@@ -4,10 +4,11 @@ import ProTable from '@ant-design/pro-table'
 import { useRequest } from 'ahooks'
 import { Button, Space } from 'antd'
 import { HiddenFromUserIcon } from 'components/Icons'
+import RecordStatus from 'components/RecordStatus'
 import ShadowCard from 'components/ShadowCard'
-import { useAccess, useDomain, usePageHeader } from 'models'
+import { useAccess, useDomain } from 'models'
 import type React from 'react'
-import { useEffect, useMemo, useRef } from 'react'
+import { useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import type { ProTablePagination } from 'types'
@@ -21,7 +22,6 @@ const Index: React.FC = () => {
 	const access = useAccess()
 	const { domainUrl } = useParams<{ domainUrl: string }>()
 	const { domain } = useDomain()
-	const { setHeader } = usePageHeader()
 	const ref = useRef<ActionType>()
 	const navigate = useNavigate()
 
@@ -31,10 +31,10 @@ const Index: React.FC = () => {
 
 	const { runAsync: fetchProblems, loading: fetching } = useRequest(
 		async (parameters: ProTablePagination) => {
-			const res = await Horse.problem.v1ListProblems(
-				domainUrl,
-				transPagination(parameters)
-			)
+			const res = await Horse.problem.v1ListProblems(domainUrl, {
+				...transPagination(parameters),
+				ordering: '-created_at'
+			})
 			return res.data.data ?? { count: 0, results: [] }
 		},
 		{
@@ -45,17 +45,24 @@ const Index: React.FC = () => {
 	const columns: ProColumns<ProblemWithLatestRecord>[] = [
 		{
 			title: t('ProblemList.status'),
-			width: 80,
+			width: 120,
 			dataIndex: 'latestRecord',
 			render: (_, record) =>
-				record.latestRecord ? record.latestRecord.state : '-'
+				record.latestRecord ? (
+					<RecordStatus record={record.latestRecord} domainUrl={domainUrl} />
+				) : (
+					'-'
+				)
 		},
 		{
 			title: t('ProblemList.title'),
 			dataIndex: 'title',
+			ellipsis: true,
 			render: (_, record) => (
 				<Space>
 					<Link
+						target='_blank'
+						rel='noopener noreferrer'
 						to={`/domain/${domain?.url ?? record.domainId}/problem/${
 							record.url ?? record.id
 						}`}
@@ -68,35 +75,15 @@ const Index: React.FC = () => {
 		},
 		{
 			title: t('ProblemList.submission'),
-			width: 60,
+			width: 80,
 			dataIndex: 'numSubmit'
 		},
 		{
 			title: t('ProblemList.acCount'),
-			width: 60,
+			width: 80,
 			dataIndex: 'numAccept'
 		}
 	]
-
-	const breads = useMemo(
-		() => [
-			{
-				path: `domain/${domainUrl}`,
-				breadcrumbName: domain?.name ?? 'unknown'
-			},
-			{
-				path: 'problem'
-			}
-		],
-		[domainUrl, domain]
-	)
-
-	useEffect(() => {
-		setHeader({
-			routes: breads,
-			titleI18nKey: 'problem.problems'
-		})
-	}, [breads, setHeader])
 
 	return (
 		<ShadowCard

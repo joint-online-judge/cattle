@@ -15,7 +15,7 @@ const Index: React.FC = () => {
 			<Col span={24}>
 				<Row justify='center'>
 					<Tooltip title='Change your avatar' placement='bottom'>
-						<Link to='/settings/account'>
+						<Link to='/preference/account'>
 							<Gravatar gravatar={auth.user?.gravatar} size={200} />
 						</Link>
 					</Tooltip>
@@ -40,7 +40,7 @@ const Index: React.FC = () => {
 					block
 					icon={<EditOutlined />}
 					onClick={(): void => {
-						navigate('/settings/account')
+						navigate('/preference/account')
 					}}
 				>
 					Edit Profile

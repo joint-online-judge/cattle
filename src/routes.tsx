@@ -81,7 +81,7 @@ const children: RouteObject[] = [
 			{ index: true, element: <DomainList /> },
 
 			{
-				path: 'settings',
+				path: 'preference',
 				element: <UserSettings.Index />,
 				children: [
 					{
@@ -182,7 +182,7 @@ const children: RouteObject[] = [
 										children: [
 											{
 												index: true,
-												element: <Navigate to='detail' replace />
+												element: <ProblemSetDetail.ViewDetail />
 											},
 											{
 												path: 'scoreboard',
@@ -221,7 +221,7 @@ const children: RouteObject[] = [
 										children: [
 											{
 												index: true,
-												element: <Navigate to='detail' replace />
+												element: <ProblemDetail.Detail />
 											},
 											{
 												path: 'detail',
