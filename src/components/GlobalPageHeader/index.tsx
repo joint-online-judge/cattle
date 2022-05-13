@@ -174,4 +174,5 @@ export default Index
  * t('PageHeader.preference_general')
  * t('PageHeader.preference_account')
  * t('PageHeader.preference_domains')
+ * t('PageHeader.record')
  */

@@ -2,6 +2,7 @@ import type { ActionType, ProColumns } from '@ant-design/pro-table'
 import ProTable from '@ant-design/pro-table'
 import { useRequest } from 'ahooks'
 import { message } from 'antd'
+import RecordStatus from 'components/RecordStatus'
 import { isNumber, omit, omitBy } from 'lodash-es'
 import type React from 'react'
 import { useMemo, useRef } from 'react'
@@ -53,11 +54,7 @@ const Index: React.FC = () => {
 				dataIndex: 'state',
 				width: 120,
 				search: false,
-				render: (text, record) => (
-					<Link to={record.id} target='_blank' rel='noopener noreferrer'>
-						{text}
-					</Link>
-				)
+				render: (text, record) => <RecordStatus record={record} />
 			},
 			{
 				title: t('RecordList.problem'),

@@ -346,6 +346,7 @@
 		"preference_general": "$t(UserSettings.menu.general)",
 		"preference_account": "$t(UserSettings.menu.account)",
 		"preference_domains": "$t(UserSettings.menu.domains)",
-		"preference": "Preference"
+		"preference": "Preference",
+		"record": "Judging Queue"
 	}
 }
