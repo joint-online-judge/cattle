@@ -3,9 +3,9 @@ import ProForm, { ProFormText } from '@ant-design/pro-form'
 import { useRequest } from 'ahooks'
 import { Col, message, Row, Spin } from 'antd'
 import ShadowCard from 'components/ShadowCard'
-import { useDomain } from 'models'
+import { useDomain, usePageHeader } from 'models'
 import type React from 'react'
-import { useEffect } from 'react'
+import { useEffect, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom'
 import { NoDomainUrlError } from 'utils/exception'
@@ -21,6 +21,7 @@ const Index: React.FC = () => {
 	const { domainUrl } = useParams<{ domainUrl: string }>()
 	const [searchParams] = useSearchParams()
 	const { domain } = useDomain()
+	const { setHeader } = usePageHeader()
 
 	if (!domainUrl) {
 		throw new NoDomainUrlError()
@@ -67,6 +68,26 @@ const Index: React.FC = () => {
 			}
 		}
 	)
+
+	const breads = useMemo(
+		() => [
+			{
+				path: `domain/${domainUrl}`,
+				breadcrumbName: domain?.name ?? 'unknown'
+			},
+			{
+				path: 'join'
+			}
+		],
+		[domainUrl, domain]
+	)
+
+	useEffect(() => {
+		setHeader({
+			routes: breads,
+			titleI18nKey: 'domain.invitation.join'
+		})
+	}, [breads, setHeader])
 
 	useEffect(() => {
 		const code = searchParams.get('code')

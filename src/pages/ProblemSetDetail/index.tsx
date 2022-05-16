@@ -9,7 +9,7 @@ import { Menu, Progress } from 'antd'
 import { getProblemSetStatus } from 'components/ProblemSet'
 import ShadowCard from 'components/ShadowCard'
 import SideMenuPage from 'components/SideMenuPage'
-import { useProblemSet } from 'models'
+import { useDomain, usePageHeader, useProblemSet } from 'models'
 import mm from 'moment'
 import type React from 'react'
 import { useEffect, useMemo, useState } from 'react'
@@ -22,6 +22,8 @@ import BeforeAvailable from './BeforeAvailable'
 
 const Index: React.FC = () => {
 	const { t } = useTranslation()
+	const { setHeader } = usePageHeader()
+	const { domain } = useDomain()
 	const { problemSet, fetchProblemSet, loading } = useProblemSet()
 	const { domainUrl, problemSetId } =
 		useParams<{ domainUrl: string; problemSetId: string }>()
@@ -48,6 +50,30 @@ const Index: React.FC = () => {
 
 		return 0
 	}, [problemSet])
+
+	const breads = useMemo(
+		() => [
+			{
+				path: `domain/${domainUrl}`,
+				breadcrumbName: domain?.name ?? 'unknown'
+			},
+			{
+				path: 'problem-set',
+				breadcrumbI18nKey: 'PROBLEM_SET.PROBLEM_SET'
+			},
+			{
+				path: problemSetId
+			}
+		],
+		[domainUrl, domain?.name, problemSetId]
+	)
+
+	useEffect(() => {
+		setHeader({
+			routes: breads,
+			title: problemSet?.title
+		})
+	}, [breads, setHeader, problemSet?.title])
 
 	useEffect(() => {
 		fetchProblemSet(domainUrl, problemSetId)

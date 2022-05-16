@@ -2,8 +2,9 @@ import ProCard from '@ant-design/pro-card'
 import { useRequest } from 'ahooks'
 import { Col, message, Row } from 'antd'
 import ShadowCard from 'components/ShadowCard'
+import { useDomain, usePageHeader } from 'models'
 import type React from 'react'
-import { useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import type { ProTablePagination } from 'types'
 import { transPagination } from 'utils'
@@ -15,6 +16,8 @@ import DraggableProblemTable from './DraggableProblemTable'
 
 const Index: React.FC = () => {
 	const [tab, setTab] = useState('tab1')
+	const { domain } = useDomain()
+	const { setHeader } = usePageHeader()
 	const { domainUrl, problemSetId } =
 		useParams<{ domainUrl: string; problemSetId: string }>()
 
@@ -61,6 +64,34 @@ const Index: React.FC = () => {
 			manual: true
 		}
 	)
+
+	const breads = useMemo(
+		() => [
+			{
+				path: `domain/${domainUrl}`,
+				breadcrumbName: domain?.name ?? 'unknown'
+			},
+			{
+				path: 'problem-set',
+				breadcrumbI18nKey: 'PROBLEM_SET.PROBLEM_SET'
+			},
+			{
+				path: problemSetId,
+				breadcrumbName: problemSet?.title ?? 'unknown'
+			},
+			{
+				path: 'settings'
+			}
+		],
+		[domainUrl, domain?.name, problemSetId, problemSet?.title]
+	)
+
+	useEffect(() => {
+		setHeader({
+			routes: breads,
+			titleI18nKey: 'problem_set.side_menu.settings'
+		})
+	}, [breads, setHeader])
 
 	return (
 		<Row gutter={VERTICAL_GUTTER}>

@@ -40,7 +40,7 @@ export const Index: React.FC = () => {
 				{t('UserMenuItem.menu.switchLang')}
 			</Menu.Item>
 			<Menu.Item key='settings' icon={<SettingOutlined />}>
-				<Link to='/preference'>{t('UserMenuItem.menu.settings')}</Link>
+				<Link to='/settings'>{t('UserMenuItem.menu.settings')}</Link>
 			</Menu.Item>
 			<Menu.Divider key='divider-2' />
 			{access.isRoot ? (

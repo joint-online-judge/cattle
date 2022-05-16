@@ -3,7 +3,7 @@ import { AccessContextProvider } from 'models/access'
 import { AuthContextProvider } from 'models/auth'
 import { DomainContextProvider } from 'models/domain'
 import { LangContextProvider } from 'models/lang'
-import { ProblemContextProvider } from 'models/problem'
+import { PageHeaderContextProvider } from 'models/pageHeader'
 import { ProblemSetContextProvider } from 'models/problemSet'
 import type { ReactElement } from 'react'
 import { Suspense } from 'react'
@@ -24,13 +24,13 @@ export default function App(): ReactElement {
 				<AuthContextProvider>
 					<DomainContextProvider>
 						<AccessContextProvider>
-							<ProblemSetContextProvider>
-								<ProblemContextProvider>
+							<PageHeaderContextProvider>
+								<ProblemSetContextProvider>
 									<BrowserRouter>
 										<Routes />
 									</BrowserRouter>
-								</ProblemContextProvider>
-							</ProblemSetContextProvider>
+								</ProblemSetContextProvider>
+							</PageHeaderContextProvider>
 						</AccessContextProvider>
 					</DomainContextProvider>
 				</AuthContextProvider>
