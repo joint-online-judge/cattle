@@ -10,59 +10,59 @@ import { Link } from 'react-router-dom'
 import { Horse } from 'utils/service'
 
 const Index: React.FC = () => {
-	const { t } = useTranslation()
-	const msg = useMessage()
+  const { t } = useTranslation()
+  const msg = useMessage()
 
-	const { data, loading } = useRequest(
-		async () => {
-			const res = await Horse.domain.v1ListDomains()
-			return res.data.data?.results ?? []
-		},
-		{
-			onError: () => {
-				msg.error.fetch(t('domain'))
-			}
-		}
-	)
+  const { data, loading } = useRequest(
+    async () => {
+      const res = await Horse.domain.v1ListDomains()
+      return res.data.data?.results ?? []
+    },
+    {
+      onError: () => {
+        msg.error.fetch(t('domain'))
+      }
+    }
+  )
 
-	return (
-		<>
-			<Head title='Home' />
-			<ShadowCard bodyStyle={{ padding: 0 }}>
-				<List
-					loading={loading}
-					itemLayout='horizontal'
-					dataSource={data}
-					size='large'
-					renderItem={(item): ReactNode => (
-						<List.Item
-							actions={[
-								<Link to={`/domain/${item.url ?? ''}`} key='visit'>
-									{t('DomainList.visit')}
-								</Link>,
-								<Link
-									to={`/domain/${item.url ?? ''}/settings/profile`}
-									key='manage'
-								>
-									{t('DomainList.manage')}
-								</Link>
-							]}
-						>
-							<Skeleton title={false} loading={loading} active>
-								<List.Item.Meta
-									title={
-										<Link to={`/domain/${item.url ?? ''}`} className='text-lg'>
-											{item.name}
-										</Link>
-									}
-								/>
-							</Skeleton>
-						</List.Item>
-					)}
-				/>
-			</ShadowCard>
-		</>
-	)
+  return (
+    <>
+      <Head title='Home' />
+      <ShadowCard bodyStyle={{ padding: 0 }}>
+        <List
+          loading={loading}
+          itemLayout='horizontal'
+          dataSource={data}
+          size='large'
+          renderItem={(item): ReactNode => (
+            <List.Item
+              actions={[
+                <Link to={`/domain/${item.url ?? ''}`} key='visit'>
+                  {t('DomainList.visit')}
+                </Link>,
+                <Link
+                  to={`/domain/${item.url ?? ''}/settings/profile`}
+                  key='manage'
+                >
+                  {t('DomainList.manage')}
+                </Link>
+              ]}
+            >
+              <Skeleton title={false} loading={loading} active>
+                <List.Item.Meta
+                  title={
+                    <Link to={`/domain/${item.url ?? ''}`} className='text-lg'>
+                      {item.name}
+                    </Link>
+                  }
+                />
+              </Skeleton>
+            </List.Item>
+          )}
+        />
+      </ShadowCard>
+    </>
+  )
 }
 
 export default Index

@@ -18,112 +18,110 @@ import type { ProblemWithLatestRecord } from 'utils/service'
 import { Horse } from 'utils/service'
 
 const Index: React.FC = () => {
-	const { t } = useTranslation()
-	const access = useAccess()
-	const { domainUrl } = useParams<{ domainUrl: string }>()
-	const { domain } = useDomain()
-	const ref = useRef<ActionType>()
-	const navigate = useNavigate()
+  const { t } = useTranslation()
+  const access = useAccess()
+  const { domainUrl } = useParams<{ domainUrl: string }>()
+  const { domain } = useDomain()
+  const ref = useRef<ActionType>()
+  const navigate = useNavigate()
 
-	if (!domainUrl) {
-		throw new NoDomainUrlError()
-	}
+  if (!domainUrl) {
+    throw new NoDomainUrlError()
+  }
 
-	const { runAsync: fetchProblems, loading: fetching } = useRequest(
-		async (parameters: ProTablePagination) => {
-			const res = await Horse.problem.v1ListProblems(domainUrl, {
-				...transPagination(parameters),
-				ordering: '-created_at'
-			})
-			return res.data.data ?? { count: 0, results: [] }
-		},
-		{
-			manual: true
-		}
-	)
+  const { runAsync: fetchProblems, loading: fetching } = useRequest(
+    async (parameters: ProTablePagination) => {
+      const res = await Horse.problem.v1ListProblems(domainUrl, {
+        ...transPagination(parameters),
+        ordering: '-created_at'
+      })
+      return res.data.data ?? { count: 0, results: [] }
+    },
+    {
+      manual: true
+    }
+  )
 
-	const columns: ProColumns<ProblemWithLatestRecord>[] = [
-		{
-			title: t('ProblemList.status'),
-			width: 120,
-			dataIndex: 'latestRecord',
-			render: (_, record) =>
-				record.latestRecord ? (
-					<RecordStatus record={record.latestRecord} domainUrl={domainUrl} />
-				) : (
-					'-'
-				)
-		},
-		{
-			title: t('ProblemList.title'),
-			dataIndex: 'title',
-			ellipsis: true,
-			render: (_, record) => (
-				<Space>
-					<Link
-						target='_blank'
-						rel='noopener noreferrer'
-						to={`/domain/${domain?.url ?? record.domainId}/problem/${
-							record.url ?? record.id
-						}`}
-					>
-						{record.title}
-					</Link>
-					{record.hidden ? <HiddenFromUserIcon /> : null}
-				</Space>
-			)
-		},
-		{
-			title: t('ProblemList.submission'),
-			width: 80,
-			dataIndex: 'numSubmit'
-		},
-		{
-			title: t('ProblemList.acCount'),
-			width: 80,
-			dataIndex: 'numAccept'
-		}
-	]
+  const columns: ProColumns<ProblemWithLatestRecord>[] = [
+    {
+      title: t('ProblemList.status'),
+      width: 120,
+      dataIndex: 'latestRecord',
+      render: (_, record) =>
+        record.latestRecord ? (
+          <RecordStatus record={record.latestRecord} domainUrl={domainUrl} />
+        ) : (
+          '-'
+        )
+    },
+    {
+      title: t('ProblemList.title'),
+      dataIndex: 'title',
+      ellipsis: true,
+      render: (_, record) => (
+        <Space>
+          <Link
+            to={`/domain/${domain?.url ?? record.domainId}/problem/${
+              record.url ?? record.id
+            }`}
+          >
+            {record.title}
+          </Link>
+          {record.hidden ? <HiddenFromUserIcon /> : null}
+        </Space>
+      )
+    },
+    {
+      title: t('ProblemList.submission'),
+      width: 80,
+      dataIndex: 'numSubmit'
+    },
+    {
+      title: t('ProblemList.acCount'),
+      width: 80,
+      dataIndex: 'numAccept'
+    }
+  ]
 
-	return (
-		<ShadowCard
-			extra={
-				access.canCreateProblem ? (
-					<Button
-						icon={<PlusOutlined />}
-						onClick={() => {
-							navigate(`/domain/${domainUrl}/create-problem`)
-						}}
-						type='primary'
-					>
-						{t('ProblemList.create')}
-					</Button>
-				) : null
-			}
-		>
-			<ProTable<ProblemWithLatestRecord>
-				scroll={{ x: 'max-content' }}
-				loading={fetching}
-				actionRef={ref}
-				cardProps={false}
-				columns={columns}
-				request={async parameters => {
-					const data = await fetchProblems(parameters)
-					return {
-						data: data.results,
-						total: data.count,
-						success: true
-					}
-				}}
-				rowKey='id'
-				pagination={{
-					showQuickJumper: true
-				}}
-				search={false}
-				options={false}
-			/>
-		</ShadowCard>
-	)
+  return (
+    <ShadowCard
+      extra={
+        access.canCreateProblem ? (
+          <Button
+            icon={<PlusOutlined />}
+            onClick={() => {
+              navigate(`/domain/${domainUrl}/create-problem`)
+            }}
+            type='primary'
+          >
+            {t('ProblemList.create')}
+          </Button>
+        ) : null
+      }
+    >
+      <ProTable<ProblemWithLatestRecord>
+        scroll={{ x: 'max-content' }}
+        loading={fetching}
+        actionRef={ref}
+        cardProps={false}
+        columns={columns}
+        request={async parameters => {
+          const data = await fetchProblems(parameters)
+          return {
+            data: data.results,
+            total: data.count,
+            success: true
+          }
+        }}
+        rowKey='id'
+        pagination={{
+          showQuickJumper: true
+        }}
+        search={false}
+        options={false}
+      />
+    </ShadowCard>
+  )
 }
 
 export default Index
