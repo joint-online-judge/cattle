@@ -140,7 +140,7 @@
     "msg": {
       "registerSuccess": "Register success",
       "incompleteInfo": "Incomplete info",
-      "usernameEmailUsed": "Username or email alread registered",
+      "usernameEmailUsed": "Username or email already registered",
       "registerFailed": "Register failed",
       "loginSuccess": "Login success",
       "wrongUsernamePassword": "Wrong username or password",
@@ -338,7 +338,7 @@
         },
         "alert": {
           "use_default": "A default config will be generated and you can modify that later. Select this when there is not config.json in your data archive.",
-          "raise_error": "Use config.json in the data archive to be uploaded. Select this when you editted config.json locally.",
+          "raise_error": "Use config.json in the data archive to be uploaded. Select this when you edited config.json locally.",
           "use_old": "Reuse config from the previous version. Only data files will be updated."
         }
       }

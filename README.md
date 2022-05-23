@@ -1,6 +1,6 @@
 # Cattle
 
-The new generation of JOJ Frontend. Bulit with [Vite](https://vitejs.dev/).
+The new generation of JOJ Frontend. Built with [Vite](https://vitejs.dev/).
 
 ## Requirements
 
@@ -123,7 +123,7 @@ $ pnpm build
 
 ### Deploy
 
-- `pnpm build` - build for production. The generated files will be on the `dist` folder. (need to geneate API client first)
+- `pnpm build` - build for production. The generated files will be on the `dist` folder. (need to generate API client first)
 - `pnpm preview` - locally preview the production build.
 
 ### Testing & Linting
