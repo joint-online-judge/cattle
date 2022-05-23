@@ -5,11 +5,11 @@ import MainContentLayout from './MainContentLayout'
 import PageHeaderLayout from './PageHeaderLayout'
 
 const Index: React.FC = ({ children }) => (
-	<MainContentLayout>
-		<PageHeaderLayout>
-			<Suspense fallback={<LoadingOrError />}>{children}</Suspense>
-		</PageHeaderLayout>
-	</MainContentLayout>
+  <MainContentLayout className='pb-16'>
+    <PageHeaderLayout>
+      <Suspense fallback={<LoadingOrError />}>{children}</Suspense>
+    </PageHeaderLayout>
+  </MainContentLayout>
 )
 
 export default Index

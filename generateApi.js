@@ -8,62 +8,64 @@ const fs = require('fs')
 const { EOL } = require('os')
 
 const envOpts = {
-	submodule: 'submodule',
-	localServer: 'localServer',
-	stagingServer: 'stagingServer'
+  submodule: 'submodule',
+  localServer: 'localServer',
+  stagingServer: 'stagingServer'
 }
 
 const urlMapping = {
-	[envOpts.localServer]: 'http://localhost:34765/api/v1/openapi.json',
-	[envOpts.stagingServer]: 'http://nichujie.xyz/api/v1/openapi.json'
+  [envOpts.localServer]: 'http://localhost:34765/api/v1/openapi.json',
+  [envOpts.stagingServer]: 'http://nichujie.xyz/api/v1/openapi.json'
 }
 
 const outputPath = path.resolve(process.cwd(), 'src/client')
 const env = process.argv[2] ?? envOpts.submodule
 
 if (
-	env !== envOpts.submodule &&
-	env !== envOpts.localServer &&
-	env !== envOpts.stagingServer
+  env !== envOpts.submodule &&
+  env !== envOpts.localServer &&
+  env !== envOpts.stagingServer
 ) {
-	console.error(
-		'ERROR: wrong environment option. Valid options: submodule, localServer, stagingServer'
-	)
-	process.exit(-1)
+  console.error(
+    'ERROR: wrong environment option. Valid options: submodule, localServer, stagingServer'
+  )
+  process.exit(-1)
 }
 
 let config
 if (env === envOpts.submodule) {
-	config = {
-		name: 'index.ts',
-		output: outputPath,
-		input: path.resolve(process.cwd(), 'openapi/openapi.json'),
-		httpClientType: 'axios',
-		moduleNameFirstTag: true
-	}
+  config = {
+    name: 'index.ts',
+    output: outputPath,
+    input: path.resolve(process.cwd(), 'openapi/openapi.json'),
+    templates: path.resolve(process.cwd(), './api-templates'),
+    httpClientType: 'axios',
+    moduleNameFirstTag: true
+  }
 } else {
-	config = {
-		name: 'index.ts',
-		output: outputPath,
-		url: urlMapping[env],
-		httpClientType: 'axios',
-		moduleNameFirstTag: true
-	}
+  config = {
+    name: 'index.ts',
+    output: outputPath,
+    url: urlMapping[env],
+    templates: path.resolve(process.cwd(), './api-templates'),
+    httpClientType: 'axios',
+    moduleNameFirstTag: true
+  }
 }
 
 console.log('Start to generate API client for ' + env)
 generateApi(config)
-	.then(({ files }) => {
-		files.forEach(({ name }) => {
-			const generatedFilePath = path.resolve(outputPath, name)
-			const data = fs.readFileSync(generatedFilePath)
-			fs.writeFile(
-				generatedFilePath,
-				'// @ts-nocheck generated file' + EOL + data,
-				err => {
-					if (err) throw err
-				}
-			)
-		})
-	})
-	.catch(e => console.error(e))
+  .then(({ files }) => {
+    files.forEach(({ name }) => {
+      const generatedFilePath = path.resolve(outputPath, name)
+      const data = fs.readFileSync(generatedFilePath)
+      fs.writeFile(
+        generatedFilePath,
+        '// @ts-nocheck generated file' + EOL + data,
+        err => {
+          if (err) throw err
+        }
+      )
+    })
+  })
+  .catch(e => console.error(e))
