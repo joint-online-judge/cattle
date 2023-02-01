@@ -3,7 +3,7 @@ import { Button, message } from 'antd'
 import type React from 'react'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
 import { useTranslation } from 'react-i18next'
-import style from './style.module.less'
+import style from './style.module.css'
 
 const Index: React.FC = ({ children }) => {
   const { t } = useTranslation()

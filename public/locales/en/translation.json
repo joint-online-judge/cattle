@@ -98,7 +98,7 @@
     }
   },
   "DomainHome": {
-    "problemSet": "Assignments",
+    "problemSet": "Recent Assignments",
     "createProblemSet": "Create Assignments"
   },
   "DomainList": {
@@ -273,7 +273,8 @@
     "problem_set": "Problem Sets"
   },
   "ProblemSetList": {
-    "noDueDate": "No due date"
+    "noDueDate": "No due date",
+    "problemSet": "Assignments"
   },
   "problemSet": {
     "status": {
@@ -291,7 +292,8 @@
     "title": "Title",
     "submission": "Submission",
     "acCount": "AC",
-    "status": "Status"
+    "status": "Status",
+    "problems": "Problems"
   },
   "ProblemDetail": {
     "introduction": "Description",

@@ -1,0 +1,26 @@
+.login-title {
+  @apply mb-2 text-center text-2xl font-light;
+}
+
+.login-subtitle {
+  text-align: center;
+  font-size: 1em;
+  margin-bottom: 12px;
+  @apply text-slate-400;
+}
+
+.login-logo-wrap {
+  display: flex;
+  justify-content: center;
+  margin: 36px 0 12px;
+}
+
+.login-logo {
+  margin: auto;
+  width: 4.5em;
+}
+
+.oauth-img {
+  height: 90%;
+  margin-right: 8px;
+}

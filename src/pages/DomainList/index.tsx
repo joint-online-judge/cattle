@@ -51,7 +51,10 @@ const Index: React.FC = () => {
               <Skeleton title={false} loading={loading} active>
                 <List.Item.Meta
                   title={
-                    <Link to={`/domain/${item.url ?? ''}`} className='text-lg'>
+                    <Link
+                      to={`/domain/${item.url ?? item.id}`}
+                      className='text-lg'
+                    >
                       {item.name}
                     </Link>
                   }
