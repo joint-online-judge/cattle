@@ -5,6 +5,8 @@ import type { AuthContextValue } from './auth'
 import { AuthContext } from './auth'
 import type { DomainContextValue } from './domain'
 import { DomainContext } from './domain'
+import type { DomainListContextValue } from './domainList'
+import { DomainListContext } from './domainList'
 import type { LangContextValue } from './lang'
 import { LangContext } from './lang'
 import type { ProblemContextValue } from './problem'
@@ -13,21 +15,32 @@ import type { ProblemSetContextValue } from './problemSet'
 import { ProblemSetContext } from './problemSet'
 
 const useAuth = (): AuthContextValue =>
-	useContext<AuthContextValue>(AuthContext)
+  useContext<AuthContextValue>(AuthContext)
 
 const useDomain = (): DomainContextValue =>
-	useContext<DomainContextValue>(DomainContext)
+  useContext<DomainContextValue>(DomainContext)
+
+const useDomainList = (): DomainListContextValue =>
+  useContext<DomainListContextValue>(DomainListContext)
 
 const useAccess = (): AccessContextValue =>
-	useContext<AccessContextValue>(AccessContext)
+  useContext<AccessContextValue>(AccessContext)
 
 const useLang = (): LangContextValue =>
-	useContext<LangContextValue>(LangContext)
+  useContext<LangContextValue>(LangContext)
 
 const useProblemSet = (): ProblemSetContextValue =>
-	useContext<ProblemSetContextValue>(ProblemSetContext)
+  useContext<ProblemSetContextValue>(ProblemSetContext)
 
 const useProblem = (): ProblemContextValue =>
-	useContext<ProblemContextValue>(ProblemContext)
+  useContext<ProblemContextValue>(ProblemContext)
 
-export { useAuth, useDomain, useAccess, useLang, useProblemSet, useProblem }
+export {
+  useAuth,
+  useDomain,
+  useDomainList,
+  useAccess,
+  useLang,
+  useProblemSet,
+  useProblem
+}

@@ -48,7 +48,7 @@ Run the frontend locally, while connecting to the backend deployed on a staging 
 $ pnpm dev:staging
 ```
 
-Now the frontend is running on `localhost:3000`.
+Now the frontend is running on `localhost:5173`.
 
 We need some extra setup to overcome the [same-origin policy](https://developer.mozilla.org/en-US/docs/Web/Security/Same-origin_policy).
 
@@ -60,10 +60,10 @@ We need some extra setup to overcome the [same-origin policy](https://developer.
 - Visit `localhost:8899` and add a single rule:
 
 ```
-nichujie.xyz 127.0.0.1:3000
+nichujie.xyz 127.0.0.1:5173
 ```
 
-Whistle, as a proxy server, now proxies `nichujie.xyz` to `127.0.0.1:3000`.
+Whistle, as a proxy server, now proxies `nichujie.xyz` to `127.0.0.1:5173`.
 
 #### Install SwitchyOmega (for chrome)
 
@@ -89,11 +89,11 @@ Then, start the local frontend:
 $ pnpm dev
 ```
 
-The frontend will run on `127.0.0.1:3000` by default. All requests to the backend are proxied to `127.0.0.1:34765`.
+The frontend will run on `127.0.0.1:5173` by default. All requests to the backend are proxied to `127.0.0.1:34765`.
 
 In this mode, signing in by OAuth2 is difficult. You are recommended to use the simple
 
-> Note: Please always use 127.0.0.1:3000 instead of localhost:3000 to avoid issues about same-site cookie policies.
+> Note: Please always use 127.0.0.1:5173 instead of localhost:5173 to avoid issues about same-site cookie policies.
 
 ### Production Staging
 

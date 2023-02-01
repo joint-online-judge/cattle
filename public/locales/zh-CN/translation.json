@@ -98,7 +98,7 @@
     }
   },
   "DomainHome": {
-    "problemSet": "作业",
+    "problemSet": "近期作业",
     "createProblemSet": "创建作业"
   },
   "DomainList": {
@@ -273,7 +273,8 @@
     "problem_set": "问题集"
   },
   "ProblemSetList": {
-    "noDueDate": "无截止日期"
+    "noDueDate": "无截止日期",
+    "problemSet": "作业"
   },
   "problemSet": {
     "status": {
@@ -291,7 +292,8 @@
     "title": "标题",
     "submission": "提交",
     "acCount": "AC",
-    "status": "状态"
+    "status": "状态",
+    "problems": "题目"
   },
   "ProblemDetail": {
     "introduction": "题目描述",

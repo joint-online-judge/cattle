@@ -1,0 +1,19 @@
+.copy-pre {
+  position: relative;
+  padding: 0.6em 0.8em;
+}
+
+.copy-pre .hover-button {
+  position: absolute;
+  top: 0.2em;
+  right: 0.2em;
+  opacity: 0.4;
+}
+
+.copy-pre:hover .hover-button {
+  opacity: 0.9;
+}
+
+.copy-pre .ant-typography pre {
+  padding: 0.6em 0.8em;
+}

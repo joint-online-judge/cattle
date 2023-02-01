@@ -2,7 +2,6 @@
 import eslintPlugin from '@nabla/vite-plugin-eslint'
 import react from '@vitejs/plugin-react'
 import { defineConfig } from 'vite'
-import vitePluginImp from 'vite-plugin-imp'
 import { VitePWA } from 'vite-plugin-pwa'
 import tsconfigPaths from 'vite-tsconfig-paths'
 
@@ -76,38 +75,11 @@ export default defineConfig(({ mode }) => {
               }
             })
           ]
-        : []),
-      vitePluginImp({
-        libList: [
-          {
-            libName: 'antd',
-            style: (name): string => {
-              if (name === 'col' || name === 'row') {
-                return 'antd/es/grid/style/index.less'
-              }
-              return `antd/es/${name}/style/index.less`
-            }
-          }
-        ]
-      })
+        : [])
     ],
     css: {
       modules: {
         localsConvention: 'camelCaseOnly'
-      },
-      preprocessorOptions: {
-        less: {
-          javascriptEnabled: true,
-          modifyVars: {
-            '@primary-color': '#6543a9'
-            // '@border-radius-base': '6px'
-          }
-        }
-      }
-    },
-    resolve: {
-      alias: {
-        '~antd': 'antd'
       }
     }
   }

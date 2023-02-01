@@ -6,27 +6,27 @@ import { useMemo } from 'react'
 import ReactDOMServer from 'react-dom/server'
 import type { SimpleMDEReactProps } from 'react-simplemde-editor'
 import SimpleMDE from 'react-simplemde-editor'
-import './style.less'
+import './style.css'
 
 const Index: React.FC<SimpleMDEReactProps> = ({
-	options,
-	...otherProperties
+  options,
+  ...otherProperties
 }) => {
-	const presetOptions: Options = useMemo(
-		() => ({
-			autofocus: false,
-			spellChecker: false,
-			minHeight: '300px',
-			maxHeight: '400px',
-			previewRender: text =>
-				ReactDOMServer.renderToString(<MarkdownRender>{text}</MarkdownRender>)
-		}),
-		[]
-	)
+  const presetOptions: Options = useMemo(
+    () => ({
+      autofocus: false,
+      spellChecker: false,
+      minHeight: '300px',
+      maxHeight: '400px',
+      previewRender: text =>
+        ReactDOMServer.renderToString(<MarkdownRender>{text}</MarkdownRender>)
+    }),
+    []
+  )
 
-	return (
-		<SimpleMDE options={merge(presetOptions, options)} {...otherProperties} />
-	)
+  return (
+    <SimpleMDE options={merge(presetOptions, options)} {...otherProperties} />
+  )
 }
 
 export default Index

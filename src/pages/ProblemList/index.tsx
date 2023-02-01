@@ -85,6 +85,7 @@ const Index: React.FC = () => {
 
   return (
     <ShadowCard
+      title={t('ProblemList.problems')}
       extra={
         access.canCreateProblem ? (
           <Button

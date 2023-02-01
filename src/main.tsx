@@ -1,13 +1,12 @@
 import App from 'app'
 import { StrictMode } from 'react'
-import ReactDOM from 'react-dom'
+import { createRoot } from 'react-dom/client'
 import { registerSW } from 'virtual:pwa-register'
 
 registerSW()
-
-ReactDOM.render(
-	<StrictMode>
-		<App />
-	</StrictMode>,
-	document.querySelector('#root')
+const root = createRoot(document.querySelector('#root')!)
+root.render(
+  <StrictMode>
+    <App />
+  </StrictMode>
 )

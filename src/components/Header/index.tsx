@@ -1,76 +1,52 @@
-import { MenuOutlined } from '@ant-design/icons'
-import { Button, Col, Row } from 'antd'
+import { Col, Row, Select } from 'antd'
 import Logo from 'assets/logo.svg'
+import { useAuth, useDomainList } from 'models'
 import type React from 'react'
-import { Link } from 'react-router-dom'
-import style from './style.module.less'
+import { useEffect } from 'react'
+import { Link, useNavigate, useParams } from 'react-router-dom'
+import style from './style.module.css'
 import UserMenuItem from './UserMenuItem'
 
-const Index: React.FC = () => (
-	// Const [drawerVisible, setDrawerVisible] = useState<boolean>(false);
+const Index: React.FC = () => {
+  const auth = useAuth()
+  const navigate = useNavigate()
+  const { domainList, fetchDomainList } = useDomainList()
+  const { domainUrl } = useParams<{ domainUrl: string }>()
 
-	<Row style={{ height: '100%' }} align='middle'>
-		<Col xs={0} sm={0} md={24} lg={24} xl={24} xxl={24}>
-			<div className='flex'>
-				<Link to='/'>
-					<Row gutter={16} align='middle'>
-						<Col>
-							<img src={Logo} alt='logo' className={style.pageTitleLogo} />
-						</Col>
-						<Col>
-							<div className={style.textContainer}>
-								<span className='text-bold text-2xl text-black'>
-									Joint Online Judge
-								</span>
-							</div>
-						</Col>
-					</Row>
-				</Link>
-				<div className='flex-1' />
-				<UserMenuItem />
-			</div>
-		</Col>
+  useEffect(() => {
+    fetchDomainList() // Fetch domains when login/logout
+  }, [auth.user])
 
-		<Col xs={24} sm={24} md={0} lg={0} xl={0} xxl={0}>
-			<Row wrap={false} align='middle' justify='space-between'>
-				<Col>
-					<Button
-						icon={<MenuOutlined />}
-						// OnClick={() => {
-						//   setDrawerVisible(true);
-						// }}
-					/>
-				</Col>
-				<Col>
-					<img src={Logo} alt='logo' className={style.pageTitleLogo} />
-				</Col>
-				<Col>
-					<UserMenuItem />
-				</Col>
-			</Row>
-		</Col>
+  const options = (domainList ?? []).map(d => ({
+    value: d.url ?? d.id,
+    label: d.name
+  }))
 
-		{/* <Drawer */}
-		{/*  title={ */}
-		{/*    <span className="block text-center text-xl">Joint Online Judge</span> */}
-		{/*  } */}
-		{/*  placement="left" */}
-		{/*  onClose={() => setDrawerVisible(false)} */}
-		{/*  visible={drawerVisible} */}
-		{/*  closeIcon={false} */}
-		{/*  bodyStyle={{ padding: 0 }} */}
-		{/* > */}
-		{/*  <Menu */}
-		{/*    mode="vertical" */}
-		{/*    className={style.menu} */}
-		{/*    selectedKeys={[current]} */}
-		{/*    onClick={(e) => { */}
-		{/*      if (e.key !== 'user') setCurrent(e.key); */}
-		{/*    }} */}
-		{/*  > */}
-		{/*    {menuItems} */}
-		{/*  </Menu> */}
-		{/* </Drawer> */}
-	</Row>
-)
+  return (
+    <Row style={{ height: '100%' }} align='middle'>
+      <Col span={24}>
+        <div className='flex'>
+          <Row gutter={16} align='middle'>
+            <Col>
+              <Link to='/'>
+                <img src={Logo} alt='logo' className={style.pageTitleLogo} />
+              </Link>
+            </Col>
+            <Col>
+              <Select
+                style={{ width: 200 }}
+                value={domainUrl}
+                onChange={e => navigate(`/domain/${e}`)}
+                options={options}
+              />
+            </Col>
+          </Row>
+
+          <div className='flex-1' />
+          <UserMenuItem />
+        </div>
+      </Col>
+    </Row>
+  )
+}
 export default Index

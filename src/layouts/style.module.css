@@ -1,0 +1,17 @@
+.page-layout {
+  min-height: 100vh;
+  background: #fff;
+}
+
+.domain-layout-header {
+  background: inherit;
+  z-index: 5;
+}
+
+.page-content-no-header {
+  padding-top: 24px;
+}
+
+.page-content-with-header {
+  padding-top: 8px;
+}
