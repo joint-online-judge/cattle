@@ -246,6 +246,10 @@ const children: RouteObject[] = [
               {
                 path: 'record',
                 element: <RecordList />
+              },
+              {
+                path: 'record/:recordId',
+                element: <RecordList />
               }
             ]
           }

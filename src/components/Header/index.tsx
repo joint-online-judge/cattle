@@ -15,7 +15,7 @@ const Index: React.FC = () => {
 
   useEffect(() => {
     fetchDomainList() // Fetch domains when login/logout
-  }, [auth.user])
+  }, [auth.user, fetchDomainList])
 
   const options = (domainList ?? []).map(d => ({
     value: d.url ?? d.id,

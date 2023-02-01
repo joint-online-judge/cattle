@@ -75,7 +75,10 @@ const Index: React.FC = () => {
             <dt>{t('ProblemDetail.status')}</dt>
             <dd>
               {problem?.latestRecord ? (
-                <RecordStatus record={problem.latestRecord} />
+                <RecordStatus
+                  domainUrl={domainUrl}
+                  record={problem.latestRecord}
+                />
               ) : (
                 '-'
               )}
