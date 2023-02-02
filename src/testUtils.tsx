@@ -13,7 +13,7 @@ export default function renderWithProviders(
   includeRouter = true
 ): void {
   render(ui, {
-    wrapper: ({ children }: PropsWithChildren<unknown>): ReactElement => (
+    wrapper: ({ children }: PropsWithChildren): ReactElement => (
       <div>
         {includeRouter ? <BrowserRouter>{children}</BrowserRouter> : children}
       </div>

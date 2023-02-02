@@ -22,7 +22,7 @@ interface IProps extends ModalFormProps {
   domainUrl: string
   onSuccess: () => void
   formRef:
-    | MutableRefObject<ProFormInstance<DomainInvitation> | undefined>
+           | MutableRefObject<ProFormInstance<DomainInvitation> | undefined>
     | undefined
   editingInvitation?: DomainInvitation
 }

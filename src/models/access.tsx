@@ -1,5 +1,5 @@
 import { mapValues } from 'lodash-es'
-import type { FC } from 'react'
+import type { FC, PropsWithChildren } from 'react'
 import { createContext, useContext, useMemo } from 'react'
 import { AuthContext } from './auth'
 import { DomainContext } from './domain'
@@ -24,7 +24,7 @@ const AccessContext = createContext<AccessContextValue>({
   canCreateProblemSet: false
 })
 
-const AccessContextProvider: FC = ({ children }) => {
+const AccessContextProvider: FC<PropsWithChildren> = ({ children }) => {
   const { permission } = useContext(DomainContext)
   const { user } = useContext(AuthContext)
 

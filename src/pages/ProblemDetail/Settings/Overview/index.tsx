@@ -174,7 +174,6 @@ const Index: React.FC<IProps> = ({
     <ShadowCard
       title='Overview'
       extra={
-        //  @ts-expect-error lib types bug
         <Segmented
           options={['current', 'history']}
           value={category}

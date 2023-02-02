@@ -1,6 +1,6 @@
 import { useRequest } from 'ahooks'
 import type { AxiosError } from 'axios'
-import type { FC } from 'react'
+import type { FC, PropsWithChildren } from 'react'
 import { createContext, useMemo, useState } from 'react'
 import type { DomainDetail, DomainPermission } from 'utils/service'
 import Horse, { ErrorCode } from 'utils/service'
@@ -33,7 +33,7 @@ const DomainContext = createContext<DomainContextValue>({
   refresh: () => {}
 })
 
-const DomainContextProvider: FC = ({ children }) => {
+const DomainContextProvider: FC<PropsWithChildren> = ({ children }) => {
   const [domainUrl, setDomainUrl] = useState<string>()
   const [errorCode, setErrorCode] = useState<ErrorCode | 403 | undefined>()
 

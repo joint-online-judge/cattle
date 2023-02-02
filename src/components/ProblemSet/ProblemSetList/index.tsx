@@ -26,13 +26,12 @@ const Index: React.FC<IProps> = ({ domainUrl, recent }) => {
           limit: recent
         })
         return res.data.data?.results ?? []
-      } else {
-        const res = await Horse.problemSet.v1ListProblemSets(domainUrl, {
-          ordering: '-created_at'
-          // TODO: real pagination
-        })
-        return res.data.data?.results ?? []
       }
+      const res = await Horse.problemSet.v1ListProblemSets(domainUrl, {
+        ordering: '-created_at'
+        // TODO: real pagination
+      })
+      return res.data.data?.results ?? []
     },
     {
       refreshDeps: [domainUrl],

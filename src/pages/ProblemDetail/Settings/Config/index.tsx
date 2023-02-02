@@ -74,7 +74,6 @@ const Index: React.FC<IProps> = ({ refresh, configRequest }) => {
   return (
     <div>
       <div className='mb-4'>
-        {/* @ts-expect-error lib types bug */}
         <Segmented options={['Form', 'JSON']} />
       </div>
       <Form form={form} onFinish={onFinish}>

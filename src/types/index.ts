@@ -22,13 +22,8 @@ export enum ProblemSetStatus {
   Locked // lockAt <= now
 }
 
-export type MenuItemWithPermission = (
-  | MenuItemType
-  | SubMenuType
-  | MenuItemGroupType
-  | MenuDividerType
-) & {
+export type MenuItemWithPermission = {
   access?: boolean
-}
+} & (MenuDividerType | MenuItemGroupType | MenuItemType | SubMenuType)
 
 export type MenuItemsWithPermission = MenuItemWithPermission[]

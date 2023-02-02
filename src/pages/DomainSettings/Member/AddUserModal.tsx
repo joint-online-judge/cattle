@@ -20,7 +20,7 @@ interface IProps extends ModalFormProps {
   domainUrl: string
   onSuccess: () => Promise<void>
   formRef:
-    | MutableRefObject<ProFormInstance<DomainUserAdd> | undefined>
+           | MutableRefObject<ProFormInstance<DomainUserAdd> | undefined>
     | undefined
   editingUser?: UserWithDomainRole
 }

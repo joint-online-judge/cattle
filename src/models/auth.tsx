@@ -1,6 +1,6 @@
 import { useRequest } from 'ahooks'
 import type { AxiosResponse } from 'axios'
-import type { FC } from 'react'
+import type { FC, PropsWithChildren } from 'react'
 import { createContext, useMemo, useState } from 'react'
 import type { UserDetail, UserDetailResp } from 'utils/service'
 import Horse, { ErrorCode } from 'utils/service'
@@ -18,7 +18,7 @@ const AuthContext = createContext<AuthContextValue>({
   refresh: () => {}
 })
 
-const AuthContextProvider: FC = ({ children }) => {
+const AuthContextProvider: FC<PropsWithChildren> = ({ children }) => {
   const [user, setUser] = useState<UserDetail>()
 
   const { loading, refresh, refreshAsync } = useRequest(
