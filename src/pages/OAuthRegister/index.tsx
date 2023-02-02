@@ -3,13 +3,14 @@ import { useRequest } from 'ahooks'
 import { Button, Col, Form, Input, message, Row, Spin } from 'antd'
 import type { RuleObject } from 'antd/lib/form'
 import Logo from 'assets/logo.svg'
+import jwtDecode from 'jwt-decode'
 import { isNil, omitBy } from 'lodash-es'
 import { useAuth } from 'models'
 import type React from 'react'
 import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Navigate, useNavigate, useSearchParams } from 'react-router-dom'
-import type { UserCreate } from 'utils/service'
+import type { JWTAccessToken, UserCreate } from 'utils/service'
 import { ErrorCode, Horse } from 'utils/service'
 import style from './style.module.css'
 
@@ -24,6 +25,14 @@ const Index: React.FC = () => {
     const res = await Horse.auth.v1ListOauth2()
     return res.data.data?.results ?? []
   })
+
+  const { data: decodedToken, loading: fetchingToken } = useRequest(
+    async (): Promise<JWTAccessToken | undefined> => {
+      const res = await Horse.auth.v1GetToken({ responseType: 'json' })
+      const accessToken = res.data.data?.accessToken
+      return accessToken ? jwtDecode<JWTAccessToken>(accessToken) : undefined
+    }
+  )
 
   const { run: register, loading: registering } = useRequest(
     async (registerInfo: UserCreate) =>
@@ -47,7 +56,7 @@ const Index: React.FC = () => {
   )
 
   const onFinish = (e: UserCreate): void => {
-    const { sub, oauthName } = user ?? {}
+    const { sub, oauthName } = decodedToken ?? {}
     if (sub && oauthName) {
       register({
         ...omitBy(e, isNil),
@@ -71,7 +80,7 @@ const Index: React.FC = () => {
     )
   }, [user, form])
 
-  if (isNil(user?.oauthName)) {
+  if (isNil(decodedToken?.oauthName)) {
     return <Navigate to='/login' replace />
   }
 
@@ -84,8 +93,11 @@ const Index: React.FC = () => {
             <HeartFilled style={{ color: '#eb2f96', fontSize: 28 }} />
             <Spin wrapperClassName='m-auto' spinning={discovering}>
               <img
-                src={oauths?.find(o => o.oauthName === user?.oauthName)?.icon}
-                alt={user?.oauthName}
+                src={
+                  oauths?.find(o => o.oauthName === decodedToken?.oauthName)
+                    ?.icon
+                }
+                alt={decodedToken?.oauthName}
                 className={style.loginLogo}
               />
             </Spin>
@@ -144,7 +156,7 @@ const Index: React.FC = () => {
             <Button
               type='primary'
               htmlType='submit'
-              loading={registering}
+              loading={registering || fetchingToken}
               block
             >
               Register now

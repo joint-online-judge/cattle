@@ -387,5 +387,27 @@
   "CommittedFileTree": {
     "loadMore": "More files are hidden",
     "fileList": "file list"
+  },
+  "Axios": {
+    "noPermission": {
+      "message": "Permission Denied",
+      "description": "You don't have the permssion of certain resources."
+    },
+    "serverError": {
+      "message": "Oops...",
+      "description": "Server error. Please contact the maintainers."
+    },
+    "timeout": {
+      "message": "Oops...",
+      "description": "The server may be busy now."
+    },
+    "networkError": {
+      "message": "Network Error",
+      "description": "Please check your network connection."
+    },
+    "requestError": {
+      "message": "Oops...",
+      "description": "Error met when sending request."
+    }
   }
 }

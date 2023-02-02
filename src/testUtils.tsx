@@ -9,14 +9,14 @@ export const DESKTOP_RESOLUTION_HEIGHT = 800
 // export const MOBILE_RESOLUTION_HEIGHT = 896
 
 export default function renderWithProviders(
-	ui: ReactElement,
-	includeRouter = true
+  ui: ReactElement,
+  includeRouter = true
 ): void {
-	render(ui, {
-		wrapper: ({ children }: PropsWithChildren<unknown>): ReactElement => (
-			<div>
-				{includeRouter ? <BrowserRouter>{children}</BrowserRouter> : children}
-			</div>
-		)
-	})
+  render(ui, {
+    wrapper: ({ children }: PropsWithChildren<unknown>): ReactElement => (
+      <div>
+        {includeRouter ? <BrowserRouter>{children}</BrowserRouter> : children}
+      </div>
+    )
+  })
 }

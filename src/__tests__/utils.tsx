@@ -1,5 +1,4 @@
-import { screen } from '@testing-library/react'
-import { act, renderHook } from '@testing-library/react-hooks'
+import { act, renderHook, screen } from '@testing-library/react'
 import { Link } from 'react-router-dom'
 import renderWithProviders from 'testUtils'
 import { useMediaQuery } from 'utils/test'
