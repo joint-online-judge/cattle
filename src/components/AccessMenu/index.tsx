@@ -14,6 +14,7 @@ const Index: React.FC<IProps> = ({ items, ...rest }) => {
     .filter(item => item.access !== false)
     .map(item => omit(item, ['access']))
 
+  // @ts-expect-error type broken after lodash omit
   return <Menu items={filteredItems} {...rest} />
 }
 

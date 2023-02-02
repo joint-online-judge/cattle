@@ -3,7 +3,7 @@ import type { Locale } from 'antd/lib/locale-provider'
 import enUS from 'antd/lib/locale/en_US'
 import zhCN from 'antd/lib/locale/zh_CN'
 import { isArray } from 'lodash-es'
-import type { FC } from 'react'
+import type { FC, PropsWithChildren } from 'react'
 import { createContext, useCallback, useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
@@ -26,7 +26,7 @@ const antdLangMap: Record<string, Locale | undefined> = {
 
 const localKey = 'LANG' // Store language preference in local storage
 
-const LangContextProvider: FC = ({ children }) => {
+const LangContextProvider: FC<PropsWithChildren> = ({ children }) => {
   const { i18n } = useTranslation()
   const allLang = i18n.languages
 

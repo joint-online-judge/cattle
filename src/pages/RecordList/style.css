@@ -1,11 +1,9 @@
-#record-list-table {
-	.ant-pro-table-search {
-		@apply shadow-md;
+#record-list-table .ant-pro-table-search {
+  @apply shadow-md;
 
-		border-radius: 6px;
-	}
+  border-radius: 6px;
+}
 
-	.ant-card {
-		@apply shadow-md;
-	}
+#record-list-table .ant-card {
+  @apply shadow-md;
 }

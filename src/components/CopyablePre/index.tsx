@@ -5,13 +5,13 @@ import { CopyToClipboard } from 'react-copy-to-clipboard'
 import { useTranslation } from 'react-i18next'
 import style from './style.module.css'
 
-const Index: React.FC = ({ children }) => {
+const Index: React.FC<{ children: string }> = ({ children }) => {
   const { t } = useTranslation()
 
   return (
     <pre className={style.copyPre} style={{ padding: '0.6em 0.8em' }}>
       <CopyToClipboard
-        text={children?.toString() ?? ''}
+        text={children.toString()}
         onCopy={(_text, success): void => {
           if (success) {
             message.success(t('CopyablePre.copySuccess'))

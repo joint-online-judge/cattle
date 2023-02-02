@@ -1,7 +1,7 @@
 import { MenuOutlined } from '@ant-design/icons'
 import type { ProColumns } from '@ant-design/pro-table'
 import ProTable from '@ant-design/pro-table'
-import { arrayMoveImmutable } from '@ant-design/pro-utils'
+import { arrayMoveImmutable, useRefFunction } from '@ant-design/pro-utils'
 import { useRequest } from 'ahooks'
 import { Button, message, Space } from 'antd'
 import { HiddenFromUserIcon } from 'components/Icons'
@@ -148,21 +148,20 @@ const Index: React.FC<IProps> = ({
     [domain?.url, removeProblem]
   )
 
-  const onSortEnd = useCallback(
+  const onSortEnd = useRefFunction(
     ({ oldIndex, newIndex }: { oldIndex: number; newIndex: number }) => {
       if (oldIndex !== newIndex) {
-        const newData = arrayMoveImmutable(
-          [...dataSource],
-          oldIndex,
-          newIndex
-        ).filter(element => Boolean(element))
+        const newData = arrayMoveImmutable({
+          array: [...dataSource],
+          fromIndex: oldIndex,
+          toIndex: newIndex
+        }).filter(el => Boolean(el))
         setDataSource([...newData])
         if (dataSource[oldIndex]?.id) {
           updateProblem(dataSource[oldIndex].id, { position: newIndex })
         }
       }
-    },
-    [dataSource, updateProblem]
+    }
   )
 
   const DraggableContainer: React.FC = useCallback(

@@ -1,5 +1,5 @@
 import { message } from 'antd'
-import type { MessageType } from 'antd/es/message'
+import type { MessageType } from 'antd/es/message/interface'
 import { useCallback, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import type { ErrorCode } from 'utils/service'

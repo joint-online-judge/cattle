@@ -386,5 +386,27 @@
   "CommittedFileTree": {
     "loadMore": "更多文件已隐藏",
     "fileList": "文件列表"
+  },
+  "Axios": {
+    "noPermission": {
+      "message": "权限不足",
+      "description": "你没有访问该资源的权限"
+    },
+    "serverError": {
+      "message": "Oops...",
+      "description": "服务器错误，请联系管理员"
+    },
+    "timeout": {
+      "message": "Oops...",
+      "description": "服务器可能繁忙"
+    },
+    "networkError": {
+      "message": "网络错误",
+      "description": "请检查网络连接"
+    },
+    "requestError": {
+      "message": "Oops...",
+      "description": "请求时出现错误"
+    }
   }
 }
