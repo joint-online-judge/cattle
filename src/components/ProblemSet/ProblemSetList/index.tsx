@@ -1,8 +1,8 @@
 import { useRequest } from 'ahooks'
 import { List, message, Skeleton } from 'antd'
 import { ProblemSetStatusBadge } from 'components/ProblemSet'
+import dayjs from 'dayjs'
 import { t } from 'i18next'
-import mm from 'moment'
 import type React from 'react'
 import type { ReactNode } from 'react'
 import { Link } from 'react-router-dom'
@@ -75,7 +75,7 @@ const Index: React.FC<IProps> = ({ domainUrl, recent }) => {
               }
               description={
                 item.dueAt
-                  ? mm(item.dueAt).format('YYYY-MM-DD HH:mm')
+                  ? dayjs(item.dueAt).format('YYYY-MM-DD HH:mm')
                   : t('ProblemSetList.noDueDate')
               }
             />

@@ -14,8 +14,8 @@ import {
 } from 'antd'
 import CopyablePre from 'components/CopyablePre'
 import ShadowCard from 'components/ShadowCard'
+import dayjs from 'dayjs'
 import { isArray } from 'lodash-es'
-import mm from 'moment'
 import type React from 'react'
 import type { ReactElement } from 'react'
 import { useRef, useState } from 'react'
@@ -146,7 +146,9 @@ const Index: React.FC = () => {
                             <li>
                               过期时间:{' '}
                               {o.expireAt
-                                ? mm(o.expireAt).format('YYYY-MM-DD HH:mm:ss')
+                                ? dayjs(o.expireAt).format(
+                                    'YYYY-MM-DD HH:mm:ss'
+                                  )
                                 : 'Never'}
                             </li>
                           </ul>

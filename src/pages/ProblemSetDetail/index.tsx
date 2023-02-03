@@ -9,8 +9,8 @@ import { Menu, Progress } from 'antd'
 import { getProblemSetStatus } from 'components/ProblemSet'
 import ShadowCard from 'components/ShadowCard'
 import SideMenuPage from 'components/SideMenuPage'
+import dayjs from 'dayjs'
 import { useProblemSet } from 'models'
-import mm from 'moment'
 import type React from 'react'
 import { useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -107,13 +107,13 @@ const Index: React.FC = () => {
             <dt>Due At</dt>
             <dd>
               {problemSet?.dueAt
-                ? mm(problemSet.dueAt).format('YYYY-MM-DD HH:mm:ss')
+                ? dayjs(problemSet.dueAt).format('YYYY-MM-DD HH:mm:ss')
                 : 'Never'}
             </dd>
             <dt>Lock At</dt>
             <dd>
               {problemSet?.lockAt
-                ? mm(problemSet.lockAt).format('YYYY-MM-DD HH:mm:ss')
+                ? dayjs(problemSet.lockAt).format('YYYY-MM-DD HH:mm:ss')
                 : 'Never'}
             </dd>
             <dt>Accept Rate</dt>

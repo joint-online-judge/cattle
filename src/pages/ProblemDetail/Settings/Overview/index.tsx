@@ -1,17 +1,16 @@
 import type { Result } from 'ahooks/lib/useRequest/src/types'
 import { Alert, Button, Descriptions, Segmented, Table } from 'antd'
 import type { ColumnsType } from 'antd/lib/table'
+import ShadowCard from 'components/ShadowCard'
+import dayjs from 'dayjs'
+import { useEffect, useMemo, useState } from 'react'
 import type {
   ProblemConfigDataDetail,
   ProblemConfigDataDetailResp,
   ProblemConfigDetail,
   ProblemConfigDetailListResp
-} from 'client'
-import { ErrorCode } from 'client'
-import ShadowCard from 'components/ShadowCard'
-import mm from 'moment'
-import { useEffect, useMemo, useState } from 'react'
-import Horse from 'utils/service'
+} from 'utils/service'
+import Horse, { ErrorCode } from 'utils/service'
 
 interface IProps {
   domainUrl: string
@@ -72,7 +71,7 @@ const Index: React.FC<IProps> = ({
         dataIndex: 'createdAt',
         render: text =>
           typeof text === 'string'
-            ? mm(text).format('YYYY-MM-DD HH:mm:ss')
+            ? dayjs(text).format('YYYY-MM-DD HH:mm:ss')
             : '-'
       },
       {
@@ -80,7 +79,7 @@ const Index: React.FC<IProps> = ({
         dataIndex: 'updatedAt',
         render: text =>
           typeof text === 'string'
-            ? mm(text).format('YYYY-MM-DD HH:mm:ss')
+            ? dayjs(text).format('YYYY-MM-DD HH:mm:ss')
             : '-'
       },
       {
@@ -130,12 +129,12 @@ const Index: React.FC<IProps> = ({
             </Descriptions.Item>
             <Descriptions.Item label='Created At' span={3}>
               {config.createdAt
-                ? mm(config.createdAt).format('YYYY-MM-DD HH:mm:ss')
+                ? dayjs(config.createdAt).format('YYYY-MM-DD HH:mm:ss')
                 : '-'}
             </Descriptions.Item>
             <Descriptions.Item label='Updated At' span={3}>
               {config.updatedAt
-                ? mm(config.updatedAt).format('YYYY-MM-DD HH:mm:ss')
+                ? dayjs(config.updatedAt).format('YYYY-MM-DD HH:mm:ss')
                 : '-'}
             </Descriptions.Item>
           </Descriptions>
