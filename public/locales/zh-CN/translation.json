@@ -353,7 +353,8 @@
     "language": "语言",
     "submitAt": "提交时间",
     "problemSet": "作业",
-    "submitter": "用户名"
+    "submitter": "用户名",
+    "submitBy": "提交者"
   },
   "PageHeader": {
     "problem_detail": "$t(ProblemDetail.menu.detail)",

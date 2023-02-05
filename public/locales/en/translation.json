@@ -354,7 +354,8 @@
     "language": "Language",
     "submitAt": "Submit At",
     "problemSet": "Assignment",
-    "submitter": "Username"
+    "submitter": "Username",
+    "submitBy": "Submit By"
   },
   "PageHeader": {
     "problem_detail": "$t(ProblemDetail.menu.detail)",
