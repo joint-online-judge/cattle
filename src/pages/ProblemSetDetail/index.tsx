@@ -5,7 +5,7 @@ import {
   SettingOutlined,
   TrophyOutlined
 } from '@ant-design/icons'
-import { Menu, Progress } from 'antd'
+import { Progress } from 'antd'
 import { getProblemSetStatus } from 'components/ProblemSet'
 import ShadowCard from 'components/ShadowCard'
 import SideMenuPage from 'components/SideMenuPage'
@@ -15,6 +15,7 @@ import type React from 'react'
 import { useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Outlet, useParams } from 'react-router-dom'
+import type { MenuItemsWithPermission } from 'types'
 import { ProblemSetStatus } from 'types'
 import { NoDomainUrlError, NoProblemSetIdError } from 'utils/exception'
 import AfterDue from './AfterDue'
@@ -27,6 +28,40 @@ const Index: React.FC = () => {
     useParams<{ domainUrl: string; problemSetId: string }>()
   const [status, setStatus] = useState<ProblemSetStatus>(
     ProblemSetStatus.Ongoing
+  )
+
+  const menuItems: MenuItemsWithPermission = useMemo(
+    () => [
+      {
+        key: 'detail',
+        icon: <EyeOutlined />,
+        label: t('ProblemSetDetail.menu.detail')
+      },
+      {
+        key: 'scoreboard',
+        icon: <TrophyOutlined />,
+        label: t('ProblemSetDetail.menu.scoreboard')
+      },
+      {
+        type: 'divider'
+      },
+      {
+        key: 'system-test',
+        icon: <CodeOutlined />,
+        label: t('ProblemSetDetail.menu.systemTest')
+      },
+      {
+        key: 'edit',
+        icon: <EditOutlined />,
+        label: t('ProblemSetDetail.menu.edit')
+      },
+      {
+        key: 'settings',
+        icon: <SettingOutlined />,
+        label: t('ProblemSetDetail.menu.settings')
+      }
+    ],
+    [t]
   )
 
   if (!domainUrl) {
@@ -79,26 +114,7 @@ const Index: React.FC = () => {
   return (
     <SideMenuPage
       defaultTab='detail'
-      menu={
-        <Menu mode='inline'>
-          <Menu.Item key='detail' icon={<EyeOutlined />}>
-            {t('ProblemSetDetail.menu.detail')}
-          </Menu.Item>
-          <Menu.Item key='scoreboard' icon={<TrophyOutlined />}>
-            {t('ProblemSetDetail.menu.scoreboard')}
-          </Menu.Item>
-          <Menu.Divider />
-          <Menu.Item key='system-test' icon={<CodeOutlined />}>
-            {t('ProblemSetDetail.menu.systemTest')}
-          </Menu.Item>
-          <Menu.Item key='edit' icon={<EditOutlined />}>
-            {t('ProblemSetDetail.menu.edit')}
-          </Menu.Item>
-          <Menu.Item key='settings' icon={<SettingOutlined />}>
-            {t('ProblemSetDetail.menu.settings')}
-          </Menu.Item>
-        </Menu>
-      }
+      menuItems={menuItems}
       extra={
         <ShadowCard loading={loading}>
           <dl className='m-0'>

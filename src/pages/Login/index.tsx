@@ -195,10 +195,17 @@ const Index: React.FC = () => {
             onChange={(activeKey): void => {
               setOpType(activeKey as OperationType)
             }}
-          >
-            <Tabs.TabPane key='login' tab={t('Login.login')} />
-            <Tabs.TabPane key='register' tab={t('Login.register')} />
-          </Tabs>
+            items={[
+              {
+                key: 'login',
+                label: t('Login.login')
+              },
+              {
+                key: 'register',
+                label: t('Login.register')
+              }
+            ]}
+          />
           {opType === 'login' && (
             <>
               <Form.Item

@@ -4,11 +4,12 @@ import {
   SolutionOutlined,
   TeamOutlined
 } from '@ant-design/icons'
-import { Menu } from 'antd'
 import SideMenuPage from 'components/SideMenuPage'
 import type React from 'react'
+import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Outlet, useParams } from 'react-router-dom'
+import type { MenuItemsWithPermission } from 'types'
 import { NoDomainUrlError } from 'utils/exception'
 
 const Index: React.FC = () => {
@@ -19,34 +20,47 @@ const Index: React.FC = () => {
     throw new NoDomainUrlError()
   }
 
+  const menuItems: MenuItemsWithPermission = useMemo(
+    () => [
+      {
+        key: 'profile',
+        icon: <ProfileOutlined />,
+        label: t('DomainSettings.menu.profile')
+      },
+      {
+        key: 'invitation',
+        icon: <SolutionOutlined />,
+        label: t('DomainSettings.menu.invitation')
+      },
+      {
+        key: 'member',
+        icon: <TeamOutlined />,
+        label: t('DomainSettings.menu.member')
+      },
+      {
+        key: 'permission',
+        icon: <LockOutlined />,
+        label: t('DomainSettings.menu.permission'),
+        children: [
+          {
+            key: 'config',
+            label: t('DomainSettings.menu.permissionConfig')
+          },
+          {
+            key: 'role',
+            label: t('DomainSettings.menu.permissionRole')
+          }
+        ]
+      }
+    ],
+    [t]
+  )
+
   return (
     <SideMenuPage
       defaultTab='profile'
-      menu={
-        <Menu mode='inline' defaultOpenKeys={['permission']}>
-          <Menu.Item key='profile' icon={<ProfileOutlined />}>
-            {t('DomainSettings.menu.profile')}
-          </Menu.Item>
-          <Menu.Item key='invitation' icon={<SolutionOutlined />}>
-            {t('DomainSettings.menu.invitation')}
-          </Menu.Item>
-          <Menu.Item key='member' icon={<TeamOutlined />}>
-            {t('DomainSettings.menu.member')}
-          </Menu.Item>
-          <Menu.SubMenu
-            key='permission'
-            icon={<LockOutlined />}
-            title={t('DomainSettings.menu.permission')}
-          >
-            <Menu.Item key='config'>
-              {t('DomainSettings.menu.permissionConfig')}
-            </Menu.Item>
-            <Menu.Item key='role'>
-              {t('DomainSettings.menu.permissionRole')}
-            </Menu.Item>
-          </Menu.SubMenu>
-        </Menu>
-      }
+      menuItems={menuItems}
+      defaultOpenKeys={['permission']}
     >
       <Outlet />
     </SideMenuPage>
