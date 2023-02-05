@@ -10,6 +10,8 @@ interface IProps extends MenuProps {
 }
 
 const Index: React.FC<IProps> = ({ items, ...rest }) => {
+  // @Chujie: note this component only support access control on first layer menu
+  // i.e. access on submenu will be ignored
   const filteredItems = items
     .filter(item => item.access !== false)
     .map(item => omit(item, ['access']))

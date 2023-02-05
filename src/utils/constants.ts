@@ -10,7 +10,7 @@ export const MAIN_CONTENT_GRID = {
   md: 22,
   lg: 20,
   xl: 18,
-  xxl: 16
+  xxl: 14
 }
 
 export const VERTICAL_GUTTER: [Gutter, Gutter] = [

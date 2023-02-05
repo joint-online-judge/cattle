@@ -4,15 +4,15 @@ import {
   ReadOutlined,
   SettingOutlined
 } from '@ant-design/icons'
-import { Menu } from 'antd'
 import RecordStatus from 'components/RecordStatus'
 import ShadowCard from 'components/ShadowCard'
 import SideMenuPage from 'components/SideMenuPage'
 import { useProblem } from 'models'
 import type React from 'react'
-import { useEffect } from 'react'
+import { useEffect, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Outlet, useParams } from 'react-router-dom'
+import type { MenuItemsWithPermission } from 'types'
 import { NoDomainUrlError, NoProblemIdError } from 'utils/exception'
 
 const Index: React.FC = () => {
@@ -49,26 +49,39 @@ const Index: React.FC = () => {
   //   }
   // )
 
+  const menuItems: MenuItemsWithPermission = useMemo(
+    () => [
+      {
+        key: 'detail',
+        icon: <ReadOutlined />,
+        label: t('ProblemDetail.menu.detail')
+      },
+      {
+        key: 'submit',
+        icon: <CodeOutlined />,
+        label: t('ProblemDetail.menu.submit')
+      },
+      {
+        type: 'divider'
+      },
+      {
+        key: 'edit',
+        icon: <EditOutlined />,
+        label: t('ProblemDetail.menu.edit')
+      },
+      {
+        key: 'settings',
+        icon: <SettingOutlined />,
+        label: t('ProblemDetail.menu.settings')
+      }
+    ],
+    [t]
+  )
+
   return (
     <SideMenuPage
       defaultTab='detail'
-      menu={
-        <Menu mode='inline'>
-          <Menu.Item key='detail' icon={<ReadOutlined />}>
-            {t('ProblemDetail.menu.detail')}
-          </Menu.Item>
-          <Menu.Item key='submit' icon={<CodeOutlined />}>
-            {t('ProblemDetail.menu.submit')}
-          </Menu.Item>
-          <Menu.Divider />
-          <Menu.Item key='edit' icon={<EditOutlined />}>
-            {t('ProblemDetail.menu.edit')}
-          </Menu.Item>
-          <Menu.Item key='settings' icon={<SettingOutlined />}>
-            {t('ProblemDetail.menu.settings')}
-          </Menu.Item>
-        </Menu>
-      }
+      menuItems={menuItems}
       extra={
         <ShadowCard loading={fetchingProblem}>
           <dl className='m-0'>

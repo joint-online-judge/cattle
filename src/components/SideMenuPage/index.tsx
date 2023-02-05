@@ -1,63 +1,43 @@
 import type { MenuProps } from 'antd'
 import { Col, Row } from 'antd'
+import AccessMenu from 'components/AccessMenu'
 import LoadingOrError from 'components/LoadingOrError'
-import SideMenuBar from 'components/SideMenuBar'
+import ShadowCard from 'components/ShadowCard'
 import { last } from 'lodash-es'
 import type React from 'react'
-import type { ReactElement } from 'react'
+import type { PropsWithChildren } from 'react'
 import { Suspense, useCallback, useEffect, useState } from 'react'
 import type { Location } from 'react-router-dom'
-import {
-  matchRoutes,
-  useLocation,
-  useNavigate,
-  useSearchParams
-} from 'react-router-dom'
+import { matchRoutes, useLocation, useNavigate } from 'react-router-dom'
 import routes from 'routes'
+import type { MenuItemsWithPermission } from 'types'
 import { VERTICAL_GUTTER } from 'utils/constants'
 
 interface IProps {
-  menu: React.ReactElement<MenuProps> // The side menu component (will override all other options)
+  menuItems: MenuItemsWithPermission
+  defaultOpenKeys?: MenuProps['defaultOpenKeys']
   extra?: React.ReactElement | React.ReactNode // Extra component below SideBar
   defaultTab?: string // Default tab of menu
-  routerMode?: 'param' | 'query' // Use query string or route parameters
-  children: ReactElement
 }
 
-const Index: React.FC<IProps> = ({
+const Index: React.FC<PropsWithChildren<IProps>> = ({
   children,
   extra,
   defaultTab,
-  menu,
-  routerMode = 'param'
+  menuItems,
+  defaultOpenKeys
 }) => {
   const navigate = useNavigate()
   const location: Location = useLocation()
   const matchedRoutes = matchRoutes(routes, location)
-  const [searchParams, setSearchParams] = useSearchParams()
   const [key, setKey] = useState<string>()
 
   const parseMenuKeyFromUrl = useCallback((): string | undefined => {
-    /**
-     * Init the menu key.
-     * If routerMode is 'query', the key should be loaded from the url query string.
-     * @example /domain/test/settings?tab=profile --> tab='profile'
-     * Note: 'query' mode won't support subTab.
-     * If routerMode is 'param', the key should be loaded from the url parameter.
-     * @example /domain/test/settings/permission/config --> tab='permission', subTab='config'
-     */
-    if (routerMode === 'query') {
-      const subTab = searchParams.get('subTab')
-      const tab = searchParams.get('tab')
-
-      return subTab ?? tab ?? defaultTab
-    }
-
     const lastRoute = last(matchedRoutes)
     return lastRoute && !lastRoute.route.index
       ? lastRoute.route.path
       : defaultTab
-  }, [routerMode, searchParams, defaultTab, matchedRoutes])
+  }, [defaultTab, matchedRoutes])
 
   useEffect(() => {
     setKey(parseMenuKeyFromUrl())
@@ -65,21 +45,14 @@ const Index: React.FC<IProps> = ({
 
   /**
    * Menu click event: click the menu items will change the url.
-   * @example /domain/test/settings?tab=profile --> /domain/test/settings?tab=member
    * @example /domain/test/settings/profile --> /domain/test/settings/member
    */
   const menuOnClick: MenuProps['onClick'] = useCallback(
     (event: { key: string; keyPath: string[] }) => {
-      const [newTab, newSubTab] = event.keyPath.reverse()
       setKey(event.key)
-
-      if (routerMode === 'query') {
-        setSearchParams({ tab: newTab, subTab: newSubTab })
-      } else if (event.key) {
-        navigate(event.keyPath.join('/'))
-      }
+      navigate(event.keyPath.join('/'))
     },
-    [routerMode, navigate, setSearchParams]
+    [navigate]
   )
 
   return (
@@ -89,12 +62,19 @@ const Index: React.FC<IProps> = ({
       <Col xs={24} sm={24} md={8} lg={7} xl={7} xxl={6}>
         <Row gutter={VERTICAL_GUTTER}>
           <Col span={24}>
-            <SideMenuBar
-              selectedKeys={key ? [key] : undefined}
-              onClick={menuOnClick}
+            <ShadowCard
+              bodyStyle={{ padding: 0 }}
+              style={{ overflow: 'hidden' }}
+              className='w-full'
             >
-              {menu}
-            </SideMenuBar>
+              <AccessMenu
+                mode='inline'
+                items={menuItems}
+                selectedKeys={key ? [key] : undefined}
+                onClick={menuOnClick}
+                defaultOpenKeys={defaultOpenKeys}
+              />
+            </ShadowCard>
           </Col>
           <Col span={24}>{extra}</Col>
         </Row>
