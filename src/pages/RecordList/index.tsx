@@ -2,6 +2,7 @@ import type { ActionType, ProColumns } from '@ant-design/pro-table'
 import ProTable from '@ant-design/pro-table'
 import { useRequest } from 'ahooks'
 import { message } from 'antd'
+import Head from 'components/Head'
 import RecordStatus from 'components/RecordStatus'
 import { isNumber, omit, omitBy } from 'lodash-es'
 import type React from 'react'
@@ -84,7 +85,6 @@ const Index: React.FC = () => {
           )
         }
       },
-
       {
         title: t('RecordList.time'),
         dataIndex: 'timeMs',
@@ -155,6 +155,7 @@ const Index: React.FC = () => {
 
   return (
     <div id='record-list-table'>
+      <Head title={t('RecordList.title')} />
       <ProTable<RecordListDetail, QueryParams>
         columns={columns}
         actionRef={actionRef}

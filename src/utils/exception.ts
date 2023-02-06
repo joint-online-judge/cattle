@@ -10,30 +10,45 @@
  * Throw when no domainUrl is found in the current path.
  */
 class NoDomainUrlError extends Error {
-	public constructor() {
-		super('No domain url found')
-		this.name = 'NoDomainUrlError'
-	}
+  public constructor() {
+    super('No domain url found')
+    this.name = 'NoDomainUrlError'
+  }
 }
 
 /**
  * Throw when no problemSetId is found in the current path.
  */
 class NoProblemSetIdError extends Error {
-	public constructor() {
-		super('No problem set id found')
-		this.name = 'NoProblemSetIdError'
-	}
+  public constructor() {
+    super('No problem set id found')
+    this.name = 'NoProblemSetIdError'
+  }
 }
 
 /**
  * Throw when no problemId is found in the current path.
  */
 class NoProblemIdError extends Error {
-	public constructor() {
-		super('No problem id found')
-		this.name = 'NoProblemIdError'
-	}
+  public constructor() {
+    super('No problem id found')
+    this.name = 'NoProblemIdError'
+  }
 }
 
-export { NoDomainUrlError, NoProblemSetIdError, NoProblemIdError }
+/**
+ * Throw when no recordId is found in the current path.
+ */
+class NoRecordIdError extends Error {
+  public constructor() {
+    super('No record id found')
+    this.name = 'NoRecordIdError'
+  }
+}
+
+export {
+  NoDomainUrlError,
+  NoProblemSetIdError,
+  NoProblemIdError,
+  NoRecordIdError
+}

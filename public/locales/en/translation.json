@@ -47,25 +47,25 @@
       "problemUrlNotUnique": "URL already exists"
     },
     "success": {
-      "fetchItem": "fetch {data} successfully",
-      "fetch": "fetch successfully",
-      "createItem": "create {data} successfully",
-      "create": "create successfully",
-      "updateItem": "update {data} successfully",
-      "update": "update successfully",
-      "deleteItem": "delete {data} successfully",
-      "delete": "delete successfully",
+      "fetchItem": "Fetch {{data}} successfully",
+      "fetch": "Fetch successfully",
+      "createItem": "Create {{data}} successfully",
+      "create": "Create successfully",
+      "updateItem": "Update {{data}} successfully",
+      "update": "Update successfully",
+      "deleteItem": "Delete {{data}} successfully",
+      "delete": "Delete successfully",
       "uploadFile": "Upload success"
     },
     "error": {
-      "fetchItem": "failed to fetch {data}",
-      "fetch": "fetch failed",
-      "createItem": "failed to create {data}",
-      "create": "create failed",
-      "updateItem": "failed to update {data}",
-      "update": "update failed",
-      "deleteItem": "failed to delete {data}",
-      "delete": "delete failed",
+      "fetchItem": "Failed to fetch {{data}}",
+      "fetch": "Failed to fetch data",
+      "createItem": "Failed to create {{data}}",
+      "create": "Failed to create",
+      "updateItem": "Failed to update {{data}}",
+      "update": "Failed to update",
+      "deleteItem": "Failed to delete {{data}}",
+      "delete": "Failed to delete",
       "uploadFile": "Upload failed"
     },
     "loading": {
@@ -355,7 +355,8 @@
     "submitAt": "Submit At",
     "problemSet": "Assignment",
     "submitter": "Username",
-    "submitBy": "Submit By"
+    "submitBy": "Submit By",
+    "title": "Judge Queue"
   },
   "PageHeader": {
     "problem_detail": "$t(ProblemDetail.menu.detail)",
@@ -410,5 +411,12 @@
       "message": "Oops...",
       "description": "Error met when sending request."
     }
+  },
+  "RecordDetail": {
+    "title": "Submission Detail",
+    "record": "record",
+    "state": "Status",
+    "time": "Time",
+    "memory": "Memory"
   }
 }

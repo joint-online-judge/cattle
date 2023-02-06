@@ -58,6 +58,7 @@ const SiteAdmin = {
 }
 
 const RecordList = lazy(async () => import('pages/RecordList'))
+const RecordDetail = lazy(async () => import('pages/RecordDetail'))
 
 const NotFound = lazy(async () => import('pages/NotFound'))
 
@@ -245,11 +246,16 @@ const children: RouteObject[] = [
               },
               {
                 path: 'record',
-                element: <RecordList />
-              },
-              {
-                path: 'record/:recordId',
-                element: <RecordList />
+                children: [
+                  {
+                    index: true,
+                    element: <RecordList />
+                  },
+                  {
+                    path: ':recordId',
+                    element: <RecordDetail />
+                  }
+                ]
               }
             ]
           }
