@@ -1,5 +1,5 @@
 import { useRequest } from 'ahooks'
-import { Space } from 'antd'
+import { Space, Spin } from 'antd'
 import Gravatar from 'components/Gravatar'
 import type React from 'react'
 import { Link } from 'react-router-dom'
@@ -15,7 +15,7 @@ const Index: React.FC<UserBadgeProps> = ({ userId }) => {
     return res.data.data
   })
 
-  if (loading) return <span>Loading...</span> // TODO: better loading
+  if (loading) return <Spin size='small' />
 
   if (!user) return <span>N/A</span>
 

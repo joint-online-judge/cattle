@@ -199,7 +199,17 @@
       "settings": "Problem Settings"
     },
     "problem": "Problem List",
-    "introduction": "Description"
+    "introduction": "Description",
+    "status": "Status",
+    "dueAt": "Due At",
+    "never": "Never",
+    "lockAt": "Lock At",
+    "owner": "Created By",
+    "acRate": "AC Rate",
+    "tooltip": {
+      "dueAt": "You can still submit after this time, but will be counted as overdue.",
+      "lockAt": "No submission allowed."
+    }
   },
   "VISIT": "VISIT",
   "MANAGE": "MANAGE",
@@ -278,10 +288,15 @@
   },
   "problemSet": {
     "status": {
-      "notStarted": "Unstarted",
+      "notStarted": "Incoming",
       "ended": "Ended",
       "overdue": "Overdue",
       "ongoing": "Ongoing"
+    },
+    "tooltip": {
+      "ended": "You can still view the assignment but not submit.",
+      "notStarted": "The assignment is locked now.",
+      "overdue": "You can still submit, but will be counted as overdue."
     }
   },
   "Icons": {

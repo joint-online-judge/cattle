@@ -1,12 +1,13 @@
 import { useRequest } from 'ahooks'
 import { List, message, Skeleton } from 'antd'
-import { ProblemSetStatusBadge } from 'components/ProblemSet'
 import dayjs from 'dayjs'
 import { t } from 'i18next'
 import type React from 'react'
 import type { ReactNode } from 'react'
 import { Link } from 'react-router-dom'
+import { transPagination } from 'utils'
 import Horse from 'utils/service'
+import ProblemSetStatusBadge from '../ProblemSetStatusBadge'
 
 interface IProps {
   domainUrl: string
@@ -14,10 +15,16 @@ interface IProps {
 }
 
 const Index: React.FC<IProps> = ({ domainUrl, recent }) => {
-  const { data: problemSets, loading } = useRequest(
-    async () => {
+  const pageSize = 5
+
+  const {
+    data: problemSetResp,
+    run: fetchProblemSets,
+    loading
+  } = useRequest(
+    async (current: number = 1) => {
       if (!domainUrl) {
-        return []
+        return undefined
       }
 
       if (recent) {
@@ -25,13 +32,16 @@ const Index: React.FC<IProps> = ({ domainUrl, recent }) => {
           ordering: '-created_at',
           limit: recent
         })
-        return res.data.data?.results ?? []
+        return res.data.data
       }
       const res = await Horse.problemSet.v1ListProblemSets(domainUrl, {
-        ordering: '-created_at'
-        // TODO: real pagination
+        ordering: '-created_at',
+        ...transPagination({
+          current,
+          pageSize
+        })
       })
-      return res.data.data?.results ?? []
+      return res.data.data
     },
     {
       refreshDeps: [domainUrl],
@@ -46,13 +56,18 @@ const Index: React.FC<IProps> = ({ domainUrl, recent }) => {
       itemLayout='horizontal'
       size='large'
       loading={loading}
-      dataSource={problemSets ?? []}
+      dataSource={problemSetResp?.results}
       pagination={
         recent
           ? undefined
           : {
               position: 'bottom',
-              pageSize: 5
+              pageSize,
+              align: 'center',
+              onChange(current) {
+                fetchProblemSets(current)
+              },
+              total: problemSetResp?.count
             }
       }
       renderItem={(item): ReactNode => (

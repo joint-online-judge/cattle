@@ -7,7 +7,6 @@ import { useAccess } from 'models'
 import type React from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { NoDomainUrlError } from 'utils/exception'
-import './style.css' // @Chujie: import whole file to override antd style
 
 const Index: React.FC = () => {
   const access = useAccess()
@@ -22,7 +21,7 @@ const Index: React.FC = () => {
     <Row>
       <Col span={24}>
         <ShadowCard
-          className='problem-set-card'
+          className='pb-6'
           title={t('ProblemSetList.problemSet')}
           extra={
             access.canCreateProblemSet ? (
