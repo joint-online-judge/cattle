@@ -11,7 +11,7 @@ import type { Location } from 'react-router-dom'
 import { matchRoutes, useLocation, useNavigate } from 'react-router-dom'
 import routes from 'routes'
 import type { MenuItemsWithPermission } from 'types'
-import { VERTICAL_GUTTER } from 'utils/constants'
+import { DEFAULT_GUTTER } from 'utils/constants'
 
 interface IProps {
   menuItems: MenuItemsWithPermission
@@ -56,17 +56,11 @@ const Index: React.FC<PropsWithChildren<IProps>> = ({
   )
 
   return (
-    <Row
-      gutter={[{ xs: 16, sm: 16, lg: 24, xl: 24, xxl: 24 }, VERTICAL_GUTTER[1]]}
-    >
+    <Row gutter={DEFAULT_GUTTER}>
       <Col xs={24} sm={24} md={8} lg={7} xl={7} xxl={6}>
-        <Row gutter={VERTICAL_GUTTER}>
+        <Row gutter={DEFAULT_GUTTER}>
           <Col span={24}>
-            <ShadowCard
-              bodyStyle={{ padding: 0 }}
-              style={{ overflow: 'hidden' }}
-              className='w-full'
-            >
+            <ShadowCard noPadding className='w-full'>
               <AccessMenu
                 mode='inline'
                 items={menuItems}

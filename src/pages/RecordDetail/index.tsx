@@ -3,70 +3,21 @@ import { Table } from 'antd'
 import type { ColumnsType } from 'antd/es/table'
 import Head from 'components/Head'
 import RecordCaseStatus from 'components/RecordCaseStatus'
+import RecordStatus from 'components/RecordStatus'
+import ShadowCard from 'components/ShadowCard'
 import SidePage from 'components/SidePage'
+import UserBadge from 'components/UserBadge'
+import dayjs from 'dayjs'
 import { useMessage } from 'hooks'
 import { isNumber } from 'lodash-es'
 import type React from 'react'
+import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import { memoryKb2String, timeMs2String } from 'utils'
 import { NoDomainUrlError, NoRecordIdError } from 'utils/exception'
 import type { RecordCase } from 'utils/service'
-import Horse, { RecordCaseResult } from 'utils/service'
-
-const mockCases: RecordCase[] = [
-  {
-    state: RecordCaseResult.Accepted,
-    score: 10,
-    timeMs: Math.floor(Math.random() * 10_000),
-    memoryKb: Math.floor(Math.random() * 10_000)
-  },
-  {
-    state: RecordCaseResult.Canceled
-  },
-  {
-    state: RecordCaseResult.MemoryLimitExceeded,
-    score: 0,
-    timeMs: Math.floor(Math.random() * 10_000),
-    memoryKb: Math.floor(Math.random() * 10_000)
-  },
-  {
-    state: RecordCaseResult.OutputLimitExceeded,
-    score: 0,
-    timeMs: Math.floor(Math.random() * 10_000),
-    memoryKb: Math.floor(Math.random() * 10_000)
-  },
-  {
-    state: RecordCaseResult.RuntimeError,
-    score: 0,
-    timeMs: Math.floor(Math.random() * 10_000),
-    memoryKb: Math.floor(Math.random() * 10_000)
-  },
-  {
-    state: RecordCaseResult.SystemError,
-    score: 0,
-    timeMs: Math.floor(Math.random() * 10_000),
-    memoryKb: Math.floor(Math.random() * 10_000)
-  },
-  {
-    state: RecordCaseResult.TimeLimitExceeded,
-    score: 0,
-    timeMs: Math.floor(Math.random() * 10_000),
-    memoryKb: Math.floor(Math.random() * 10_000)
-  },
-  {
-    state: RecordCaseResult.WrongAnswer,
-    score: 0,
-    timeMs: Math.floor(Math.random() * 10_000),
-    memoryKb: Math.floor(Math.random() * 10_000)
-  },
-  {
-    state: RecordCaseResult.Etc,
-    score: 0,
-    timeMs: Math.floor(Math.random() * 10_000),
-    memoryKb: Math.floor(Math.random() * 10_000)
-  }
-]
+import Horse from 'utils/service'
 
 const Index: React.FC = () => {
   const { t } = useTranslation()
@@ -122,12 +73,137 @@ const Index: React.FC = () => {
     }
   )
 
+  const problemLink = useMemo(() => {
+    if (record?.problemId && record.problemSetId)
+      return (
+        <Link
+          to={`/domain/${domainUrl}/problem-set/${record.problemSetId}/problem/${record.problemId}`}
+        >
+          {record.problemId}
+        </Link>
+      )
+    if (record?.problemId)
+      return (
+        <Link to={`/domain/${domainUrl}/problem/${record.problemId}`}>
+          {record.problemId}
+        </Link>
+      )
+    return 'N/A'
+  }, [domainUrl, record?.problemId, record?.problemSetId])
+
+  const sideInfo = (
+    <ShadowCard
+      loading={loading}
+      title={
+        <h3 className='m-0 text-lg font-medium leading-6 text-gray-900'>
+          {t('RecordDetail.title')}
+        </h3>
+      }
+    >
+      <dl>
+        <div className='py-1 sm:grid sm:grid-cols-3 sm:gap-4'>
+          <dt className='text-sm font-medium text-gray-500'>Submit By</dt>
+          <dd className='mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0'>
+            {record?.committerId ? (
+              <UserBadge userId={record.committerId} />
+            ) : (
+              'N/A'
+            )}
+          </dd>
+        </div>
+        <div className='py-1 sm:grid sm:grid-cols-3 sm:gap-4'>
+          <dt className='text-sm font-medium text-gray-500'>Problem</dt>
+          <dd className='mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0'>
+            {problemLink}
+          </dd>
+        </div>
+        {record?.problemSetId ? (
+          <div className='py-1 sm:grid sm:grid-cols-3 sm:gap-4'>
+            <dt className='text-sm font-medium text-gray-500'>Assignment</dt>
+            <dd className='mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0'>
+              <Link
+                to={`/domain/${domainUrl}/problem-set/${record.problemSetId}`}
+              >
+                {record.problemSetId}
+              </Link>
+            </dd>
+          </div>
+        ) : null}
+        <div className='py-1 sm:grid sm:grid-cols-3 sm:gap-4'>
+          <dt className='text-sm font-medium text-gray-500'>Language</dt>
+          <dd className='mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0'>
+            {record?.language}
+          </dd>
+        </div>
+        <div className='py-1 sm:grid sm:grid-cols-3 sm:gap-4'>
+          <dt className='text-sm font-medium text-gray-500'>Submit At</dt>
+          <dd className='mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0'>
+            {record?.createdAt
+              ? dayjs(record.createdAt).format('YYYY-MM-DD HH:mm:ss')
+              : 'N/A'}
+          </dd>
+        </div>
+        <div className='py-1 sm:grid sm:grid-cols-3 sm:gap-4'>
+          <dt className='text-sm font-medium text-gray-500'>Judged At</dt>
+          <dd className='mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0'>
+            {record?.judgedAt
+              ? dayjs(record.judgedAt).format('YYYY-MM-DD HH:mm:ss')
+              : 'N/A'}
+          </dd>
+        </div>
+      </dl>
+      <dl className='m-0'>
+        <div className='py-1 sm:grid sm:grid-cols-3 sm:gap-4'>
+          <dt className='text-sm font-medium text-gray-500'>Score</dt>
+          <dd className='mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0'>
+            {record?.score ?? 'N/A'}
+          </dd>
+        </div>
+        <div className='py-1 sm:grid sm:grid-cols-3 sm:gap-4'>
+          <dt className='text-sm font-medium text-gray-500'>Total Time</dt>
+          <dd className='mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0'>
+            {record?.timeMs === undefined
+              ? 'N/A'
+              : timeMs2String(record.timeMs)}
+          </dd>
+        </div>
+        <div className='py-1 sm:grid sm:grid-cols-3 sm:gap-4'>
+          <dt className='text-sm font-medium text-gray-500'>Peak Memory</dt>
+          <dd className='mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0'>
+            {record?.memoryKb === undefined
+              ? 'N/A'
+              : memoryKb2String(record.memoryKb)}
+          </dd>
+        </div>
+      </dl>
+    </ShadowCard>
+  )
+
   return (
     <div>
       <Head title={t('RecordDetail.title')} />
-      <SidePage extra={<h1>Test</h1>}>
-        <Table columns={columns} dataSource={record?.cases} loading={loading} />
-        <Table columns={columns} dataSource={mockCases} loading={loading} />
+      <SidePage extra={sideInfo}>
+        <ShadowCard
+          noPadding={!loading}
+          loading={loading}
+          title={
+            loading ? (
+              t('RecordDetail.title')
+            ) : (
+              <RecordStatus
+                domainUrl={domainUrl}
+                record={record}
+                size='large'
+              />
+            )
+          }
+        >
+          <Table
+            columns={columns}
+            dataSource={record?.cases}
+            loading={loading}
+          />
+        </ShadowCard>
       </SidePage>
     </div>
   )

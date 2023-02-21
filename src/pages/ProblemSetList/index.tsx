@@ -37,7 +37,7 @@ const Index: React.FC = () => {
               </Button>
             ) : null
           }
-          bodyStyle={{ padding: 0 }}
+          noPadding
         >
           <ProblemSetList domainUrl={domainUrl} />
         </ShadowCard>

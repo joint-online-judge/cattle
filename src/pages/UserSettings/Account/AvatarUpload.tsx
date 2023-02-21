@@ -7,7 +7,7 @@ import { useAuth } from 'models'
 import type React from 'react'
 import type { ChangeEvent } from 'react'
 import { useMemo, useState } from 'react'
-import { VERTICAL_GUTTER } from 'utils/constants'
+import { DEFAULT_GUTTER } from 'utils/constants'
 import Horse, { ErrorCode } from 'utils/service'
 
 const AvatarUpload: React.FC = () => {
@@ -77,7 +77,7 @@ const AvatarUpload: React.FC = () => {
 
   return (
     <>
-      <Row justify='center' gutter={VERTICAL_GUTTER}>
+      <Row justify='center' gutter={DEFAULT_GUTTER}>
         <Col span={24}>
           <Row justify='center'>
             <Gravatar gravatar={user?.gravatar} size={150} />

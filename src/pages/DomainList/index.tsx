@@ -28,7 +28,7 @@ const Index: React.FC = () => {
   return (
     <>
       <Head title='Home' />
-      <ShadowCard bodyStyle={{ padding: 0 }}>
+      <ShadowCard noPadding>
         <List
           loading={loading}
           itemLayout='horizontal'

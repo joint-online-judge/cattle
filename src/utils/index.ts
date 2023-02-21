@@ -26,9 +26,8 @@ export function joinRoutes(matches: RouteMatch[]): string {
 
 export function timeMs2String(timeMs: number): string {
   // @Chujie: Can you imagine we can judge AI/ML on this platform?
-  if (timeMs > 1000 * 60)
-    return `${Math.floor(timeMs / 1000 / 60).toString()}min`
-  if (timeMs > 1000) return `${Math.floor(timeMs / 1000).toString()}s`
+  if (timeMs > 1000 * 60) return `${(timeMs / 1000 / 60).toFixed(3)}min`
+  if (timeMs > 1000) return `${(timeMs / 1000).toFixed(3)}s`
   return `${timeMs}ms` // Usually you would only need this
 }
 

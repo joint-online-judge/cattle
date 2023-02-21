@@ -11,7 +11,7 @@ import type { ReactElement } from 'react'
 import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate, useParams } from 'react-router-dom'
-import { VERTICAL_GUTTER } from 'utils/constants'
+import { DEFAULT_GUTTER } from 'utils/constants'
 import { NoDomainUrlError } from 'utils/exception'
 
 const Index: React.FC = () => {
@@ -64,7 +64,7 @@ const Index: React.FC = () => {
   return (
     <>
       <Head title={domain?.name ?? 'Domain Home'} />
-      <Row align='middle' justify='center' gutter={VERTICAL_GUTTER}>
+      <Row align='middle' justify='center' gutter={DEFAULT_GUTTER}>
         <Col span={24}>
           <ShadowCard>{domainInfo}</ShadowCard>
         </Col>
@@ -84,7 +84,7 @@ const Index: React.FC = () => {
                 </Button>
               ) : null
             }
-            bodyStyle={{ padding: 0 }}
+            noPadding
           >
             <ProblemSetList domainUrl={domainUrl} recent={5} />
           </ShadowCard>
