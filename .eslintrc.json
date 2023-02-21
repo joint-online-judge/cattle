@@ -77,6 +77,7 @@
     ],
     "@typescript-eslint/explicit-function-return-type": "off",
     "@typescript-eslint/no-type-alias": "off",
+    "@typescript-eslint/no-inferrable-types": "off",
 
     "import/no-deprecated": "error",
     "import/order": "off",
