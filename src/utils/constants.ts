@@ -13,9 +13,9 @@ export const MAIN_CONTENT_GRID = {
   xxl: 14
 }
 
-export const VERTICAL_GUTTER: [Gutter, Gutter] = [
-  0,
-  { xs: 16, sm: 16, md: 16, lg: 24, xl: 24, xxl: 24 }
+export const DEFAULT_GUTTER: [Gutter, Gutter] = [
+  { xs: 16, sm: 16, md: 16, lg: 24, xl: 24, xxl: 24 }, // Horizontal
+  { xs: 16, sm: 16, md: 16, lg: 24, xl: 24, xxl: 24 } // Vertical
 ]
 
 export const SUPPORT_PROGRAMMING_LANGUAGE = [

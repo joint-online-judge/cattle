@@ -1,30 +1,37 @@
 import { Col, Row } from 'antd'
-import ShadowCard from 'components/ShadowCard'
 import React from 'react'
-import { VERTICAL_GUTTER } from 'utils/constants'
+import { DEFAULT_GUTTER } from 'utils/constants'
 
 interface IProperties {
-	children: React.ReactNode | React.ReactNode[]
-	extra: React.ReactNode | React.ReactNode[] // Extra component on the side
-	position?: 'left' | 'right' // On left or right side extra component will be placed
+  children: React.ReactNode | React.ReactNode[]
+  extra: React.ReactNode | React.ReactNode[] // Extra component on the side
+  position?: 'left' | 'right' // On left or right side extra component will be placed
 }
 
 const Index: React.FC<IProperties> = ({ children, extra, position }) => {
-	const childrenOrder = position && position === 'left' ? 1 : 0
-	return (
-		<Row gutter={[{ lg: 24, xl: 24, md: 24, sm: 24 }, VERTICAL_GUTTER[1]]}>
-			<Col xs={24} sm={24} md={16} xl={16} xxl={18} order={childrenOrder}>
-				{React.Children.map(children, c => (
-					<ShadowCard>{c}</ShadowCard>
-				))}
-			</Col>
-			<Col xs={24} sm={24} md={8} xl={8} xxl={6}>
-				{React.Children.map(extra, c => (
-					<ShadowCard>{c}</ShadowCard>
-				))}
-			</Col>
-		</Row>
-	)
+  const childrenOrder = position && position === 'left' ? 1 : 0
+  return (
+    <Row gutter={DEFAULT_GUTTER}>
+      <Col xs={24} sm={24} md={16} xl={16} xxl={18} order={childrenOrder}>
+        <Row gutter={DEFAULT_GUTTER}>
+          {React.Children.map(children, (c, index) => (
+            <Col span={24} key={`main-${index}`}>
+              {c}
+            </Col>
+          ))}
+        </Row>
+      </Col>
+      <Col xs={24} sm={24} md={8} xl={8} xxl={6}>
+        <Row gutter={DEFAULT_GUTTER}>
+          {React.Children.map(extra, (c, index) => (
+            <Col span={24} key={`extra-${index}`}>
+              {c}
+            </Col>
+          ))}
+        </Row>
+      </Col>
+    </Row>
+  )
 }
 
 export default Index

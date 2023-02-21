@@ -6,7 +6,7 @@ import type React from 'react'
 import { useCallback, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useParams } from 'react-router-dom'
-import { VERTICAL_GUTTER } from 'utils/constants'
+import { DEFAULT_GUTTER } from 'utils/constants'
 import { NoDomainUrlError, NoProblemIdError } from 'utils/exception'
 import Horse from 'utils/service'
 import Config from './Config'
@@ -112,7 +112,7 @@ const Index: React.FC = () => {
   }, [tabKey, refresh, listObjectsRequest, configRequest])
 
   return (
-    <Row gutter={VERTICAL_GUTTER}>
+    <Row gutter={DEFAULT_GUTTER}>
       <Col span={24}>
         <Overview
           domainUrl={domainUrl}

@@ -2,6 +2,7 @@ import type { ActionType, ProColumns } from '@ant-design/pro-table'
 import ProTable from '@ant-design/pro-table'
 import { useRequest } from 'ahooks'
 import { message } from 'antd'
+import Head from 'components/Head'
 import RecordStatus from 'components/RecordStatus'
 import { isNumber, omit, omitBy } from 'lodash-es'
 import type React from 'react'
@@ -52,13 +53,14 @@ const Index: React.FC = () => {
       {
         title: t('RecordList.status'),
         dataIndex: 'state',
-        width: 120,
+        width: 140,
         search: false,
+        className: 'record-first-col',
         render: (text, record) => <RecordStatus record={record} />
       },
       {
         title: t('RecordList.problem'),
-        dataIndex: 'problemTitle',
+        dataIndex: 'problemId',
         ellipsis: true,
         search: false,
         render: (_, record) => {
@@ -88,29 +90,49 @@ const Index: React.FC = () => {
         dataIndex: 'timeMs',
         width: 80,
         search: false,
+        responsive: ['lg'],
         render: (_, record) =>
-          isNumber(record.timeMs) ? `${record.timeMs} ms` : 'N/A'
+          isNumber(record.timeMs) ? `${record.timeMs} ms` : 'N/A' // TODO: calculation
       },
       {
         title: t('RecordList.memory'),
         dataIndex: 'memoryKb',
         width: 80,
         search: false,
+        responsive: ['lg'],
         render: (_, record) =>
-          isNumber(record.memoryKb) ? `${record.memoryKb} KB` : 'N/A'
+          isNumber(record.memoryKb) ? `${record.memoryKb} KB` : 'N/A' // TODO: calculation
       },
       {
         title: t('RecordList.language'),
         dataIndex: 'language',
+        width: 90,
+        search: false,
+        responsive: ['md']
+      },
+      {
+        title: t('RecordList.submitBy'),
+        dataIndex: 'committerId',
+        ellipsis: true,
+        search: false,
         width: 100,
-        search: false
+        render: (_, record) => {
+          if (!record.committerId) return record.committerUsername ?? '-'
+
+          return (
+            <Link to={`/user/${record.committerId}`}>
+              {record.committerUsername ?? record.committerId}
+            </Link>
+          )
+        }
       },
       {
         title: t('RecordList.submitAt'),
         dataIndex: 'createdAt',
         valueType: 'dateTime',
         width: 180,
-        search: false
+        search: false,
+        responsive: ['md']
       },
       {
         title: t('RecordList.problem'),
@@ -133,6 +155,7 @@ const Index: React.FC = () => {
 
   return (
     <div id='record-list-table'>
+      <Head title={t('RecordList.title')} />
       <ProTable<RecordListDetail, QueryParams>
         columns={columns}
         actionRef={actionRef}
@@ -153,6 +176,8 @@ const Index: React.FC = () => {
         form={{ syncToUrl: true }}
         pagination={{ pageSize: 20 }}
         dateFormatter='string'
+        toolBarRender={false}
+        size='small'
       />
     </div>
   )

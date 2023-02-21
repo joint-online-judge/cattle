@@ -10,12 +10,13 @@ import { Link } from 'react-router-dom'
 import { RecordState } from 'utils/service'
 
 interface IProps {
-  record: {
+  record?: {
     id: string
     state?: RecordState
     createdAt?: string
   }
   domainUrl?: string
+  size?: 'default' | 'large' | 'small'
 }
 
 interface StatusConfig {
@@ -77,13 +78,26 @@ const RecordStatusConfig: Record<RecordState, StatusConfig> = {
   }
 }
 
-const Index: React.FC<IProps> = ({ record, domainUrl }) => {
+const Index: React.FC<IProps> = ({ record, domainUrl, size = 'default' }) => {
+  const fontClass = {
+    small: 'text-sm',
+    large: 'text-lg',
+    default: undefined
+  }
+  const className = fontClass[size]
+  if (!record) return <div className={className}>N/A</div>
+
   const config = record.state ? RecordStatusConfig[record.state] : undefined
   const url = domainUrl ? `/domain/${domainUrl}/record/${record.id}` : record.id
 
   if (!config)
     return (
-      <Link target='_blank' rel='noopener noreferrer' to={url}>
+      <Link
+        target='_blank'
+        rel='noopener noreferrer'
+        to={url}
+        className={className}
+      >
         {record.state}
       </Link>
     )
@@ -95,7 +109,7 @@ const Index: React.FC<IProps> = ({ record, domainUrl }) => {
       to={url}
       style={{ color: config.color }}
     >
-      <Space>
+      <Space className={className}>
         {config.icon}
         {config.text}
       </Space>

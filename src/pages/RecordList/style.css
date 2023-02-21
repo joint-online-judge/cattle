@@ -4,6 +4,10 @@
   border-radius: 6px;
 }
 
-#record-list-table .ant-card {
+#record-list-table .ant-pro-card {
   @apply shadow-md;
+}
+
+.record-first-col {
+  padding-left: 16px !important;
 }
