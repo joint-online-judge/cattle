@@ -192,14 +192,24 @@
   "CodeType": "CodeType",
   "ProblemSetDetail": {
     "menu": {
-      "detail": "问题集详情",
+      "detail": "作业详情",
       "scoreboard": "成绩榜",
       "systemTest": "评测与导出",
       "edit": "编辑信息",
       "settings": "问题配置"
     },
     "problem": "题目列表",
-    "introduction": "作业描述"
+    "introduction": "作业描述",
+    "status": "作业状态",
+    "never": "永不",
+    "owner": "创建者",
+    "acRate": "AC率",
+    "lockAt": "锁定时间",
+    "dueAt": "截止时间",
+    "tooltip": {
+      "dueAt": "到期后你仍可以提交，但将被记录为过due",
+      "lockAt": "过期后不允许提交"
+    }
   },
   "VISIT": "VISIT",
   "MANAGE": "MANAGE",
@@ -282,6 +292,11 @@
       "notStarted": "未开始",
       "overdue": "延期提交",
       "ongoing": "进行中"
+    },
+    "tooltip": {
+      "ended": "你仍然可以浏览作业内容，但不可以提交",
+      "notStarted": "作业还未开放提交",
+      "overdue": "你仍然可以提交，但会被记录为过due"
     }
   },
   "Icons": {
@@ -293,7 +308,7 @@
     "submission": "提交",
     "acCount": "AC",
     "status": "状态",
-    "problems": "题目"
+    "problems": "题目列表"
   },
   "ProblemDetail": {
     "introduction": "题目描述",
