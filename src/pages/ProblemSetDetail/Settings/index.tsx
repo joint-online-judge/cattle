@@ -1,10 +1,10 @@
 import ProCard from '@ant-design/pro-card'
 import { useRequest } from 'ahooks'
-import { Col, message, Row } from 'antd'
+import { Col, message, Row, Button } from 'antd'
 import ShadowCard from 'components/ShadowCard'
 import type React from 'react'
 import { useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import type { ProTablePagination } from 'types'
 import { transPagination } from 'utils'
 import { DEFAULT_GUTTER } from 'utils/constants'
@@ -12,12 +12,15 @@ import { NoDomainUrlError, NoProblemIdError } from 'utils/exception'
 import Horse from 'utils/service'
 import AddExistProblem from './AddExistProblem'
 import DraggableProblemTable from './DraggableProblemTable'
+import { PlusOutlined } from '@ant-design/icons'
+import { useTranslation } from 'react-i18next'
 
 const Index: React.FC = () => {
+  const { t } = useTranslation()
   const [tab, setTab] = useState('tab1')
   const { domainUrl, problemSetId } =
     useParams<{ domainUrl: string; problemSetId: string }>()
-
+  const navigate = useNavigate()
   if (!domainUrl) {
     throw new NoDomainUrlError()
   }
@@ -61,7 +64,23 @@ const Index: React.FC = () => {
       manual: true
     }
   )
-
+  const styleMarginRight = {
+    marginRight: '10px'
+  }
+  const createNewProblem = (
+    <div style={styleMarginRight}>
+      {' '}
+      <Button
+        icon={<PlusOutlined />}
+        onClick={() => {
+          navigate(`/domain/${domainUrl}/create-problem`)
+        }}
+        type='primary'
+      >
+        {t('PROBLEM.CREATE.TITLE')}
+      </Button>{' '}
+    </div>
+  )
   return (
     <Row gutter={DEFAULT_GUTTER}>
       <Col span={24}>
@@ -88,7 +107,8 @@ const Index: React.FC = () => {
               tabs={{
                 activeKey: tab,
                 onChange: setTab,
-                animated: { inkBar: true, tabPane: true }
+                animated: { inkBar: true, tabPane: true },
+                tabBarExtraContent: createNewProblem
               }}
             >
               <ProCard.TabPane key='tab1' tab='Add Existed'>
