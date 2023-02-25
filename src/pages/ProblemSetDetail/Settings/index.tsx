@@ -77,7 +77,7 @@ const Index: React.FC = () => {
         }}
         type='primary'
       >
-        {t('PROBLEM.CREATE.TITLE')}
+        {t('ProblemList.create')}
       </Button>{' '}
     </div>
   )
