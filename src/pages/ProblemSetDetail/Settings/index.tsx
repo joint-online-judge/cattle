@@ -1,9 +1,11 @@
+import { PlusOutlined } from '@ant-design/icons'
 import ProCard from '@ant-design/pro-card'
 import { useRequest } from 'ahooks'
-import { Col, message, Row, Button } from 'antd'
+import { Button, Col, message, Row } from 'antd'
 import ShadowCard from 'components/ShadowCard'
 import type React from 'react'
 import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { useNavigate, useParams } from 'react-router-dom'
 import type { ProTablePagination } from 'types'
 import { transPagination } from 'utils'
@@ -12,8 +14,6 @@ import { NoDomainUrlError, NoProblemIdError } from 'utils/exception'
 import Horse from 'utils/service'
 import AddExistProblem from './AddExistProblem'
 import DraggableProblemTable from './DraggableProblemTable'
-import { PlusOutlined } from '@ant-design/icons'
-import { useTranslation } from 'react-i18next'
 
 const Index: React.FC = () => {
   const { t } = useTranslation()
@@ -64,12 +64,8 @@ const Index: React.FC = () => {
       manual: true
     }
   )
-  const styleMarginRight = {
-    marginRight: '10px'
-  }
   const createNewProblem = (
-    <div style={styleMarginRight}>
-      {' '}
+    <div className='mx-8 space-x-4'>
       <Button
         icon={<PlusOutlined />}
         onClick={() => {
@@ -78,7 +74,7 @@ const Index: React.FC = () => {
         type='primary'
       >
         {t('ProblemList.create')}
-      </Button>{' '}
+      </Button>
     </div>
   )
   return (
