@@ -1,10 +1,12 @@
+import { PlusOutlined } from '@ant-design/icons'
 import ProCard from '@ant-design/pro-card'
 import { useRequest } from 'ahooks'
-import { Col, message, Row } from 'antd'
+import { Button, Col, message, Row } from 'antd'
 import ShadowCard from 'components/ShadowCard'
 import type React from 'react'
 import { useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
+import { useNavigate, useParams } from 'react-router-dom'
 import type { ProTablePagination } from 'types'
 import { transPagination } from 'utils'
 import { DEFAULT_GUTTER } from 'utils/constants'
@@ -14,10 +16,11 @@ import AddExistProblem from './AddExistProblem'
 import DraggableProblemTable from './DraggableProblemTable'
 
 const Index: React.FC = () => {
+  const { t } = useTranslation()
   const [tab, setTab] = useState('tab1')
   const { domainUrl, problemSetId } =
     useParams<{ domainUrl: string; problemSetId: string }>()
-
+  const navigate = useNavigate()
   if (!domainUrl) {
     throw new NoDomainUrlError()
   }
@@ -61,7 +64,19 @@ const Index: React.FC = () => {
       manual: true
     }
   )
-
+  const createNewProblem = (
+    <div className='mx-8 space-x-4'>
+      <Button
+        icon={<PlusOutlined />}
+        onClick={() => {
+          navigate(`/domain/${domainUrl}/create-problem`)
+        }}
+        type='primary'
+      >
+        {t('ProblemList.create')}
+      </Button>
+    </div>
+  )
   return (
     <Row gutter={DEFAULT_GUTTER}>
       <Col span={24}>
@@ -88,7 +103,8 @@ const Index: React.FC = () => {
               tabs={{
                 activeKey: tab,
                 onChange: setTab,
-                animated: { inkBar: true, tabPane: true }
+                animated: { inkBar: true, tabPane: true },
+                tabBarExtraContent: createNewProblem
               }}
             >
               <ProCard.TabPane key='tab1' tab='Add Existed'>
